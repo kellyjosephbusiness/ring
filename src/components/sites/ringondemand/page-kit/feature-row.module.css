@@ -1,0 +1,125 @@
+/* Feature row (iClosed analytics "CALL OUTCOME TRACKING" / "Convert Visitors
+   into Bookings"): two 656px columns 48px apart inside 40px gutters, a 480px
+   #f9fafb visual panel, and a hairline across the window underneath. */
+
+.section {
+  position: relative;
+  width: 100%;
+  container-type: inline-size;
+  background: #ffffff;
+  font-family: var(--site-font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.section::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: #e5e7eb;
+}
+
+.inner {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: center;
+  gap: 48px;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 56px 40px 72px;
+}
+
+.section[data-reverse] .visual {
+  order: 2;
+}
+
+.visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 480px;
+  padding: 40px;
+  overflow: hidden;
+  background: #f9fafb;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 32px;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.heading {
+  margin: 0;
+  font-family: var(--site-font-display);
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 42px;
+  letter-spacing: -0.32px;
+  color: rgb(2, 4, 24);
+  text-wrap: balance;
+}
+
+.accent {
+  color: #1c64f2;
+}
+
+.body {
+  max-width: 640px;
+  margin-top: 12px;
+  font-size: 16px;
+  line-height: 26px;
+  letter-spacing: -0.16px;
+  color: #31353f;
+}
+
+.body p {
+  margin: 0;
+}
+
+.body p + p {
+  margin-top: 12px;
+}
+
+@container (max-width: 1279px) {
+  .inner {
+    gap: 40px;
+  }
+
+  .visual {
+    min-height: 420px;
+    padding: 32px;
+  }
+}
+
+@container (max-width: 809px) {
+  .inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+    padding: 48px 20px 56px;
+  }
+
+  .visual,
+  .section[data-reverse] .visual {
+    order: 2;
+    min-height: 0;
+    padding: 24px 16px;
+  }
+
+  .heading {
+    font-size: 24px;
+    line-height: 32px;
+    letter-spacing: -0.24px;
+  }
+}

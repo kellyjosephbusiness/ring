@@ -15,7 +15,8 @@ Clone route: `/` → `src/app/page.tsx`.
 | Source | Local | Notes |
 |---|---|---|
 | `https://www.iclosed.io/` | `/` | Full homepage |
-| `./product/*`, `./results`, `./pricing`, `./mcp`, legal pages, etc. | not cloned | Links point to `https://www.iclosed.io/...` via `sourceUrl()` in `src/components/sites/iclosed/links.ts` |
+| `./product/analytics`, `./results` | layouts reused, not cloned | See `LAYOUTS_analytics_results.md`; RingOnDemand's interior pages are built on them |
+| other `./product/*`, `./pricing`, `./mcp`, legal pages, etc. | not cloned | Links point to `https://www.iclosed.io/...` via `sourceUrl()` in `src/components/sites/iclosed/links.ts` |
 | `app.iclosed.io` (signup / login), `docs.iclosed.io`, `university.iclosed.io` | external | Kept as-is |
 
 ## Page-wide facts

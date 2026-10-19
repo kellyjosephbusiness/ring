@@ -199,6 +199,222 @@
   }
 }
 
+/* ---------- "Legal" menu (the source's Product dropdown) ---------- */
+
+.trigger {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 2px;
+  height: 38px;
+  padding: 8px 12px 8px 16px;
+  border: 0;
+  background: #fff;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background-color 0.6s var(--nav-ease);
+}
+
+.trigger[data-open] {
+  background: var(--hover-wash);
+}
+
+@media (hover: hover) {
+  .trigger:hover {
+    background: var(--hover-wash);
+  }
+}
+
+.trigger:focus-visible {
+  outline: 2px solid #1c64f2;
+  outline-offset: -2px;
+}
+
+.triggerLabel {
+  font-size: 14px;
+  line-height: 22px;
+  letter-spacing: -0.14px;
+  white-space: pre;
+  color: var(--ink);
+}
+
+.triggerChevron {
+  display: block;
+  flex: none;
+  width: 20px;
+  height: 20px;
+  color: var(--ink);
+  transition: transform 0.6s var(--nav-ease);
+}
+
+.trigger[data-open] .triggerChevron {
+  transform: rotate(-180deg);
+}
+
+/* The dropdown spans the nav, grows from the 64px bar to bar + panel, and
+   clips the panel as it opens. */
+.dropdown {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  height: 64px;
+  padding-top: 64px;
+  overflow: clip;
+  pointer-events: none;
+  transition: height 0.6s var(--nav-ease);
+}
+
+.deskNav[data-open] .dropdown {
+  height: calc(64px + var(--panel-height));
+}
+
+.dropdownCatcher {
+  position: absolute;
+  inset: 64px 0 0;
+  pointer-events: auto;
+}
+
+.panel {
+  position: relative;
+  flex: none;
+  width: min(940px, 100% - 64px);
+  height: var(--panel-height);
+  padding: 16px;
+  overflow: hidden;
+  background: #fff;
+  pointer-events: auto;
+}
+
+.deskNav {
+  --panel-height: 352px;
+}
+
+.backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  height: 100vh;
+  background: #000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s var(--nav-ease);
+}
+
+.deskNav[data-open] .backdrop {
+  opacity: 0.1;
+}
+
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tileItem {
+  display: flex;
+  min-width: 0;
+}
+
+.tile {
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 16px;
+  background: #fff;
+  color: inherit;
+  text-decoration: none;
+}
+
+.tile::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgb(229, 231, 235);
+  pointer-events: none;
+}
+
+.tile:focus-visible {
+  outline: 2px solid #1c64f2;
+  outline-offset: -2px;
+}
+
+.iconBox {
+  position: relative;
+  display: block;
+  flex: none;
+  width: 36px;
+  height: 36px;
+  margin-bottom: 4px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow:
+    0 0.75px 1.5px 0 rgba(10, 12, 18, 0.05),
+    inset 0 -1.5px 0 0 rgba(10, 12, 18, 0.05),
+    inset 0 0 0 0.75px rgba(10, 12, 18, 0.18);
+}
+
+.iconBox::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(225deg, rgb(0, 28, 105) 0%, #000 100%);
+  opacity: 0;
+  transition: opacity 0.4s var(--link-ease);
+}
+
+.tileGlyph {
+  position: absolute;
+  top: 7px;
+  left: 7px;
+  z-index: 1;
+  display: block;
+  width: 22px;
+  height: 22px;
+  color: rgb(2, 54, 194);
+  transition: color 0.4s var(--link-ease);
+}
+
+@media (hover: hover) {
+  .tile:hover .iconBox::before {
+    opacity: 1;
+  }
+
+  .tile:hover .tileGlyph {
+    color: #fff;
+  }
+}
+
+.tileTitle {
+  display: block;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: -0.18px;
+  color: var(--ink);
+}
+
+.tileDesc {
+  display: block;
+  font-size: 14px;
+  line-height: 22px;
+  letter-spacing: -0.14px;
+  color: rgb(75, 85, 99);
+}
+
 /* ---------- Phone nav ---------- */
 
 .mNav {
@@ -271,8 +487,9 @@
   flex-direction: column;
   gap: 12px;
   padding: 40px 0;
-  -webkit-mask-image: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, #000 15%, #000 96%, rgba(0, 0, 0, 0) 100%);
-  mask-image: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, #000 15%, #000 96%, rgba(0, 0, 0, 0) 100%);
+  /* Fades only inside the list's own padding, so no link is dimmed. */
+  -webkit-mask-image: linear-gradient(0deg, rgba(0, 0, 0, 0) 0, #000 32px, #000 calc(100% - 16px), rgba(0, 0, 0, 0) 100%);
+  mask-image: linear-gradient(0deg, rgba(0, 0, 0, 0) 0, #000 32px, #000 calc(100% - 16px), rgba(0, 0, 0, 0) 100%);
 }
 
 .mLinkCell {
@@ -297,6 +514,43 @@
 
 @media (hover: hover) {
   .mTextLink:hover {
+    background: var(--hover-wash);
+  }
+}
+
+/* The Legal group: a small label over the practice-area links. */
+.mGroup {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgb(229, 231, 235);
+}
+
+.mGroupLabel {
+  margin: 0 0 6px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0.72px;
+  text-transform: uppercase;
+  color: rgb(107, 114, 128);
+}
+
+.mSubLink {
+  padding: 6px 16px;
+  font-size: 17px;
+  line-height: 24px;
+  letter-spacing: -0.17px;
+  color: var(--ink);
+  text-decoration: none;
+  transition: background-color 0.4s var(--link-ease);
+}
+
+@media (hover: hover) {
+  .mSubLink:hover {
     background: var(--hover-wash);
   }
 }
@@ -371,10 +625,31 @@
   }
 }
 
+/* Tablet: the tiles are too narrow for their descriptions, so the menu
+   shows icons and titles only (titles may wrap to two lines). */
+@media (min-width: 810px) and (max-width: 1279.98px) {
+  .deskNav {
+    --panel-height: 300px;
+  }
+
+  .tileTitle {
+    font-size: 16px;
+    letter-spacing: -0.16px;
+  }
+
+  .tileDesc {
+    display: none;
+  }
+}
+
 /* Narrow tablets: tighter link padding so the row keeps air at 810px. */
 @media (min-width: 810px) and (max-width: 959.98px) {
   .textLink {
-    padding: 8px 12px;
+    padding: 8px 10px;
+  }
+
+  .trigger {
+    padding: 8px 6px 8px 10px;
   }
 }
 

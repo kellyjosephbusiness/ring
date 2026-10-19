@@ -1,0 +1,93 @@
+/* Onboarding card (iClosed "1-1 Onboarding"): a #f7f8fa card across the
+   1360px content width, 48px inside padding, text left and visual right. */
+
+.section {
+  position: relative;
+  width: 100%;
+  container-type: inline-size;
+  background: #ffffff;
+  font-family: var(--site-font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.inner {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 40px;
+}
+
+.card {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: center;
+  gap: 48px;
+  padding: 36px 48px;
+  background: #f7f8fa;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 32px;
+  max-width: 520px;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.heading {
+  margin: 0;
+  font-family: var(--site-font-display);
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 42px;
+  letter-spacing: -0.32px;
+  color: rgb(2, 4, 24);
+  text-wrap: balance;
+}
+
+.body {
+  margin-top: 12px;
+  font-size: 16px;
+  line-height: 26px;
+  letter-spacing: -0.16px;
+  color: #737373;
+}
+
+.body p {
+  margin: 0;
+}
+
+.visual {
+  min-width: 0;
+}
+
+@container (max-width: 1279px) {
+  .card {
+    gap: 32px;
+    padding: 32px;
+  }
+}
+
+@container (max-width: 809px) {
+  .inner {
+    padding: 32px 0;
+  }
+
+  .card {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 40px 20px;
+  }
+
+  .heading {
+    font-size: 24px;
+    line-height: 32px;
+    letter-spacing: -0.24px;
+  }
+}
