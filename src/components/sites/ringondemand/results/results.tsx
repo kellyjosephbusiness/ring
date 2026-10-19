@@ -9,13 +9,15 @@ const STATS = [
   { figure: "24 hours", label: "From signed order to first transfer" },
 ] as const;
 
-/** "What firms see": three figures in the clone's hairline-divided strip. */
-export function Results() {
+/** "What firms see": three figures in the clone's hairline-divided strip.
+ * The figures are personal injury results, so pages that cover more than
+ * legal pass a heading that says so. */
+export function Results({ heading = "What firms see" }: { heading?: string }) {
   return (
     <section id="results" className={styles.section} data-section="results" aria-labelledby="results-heading">
       <div className={styles.inner}>
         <h2 id="results-heading" className={styles.heading}>
-          What firms see
+          {heading}
         </h2>
       </div>
 

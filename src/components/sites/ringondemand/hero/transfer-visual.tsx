@@ -5,13 +5,12 @@ import type { CSSProperties } from "react";
 
 import styles from "./transfer-visual.module.css";
 
-/** The screening checks, restated from the copy, ticked in order. */
+/** Screening checks any buyer sets, ticked in order. */
 const CHECKS = [
-  "Accident inside your window",
-  "Not at fault",
-  "Already received treatment",
-  "At-fault driver insured",
-  "Inside the statute of limitations",
+  "Inside the states you work in",
+  "Fits your criteria",
+  "Answered every qualifying question",
+  "Wants to talk now",
 ] as const;
 
 /** Share of the frame that must be on screen before the checks tick in. */
@@ -118,7 +117,7 @@ export function TransferVisual() {
         <div className={styles.status}>
           <p className={styles.statusRow}>
             <span className={styles.liveDot} />
-            <span className={styles.statusText}>Transferring to your intake line</span>
+            <span className={styles.statusText}>Transferring to your team</span>
           </p>
           <div className={styles.route}>
             <span className={styles.routeCaller}>

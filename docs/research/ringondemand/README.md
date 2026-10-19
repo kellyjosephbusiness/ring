@@ -1,31 +1,34 @@
 # RingOnDemand site
 
 The homepage (`/`) uses the iclosed.io clone's design (see
-`docs/research/iclosed/`) with RingOnDemand's copy from
-[`website-copy.md`](./website-copy.md), placed verbatim. The one change from
-the doc: the hero headline is "Signed MVA Cases for Personal Injury Firms".
+`docs/research/iclosed/`) with general copy covering legal and insurance. The
+legal copy doc ([`website-copy.md`](./website-copy.md)) lives on `/legal/mva`,
+which also carries its pricing and FAQ.
 
 The interior pages reuse the layouts of iclosed.io's `/product/analytics` and
 `/results` pages (see `docs/research/iclosed/LAYOUTS_analytics_results.md`).
-Their copy is a **draft for review**:
+Everything outside the copy doc is a **draft for review**:
 [`pages-copy-draft.md`](./pages-copy-draft.md).
 
 ## Routes
 
 | Route | Page |
 |---|---|
-| `/` | Homepage (copy doc) |
+| `/` | Homepage (general: inbound calls and live transfers) |
 | `/legal` | Practice-area index |
-| `/legal/mva`, `/legal/workers-comp`, `/legal/lemon-law`, `/legal/medical-malpractice`, `/legal/pre-settlement-funding` | One page per practice area (`legal/practice-areas.ts`) |
+| `/legal/mva`, `/legal/workers-comp`, `/legal/lemon-law`, `/legal/medical-malpractice`, `/legal/pre-settlement-funding` | One page per practice area (`legal/practice-areas.ts`); MVA adds the copy doc's results, pricing and FAQ |
+| `/insurance` | Insurance index |
+| `/insurance/final-expense`, `/insurance/auto`, `/insurance/home`, `/insurance/medicare` | One page per line (`insurance/insurance-lines.ts`) |
 | `/results` | Stats, reporting, getting started |
 | `/partners` | Call publishers |
 | `/about` | Company |
 
 Components live in `src/components/sites/ringondemand/`. There is one folder
-per homepage section in the copy doc's order. The other folders:
+per homepage section. The other folders:
 - `page-kit/` — the interior-page blocks
 - `page-shell/` — header, rails and footer
 - `legal/` — practice-area data and pages
+- `insurance/` — insurance-line data and pages
 - `shared/` — shared bits
 
 Every destination is in `links.ts`.
@@ -48,9 +51,15 @@ logos render through `shared/logo.tsx`.
 ## Booking
 
 Every "Book a call" button scrolls to the closing section (`#book-a-call`),
-which every page ends with. That section holds the iClosed inline widget for
-the "Ring On Demand - Personal Injury Discovery Call" event
-(`final-cta/booking-widget.tsx`).
+which every page ends with. That section holds the iClosed inline widget
+(`final-cta/booking-widget.tsx`) for one of the events in `BOOKING_EVENTS`
+(`links.ts`):
+
+| Event | Pages |
+|---|---|
+| Ring On Demand - Personal Injury Discovery Call (`discovery`) | Homepage, legal pages, Results, About |
+| Ring On Demand - Partner Discovery Call (`insurance`) | `/insurance` and the insurance line pages |
+| Publisher Intro Call (`publisher`) | `/partners` |
 
 - **Loading.** iClosed's `widget.js` loads once. It picks up new widgets after
   client-side navigation. The widget mounts when the section is within 1200px
@@ -65,8 +74,9 @@ the "Ring On Demand - Personal Injury Discovery Call" event
 
 - **Draft copy:** review [`pages-copy-draft.md`](./pages-copy-draft.md),
   especially its "Please confirm" list.
-- **Partners booking:** `/partners` uses the personal-injury discovery call. A
-  publisher-specific iClosed event or contact link should replace it.
+- **Homepage booking:** the homepage books the personal-injury discovery call.
+  If it should book a general event, add one to `BOOKING_EVENTS` and pass it to
+  `FinalCta` as `booking`.
 - **Footer pages:** Contact, Privacy Policy and Terms of Service use
   `PENDING_PAGES` placeholders (`#`).
 - **Notes in the copy doc still apply:**

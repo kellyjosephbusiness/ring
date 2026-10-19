@@ -24,9 +24,9 @@ const inter = localFont({
   ],
 });
 
-const title = "RingOnDemand | Signed MVA Cases for Personal Injury Firms";
+const title = "RingOnDemand | Inbound Calls for Enterprise Companies";
 const description =
-  "You give us your case criteria. We run the ads, screen every caller, and send you a live transfer or a signed retainer. You pay per transfer or per signed case and nothing else.";
+  "You set the criteria. We run the ads, screen every caller, and send the ones who qualify to your team as inbound calls or live transfers.";
 
 const siteUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
   ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
@@ -60,6 +60,7 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${poppins.variable} ${inter.variable} antialiased`}
+      data-scroll-behavior="smooth"
     >
       <body>{children}</body>
     </html>

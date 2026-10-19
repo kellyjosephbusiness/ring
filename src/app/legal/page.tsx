@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
-import { ClipboardList, Megaphone, PhoneForwarded } from "lucide-react";
+import { ClipboardList, Megaphone, MessageSquareText, PhoneForwarded } from "lucide-react";
 
 import { CallSources } from "@/components/sites/ringondemand/call-sources/call-sources";
 import { FinalCta } from "@/components/sites/ringondemand/final-cta/final-cta";
-import { AreaGrid } from "@/components/sites/ringondemand/legal/area-grid";
 import { AttorneyCall } from "@/components/sites/ringondemand/legal/attorney-call";
+import { PRACTICE_AREAS, practiceAreaHref } from "@/components/sites/ringondemand/legal/practice-areas";
 import { BOOK_CALL_URL } from "@/components/sites/ringondemand/links";
 import { Divider } from "@/components/sites/ringondemand/page-kit/divider";
 import { FeatureColumns } from "@/components/sites/ringondemand/page-kit/feature-columns";
+import { LinkGrid } from "@/components/sites/ringondemand/page-kit/link-grid";
 import { PageHero } from "@/components/sites/ringondemand/page-kit/page-hero";
 import { PageShell } from "@/components/sites/ringondemand/page-shell/page-shell";
 
@@ -33,7 +34,30 @@ export default function LegalPage() {
         note="The call is with a licensed attorney on our team, not a sales rep."
       />
       <Divider />
-      <AreaGrid />
+      <LinkGrid
+        heading={{
+          id: "practice-areas-heading",
+          eyebrow: "Practice areas",
+          heading: { lead: "Pick your", accent: "practice area" },
+          sub: "The same process in every area: your criteria in our intake script, our ads, and a live transfer or a signed retainer when a caller qualifies.",
+        }}
+        items={[
+          ...PRACTICE_AREAS.map((area) => ({
+            href: practiceAreaHref(area),
+            icon: area.icon,
+            title: area.name,
+            body: area.summary,
+          })),
+          {
+            href: BOOK_CALL_URL,
+            icon: MessageSquareText,
+            title: "Another practice area?",
+            body: "Tell us your case criteria and we will tell you what we can deliver.",
+            more: "Book a call",
+            muted: true,
+          },
+        ]}
+      />
       <Divider />
       <FeatureColumns
         heading={{ heading: { lead: "How it works" } }}

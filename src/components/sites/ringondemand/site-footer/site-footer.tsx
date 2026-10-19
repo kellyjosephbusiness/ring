@@ -1,8 +1,9 @@
 import Link from "next/link";
 
+import { INSURANCE_LINES, insuranceLineHref } from "../insurance/insurance-lines";
 import { PRACTICE_AREAS, practiceAreaHref } from "../legal/practice-areas";
 import { Logo } from "../shared/logo";
-import { ANCHORS, PENDING_PAGES, ROUTES } from "../links";
+import { PENDING_PAGES, ROUTES } from "../links";
 import styles from "./site-footer.module.css";
 
 interface FooterLink {
@@ -17,16 +18,12 @@ interface FooterColumn {
 
 const COLUMNS: FooterColumn[] = [
   {
-    heading: "Practice areas",
+    heading: "Legal",
     links: PRACTICE_AREAS.map((area) => ({ label: area.navLabel, href: practiceAreaHref(area) })),
   },
   {
-    heading: "Offers",
-    links: [
-      { label: "Live Transfers", href: ANCHORS.liveTransfers },
-      { label: "Pre-Signed Cases", href: ANCHORS.preSignedCases },
-      { label: "Pricing", href: ANCHORS.pricing },
-    ],
+    heading: "Insurance",
+    links: INSURANCE_LINES.map((line) => ({ label: line.navLabel, href: insuranceLineHref(line) })),
   },
   {
     heading: "Company",
@@ -38,7 +35,7 @@ const COLUMNS: FooterColumn[] = [
     ],
   },
   {
-    heading: "Legal",
+    heading: "Policies",
     links: [
       { label: "Privacy Policy", href: PENDING_PAGES.privacyPolicy },
       { label: "Terms of Service", href: PENDING_PAGES.termsOfService },
@@ -54,7 +51,7 @@ export function SiteFooter() {
           <div className={styles.info}>
             <div className={styles.intro}>
               <Logo variant="light" className={styles.logo} />
-              <p className={styles.blurb}>Signed MVA cases and live transfers for personal injury firms.</p>
+              <p className={styles.blurb}>Screened inbound calls and live transfers.</p>
             </div>
           </div>
           <nav className={styles.links} aria-label="Footer">

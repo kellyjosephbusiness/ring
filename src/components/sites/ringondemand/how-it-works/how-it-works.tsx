@@ -10,7 +10,7 @@ const STEPS: readonly Step[] = [
   {
     num: "01",
     title: "You set the criteria",
-    body: "Accident date window, treatment, fault, insurance, and the states you take cases in. We write your criteria into the intake script.",
+    body: "The case types or lines of insurance you want, the questions every caller must pass, and the states you work in. We write your criteria into the intake script.",
   },
   {
     num: "02",
@@ -19,8 +19,8 @@ const STEPS: readonly Step[] = [
   },
   {
     num: "03",
-    title: "You get the transfer or the signed retainer",
-    body: "Live transfers go to your intake line during the hours you set. Pre-signed cases come to you with the completed intake and the signed retainer.",
+    title: "Your team gets the call",
+    body: "Inbound calls and live transfers go to your line during the hours you set. Law firms can also take pre-signed cases, with the completed intake and the signed retainer.",
   },
 ];
 

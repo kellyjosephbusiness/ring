@@ -2,7 +2,7 @@ import { BOOK_CALL_TARGET, BOOK_CALL_URL } from "../links";
 import { TransferVisual } from "./transfer-visual";
 import styles from "./hero.module.css";
 
-const HEADLINE_LINE_1 = "Signed MVA Cases for";
+const HEADLINE_LINE_1 = "Inbound Calls for";
 
 /** Verified badge (scalloped seal with a check), drawn at 18px beside the proof line. */
 function CheckBadge() {
@@ -24,20 +24,19 @@ export function Hero() {
       <div className={styles.inner}>
         <div className={styles.grid}>
           <div className={styles.copy}>
-            <p className={styles.eyebrow}>For personal injury law firms</p>
+            <p className={styles.eyebrow}>Inbound calls and live transfers</p>
             <div className={styles.text}>
               <h1 className={styles.h1}>
                 <span>{HEADLINE_LINE_1}</span>
                 <span>
                   {" "}
                   <br className={styles.h1Break} />
-                  Personal Injury Firms
+                  Enterprise Companies
                 </span>
               </h1>
               <p className={styles.sub}>
-                You give us your case criteria. We run the ads, screen every caller, and send you a
-                live transfer or a signed retainer. You pay per transfer or per signed case and
-                nothing else.
+                You set the criteria. We run the ads, screen every caller, and send the ones who
+                qualify to your team as inbound calls or live transfers.
               </p>
             </div>
             <div className={styles.ctaGroup}>
@@ -53,14 +52,14 @@ export function Hero() {
                 </span>
               </a>
               <p className={styles.micro}>
-                The call is with a licensed attorney on our team, not a sales rep.
+                Tell us your criteria. We tell you what we can deliver.
               </p>
             </div>
             <p className={styles.proof}>
               <CheckBadge />
               <span>
-                Over <b className={styles.proofStrong}>1,500 signed retainers</b> delivered last
-                quarter
+                Over <b className={styles.proofStrong}>1,500 signed retainers</b> delivered to
+                personal injury firms last quarter
               </span>
             </p>
           </div>
