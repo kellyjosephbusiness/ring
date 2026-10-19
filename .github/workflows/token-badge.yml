@@ -66,6 +66,9 @@ jobs:
           git init -q badge
           cd badge
           printf '%s\n' "$BADGE" > token-badge.json
-          git add token-badge.json
+          # This branch only carries badge data; stop Vercel from trying to
+          # build it as the site on every push.
+          printf '{"git":{"deploymentEnabled":false}}\n' > vercel.json
+          git add token-badge.json vercel.json
           git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -q -m "Update token badge"
           git push --force "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:refs/heads/badges
