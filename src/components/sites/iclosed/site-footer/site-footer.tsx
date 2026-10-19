@@ -10,8 +10,8 @@ interface FooterLink {
 interface FooterColumn {
   heading: string;
   links: FooterLink[];
-  /** Empty placeholder rows the source keeps at the end of the column. */
-  spacers?: number[];
+  /** The source keeps two empty placeholder rows at the end of this column. */
+  spacers?: boolean;
 }
 
 const COLUMNS: FooterColumn[] = [
@@ -21,7 +21,7 @@ const COLUMNS: FooterColumn[] = [
       { label: "AI Scheduler", href: sourceUrl("./product/ai-scheduler") },
       { label: "Analytics", href: sourceUrl("./product/analytics") },
     ],
-    spacers: [65, 73],
+    spacers: true,
   },
   {
     heading: "Resources",
@@ -103,14 +103,12 @@ export function SiteFooter() {
                     {link.label}
                   </a>
                 ))}
-                {column.spacers?.map((width) => (
-                  <span
-                    key={width}
-                    className={styles.spacer}
-                    style={{ minWidth: width }}
-                    aria-hidden="true"
-                  />
-                ))}
+                {column.spacers && (
+                  <>
+                    <span className={`${styles.spacer} ${styles.spacerNarrow}`} aria-hidden="true" />
+                    <span className={`${styles.spacer} ${styles.spacerWide}`} aria-hidden="true" />
+                  </>
+                )}
               </div>
             ))}
           </nav>
