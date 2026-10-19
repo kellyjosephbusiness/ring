@@ -1,0 +1,3144 @@
+
+.iccs--band,
+.iccs--portal {
+  --container-pad: 40px;
+  --color-accent: #1c64f2;
+  --font-display: Poppins, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --gray-200: #e5e7eb;
+  --radius-md: 8px;
+  --color-surface: #ffffff;
+  --gray-900: #111928;
+  --gray-50: #f9fafb;
+  --color-nav: #020418;
+  --container-max: 1440px;
+  --color-hairline: #e5e7eb;
+  --font-body: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --color-text-primary: #111928;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.iccs--outer { position: relative; width: 100%; container-type: inline-size; }
+.iccs--band { position: relative; width: 100%; background: var(--color-surface); font-size: 16px; line-height: 1.5; color: var(--color-text-primary); }
+.iccs--band *, .iccs--portal * { box-sizing: border-box; }
+:where(.iccs--band, .iccs--portal) :where(h1, h2, h3, h4, h5, h6) { margin: 0; font-family: var(--font-display); font-weight: 500; color: var(--color-text-primary); }
+:where(.iccs--band, .iccs--portal) :where(p, figure, blockquote) { margin: 0; }
+:where(.iccs--band, .iccs--portal) :where(a) { color: inherit; text-decoration: none; }
+:where(.iccs--band, .iccs--portal) :where(img, svg, video) { display: block; max-width: 100%; }
+:where(.iccs--band, .iccs--portal) :where(button) { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+.iccs--band :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { .iccs--band *, .iccs--band *::before, .iccs--band *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; } }
+.iccs--wrap { position: relative; width: 100%; max-width: var(--container-max); margin: 0 auto; }
+.iccs--rule::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--color-hairline); }
+
+.iccs-inner {
+  --uc-card: 1008px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  padding-block: 100px;
+}
+
+/* ---- Head (812 measure, centred — the frame's 74:11537) ---- */
+
+.iccs-head {
+  width: calc(812px + var(--container-pad) * 2);
+  max-width: 100%;
+  padding-inline: var(--container-pad);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+}
+
+/* Leads with a dot, drawn rather than typed so it keeps its size against the
+   uppercase tracking. */
+.iccs-eyebrow::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: 10px;
+  border-radius: 50%;
+  background: currentColor;
+  vertical-align: 0.15em;
+}
+
+.iccs-eyebrow {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  letter-spacing: 0.84px;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.iccs-heading {
+  font-family: var(--font-display);
+  font-size: 40px;
+  line-height: 52px;
+  font-weight: 500;
+  letter-spacing: -0.4px;
+  color: #171717;
+}
+
+.iccs-headingAccent {
+  color: var(--color-accent);
+}
+
+.iccs-subcopy {
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 400;
+  letter-spacing: -0.04px;
+  color: #020418;
+}
+
+/* Wraps the rail and its arrows so hovering either one holds the autoplay. */
+.iccs-rail {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+}
+
+/* ---- Rail (the frame's 74:11545 mask group — full rail width, faded ends) ----
+
+   Reader-driven, not a marquee. A native scroll container gets swipe and
+   trackpad flicks for free and keeps the highlight honest — it reads the scroll
+   position rather than a state variable that could drift from it. The fade is
+   exactly the gutter width, so at rest it dims the padding and never the first
+   card's edge. */
+
+.iccs-ticker {
+  width: 100%;
+  display: flex;
+  gap: 24px;
+  /* Half a rail minus half a card, so the FIRST card lands dead centre with an
+     empty card-width of space to its left — the frame's "there is a card there,
+     it is just hidden". Falls back to the plain gutter once the rail is
+     narrower than a card. */
+  padding-inline: max(var(--container-pad), calc((100% - var(--uc-card)) / 2));
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 var(--container-pad),
+    #000 calc(100% - var(--container-pad)), transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 var(--container-pad),
+    #000 calc(100% - var(--container-pad)), transparent 100%);
+}
+
+.iccs-ticker::-webkit-scrollbar {
+  display: none;
+}
+
+/* ---- Dimming ----
+
+   A rail behaviour, not a card one: a card on its own is fully opaque, and only
+   the one nearest the rail's centre stays lit here. Gated on the live flag so
+   that between first paint and the first measure — and if the script never runs
+   at all — the rail reads as a plain row of cards rather than a row of dimmed
+   ones with nothing lit. */
+
+.iccs-ticker[data-iccs-live] [data-iccs-card] {
+  opacity: 0.4;
+  transition: opacity 260ms ease;
+}
+
+.iccs-ticker[data-iccs-live] [data-iccs-card].iccs-cardActive {
+  opacity: 1;
+}
+
+/* ---- Prev / next ----
+
+   Two square buttons sharing one edge. */
+
+.iccs-nav {
+  display: flex;
+  gap: 8px;
+}
+
+.iccs-navBtn {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--gray-900);
+  cursor: pointer;
+  transition: background 150ms ease, color 150ms ease;
+}
+
+.iccs-navBtn:hover:not(:disabled) {
+  background: var(--gray-50);
+}
+
+/* No disabled state: the rail wraps, so both arrows always do something. */
+
+/* ---- Card (Figma 94:14148) — see CaseStudyCardFramer.tsx ----
+
+   Here for the baked fallback cards the rail renders while its slot is empty.
+   A card that comes through the slot brings this same CSS with it. */
+
+.iccs-card {
+  position: relative;
+  flex: none;
+  scroll-snap-align: center;
+  width: var(--uc-card, 1008px);
+  height: 480px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--color-nav, #020418);
+  color: #fff;
+}
+
+.iccs-card:hover { cursor: pointer; }
+
+.iccs-media {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+}
+
+.iccs-scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(2, 4, 24, 0.5);
+  pointer-events: none;
+}
+
+.iccs-panel {
+  position: absolute;
+  left: 24px;
+  top: 24px;
+  bottom: 24px;
+  width: 254px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 8px;
+  background:
+    linear-gradient(
+      148deg,
+      rgba(255, 255, 255, 0.14) 0%,
+      rgba(255, 255, 255, 0.05) 26%,
+      rgba(255, 255, 255, 0) 58%
+    ),
+    rgba(2, 4, 24, 0.52);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.24),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.09),
+    inset 0 -1px 0 0 rgba(255, 255, 255, 0.05),
+    0 16px 40px -12px rgba(0, 0, 0, 0.45);
+  white-space: nowrap;
+}
+
+.iccs-metrics { display: flex; flex-direction: column; gap: 32px; }
+.iccs-metric { display: flex; flex-direction: column; gap: 8px; }
+
+.iccs-stat {
+  font-size: 36px;
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.36px;
+}
+
+.iccs-statLabel {
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 500;
+  letter-spacing: -0.24px;
+}
+
+.iccs-read {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  letter-spacing: -0.1px;
+  color: inherit;
+}
+
+/* The whole card is the click, via an overlay that is the card's LAST child —
+   not a stretched ::after on the label, whose inset would resolve against the
+   absolutely-positioned panel and shrink the click area to the panel. */
+.iccs-cardLink {
+  position: absolute;
+  inset: 0;
+}
+
+.iccs-card:hover .iccs-read {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.iccs-quoteBlock {
+  position: absolute;
+  left: 302px;
+  right: 24px;
+  bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.iccs-quote {
+  font-size: 24px;
+  line-height: 34px;
+  font-weight: 500;
+  letter-spacing: -0.36px;
+}
+
+.iccs-who { display: flex; flex-direction: column; gap: 2px; }
+
+.iccs-name {
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 500;
+  letter-spacing: -0.27px;
+}
+
+.iccs-org {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+  letter-spacing: -0.176px;
+}
+
+/* ---- Tablet ---- */
+
+@container (max-width: 1279px) {
+  .iccs-inner {
+    --uc-card: 820px;
+    gap: 32px;
+    padding-block: 72px;
+  }
+
+  .iccs-heading {
+    font-size: 32px;
+    line-height: 42px;
+  }
+
+  .iccs-card { height: 440px; }
+  .iccs-panel { width: 240px; }
+  .iccs-quoteBlock { left: 288px; }
+
+  .iccs-quote {
+    font-size: 20px;
+    line-height: 30px;
+  }
+}
+
+@container (max-width: 1023px) {
+  .iccs-inner { --uc-card: 620px; }
+
+  .iccs-card { height: 400px; }
+
+  .iccs-panel {
+    width: 220px;
+    padding: 20px;
+  }
+
+  .iccs-quoteBlock { left: 268px; }
+  .iccs-stat { font-size: 30px; }
+
+  .iccs-quote {
+    font-size: 18px;
+    line-height: 26px;
+  }
+}
+
+/* ---- Phone ---- */
+
+@container (max-width: 809px) {
+  .iccs-inner {
+    --uc-card: 300px;
+    gap: 28px;
+    padding-block: 56px;
+  }
+
+  .iccs-heading {
+    font-size: 28px;
+    line-height: 36px;
+  }
+
+  .iccs-subcopy {
+    font-size: 16px;
+    line-height: 26px;
+  }
+
+  .iccs-card { height: 420px; }
+
+  .iccs-panel {
+    top: auto;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    width: auto;
+    padding: 20px;
+    gap: 16px;
+  }
+
+  .iccs-metrics { gap: 16px; }
+  .iccs-stat { font-size: 28px; }
+  .iccs-quoteBlock { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .iccs-ticker {
+    scroll-behavior: auto;
+  }
+  .iccs-ticker[data-iccs-live] [data-iccs-card] {
+    transition: none;
+  }
+}
+
+.iccs-card {
+  position: relative;
+  flex: none;
+  scroll-snap-align: center;
+  /* The rail owns the width — see the header. */
+  width: var(--uc-card, 1008px);
+  height: 480px;
+  border-radius: 8px;
+  overflow: hidden;
+  /* The copy sits on the media in white. With no media uploaded yet the card
+     falls back to the dark slab rather than to white-on-white. */
+  background: var(--color-nav, #020418);
+  color: #fff;
+  font-family: var(--font-body, Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Framer has none of the app's globals.css, so the card carries its own reset.
+   At zero specificity, so it can never out-rank a rule below — and scoped to
+   the card, so nothing leaks into the page around it. */
+.iccs-card, .iccs-card * { box-sizing: border-box; }
+:where(.iccs-card) :where(p, figure, blockquote) { margin: 0; }
+:where(.iccs-card) :where(a) { color: inherit; text-decoration: none; }
+:where(.iccs-card) :where(img, svg, video) { display: block; max-width: 100%; }
+
+.iccs-card:hover { cursor: pointer; }
+
+.iccs-media {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Biased above centre: the sources are head-and-shoulders, and a wide window
+     centred on them crops the top of the head. */
+  object-position: center 30%;
+}
+
+.iccs-scrim {
+  position: absolute;
+  inset: 0;
+  /* --color-nav #020418 at 50% — the site's deepest navy, not a neutral
+     black, so the tint sits in the palette rather than beside it. */
+  background: rgba(2, 4, 24, 0.5);
+  pointer-events: none;
+}
+
+/* The glass panel, as a material rather than a flat tint.
+
+   Four things together make it read as glass: the blur behind it (refraction),
+   a fill that is lighter where the light would land and darker where it falls
+   away, a bright hairline along the top edge with a fainter rim around the rest
+   (the specular catch), and an outer shadow so it sits ABOVE the media instead
+   of in it.
+
+   The blur itself is set INLINE in the component — this app's CSS pipeline
+   strips `backdrop-filter` out of CSS Modules, and the port keeps the inline
+   form so the two stay identical. */
+.iccs-panel {
+  position: absolute;
+  left: 24px;
+  top: 24px;
+  bottom: 24px;
+  width: 254px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 8px;
+  background:
+    linear-gradient(
+      148deg,
+      rgba(255, 255, 255, 0.14) 0%,
+      rgba(255, 255, 255, 0.05) 26%,
+      rgba(255, 255, 255, 0) 58%
+    ),
+    rgba(2, 4, 24, 0.52);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.24),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.09),
+    inset 0 -1px 0 0 rgba(255, 255, 255, 0.05),
+    0 16px 40px -12px rgba(0, 0, 0, 0.45);
+  white-space: nowrap;
+}
+
+.iccs-metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.iccs-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.iccs-stat {
+  font-size: 36px;
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.36px;
+}
+
+.iccs-statLabel {
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 500;
+  letter-spacing: -0.24px;
+}
+
+/* "Read case study →" is a visual affordance, not the click target — the
+   whole card is. A stretched ::after on the label can't do that: the label
+   lives inside the panel, the panel is absolutely positioned, and inset: 0
+   resolves against the nearest positioned ancestor — so the click area was
+   the PANEL, which read as "only the button works". The link is instead an
+   invisible overlay sitting directly on the card (.iccs-cardLink), and the
+   label is a plain span. One link per card either way. */
+.iccs-read {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  letter-spacing: -0.1px;
+  color: inherit;
+}
+
+/* Last child of the card, so it paints above the panel and the quote without
+   a z-index. Nothing else on the card is interactive, so it shadows nothing. */
+.iccs-cardLink {
+  position: absolute;
+  inset: 0;
+}
+
+.iccs-card:hover .iccs-read {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Anchored to the bottom-right, starting where the panel ends. */
+.iccs-quoteBlock {
+  position: absolute;
+  left: 302px;
+  right: 24px;
+  bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.iccs-quote {
+  font-size: 24px;
+  line-height: 34px;
+  font-weight: 500;
+  letter-spacing: -0.36px;
+}
+
+.iccs-who {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.iccs-name {
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 500;
+  letter-spacing: -0.27px;
+}
+
+.iccs-org {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+  letter-spacing: -0.176px;
+}
+
+/* ---- Tablet ----
+
+   The card is a fixed 1008 wide, so below the desktop rail it simply overran
+   its container and the quote ran off the right edge. It steps down instead,
+   in two stages, each sized to fit the narrowest rail its range can produce
+   (viewport - 64 rails - 80 track padding). The quote's left offset is always
+   panel + 24 + 24, so it moves with the panel.
+
+   The width is the rail's `--uc-card` where there is a rail; the fallback in
+   each var() is the same number the rail would have set. */
+
+@container (max-width: 1279px) {
+  .iccs-card {
+    width: var(--uc-card, 820px);
+    height: 440px;
+  }
+
+  .iccs-panel {
+    width: 240px;
+  }
+
+  .iccs-quoteBlock {
+    left: 288px;
+  }
+
+  .iccs-quote {
+    font-size: 20px;
+    line-height: 30px;
+  }
+}
+
+@container (max-width: 1023px) {
+  .iccs-card {
+    width: var(--uc-card, 620px);
+    height: 400px;
+  }
+
+  .iccs-panel {
+    width: 220px;
+    padding: 20px;
+  }
+
+  .iccs-quoteBlock {
+    left: 268px;
+  }
+
+  .iccs-stat {
+    font-size: 30px;
+  }
+
+  .iccs-quote {
+    font-size: 18px;
+    line-height: 26px;
+  }
+}
+
+/* ---- Phone ----
+
+   Stats only. There is no room for a quote beside a panel at this width — the
+   two were fighting for the same 300px and both lost — so the testimonial is
+   dropped and the panel moves to the FOOT of the card, which leaves the photo
+   the top two-thirds and puts the metrics and the link together on one surface
+   (Isma, 2026-07-27). */
+
+@container (max-width: 809px) {
+  .iccs-card {
+    width: var(--uc-card, 300px);
+    height: 420px;
+  }
+
+  /* Anchored to the bottom edge and spanning the card's width. */
+  .iccs-panel {
+    top: auto;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    width: auto;
+    padding: 20px;
+    gap: 16px;
+  }
+
+  .iccs-metrics {
+    gap: 16px;
+  }
+
+  .iccs-stat {
+    font-size: 28px;
+  }
+
+  .iccs-quoteBlock {
+    display: none;
+  }
+}
+
+.iccs-card {
+  position: relative;
+  flex: none;
+  scroll-snap-align: center;
+  /* The rail owns the width — see the header. */
+  width: var(--uc-card, 1008px);
+  height: 480px;
+  border-radius: 8px;
+  overflow: hidden;
+  /* The copy sits on the media in white. With no media uploaded yet the card
+     falls back to the dark slab rather than to white-on-white. */
+  background: var(--color-nav, #020418);
+  color: #fff;
+  font-family: var(--font-body, Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Framer has none of the app's globals.css, so the card carries its own reset.
+   At zero specificity, so it can never out-rank a rule below — and scoped to
+   the card, so nothing leaks into the page around it. */
+.iccs-card, .iccs-card * { box-sizing: border-box; }
+:where(.iccs-card) :where(p, figure, blockquote) { margin: 0; }
+:where(.iccs-card) :where(a) { color: inherit; text-decoration: none; }
+:where(.iccs-card) :where(img, svg, video) { display: block; max-width: 100%; }
+
+.iccs-card:hover { cursor: pointer; }
+
+.iccs-media {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Biased above centre: the sources are head-and-shoulders, and a wide window
+     centred on them crops the top of the head. */
+  object-position: center 30%;
+}
+
+.iccs-scrim {
+  position: absolute;
+  inset: 0;
+  /* --color-nav #020418 at 50% — the site's deepest navy, not a neutral
+     black, so the tint sits in the palette rather than beside it. */
+  background: rgba(2, 4, 24, 0.5);
+  pointer-events: none;
+}
+
+/* The glass panel, as a material rather than a flat tint.
+
+   Four things together make it read as glass: the blur behind it (refraction),
+   a fill that is lighter where the light would land and darker where it falls
+   away, a bright hairline along the top edge with a fainter rim around the rest
+   (the specular catch), and an outer shadow so it sits ABOVE the media instead
+   of in it.
+
+   The blur itself is set INLINE in the component — this app's CSS pipeline
+   strips `backdrop-filter` out of CSS Modules, and the port keeps the inline
+   form so the two stay identical. */
+.iccs-panel {
+  position: absolute;
+  left: 24px;
+  top: 24px;
+  bottom: 24px;
+  width: 254px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 8px;
+  background:
+    linear-gradient(
+      148deg,
+      rgba(255, 255, 255, 0.14) 0%,
+      rgba(255, 255, 255, 0.05) 26%,
+      rgba(255, 255, 255, 0) 58%
+    ),
+    rgba(2, 4, 24, 0.52);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.24),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.09),
+    inset 0 -1px 0 0 rgba(255, 255, 255, 0.05),
+    0 16px 40px -12px rgba(0, 0, 0, 0.45);
+  white-space: nowrap;
+}
+
+.iccs-metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.iccs-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.iccs-stat {
+  font-size: 36px;
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.36px;
+}
+
+.iccs-statLabel {
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 500;
+  letter-spacing: -0.24px;
+}
+
+/* "Read case study →" is a visual affordance, not the click target — the
+   whole card is. A stretched ::after on the label can't do that: the label
+   lives inside the panel, the panel is absolutely positioned, and inset: 0
+   resolves against the nearest positioned ancestor — so the click area was
+   the PANEL, which read as "only the button works". The link is instead an
+   invisible overlay sitting directly on the card (.iccs-cardLink), and the
+   label is a plain span. One link per card either way. */
+.iccs-read {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  letter-spacing: -0.1px;
+  color: inherit;
+}
+
+/* Last child of the card, so it paints above the panel and the quote without
+   a z-index. Nothing else on the card is interactive, so it shadows nothing. */
+.iccs-cardLink {
+  position: absolute;
+  inset: 0;
+}
+
+.iccs-card:hover .iccs-read {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Anchored to the bottom-right, starting where the panel ends. */
+.iccs-quoteBlock {
+  position: absolute;
+  left: 302px;
+  right: 24px;
+  bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.iccs-quote {
+  font-size: 24px;
+  line-height: 34px;
+  font-weight: 500;
+  letter-spacing: -0.36px;
+}
+
+.iccs-who {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.iccs-name {
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 500;
+  letter-spacing: -0.27px;
+}
+
+.iccs-org {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+  letter-spacing: -0.176px;
+}
+
+/* ---- Tablet ----
+
+   The card is a fixed 1008 wide, so below the desktop rail it simply overran
+   its container and the quote ran off the right edge. It steps down instead,
+   in two stages, each sized to fit the narrowest rail its range can produce
+   (viewport - 64 rails - 80 track padding). The quote's left offset is always
+   panel + 24 + 24, so it moves with the panel.
+
+   The width is the rail's `--uc-card` where there is a rail; the fallback in
+   each var() is the same number the rail would have set. */
+
+@container (max-width: 1279px) {
+  .iccs-card {
+    width: var(--uc-card, 820px);
+    height: 440px;
+  }
+
+  .iccs-panel {
+    width: 240px;
+  }
+
+  .iccs-quoteBlock {
+    left: 288px;
+  }
+
+  .iccs-quote {
+    font-size: 20px;
+    line-height: 30px;
+  }
+}
+
+@container (max-width: 1023px) {
+  .iccs-card {
+    width: var(--uc-card, 620px);
+    height: 400px;
+  }
+
+  .iccs-panel {
+    width: 220px;
+    padding: 20px;
+  }
+
+  .iccs-quoteBlock {
+    left: 268px;
+  }
+
+  .iccs-stat {
+    font-size: 30px;
+  }
+
+  .iccs-quote {
+    font-size: 18px;
+    line-height: 26px;
+  }
+}
+
+/* ---- Phone ----
+
+   Stats only. There is no room for a quote beside a panel at this width — the
+   two were fighting for the same 300px and both lost — so the testimonial is
+   dropped and the panel moves to the FOOT of the card, which leaves the photo
+   the top two-thirds and puts the metrics and the link together on one surface
+   (Isma, 2026-07-27). */
+
+@container (max-width: 809px) {
+  .iccs-card {
+    width: var(--uc-card, 300px);
+    height: 420px;
+  }
+
+  /* Anchored to the bottom edge and spanning the card's width. */
+  .iccs-panel {
+    top: auto;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    width: auto;
+    padding: 20px;
+    gap: 16px;
+  }
+
+  .iccs-metrics {
+    gap: 16px;
+  }
+
+  .iccs-stat {
+    font-size: 28px;
+  }
+
+  .iccs-quoteBlock {
+    display: none;
+  }
+}
+
+.iccs-card {
+  position: relative;
+  flex: none;
+  scroll-snap-align: center;
+  /* The rail owns the width — see the header. */
+  width: var(--uc-card, 1008px);
+  height: 480px;
+  border-radius: 8px;
+  overflow: hidden;
+  /* The copy sits on the media in white. With no media uploaded yet the card
+     falls back to the dark slab rather than to white-on-white. */
+  background: var(--color-nav, #020418);
+  color: #fff;
+  font-family: var(--font-body, Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Framer has none of the app's globals.css, so the card carries its own reset.
+   At zero specificity, so it can never out-rank a rule below — and scoped to
+   the card, so nothing leaks into the page around it. */
+.iccs-card, .iccs-card * { box-sizing: border-box; }
+:where(.iccs-card) :where(p, figure, blockquote) { margin: 0; }
+:where(.iccs-card) :where(a) { color: inherit; text-decoration: none; }
+:where(.iccs-card) :where(img, svg, video) { display: block; max-width: 100%; }
+
+.iccs-card:hover { cursor: pointer; }
+
+.iccs-media {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Biased above centre: the sources are head-and-shoulders, and a wide window
+     centred on them crops the top of the head. */
+  object-position: center 30%;
+}
+
+.iccs-scrim {
+  position: absolute;
+  inset: 0;
+  /* --color-nav #020418 at 50% — the site's deepest navy, not a neutral
+     black, so the tint sits in the palette rather than beside it. */
+  background: rgba(2, 4, 24, 0.5);
+  pointer-events: none;
+}
+
+/* The glass panel, as a material rather than a flat tint.
+
+   Four things together make it read as glass: the blur behind it (refraction),
+   a fill that is lighter where the light would land and darker where it falls
+   away, a bright hairline along the top edge with a fainter rim around the rest
+   (the specular catch), and an outer shadow so it sits ABOVE the media instead
+   of in it.
+
+   The blur itself is set INLINE in the component — this app's CSS pipeline
+   strips `backdrop-filter` out of CSS Modules, and the port keeps the inline
+   form so the two stay identical. */
+.iccs-panel {
+  position: absolute;
+  left: 24px;
+  top: 24px;
+  bottom: 24px;
+  width: 254px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 8px;
+  background:
+    linear-gradient(
+      148deg,
+      rgba(255, 255, 255, 0.14) 0%,
+      rgba(255, 255, 255, 0.05) 26%,
+      rgba(255, 255, 255, 0) 58%
+    ),
+    rgba(2, 4, 24, 0.52);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.24),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.09),
+    inset 0 -1px 0 0 rgba(255, 255, 255, 0.05),
+    0 16px 40px -12px rgba(0, 0, 0, 0.45);
+  white-space: nowrap;
+}
+
+.iccs-metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.iccs-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.iccs-stat {
+  font-size: 36px;
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.36px;
+}
+
+.iccs-statLabel {
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 500;
+  letter-spacing: -0.24px;
+}
+
+/* "Read case study →" is a visual affordance, not the click target — the
+   whole card is. A stretched ::after on the label can't do that: the label
+   lives inside the panel, the panel is absolutely positioned, and inset: 0
+   resolves against the nearest positioned ancestor — so the click area was
+   the PANEL, which read as "only the button works". The link is instead an
+   invisible overlay sitting directly on the card (.iccs-cardLink), and the
+   label is a plain span. One link per card either way. */
+.iccs-read {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  letter-spacing: -0.1px;
+  color: inherit;
+}
+
+/* Last child of the card, so it paints above the panel and the quote without
+   a z-index. Nothing else on the card is interactive, so it shadows nothing. */
+.iccs-cardLink {
+  position: absolute;
+  inset: 0;
+}
+
+.iccs-card:hover .iccs-read {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Anchored to the bottom-right, starting where the panel ends. */
+.iccs-quoteBlock {
+  position: absolute;
+  left: 302px;
+  right: 24px;
+  bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.iccs-quote {
+  font-size: 24px;
+  line-height: 34px;
+  font-weight: 500;
+  letter-spacing: -0.36px;
+}
+
+.iccs-who {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.iccs-name {
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 500;
+  letter-spacing: -0.27px;
+}
+
+.iccs-org {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+  letter-spacing: -0.176px;
+}
+
+/* ---- Tablet ----
+
+   The card is a fixed 1008 wide, so below the desktop rail it simply overran
+   its container and the quote ran off the right edge. It steps down instead,
+   in two stages, each sized to fit the narrowest rail its range can produce
+   (viewport - 64 rails - 80 track padding). The quote's left offset is always
+   panel + 24 + 24, so it moves with the panel.
+
+   The width is the rail's `--uc-card` where there is a rail; the fallback in
+   each var() is the same number the rail would have set. */
+
+@container (max-width: 1279px) {
+  .iccs-card {
+    width: var(--uc-card, 820px);
+    height: 440px;
+  }
+
+  .iccs-panel {
+    width: 240px;
+  }
+
+  .iccs-quoteBlock {
+    left: 288px;
+  }
+
+  .iccs-quote {
+    font-size: 20px;
+    line-height: 30px;
+  }
+}
+
+@container (max-width: 1023px) {
+  .iccs-card {
+    width: var(--uc-card, 620px);
+    height: 400px;
+  }
+
+  .iccs-panel {
+    width: 220px;
+    padding: 20px;
+  }
+
+  .iccs-quoteBlock {
+    left: 268px;
+  }
+
+  .iccs-stat {
+    font-size: 30px;
+  }
+
+  .iccs-quote {
+    font-size: 18px;
+    line-height: 26px;
+  }
+}
+
+/* ---- Phone ----
+
+   Stats only. There is no room for a quote beside a panel at this width — the
+   two were fighting for the same 300px and both lost — so the testimonial is
+   dropped and the panel moves to the FOOT of the card, which leaves the photo
+   the top two-thirds and puts the metrics and the link together on one surface
+   (Isma, 2026-07-27). */
+
+@container (max-width: 809px) {
+  .iccs-card {
+    width: var(--uc-card, 300px);
+    height: 420px;
+  }
+
+  /* Anchored to the bottom edge and spanning the card's width. */
+  .iccs-panel {
+    top: auto;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    width: auto;
+    padding: 20px;
+    gap: 16px;
+  }
+
+  .iccs-metrics {
+    gap: 16px;
+  }
+
+  .iccs-stat {
+    font-size: 28px;
+  }
+
+  .iccs-quoteBlock {
+    display: none;
+  }
+}
+
+.iccs-card {
+  position: relative;
+  flex: none;
+  scroll-snap-align: center;
+  /* The rail owns the width — see the header. */
+  width: var(--uc-card, 1008px);
+  height: 480px;
+  border-radius: 8px;
+  overflow: hidden;
+  /* The copy sits on the media in white. With no media uploaded yet the card
+     falls back to the dark slab rather than to white-on-white. */
+  background: var(--color-nav, #020418);
+  color: #fff;
+  font-family: var(--font-body, Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Framer has none of the app's globals.css, so the card carries its own reset.
+   At zero specificity, so it can never out-rank a rule below — and scoped to
+   the card, so nothing leaks into the page around it. */
+.iccs-card, .iccs-card * { box-sizing: border-box; }
+:where(.iccs-card) :where(p, figure, blockquote) { margin: 0; }
+:where(.iccs-card) :where(a) { color: inherit; text-decoration: none; }
+:where(.iccs-card) :where(img, svg, video) { display: block; max-width: 100%; }
+
+.iccs-card:hover { cursor: pointer; }
+
+.iccs-media {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Biased above centre: the sources are head-and-shoulders, and a wide window
+     centred on them crops the top of the head. */
+  object-position: center 30%;
+}
+
+.iccs-scrim {
+  position: absolute;
+  inset: 0;
+  /* --color-nav #020418 at 50% — the site's deepest navy, not a neutral
+     black, so the tint sits in the palette rather than beside it. */
+  background: rgba(2, 4, 24, 0.5);
+  pointer-events: none;
+}
+
+/* The glass panel, as a material rather than a flat tint.
+
+   Four things together make it read as glass: the blur behind it (refraction),
+   a fill that is lighter where the light would land and darker where it falls
+   away, a bright hairline along the top edge with a fainter rim around the rest
+   (the specular catch), and an outer shadow so it sits ABOVE the media instead
+   of in it.
+
+   The blur itself is set INLINE in the component — this app's CSS pipeline
+   strips `backdrop-filter` out of CSS Modules, and the port keeps the inline
+   form so the two stay identical. */
+.iccs-panel {
+  position: absolute;
+  left: 24px;
+  top: 24px;
+  bottom: 24px;
+  width: 254px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 8px;
+  background:
+    linear-gradient(
+      148deg,
+      rgba(255, 255, 255, 0.14) 0%,
+      rgba(255, 255, 255, 0.05) 26%,
+      rgba(255, 255, 255, 0) 58%
+    ),
+    rgba(2, 4, 24, 0.52);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.24),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.09),
+    inset 0 -1px 0 0 rgba(255, 255, 255, 0.05),
+    0 16px 40px -12px rgba(0, 0, 0, 0.45);
+  white-space: nowrap;
+}
+
+.iccs-metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.iccs-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.iccs-stat {
+  font-size: 36px;
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.36px;
+}
+
+.iccs-statLabel {
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 500;
+  letter-spacing: -0.24px;
+}
+
+/* "Read case study →" is a visual affordance, not the click target — the
+   whole card is. A stretched ::after on the label can't do that: the label
+   lives inside the panel, the panel is absolutely positioned, and inset: 0
+   resolves against the nearest positioned ancestor — so the click area was
+   the PANEL, which read as "only the button works". The link is instead an
+   invisible overlay sitting directly on the card (.iccs-cardLink), and the
+   label is a plain span. One link per card either way. */
+.iccs-read {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  letter-spacing: -0.1px;
+  color: inherit;
+}
+
+/* Last child of the card, so it paints above the panel and the quote without
+   a z-index. Nothing else on the card is interactive, so it shadows nothing. */
+.iccs-cardLink {
+  position: absolute;
+  inset: 0;
+}
+
+.iccs-card:hover .iccs-read {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Anchored to the bottom-right, starting where the panel ends. */
+.iccs-quoteBlock {
+  position: absolute;
+  left: 302px;
+  right: 24px;
+  bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.iccs-quote {
+  font-size: 24px;
+  line-height: 34px;
+  font-weight: 500;
+  letter-spacing: -0.36px;
+}
+
+.iccs-who {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.iccs-name {
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 500;
+  letter-spacing: -0.27px;
+}
+
+.iccs-org {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+  letter-spacing: -0.176px;
+}
+
+/* ---- Tablet ----
+
+   The card is a fixed 1008 wide, so below the desktop rail it simply overran
+   its container and the quote ran off the right edge. It steps down instead,
+   in two stages, each sized to fit the narrowest rail its range can produce
+   (viewport - 64 rails - 80 track padding). The quote's left offset is always
+   panel + 24 + 24, so it moves with the panel.
+
+   The width is the rail's `--uc-card` where there is a rail; the fallback in
+   each var() is the same number the rail would have set. */
+
+@container (max-width: 1279px) {
+  .iccs-card {
+    width: var(--uc-card, 820px);
+    height: 440px;
+  }
+
+  .iccs-panel {
+    width: 240px;
+  }
+
+  .iccs-quoteBlock {
+    left: 288px;
+  }
+
+  .iccs-quote {
+    font-size: 20px;
+    line-height: 30px;
+  }
+}
+
+@container (max-width: 1023px) {
+  .iccs-card {
+    width: var(--uc-card, 620px);
+    height: 400px;
+  }
+
+  .iccs-panel {
+    width: 220px;
+    padding: 20px;
+  }
+
+  .iccs-quoteBlock {
+    left: 268px;
+  }
+
+  .iccs-stat {
+    font-size: 30px;
+  }
+
+  .iccs-quote {
+    font-size: 18px;
+    line-height: 26px;
+  }
+}
+
+/* ---- Phone ----
+
+   Stats only. There is no room for a quote beside a panel at this width — the
+   two were fighting for the same 300px and both lost — so the testimonial is
+   dropped and the panel moves to the FOOT of the card, which leaves the photo
+   the top two-thirds and puts the metrics and the link together on one surface
+   (Isma, 2026-07-27). */
+
+@container (max-width: 809px) {
+  .iccs-card {
+    width: var(--uc-card, 300px);
+    height: 420px;
+  }
+
+  /* Anchored to the bottom edge and spanning the card's width. */
+  .iccs-panel {
+    top: auto;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    width: auto;
+    padding: 20px;
+    gap: 16px;
+  }
+
+  .iccs-metrics {
+    gap: 16px;
+  }
+
+  .iccs-stat {
+    font-size: 28px;
+  }
+
+  .iccs-quoteBlock {
+    display: none;
+  }
+}
+
+.iccs-card {
+  position: relative;
+  flex: none;
+  scroll-snap-align: center;
+  /* The rail owns the width — see the header. */
+  width: var(--uc-card, 1008px);
+  height: 480px;
+  border-radius: 8px;
+  overflow: hidden;
+  /* The copy sits on the media in white. With no media uploaded yet the card
+     falls back to the dark slab rather than to white-on-white. */
+  background: var(--color-nav, #020418);
+  color: #fff;
+  font-family: var(--font-body, Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Framer has none of the app's globals.css, so the card carries its own reset.
+   At zero specificity, so it can never out-rank a rule below — and scoped to
+   the card, so nothing leaks into the page around it. */
+.iccs-card, .iccs-card * { box-sizing: border-box; }
+:where(.iccs-card) :where(p, figure, blockquote) { margin: 0; }
+:where(.iccs-card) :where(a) { color: inherit; text-decoration: none; }
+:where(.iccs-card) :where(img, svg, video) { display: block; max-width: 100%; }
+
+.iccs-card:hover { cursor: pointer; }
+
+.iccs-media {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Biased above centre: the sources are head-and-shoulders, and a wide window
+     centred on them crops the top of the head. */
+  object-position: center 30%;
+}
+
+.iccs-scrim {
+  position: absolute;
+  inset: 0;
+  /* --color-nav #020418 at 50% — the site's deepest navy, not a neutral
+     black, so the tint sits in the palette rather than beside it. */
+  background: rgba(2, 4, 24, 0.5);
+  pointer-events: none;
+}
+
+/* The glass panel, as a material rather than a flat tint.
+
+   Four things together make it read as glass: the blur behind it (refraction),
+   a fill that is lighter where the light would land and darker where it falls
+   away, a bright hairline along the top edge with a fainter rim around the rest
+   (the specular catch), and an outer shadow so it sits ABOVE the media instead
+   of in it.
+
+   The blur itself is set INLINE in the component — this app's CSS pipeline
+   strips `backdrop-filter` out of CSS Modules, and the port keeps the inline
+   form so the two stay identical. */
+.iccs-panel {
+  position: absolute;
+  left: 24px;
+  top: 24px;
+  bottom: 24px;
+  width: 254px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 8px;
+  background:
+    linear-gradient(
+      148deg,
+      rgba(255, 255, 255, 0.14) 0%,
+      rgba(255, 255, 255, 0.05) 26%,
+      rgba(255, 255, 255, 0) 58%
+    ),
+    rgba(2, 4, 24, 0.52);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.24),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.09),
+    inset 0 -1px 0 0 rgba(255, 255, 255, 0.05),
+    0 16px 40px -12px rgba(0, 0, 0, 0.45);
+  white-space: nowrap;
+}
+
+.iccs-metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.iccs-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.iccs-stat {
+  font-size: 36px;
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.36px;
+}
+
+.iccs-statLabel {
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 500;
+  letter-spacing: -0.24px;
+}
+
+/* "Read case study →" is a visual affordance, not the click target — the
+   whole card is. A stretched ::after on the label can't do that: the label
+   lives inside the panel, the panel is absolutely positioned, and inset: 0
+   resolves against the nearest positioned ancestor — so the click area was
+   the PANEL, which read as "only the button works". The link is instead an
+   invisible overlay sitting directly on the card (.iccs-cardLink), and the
+   label is a plain span. One link per card either way. */
+.iccs-read {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  letter-spacing: -0.1px;
+  color: inherit;
+}
+
+/* Last child of the card, so it paints above the panel and the quote without
+   a z-index. Nothing else on the card is interactive, so it shadows nothing. */
+.iccs-cardLink {
+  position: absolute;
+  inset: 0;
+}
+
+.iccs-card:hover .iccs-read {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Anchored to the bottom-right, starting where the panel ends. */
+.iccs-quoteBlock {
+  position: absolute;
+  left: 302px;
+  right: 24px;
+  bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.iccs-quote {
+  font-size: 24px;
+  line-height: 34px;
+  font-weight: 500;
+  letter-spacing: -0.36px;
+}
+
+.iccs-who {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.iccs-name {
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 500;
+  letter-spacing: -0.27px;
+}
+
+.iccs-org {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+  letter-spacing: -0.176px;
+}
+
+/* ---- Tablet ----
+
+   The card is a fixed 1008 wide, so below the desktop rail it simply overran
+   its container and the quote ran off the right edge. It steps down instead,
+   in two stages, each sized to fit the narrowest rail its range can produce
+   (viewport - 64 rails - 80 track padding). The quote's left offset is always
+   panel + 24 + 24, so it moves with the panel.
+
+   The width is the rail's `--uc-card` where there is a rail; the fallback in
+   each var() is the same number the rail would have set. */
+
+@container (max-width: 1279px) {
+  .iccs-card {
+    width: var(--uc-card, 820px);
+    height: 440px;
+  }
+
+  .iccs-panel {
+    width: 240px;
+  }
+
+  .iccs-quoteBlock {
+    left: 288px;
+  }
+
+  .iccs-quote {
+    font-size: 20px;
+    line-height: 30px;
+  }
+}
+
+@container (max-width: 1023px) {
+  .iccs-card {
+    width: var(--uc-card, 620px);
+    height: 400px;
+  }
+
+  .iccs-panel {
+    width: 220px;
+    padding: 20px;
+  }
+
+  .iccs-quoteBlock {
+    left: 268px;
+  }
+
+  .iccs-stat {
+    font-size: 30px;
+  }
+
+  .iccs-quote {
+    font-size: 18px;
+    line-height: 26px;
+  }
+}
+
+/* ---- Phone ----
+
+   Stats only. There is no room for a quote beside a panel at this width — the
+   two were fighting for the same 300px and both lost — so the testimonial is
+   dropped and the panel moves to the FOOT of the card, which leaves the photo
+   the top two-thirds and puts the metrics and the link together on one surface
+   (Isma, 2026-07-27). */
+
+@container (max-width: 809px) {
+  .iccs-card {
+    width: var(--uc-card, 300px);
+    height: 420px;
+  }
+
+  /* Anchored to the bottom edge and spanning the card's width. */
+  .iccs-panel {
+    top: auto;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    width: auto;
+    padding: 20px;
+    gap: 16px;
+  }
+
+  .iccs-metrics {
+    gap: 16px;
+  }
+
+  .iccs-stat {
+    font-size: 28px;
+  }
+
+  .iccs-quoteBlock {
+    display: none;
+  }
+}
+
+.iccs-card {
+  position: relative;
+  flex: none;
+  scroll-snap-align: center;
+  /* The rail owns the width — see the header. */
+  width: var(--uc-card, 1008px);
+  height: 480px;
+  border-radius: 8px;
+  overflow: hidden;
+  /* The copy sits on the media in white. With no media uploaded yet the card
+     falls back to the dark slab rather than to white-on-white. */
+  background: var(--color-nav, #020418);
+  color: #fff;
+  font-family: var(--font-body, Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Framer has none of the app's globals.css, so the card carries its own reset.
+   At zero specificity, so it can never out-rank a rule below — and scoped to
+   the card, so nothing leaks into the page around it. */
+.iccs-card, .iccs-card * { box-sizing: border-box; }
+:where(.iccs-card) :where(p, figure, blockquote) { margin: 0; }
+:where(.iccs-card) :where(a) { color: inherit; text-decoration: none; }
+:where(.iccs-card) :where(img, svg, video) { display: block; max-width: 100%; }
+
+.iccs-card:hover { cursor: pointer; }
+
+.iccs-media {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Biased above centre: the sources are head-and-shoulders, and a wide window
+     centred on them crops the top of the head. */
+  object-position: center 30%;
+}
+
+.iccs-scrim {
+  position: absolute;
+  inset: 0;
+  /* --color-nav #020418 at 50% — the site's deepest navy, not a neutral
+     black, so the tint sits in the palette rather than beside it. */
+  background: rgba(2, 4, 24, 0.5);
+  pointer-events: none;
+}
+
+/* The glass panel, as a material rather than a flat tint.
+
+   Four things together make it read as glass: the blur behind it (refraction),
+   a fill that is lighter where the light would land and darker where it falls
+   away, a bright hairline along the top edge with a fainter rim around the rest
+   (the specular catch), and an outer shadow so it sits ABOVE the media instead
+   of in it.
+
+   The blur itself is set INLINE in the component — this app's CSS pipeline
+   strips `backdrop-filter` out of CSS Modules, and the port keeps the inline
+   form so the two stay identical. */
+.iccs-panel {
+  position: absolute;
+  left: 24px;
+  top: 24px;
+  bottom: 24px;
+  width: 254px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 8px;
+  background:
+    linear-gradient(
+      148deg,
+      rgba(255, 255, 255, 0.14) 0%,
+      rgba(255, 255, 255, 0.05) 26%,
+      rgba(255, 255, 255, 0) 58%
+    ),
+    rgba(2, 4, 24, 0.52);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.24),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.09),
+    inset 0 -1px 0 0 rgba(255, 255, 255, 0.05),
+    0 16px 40px -12px rgba(0, 0, 0, 0.45);
+  white-space: nowrap;
+}
+
+.iccs-metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.iccs-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.iccs-stat {
+  font-size: 36px;
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.36px;
+}
+
+.iccs-statLabel {
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 500;
+  letter-spacing: -0.24px;
+}
+
+/* "Read case study →" is a visual affordance, not the click target — the
+   whole card is. A stretched ::after on the label can't do that: the label
+   lives inside the panel, the panel is absolutely positioned, and inset: 0
+   resolves against the nearest positioned ancestor — so the click area was
+   the PANEL, which read as "only the button works". The link is instead an
+   invisible overlay sitting directly on the card (.iccs-cardLink), and the
+   label is a plain span. One link per card either way. */
+.iccs-read {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  letter-spacing: -0.1px;
+  color: inherit;
+}
+
+/* Last child of the card, so it paints above the panel and the quote without
+   a z-index. Nothing else on the card is interactive, so it shadows nothing. */
+.iccs-cardLink {
+  position: absolute;
+  inset: 0;
+}
+
+.iccs-card:hover .iccs-read {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Anchored to the bottom-right, starting where the panel ends. */
+.iccs-quoteBlock {
+  position: absolute;
+  left: 302px;
+  right: 24px;
+  bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.iccs-quote {
+  font-size: 24px;
+  line-height: 34px;
+  font-weight: 500;
+  letter-spacing: -0.36px;
+}
+
+.iccs-who {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.iccs-name {
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 500;
+  letter-spacing: -0.27px;
+}
+
+.iccs-org {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+  letter-spacing: -0.176px;
+}
+
+/* ---- Tablet ----
+
+   The card is a fixed 1008 wide, so below the desktop rail it simply overran
+   its container and the quote ran off the right edge. It steps down instead,
+   in two stages, each sized to fit the narrowest rail its range can produce
+   (viewport - 64 rails - 80 track padding). The quote's left offset is always
+   panel + 24 + 24, so it moves with the panel.
+
+   The width is the rail's `--uc-card` where there is a rail; the fallback in
+   each var() is the same number the rail would have set. */
+
+@container (max-width: 1279px) {
+  .iccs-card {
+    width: var(--uc-card, 820px);
+    height: 440px;
+  }
+
+  .iccs-panel {
+    width: 240px;
+  }
+
+  .iccs-quoteBlock {
+    left: 288px;
+  }
+
+  .iccs-quote {
+    font-size: 20px;
+    line-height: 30px;
+  }
+}
+
+@container (max-width: 1023px) {
+  .iccs-card {
+    width: var(--uc-card, 620px);
+    height: 400px;
+  }
+
+  .iccs-panel {
+    width: 220px;
+    padding: 20px;
+  }
+
+  .iccs-quoteBlock {
+    left: 268px;
+  }
+
+  .iccs-stat {
+    font-size: 30px;
+  }
+
+  .iccs-quote {
+    font-size: 18px;
+    line-height: 26px;
+  }
+}
+
+/* ---- Phone ----
+
+   Stats only. There is no room for a quote beside a panel at this width — the
+   two were fighting for the same 300px and both lost — so the testimonial is
+   dropped and the panel moves to the FOOT of the card, which leaves the photo
+   the top two-thirds and puts the metrics and the link together on one surface
+   (Isma, 2026-07-27). */
+
+@container (max-width: 809px) {
+  .iccs-card {
+    width: var(--uc-card, 300px);
+    height: 420px;
+  }
+
+  /* Anchored to the bottom edge and spanning the card's width. */
+  .iccs-panel {
+    top: auto;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    width: auto;
+    padding: 20px;
+    gap: 16px;
+  }
+
+  .iccs-metrics {
+    gap: 16px;
+  }
+
+  .iccs-stat {
+    font-size: 28px;
+  }
+
+  .iccs-quoteBlock {
+    display: none;
+  }
+}
+
+.iccs-card {
+  position: relative;
+  flex: none;
+  scroll-snap-align: center;
+  /* The rail owns the width — see the header. */
+  width: var(--uc-card, 1008px);
+  height: 480px;
+  border-radius: 8px;
+  overflow: hidden;
+  /* The copy sits on the media in white. With no media uploaded yet the card
+     falls back to the dark slab rather than to white-on-white. */
+  background: var(--color-nav, #020418);
+  color: #fff;
+  font-family: var(--font-body, Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Framer has none of the app's globals.css, so the card carries its own reset.
+   At zero specificity, so it can never out-rank a rule below — and scoped to
+   the card, so nothing leaks into the page around it. */
+.iccs-card, .iccs-card * { box-sizing: border-box; }
+:where(.iccs-card) :where(p, figure, blockquote) { margin: 0; }
+:where(.iccs-card) :where(a) { color: inherit; text-decoration: none; }
+:where(.iccs-card) :where(img, svg, video) { display: block; max-width: 100%; }
+
+.iccs-card:hover { cursor: pointer; }
+
+.iccs-media {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Biased above centre: the sources are head-and-shoulders, and a wide window
+     centred on them crops the top of the head. */
+  object-position: center 30%;
+}
+
+.iccs-scrim {
+  position: absolute;
+  inset: 0;
+  /* --color-nav #020418 at 50% — the site's deepest navy, not a neutral
+     black, so the tint sits in the palette rather than beside it. */
+  background: rgba(2, 4, 24, 0.5);
+  pointer-events: none;
+}
+
+/* The glass panel, as a material rather than a flat tint.
+
+   Four things together make it read as glass: the blur behind it (refraction),
+   a fill that is lighter where the light would land and darker where it falls
+   away, a bright hairline along the top edge with a fainter rim around the rest
+   (the specular catch), and an outer shadow so it sits ABOVE the media instead
+   of in it.
+
+   The blur itself is set INLINE in the component — this app's CSS pipeline
+   strips `backdrop-filter` out of CSS Modules, and the port keeps the inline
+   form so the two stay identical. */
+.iccs-panel {
+  position: absolute;
+  left: 24px;
+  top: 24px;
+  bottom: 24px;
+  width: 254px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 8px;
+  background:
+    linear-gradient(
+      148deg,
+      rgba(255, 255, 255, 0.14) 0%,
+      rgba(255, 255, 255, 0.05) 26%,
+      rgba(255, 255, 255, 0) 58%
+    ),
+    rgba(2, 4, 24, 0.52);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.24),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.09),
+    inset 0 -1px 0 0 rgba(255, 255, 255, 0.05),
+    0 16px 40px -12px rgba(0, 0, 0, 0.45);
+  white-space: nowrap;
+}
+
+.iccs-metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.iccs-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.iccs-stat {
+  font-size: 36px;
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.36px;
+}
+
+.iccs-statLabel {
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 500;
+  letter-spacing: -0.24px;
+}
+
+/* "Read case study →" is a visual affordance, not the click target — the
+   whole card is. A stretched ::after on the label can't do that: the label
+   lives inside the panel, the panel is absolutely positioned, and inset: 0
+   resolves against the nearest positioned ancestor — so the click area was
+   the PANEL, which read as "only the button works". The link is instead an
+   invisible overlay sitting directly on the card (.iccs-cardLink), and the
+   label is a plain span. One link per card either way. */
+.iccs-read {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  letter-spacing: -0.1px;
+  color: inherit;
+}
+
+/* Last child of the card, so it paints above the panel and the quote without
+   a z-index. Nothing else on the card is interactive, so it shadows nothing. */
+.iccs-cardLink {
+  position: absolute;
+  inset: 0;
+}
+
+.iccs-card:hover .iccs-read {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Anchored to the bottom-right, starting where the panel ends. */
+.iccs-quoteBlock {
+  position: absolute;
+  left: 302px;
+  right: 24px;
+  bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.iccs-quote {
+  font-size: 24px;
+  line-height: 34px;
+  font-weight: 500;
+  letter-spacing: -0.36px;
+}
+
+.iccs-who {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.iccs-name {
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 500;
+  letter-spacing: -0.27px;
+}
+
+.iccs-org {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+  letter-spacing: -0.176px;
+}
+
+/* ---- Tablet ----
+
+   The card is a fixed 1008 wide, so below the desktop rail it simply overran
+   its container and the quote ran off the right edge. It steps down instead,
+   in two stages, each sized to fit the narrowest rail its range can produce
+   (viewport - 64 rails - 80 track padding). The quote's left offset is always
+   panel + 24 + 24, so it moves with the panel.
+
+   The width is the rail's `--uc-card` where there is a rail; the fallback in
+   each var() is the same number the rail would have set. */
+
+@container (max-width: 1279px) {
+  .iccs-card {
+    width: var(--uc-card, 820px);
+    height: 440px;
+  }
+
+  .iccs-panel {
+    width: 240px;
+  }
+
+  .iccs-quoteBlock {
+    left: 288px;
+  }
+
+  .iccs-quote {
+    font-size: 20px;
+    line-height: 30px;
+  }
+}
+
+@container (max-width: 1023px) {
+  .iccs-card {
+    width: var(--uc-card, 620px);
+    height: 400px;
+  }
+
+  .iccs-panel {
+    width: 220px;
+    padding: 20px;
+  }
+
+  .iccs-quoteBlock {
+    left: 268px;
+  }
+
+  .iccs-stat {
+    font-size: 30px;
+  }
+
+  .iccs-quote {
+    font-size: 18px;
+    line-height: 26px;
+  }
+}
+
+/* ---- Phone ----
+
+   Stats only. There is no room for a quote beside a panel at this width — the
+   two were fighting for the same 300px and both lost — so the testimonial is
+   dropped and the panel moves to the FOOT of the card, which leaves the photo
+   the top two-thirds and puts the metrics and the link together on one surface
+   (Isma, 2026-07-27). */
+
+@container (max-width: 809px) {
+  .iccs-card {
+    width: var(--uc-card, 300px);
+    height: 420px;
+  }
+
+  /* Anchored to the bottom edge and spanning the card's width. */
+  .iccs-panel {
+    top: auto;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    width: auto;
+    padding: 20px;
+    gap: 16px;
+  }
+
+  .iccs-metrics {
+    gap: 16px;
+  }
+
+  .iccs-stat {
+    font-size: 28px;
+  }
+
+  .iccs-quoteBlock {
+    display: none;
+  }
+}
+
+.iccs-card {
+  position: relative;
+  flex: none;
+  scroll-snap-align: center;
+  /* The rail owns the width — see the header. */
+  width: var(--uc-card, 1008px);
+  height: 480px;
+  border-radius: 8px;
+  overflow: hidden;
+  /* The copy sits on the media in white. With no media uploaded yet the card
+     falls back to the dark slab rather than to white-on-white. */
+  background: var(--color-nav, #020418);
+  color: #fff;
+  font-family: var(--font-body, Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Framer has none of the app's globals.css, so the card carries its own reset.
+   At zero specificity, so it can never out-rank a rule below — and scoped to
+   the card, so nothing leaks into the page around it. */
+.iccs-card, .iccs-card * { box-sizing: border-box; }
+:where(.iccs-card) :where(p, figure, blockquote) { margin: 0; }
+:where(.iccs-card) :where(a) { color: inherit; text-decoration: none; }
+:where(.iccs-card) :where(img, svg, video) { display: block; max-width: 100%; }
+
+.iccs-card:hover { cursor: pointer; }
+
+.iccs-media {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Biased above centre: the sources are head-and-shoulders, and a wide window
+     centred on them crops the top of the head. */
+  object-position: center 30%;
+}
+
+.iccs-scrim {
+  position: absolute;
+  inset: 0;
+  /* --color-nav #020418 at 50% — the site's deepest navy, not a neutral
+     black, so the tint sits in the palette rather than beside it. */
+  background: rgba(2, 4, 24, 0.5);
+  pointer-events: none;
+}
+
+/* The glass panel, as a material rather than a flat tint.
+
+   Four things together make it read as glass: the blur behind it (refraction),
+   a fill that is lighter where the light would land and darker where it falls
+   away, a bright hairline along the top edge with a fainter rim around the rest
+   (the specular catch), and an outer shadow so it sits ABOVE the media instead
+   of in it.
+
+   The blur itself is set INLINE in the component — this app's CSS pipeline
+   strips `backdrop-filter` out of CSS Modules, and the port keeps the inline
+   form so the two stay identical. */
+.iccs-panel {
+  position: absolute;
+  left: 24px;
+  top: 24px;
+  bottom: 24px;
+  width: 254px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 8px;
+  background:
+    linear-gradient(
+      148deg,
+      rgba(255, 255, 255, 0.14) 0%,
+      rgba(255, 255, 255, 0.05) 26%,
+      rgba(255, 255, 255, 0) 58%
+    ),
+    rgba(2, 4, 24, 0.52);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.24),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.09),
+    inset 0 -1px 0 0 rgba(255, 255, 255, 0.05),
+    0 16px 40px -12px rgba(0, 0, 0, 0.45);
+  white-space: nowrap;
+}
+
+.iccs-metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.iccs-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.iccs-stat {
+  font-size: 36px;
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.36px;
+}
+
+.iccs-statLabel {
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 500;
+  letter-spacing: -0.24px;
+}
+
+/* "Read case study →" is a visual affordance, not the click target — the
+   whole card is. A stretched ::after on the label can't do that: the label
+   lives inside the panel, the panel is absolutely positioned, and inset: 0
+   resolves against the nearest positioned ancestor — so the click area was
+   the PANEL, which read as "only the button works". The link is instead an
+   invisible overlay sitting directly on the card (.iccs-cardLink), and the
+   label is a plain span. One link per card either way. */
+.iccs-read {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  letter-spacing: -0.1px;
+  color: inherit;
+}
+
+/* Last child of the card, so it paints above the panel and the quote without
+   a z-index. Nothing else on the card is interactive, so it shadows nothing. */
+.iccs-cardLink {
+  position: absolute;
+  inset: 0;
+}
+
+.iccs-card:hover .iccs-read {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Anchored to the bottom-right, starting where the panel ends. */
+.iccs-quoteBlock {
+  position: absolute;
+  left: 302px;
+  right: 24px;
+  bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.iccs-quote {
+  font-size: 24px;
+  line-height: 34px;
+  font-weight: 500;
+  letter-spacing: -0.36px;
+}
+
+.iccs-who {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.iccs-name {
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 500;
+  letter-spacing: -0.27px;
+}
+
+.iccs-org {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+  letter-spacing: -0.176px;
+}
+
+/* ---- Tablet ----
+
+   The card is a fixed 1008 wide, so below the desktop rail it simply overran
+   its container and the quote ran off the right edge. It steps down instead,
+   in two stages, each sized to fit the narrowest rail its range can produce
+   (viewport - 64 rails - 80 track padding). The quote's left offset is always
+   panel + 24 + 24, so it moves with the panel.
+
+   The width is the rail's `--uc-card` where there is a rail; the fallback in
+   each var() is the same number the rail would have set. */
+
+@container (max-width: 1279px) {
+  .iccs-card {
+    width: var(--uc-card, 820px);
+    height: 440px;
+  }
+
+  .iccs-panel {
+    width: 240px;
+  }
+
+  .iccs-quoteBlock {
+    left: 288px;
+  }
+
+  .iccs-quote {
+    font-size: 20px;
+    line-height: 30px;
+  }
+}
+
+@container (max-width: 1023px) {
+  .iccs-card {
+    width: var(--uc-card, 620px);
+    height: 400px;
+  }
+
+  .iccs-panel {
+    width: 220px;
+    padding: 20px;
+  }
+
+  .iccs-quoteBlock {
+    left: 268px;
+  }
+
+  .iccs-stat {
+    font-size: 30px;
+  }
+
+  .iccs-quote {
+    font-size: 18px;
+    line-height: 26px;
+  }
+}
+
+/* ---- Phone ----
+
+   Stats only. There is no room for a quote beside a panel at this width — the
+   two were fighting for the same 300px and both lost — so the testimonial is
+   dropped and the panel moves to the FOOT of the card, which leaves the photo
+   the top two-thirds and puts the metrics and the link together on one surface
+   (Isma, 2026-07-27). */
+
+@container (max-width: 809px) {
+  .iccs-card {
+    width: var(--uc-card, 300px);
+    height: 420px;
+  }
+
+  /* Anchored to the bottom edge and spanning the card's width. */
+  .iccs-panel {
+    top: auto;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    width: auto;
+    padding: 20px;
+    gap: 16px;
+  }
+
+  .iccs-metrics {
+    gap: 16px;
+  }
+
+  .iccs-stat {
+    font-size: 28px;
+  }
+
+  .iccs-quoteBlock {
+    display: none;
+  }
+}
+
+.iccs-card {
+  position: relative;
+  flex: none;
+  scroll-snap-align: center;
+  /* The rail owns the width — see the header. */
+  width: var(--uc-card, 1008px);
+  height: 480px;
+  border-radius: 8px;
+  overflow: hidden;
+  /* The copy sits on the media in white. With no media uploaded yet the card
+     falls back to the dark slab rather than to white-on-white. */
+  background: var(--color-nav, #020418);
+  color: #fff;
+  font-family: var(--font-body, Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Framer has none of the app's globals.css, so the card carries its own reset.
+   At zero specificity, so it can never out-rank a rule below — and scoped to
+   the card, so nothing leaks into the page around it. */
+.iccs-card, .iccs-card * { box-sizing: border-box; }
+:where(.iccs-card) :where(p, figure, blockquote) { margin: 0; }
+:where(.iccs-card) :where(a) { color: inherit; text-decoration: none; }
+:where(.iccs-card) :where(img, svg, video) { display: block; max-width: 100%; }
+
+.iccs-card:hover { cursor: pointer; }
+
+.iccs-media {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Biased above centre: the sources are head-and-shoulders, and a wide window
+     centred on them crops the top of the head. */
+  object-position: center 30%;
+}
+
+.iccs-scrim {
+  position: absolute;
+  inset: 0;
+  /* --color-nav #020418 at 50% — the site's deepest navy, not a neutral
+     black, so the tint sits in the palette rather than beside it. */
+  background: rgba(2, 4, 24, 0.5);
+  pointer-events: none;
+}
+
+/* The glass panel, as a material rather than a flat tint.
+
+   Four things together make it read as glass: the blur behind it (refraction),
+   a fill that is lighter where the light would land and darker where it falls
+   away, a bright hairline along the top edge with a fainter rim around the rest
+   (the specular catch), and an outer shadow so it sits ABOVE the media instead
+   of in it.
+
+   The blur itself is set INLINE in the component — this app's CSS pipeline
+   strips `backdrop-filter` out of CSS Modules, and the port keeps the inline
+   form so the two stay identical. */
+.iccs-panel {
+  position: absolute;
+  left: 24px;
+  top: 24px;
+  bottom: 24px;
+  width: 254px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 8px;
+  background:
+    linear-gradient(
+      148deg,
+      rgba(255, 255, 255, 0.14) 0%,
+      rgba(255, 255, 255, 0.05) 26%,
+      rgba(255, 255, 255, 0) 58%
+    ),
+    rgba(2, 4, 24, 0.52);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.24),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.09),
+    inset 0 -1px 0 0 rgba(255, 255, 255, 0.05),
+    0 16px 40px -12px rgba(0, 0, 0, 0.45);
+  white-space: nowrap;
+}
+
+.iccs-metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.iccs-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.iccs-stat {
+  font-size: 36px;
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.36px;
+}
+
+.iccs-statLabel {
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 500;
+  letter-spacing: -0.24px;
+}
+
+/* "Read case study →" is a visual affordance, not the click target — the
+   whole card is. A stretched ::after on the label can't do that: the label
+   lives inside the panel, the panel is absolutely positioned, and inset: 0
+   resolves against the nearest positioned ancestor — so the click area was
+   the PANEL, which read as "only the button works". The link is instead an
+   invisible overlay sitting directly on the card (.iccs-cardLink), and the
+   label is a plain span. One link per card either way. */
+.iccs-read {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  letter-spacing: -0.1px;
+  color: inherit;
+}
+
+/* Last child of the card, so it paints above the panel and the quote without
+   a z-index. Nothing else on the card is interactive, so it shadows nothing. */
+.iccs-cardLink {
+  position: absolute;
+  inset: 0;
+}
+
+.iccs-card:hover .iccs-read {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Anchored to the bottom-right, starting where the panel ends. */
+.iccs-quoteBlock {
+  position: absolute;
+  left: 302px;
+  right: 24px;
+  bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.iccs-quote {
+  font-size: 24px;
+  line-height: 34px;
+  font-weight: 500;
+  letter-spacing: -0.36px;
+}
+
+.iccs-who {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.iccs-name {
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 500;
+  letter-spacing: -0.27px;
+}
+
+.iccs-org {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+  letter-spacing: -0.176px;
+}
+
+/* ---- Tablet ----
+
+   The card is a fixed 1008 wide, so below the desktop rail it simply overran
+   its container and the quote ran off the right edge. It steps down instead,
+   in two stages, each sized to fit the narrowest rail its range can produce
+   (viewport - 64 rails - 80 track padding). The quote's left offset is always
+   panel + 24 + 24, so it moves with the panel.
+
+   The width is the rail's `--uc-card` where there is a rail; the fallback in
+   each var() is the same number the rail would have set. */
+
+@container (max-width: 1279px) {
+  .iccs-card {
+    width: var(--uc-card, 820px);
+    height: 440px;
+  }
+
+  .iccs-panel {
+    width: 240px;
+  }
+
+  .iccs-quoteBlock {
+    left: 288px;
+  }
+
+  .iccs-quote {
+    font-size: 20px;
+    line-height: 30px;
+  }
+}
+
+@container (max-width: 1023px) {
+  .iccs-card {
+    width: var(--uc-card, 620px);
+    height: 400px;
+  }
+
+  .iccs-panel {
+    width: 220px;
+    padding: 20px;
+  }
+
+  .iccs-quoteBlock {
+    left: 268px;
+  }
+
+  .iccs-stat {
+    font-size: 30px;
+  }
+
+  .iccs-quote {
+    font-size: 18px;
+    line-height: 26px;
+  }
+}
+
+/* ---- Phone ----
+
+   Stats only. There is no room for a quote beside a panel at this width — the
+   two were fighting for the same 300px and both lost — so the testimonial is
+   dropped and the panel moves to the FOOT of the card, which leaves the photo
+   the top two-thirds and puts the metrics and the link together on one surface
+   (Isma, 2026-07-27). */
+
+@container (max-width: 809px) {
+  .iccs-card {
+    width: var(--uc-card, 300px);
+    height: 420px;
+  }
+
+  /* Anchored to the bottom edge and spanning the card's width. */
+  .iccs-panel {
+    top: auto;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    width: auto;
+    padding: 20px;
+    gap: 16px;
+  }
+
+  .iccs-metrics {
+    gap: 16px;
+  }
+
+  .iccs-stat {
+    font-size: 28px;
+  }
+
+  .iccs-quoteBlock {
+    display: none;
+  }
+}
+
+.iccs-card {
+  position: relative;
+  flex: none;
+  scroll-snap-align: center;
+  /* The rail owns the width — see the header. */
+  width: var(--uc-card, 1008px);
+  height: 480px;
+  border-radius: 8px;
+  overflow: hidden;
+  /* The copy sits on the media in white. With no media uploaded yet the card
+     falls back to the dark slab rather than to white-on-white. */
+  background: var(--color-nav, #020418);
+  color: #fff;
+  font-family: var(--font-body, Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Framer has none of the app's globals.css, so the card carries its own reset.
+   At zero specificity, so it can never out-rank a rule below — and scoped to
+   the card, so nothing leaks into the page around it. */
+.iccs-card, .iccs-card * { box-sizing: border-box; }
+:where(.iccs-card) :where(p, figure, blockquote) { margin: 0; }
+:where(.iccs-card) :where(a) { color: inherit; text-decoration: none; }
+:where(.iccs-card) :where(img, svg, video) { display: block; max-width: 100%; }
+
+.iccs-card:hover { cursor: pointer; }
+
+.iccs-media {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Biased above centre: the sources are head-and-shoulders, and a wide window
+     centred on them crops the top of the head. */
+  object-position: center 30%;
+}
+
+.iccs-scrim {
+  position: absolute;
+  inset: 0;
+  /* --color-nav #020418 at 50% — the site's deepest navy, not a neutral
+     black, so the tint sits in the palette rather than beside it. */
+  background: rgba(2, 4, 24, 0.5);
+  pointer-events: none;
+}
+
+/* The glass panel, as a material rather than a flat tint.
+
+   Four things together make it read as glass: the blur behind it (refraction),
+   a fill that is lighter where the light would land and darker where it falls
+   away, a bright hairline along the top edge with a fainter rim around the rest
+   (the specular catch), and an outer shadow so it sits ABOVE the media instead
+   of in it.
+
+   The blur itself is set INLINE in the component — this app's CSS pipeline
+   strips `backdrop-filter` out of CSS Modules, and the port keeps the inline
+   form so the two stay identical. */
+.iccs-panel {
+  position: absolute;
+  left: 24px;
+  top: 24px;
+  bottom: 24px;
+  width: 254px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 8px;
+  background:
+    linear-gradient(
+      148deg,
+      rgba(255, 255, 255, 0.14) 0%,
+      rgba(255, 255, 255, 0.05) 26%,
+      rgba(255, 255, 255, 0) 58%
+    ),
+    rgba(2, 4, 24, 0.52);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.24),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.09),
+    inset 0 -1px 0 0 rgba(255, 255, 255, 0.05),
+    0 16px 40px -12px rgba(0, 0, 0, 0.45);
+  white-space: nowrap;
+}
+
+.iccs-metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.iccs-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.iccs-stat {
+  font-size: 36px;
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.36px;
+}
+
+.iccs-statLabel {
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 500;
+  letter-spacing: -0.24px;
+}
+
+/* "Read case study →" is a visual affordance, not the click target — the
+   whole card is. A stretched ::after on the label can't do that: the label
+   lives inside the panel, the panel is absolutely positioned, and inset: 0
+   resolves against the nearest positioned ancestor — so the click area was
+   the PANEL, which read as "only the button works". The link is instead an
+   invisible overlay sitting directly on the card (.iccs-cardLink), and the
+   label is a plain span. One link per card either way. */
+.iccs-read {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  letter-spacing: -0.1px;
+  color: inherit;
+}
+
+/* Last child of the card, so it paints above the panel and the quote without
+   a z-index. Nothing else on the card is interactive, so it shadows nothing. */
+.iccs-cardLink {
+  position: absolute;
+  inset: 0;
+}
+
+.iccs-card:hover .iccs-read {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Anchored to the bottom-right, starting where the panel ends. */
+.iccs-quoteBlock {
+  position: absolute;
+  left: 302px;
+  right: 24px;
+  bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.iccs-quote {
+  font-size: 24px;
+  line-height: 34px;
+  font-weight: 500;
+  letter-spacing: -0.36px;
+}
+
+.iccs-who {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.iccs-name {
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 500;
+  letter-spacing: -0.27px;
+}
+
+.iccs-org {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+  letter-spacing: -0.176px;
+}
+
+/* ---- Tablet ----
+
+   The card is a fixed 1008 wide, so below the desktop rail it simply overran
+   its container and the quote ran off the right edge. It steps down instead,
+   in two stages, each sized to fit the narrowest rail its range can produce
+   (viewport - 64 rails - 80 track padding). The quote's left offset is always
+   panel + 24 + 24, so it moves with the panel.
+
+   The width is the rail's `--uc-card` where there is a rail; the fallback in
+   each var() is the same number the rail would have set. */
+
+@container (max-width: 1279px) {
+  .iccs-card {
+    width: var(--uc-card, 820px);
+    height: 440px;
+  }
+
+  .iccs-panel {
+    width: 240px;
+  }
+
+  .iccs-quoteBlock {
+    left: 288px;
+  }
+
+  .iccs-quote {
+    font-size: 20px;
+    line-height: 30px;
+  }
+}
+
+@container (max-width: 1023px) {
+  .iccs-card {
+    width: var(--uc-card, 620px);
+    height: 400px;
+  }
+
+  .iccs-panel {
+    width: 220px;
+    padding: 20px;
+  }
+
+  .iccs-quoteBlock {
+    left: 268px;
+  }
+
+  .iccs-stat {
+    font-size: 30px;
+  }
+
+  .iccs-quote {
+    font-size: 18px;
+    line-height: 26px;
+  }
+}
+
+/* ---- Phone ----
+
+   Stats only. There is no room for a quote beside a panel at this width — the
+   two were fighting for the same 300px and both lost — so the testimonial is
+   dropped and the panel moves to the FOOT of the card, which leaves the photo
+   the top two-thirds and puts the metrics and the link together on one surface
+   (Isma, 2026-07-27). */
+
+@container (max-width: 809px) {
+  .iccs-card {
+    width: var(--uc-card, 300px);
+    height: 420px;
+  }
+
+  /* Anchored to the bottom edge and spanning the card's width. */
+  .iccs-panel {
+    top: auto;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    width: auto;
+    padding: 20px;
+    gap: 16px;
+  }
+
+  .iccs-metrics {
+    gap: 16px;
+  }
+
+  .iccs-stat {
+    font-size: 28px;
+  }
+
+  .iccs-quoteBlock {
+    display: none;
+  }
+}

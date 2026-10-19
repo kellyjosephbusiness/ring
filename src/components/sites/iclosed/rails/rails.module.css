@@ -1,0 +1,37 @@
+/* Page-wide hairline rails marking the 1440 container edges. Fixed to the
+   viewport, kept 32px clear of the screen edge on narrower windows, and
+   absent at 810px and below. */
+.rails {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  z-index: 0;
+  width: min(1440px, 100% - 64px);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.rails::before,
+.rails::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgb(229, 231, 235);
+}
+
+.rails::before {
+  left: 0;
+}
+
+.rails::after {
+  right: 0;
+}
+
+@media (max-width: 810px) {
+  .rails {
+    display: none;
+  }
+}

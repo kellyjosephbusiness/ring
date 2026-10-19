@@ -1,0 +1,12 @@
+/* The source stacks a 1px modal anchor and the hero frame's top padding
+   (100px desktop/phone, 80px tablet) under the fixed 104px header. */
+.main {
+  position: relative;
+  padding-top: 101px;
+}
+
+@media (min-width: 810px) and (max-width: 1279.98px) {
+  .main {
+    padding-top: 81px;
+  }
+}

@@ -1,0 +1,200 @@
+
+.icapi--band,
+.icapi--portal {
+  --color-hairline: #e5e7eb;
+  --blue-600: #1c64f2;
+  --font-display: Poppins, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --color-nav: #020418;
+  --container-max: 1440px;
+  --container-pad: 40px;
+  --color-cta: #0236c2;
+  --shadow-cta: inset 0 1px 4px 1px rgba(255,255,255,.24), inset 0 4px 16px 1px rgba(255,255,255,.2);
+  --font-body: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --color-text-primary: #111928;
+  --color-accent: #1c64f2;
+  --color-surface: #ffffff;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.icapi--outer { position: relative; width: 100%; container-type: inline-size; }
+.icapi--covers { z-index: 6; }
+.icapi--band { position: relative; width: 100%; background: var(--color-surface); font-size: 16px; line-height: 1.5; color: var(--color-text-primary); }
+.icapi--band *, .icapi--portal * { box-sizing: border-box; }
+:where(.icapi--band, .icapi--portal) :where(h1, h2, h3, h4, h5, h6) { margin: 0; font-family: var(--font-display); font-weight: 500; color: var(--color-text-primary); }
+:where(.icapi--band, .icapi--portal) :where(p, figure, blockquote) { margin: 0; }
+:where(.icapi--band, .icapi--portal) :where(a) { color: inherit; text-decoration: none; }
+:where(.icapi--band, .icapi--portal) :where(img, svg, video) { display: block; max-width: 100%; }
+:where(.icapi--band, .icapi--portal) :where(button) { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+:where(.icapi--band, .icapi--portal) :where(ul, ol) { margin: 0; padding: 0; list-style: none; }
+.icapi--band :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+.icapi--cta:active { filter: brightness(0.96); }
+@media (prefers-reduced-motion: reduce) { .icapi--band *, .icapi--band *::before, .icapi--band *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; } }
+.icapi--wrap { position: relative; width: 100%; max-width: var(--container-max); margin: 0 auto; }
+.icapi--pad { padding-inline: var(--container-pad); }
+.icapi--bleed { max-width: none; }
+.icapi--rule::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--color-hairline); }
+.icapi--cta { display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--color-cta); border-radius: 8px; background: var(--color-cta); box-shadow: var(--shadow-cta); color: #fff; font-family: var(--font-body); font-weight: 600; white-space: nowrap; transition: filter 150ms ease; }
+.icapi--cta:hover { filter: brightness(1.1); }
+.icapi--cta-md { width: 144px; height: 40px; font-size: 14px; line-height: 20px; letter-spacing: -0.1px; }
+.icapi--cta-lg { width: 203px; height: 54px; font-size: 16px; line-height: 24px; letter-spacing: -0.1px; }
+@container (max-width: 809px) { .icapi--cta-lg { width: 100%; max-width: 260px; } }
+
+/* "Build on iClosed" — Figma 20:15518.
+
+   A tinted panel that sits inside the 1440 container rather than spanning the
+   window: the 40px gutters stay white, so the band reads as a card on the page.
+   The section's own hairline runs the full window width underneath it. */
+
+.icapi-section {
+  border-bottom: 1px solid var(--color-hairline);
+}
+
+/* Not Gray/50. The design uses its own near-white here and the two are close
+   enough that swapping them would be invisible, but the value is kept verbatim
+   so it stays traceable to the frame. */
+.icapi-panel {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  padding: 36px 48px;
+  background: #f8f9fa;
+}
+
+.icapi-text {
+  flex: 1 0 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 24px;
+  overflow: hidden;
+}
+
+.icapi-eyebrow {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  letter-spacing: 0.84px;
+  text-transform: uppercase;
+  color: var(--blue-600);
+}
+
+.icapi-heading {
+  font-family: var(--font-display);
+  font-size: 40px;
+  line-height: 52px;
+  font-weight: 500;
+  letter-spacing: -0.4px;
+  color: var(--color-nav);
+}
+
+.icapi-body {
+  max-width: 547.346px;
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 400;
+  letter-spacing: -0.04px;
+  color: var(--color-nav);
+}
+
+/* ---- Visual ---- */
+
+.icapi-visual {
+  position: relative;
+  flex: 1 0 0;
+  min-width: 0;
+  height: 420px;
+  overflow: hidden;
+}
+
+/* Taller than the frame and pulled up, so the gradient's bright band lands
+   behind the shot rather than at the top edge. */
+.icapi-visualBg {
+  position: absolute;
+  left: 0;
+  top: -6.11%;
+  width: 100%;
+  height: 112.21%;
+  object-fit: cover;
+}
+
+.icapi-shotClip {
+  position: absolute;
+  left: 32.5px;
+  top: 32.87px;
+  width: 795.655px;
+  height: 521.741px;
+  overflow: hidden;
+}
+
+/* Wider than its own clip on purpose — the frame scales the shot up and lets
+   the frame crop it. The global `img { max-width: 100% }` reset would clamp it
+   back to the clip's width and squash it ~17% horizontally, so it opts out. */
+.icapi-shot {
+  position: absolute;
+  left: 0;
+  top: 0.11%;
+  width: 120.43%;
+  max-width: none;
+  height: 99.78%;
+}
+
+/* ---- Tablet: stack, and let the shot run to the panel's edge ---- */
+@container (max-width: 1279px) {
+  .icapi-panel {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 32px;
+    padding: 40px;
+  }
+  /* The desktop `flex: 1 0 0` is a column split; once the panel stacks, a zero
+     flex-basis collapses both children to nothing and the whole band renders
+     113px tall. Size to content instead. */
+  .icapi-text,
+  .icapi-visual {
+    flex: none;
+  }
+  .icapi-text {
+    align-items: center;
+    text-align: center;
+  }
+  .icapi-body {
+    max-width: 560px;
+  }
+  .icapi-heading {
+    font-size: 36px;
+    line-height: 46px;
+  }
+  .icapi-visual {
+    height: 360px;
+  }
+  .icapi-shotClip {
+    left: 24px;
+    top: 24px;
+  }
+}
+
+/* ---- Mobile ---- */
+@container (max-width: 809px) {
+  .icapi-panel {
+    gap: 28px;
+    padding: 32px 20px;
+  }
+  .icapi-heading {
+    font-size: 30px;
+    line-height: 40px;
+  }
+  .icapi-body {
+    font-size: 16px;
+    line-height: 26px;
+  }
+  .icapi-visual {
+    height: 260px;
+  }
+  .icapi-shotClip {
+    left: 16px;
+    top: 16px;
+  }
+}

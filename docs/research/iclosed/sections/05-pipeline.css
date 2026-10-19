@@ -1,0 +1,709 @@
+
+.icft--band,
+.icft--portal {
+  --blue-400: #76a9fa;
+  --font-display: Poppins, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --white: #ffffff;
+  --green-500: #0e9f6e;
+  --gray-600: #4b5563;
+  --gray-900: #111928;
+  --green-100: #def7ec;
+  --green-800: #03543f;
+  --gray-500: #6b7280;
+  --font-body: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --container-max: 1440px;
+  --container-pad: 40px;
+  --color-hairline: #e5e7eb;
+  --color-cta: #0236c2;
+  --shadow-cta: inset 0 1px 4px 1px rgba(255,255,255,.24), inset 0 4px 16px 1px rgba(255,255,255,.2);
+  --color-text-primary: #111928;
+  --color-accent: #1c64f2;
+  --color-surface: #ffffff;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.icft--outer { position: relative; width: 100%; container-type: inline-size; }
+.icft--covers { z-index: 6; }
+.icft--band { position: relative; width: 100%; background: var(--color-surface); font-size: 16px; line-height: 1.5; color: var(--color-text-primary); }
+.icft--band *, .icft--portal * { box-sizing: border-box; }
+:where(.icft--band, .icft--portal) :where(h1, h2, h3, h4, h5, h6) { margin: 0; font-family: var(--font-display); font-weight: 500; color: var(--color-text-primary); }
+:where(.icft--band, .icft--portal) :where(p, figure, blockquote) { margin: 0; }
+:where(.icft--band, .icft--portal) :where(a) { color: inherit; text-decoration: none; }
+:where(.icft--band, .icft--portal) :where(img, svg, video) { display: block; max-width: 100%; }
+:where(.icft--band, .icft--portal) :where(button) { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+:where(.icft--band, .icft--portal) :where(ul, ol) { margin: 0; padding: 0; list-style: none; }
+.icft--band :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+.icft--cta:active { filter: brightness(0.96); }
+@media (prefers-reduced-motion: reduce) { .icft--band *, .icft--band *::before, .icft--band *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; } }
+.icft--wrap { position: relative; width: 100%; max-width: var(--container-max); margin: 0 auto; }
+.icft--pad { padding-inline: var(--container-pad); }
+.icft--bleed { max-width: none; }
+.icft--rule::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--color-hairline); }
+.icft--cta { display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--color-cta); border-radius: 8px; background: var(--color-cta); box-shadow: var(--shadow-cta); color: #fff; font-family: var(--font-body); font-weight: 600; white-space: nowrap; transition: filter 150ms ease; }
+.icft--cta:hover { filter: brightness(1.1); }
+.icft--cta-md { width: 144px; height: 40px; font-size: 14px; line-height: 20px; letter-spacing: -0.1px; }
+.icft--cta-lg { width: 203px; height: 54px; font-size: 16px; line-height: 24px; letter-spacing: -0.1px; }
+@container (max-width: 809px) { .icft--cta-lg { width: 100%; max-width: 260px; } }
+
+/* Dark "take the funnel back" band.
+
+   Section chrome, step cards, connectors and pill are ic-website's
+   FunnelTakebackV2 design, ported verbatim — the deep #020418 ground with its
+   layered ambient glows and masked dot grid, the gradient-filled numerals, the
+   animated dashed elbows. Only the live-pipeline card follows the new Figma. */
+
+.icft-band {
+  position: relative;
+  width: 100%;
+  background: #020418;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 88px 0;
+  overflow-x: clip;
+}
+
+/* Layered ambient glows. */
+.icft-band::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(640px 420px at 74% 18%, rgba(28, 100, 242, 0.14), transparent 70%),
+    radial-gradient(520px 340px at 12% 6%, rgba(118, 169, 250, 0.08), transparent 70%),
+    radial-gradient(560px 300px at 50% 100%, rgba(28, 100, 242, 0.1), transparent 72%);
+}
+
+/* Faint dot grid, masked so it only reads near the top-right glow. */
+.icft-band::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.14) 1px, transparent 1px);
+  background-size: 26px 26px;
+  opacity: 0.16;
+  -webkit-mask-image: radial-gradient(900px 620px at 70% 20%, #000 0%, transparent 74%);
+  mask-image: radial-gradient(900px 620px at 70% 20%, #000 0%, transparent 74%);
+}
+
+.icft-inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 64px;
+}
+
+/* ---- Top: copy + live card ---- */
+
+.icft-top {
+  display: flex;
+  align-items: center;
+  gap: 64px;
+  width: 100%;
+  padding-inline: 40px;
+}
+
+/* Cards, connectors and pill are one stack with NO gap — that is what lets the
+   dashed elbows start flush at the cards' bottom edge instead of floating
+   below them. The 64px rhythm lives on .icft-inner, between .icft-top and .icft-bottom only. */
+.icft-bottom {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
+  z-index: 1;
+}
+
+.icft-copy {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 520px;
+}
+
+.icft-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--blue-400);
+}
+
+.icft-eyebrow::before {
+  content: "";
+  width: 18px;
+  height: 1px;
+  background: var(--blue-400);
+}
+
+/* The desktop break sits after "in"; the mobile one before it. */
+.icft-brMobile {
+  display: none;
+}
+
+.icft-heading {
+  margin-top: 20px;
+  font-family: var(--font-display);
+  font-size: 40px;
+  line-height: 1.25;
+  font-weight: 500;
+  letter-spacing: -0.4px;
+  color: var(--white);
+}
+
+.icft-headingAccent {
+  color: var(--blue-400);
+}
+
+.icft-subcopy {
+  margin-top: 18px;
+  max-width: 400px;
+  font-size: 16px;
+  line-height: 26px;
+  color: #aab1c2;
+}
+
+.icft-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 44px;
+  margin-top: 28px;
+  padding-inline: 20px;
+  border-radius: 8px;
+  background: var(--white);
+  color: #04072a;
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.icft-note {
+  margin-top: 18px;
+  font-size: 13px;
+  line-height: 20px;
+  color: rgba(255, 255, 255, 0.42);
+}
+
+/* ---- Live pipeline card (new Figma) ---- */
+
+/* 658 x 495 in the Figma frame — it is a card beside the copy, not a half of
+   the section. */
+/* Shorter than the frame's 658x495. The card was mostly white chart area, so
+   the height comes off the glass panel below rather than the sky above it —
+   see .icft-panel, which still starts at 30% and now simply has less to fill. */
+.icft-visual {
+  position: relative;
+  flex: 0 1 658px;
+  min-width: 0;
+  max-width: 658px;
+  aspect-ratio: 658 / 430;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-left: auto;
+}
+
+.icft-visualBg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.icft-closers {
+  position: absolute;
+  top: 26px;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.icft-avatars {
+  display: flex;
+  gap: 8px;
+}
+
+.icft-avatarWrap {
+  position: relative;
+  transition: transform 320ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.icft-avatarWrapActive {
+  transform: translateY(-4px) scale(1.06);
+}
+
+.icft-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+}
+
+/* The recovery amount, dropping out from under whichever closer just earned it.
+   Ringed and shadowed so it stays legible against both the sky and the glass
+   panel it overlaps. */
+.icft-chip {
+  position: absolute;
+  bottom: -24px;
+  left: 50%;
+  translate: -50% 0;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--green-500);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.55), 0 4px 10px rgba(3, 84, 63, 0.35);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 700;
+  letter-spacing: -0.1px;
+  color: var(--white);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 260ms ease;
+}
+
+.icft-avatarWrapActive .icft-chip {
+  opacity: 1;
+}
+
+.icft-closersLabel {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.icft-panel {
+  position: absolute;
+  left: 6%;
+  right: 6%;
+  bottom: 0;
+  top: 30%;
+  padding: 12px 12px 0;
+  border-radius: 12px 12px 0 0;
+  background: rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-bottom: none;
+}
+
+.icft-panelBrand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 10px;
+}
+
+.icft-panelBrand img {
+  height: 15px;
+  width: auto;
+}
+
+.icft-panelCard {
+  height: 100%;
+  padding: 18px 20px 0;
+  border-radius: 8px 8px 0 0;
+  background: var(--white);
+  text-align: center;
+  overflow: hidden;
+}
+
+.icft-liveRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--gray-600);
+}
+
+.icft-liveDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--green-500);
+}
+
+.icft-amount {
+  margin-top: 6px;
+  font-family: var(--font-display);
+  font-size: 40px;
+  line-height: 1.15;
+  font-weight: 600;
+  color: var(--gray-900);
+  transition: color 220ms ease;
+}
+
+.icft-amountTick {
+  color: var(--green-500);
+}
+
+.icft-deltaRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.icft-delta {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: var(--green-100);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--green-800);
+}
+
+.icft-period {
+  font-size: 12px;
+  color: var(--gray-500);
+}
+
+.icft-chart {
+  display: block;
+  width: 100%;
+  margin-top: 12px;
+}
+
+/* ---- Step cards (ic-website "bubbles") ---- */
+
+/* Fixed-height row so the cards' bottom edge is a known line for the
+   connectors to start from. */
+.icft-steps {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: 240px;
+  width: 100%;
+  padding: 0 32px;
+}
+
+.icft-step {
+  flex: 1 0 0;
+  min-width: 1px;
+  max-width: 448px;
+  align-self: stretch;
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 14px;
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.055) 0%, rgba(255, 255, 255, 0.018) 100%);
+  transition: transform 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
+}
+
+/* Hairline of blue light across the top edge of each card. */
+.icft-step::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 14px;
+  right: 14px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(118, 169, 250, 0.55), transparent);
+}
+
+.icft-step:hover {
+  transform: translateY(-3px);
+  border-color: rgba(118, 169, 250, 0.38);
+  box-shadow: 0 16px 48px -16px rgba(28, 100, 242, 0.4);
+}
+
+/* The big ghosted numeral — a gradient clipped to the glyphs. */
+.icft-stepNum {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 44px;
+  line-height: 1.4;
+  white-space: nowrap;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0.06) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.icft-stepText {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.icft-stepTitle {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 1.4;
+  color: var(--white);
+  white-space: nowrap;
+}
+
+.icft-stepBody {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 25px;
+  color: #aab1c2;
+  width: 100%;
+}
+
+.icft-plus {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  align-self: center;
+  opacity: 0.45;
+  color: var(--white);
+}
+
+/* ---- Connectors ----
+   Two dashed elbows drop from the outer cards and turn in toward the centre,
+   where a third dashed run carries an arrowhead down into the pill. Card 02
+   sits directly above that centre run. The Figma's single floating stub is not
+   reproduced. The dashes flow while the section is in view. */
+
+.icft-connectors {
+  position: relative;
+  width: 100%;
+  height: 100px;
+  overflow: hidden;
+}
+
+.icft-dash {
+  stroke: #5f96f8;
+}
+
+.icft-inview .icft-dash {
+  animation: icft-dashFlow 1.1s linear infinite;
+}
+
+@keyframes icft-dashFlow {
+  to {
+    stroke-dashoffset: -12;
+  }
+}
+
+.icft-connectorLeft {
+  position: absolute;
+  left: 15.64%;
+  top: 1.51px;
+  width: 33.58%;
+  height: 68.49px;
+}
+
+.icft-connectorRight {
+  position: absolute;
+  left: 49.14%;
+  top: 1.51px;
+  width: 34.51%;
+  height: 68.49px;
+  transform: scaleX(-1);
+}
+
+.icft-connectorMid {
+  position: absolute;
+  left: 48.98%;
+  top: 1.09px;
+  width: 5.77px;
+  height: 98.4px;
+}
+
+/* ---- Pill ---- */
+
+.icft-pillRow {
+  height: 74px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.icft-pill {
+  height: 100%;
+  max-width: 384px;
+  border: 1px solid rgba(118, 169, 250, 0.45);
+  border-radius: 14px;
+  padding: 20px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(223deg, rgba(28, 100, 242, 0.12) 10%, rgba(255, 255, 255, 0.04) 100%);
+  box-shadow: 0 0 32px rgba(28, 100, 242, 0.28), inset 0 0 24px rgba(28, 100, 242, 0.14);
+}
+
+.icft-inview .icft-pill {
+  animation: icft-pillGlow 2.6s ease-in-out infinite;
+}
+
+@keyframes icft-pillGlow {
+  0%,
+  100% {
+    box-shadow: 0 0 26px rgba(28, 100, 242, 0.22), inset 0 0 20px rgba(28, 100, 242, 0.12);
+  }
+  50% {
+    box-shadow: 0 0 44px rgba(28, 100, 242, 0.42), inset 0 0 28px rgba(28, 100, 242, 0.2);
+  }
+}
+
+.icft-pillLabel {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 26px;
+  letter-spacing: 0.06em;
+  color: var(--white);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .icft-avatarWrap,
+  .icft-chip,
+  .icft-amount,
+  .icft-step {
+    transition: none;
+  }
+  .icft-inview .icft-dash,
+  .icft-inview .icft-pill {
+    animation: none;
+  }
+}
+
+@container (max-width: 1279px) {
+  .icft-band {
+    padding: 56px 0;
+  }
+  .icft-inner {
+    gap: 40px;
+  }
+  .icft-top {
+    flex-direction: column;
+    gap: 32px;
+  }
+  .icft-copy {
+    max-width: 640px;
+    text-align: center;
+  }
+  .icft-eyebrow {
+    justify-content: center;
+  }
+  .icft-subcopy {
+    margin-inline: auto;
+  }
+  .icft-heading {
+    font-size: 32px;
+  }
+  /* In the stacked column the desktop `flex: 0 1 658px` basis becomes the
+     HEIGHT — a ~658px-tall square card instead of the 658x430 aspect box —
+     and margin-left:auto shoves it right instead of centering. */
+  .icft-visual {
+    flex: none;
+    width: 100%;
+    margin-inline: auto;
+  }
+  .icft-steps {
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+    gap: 12px;
+  }
+  .icft-step {
+    flex: none;
+    width: 100%;
+    max-width: 640px;
+    align-self: auto;
+  }
+  .icft-stepTitle {
+    white-space: normal;
+  }
+  .icft-connectors {
+    height: 64px;
+  }
+  .icft-connectorLeft,
+  .icft-connectorRight {
+    display: none;
+  }
+  .icft-connectorMid {
+    left: 50%;
+    margin-left: -3px;
+    top: 0;
+    height: 60px;
+  }
+  .icft-pillRow {
+    height: auto;
+  }
+  .icft-pill {
+    height: auto;
+    padding: 18px 24px;
+  }
+}
+
+@container (max-width: 809px) {
+  .icft-band {
+    padding: 48px 0;
+  }
+  .icft-inner {
+    gap: 32px;
+    padding-inline: 20px;
+  }
+  /* .icft-inner already carries the 20px gutter — stacking .icft-top's 40px on it gave
+     the phone a 60px dead margin each side and a shrunken card. */
+  .icft-top {
+    gap: 28px;
+    padding-inline: 0;
+  }
+  /* The dash reads as clutter at this size. */
+  .icft-eyebrow::before {
+    display: none;
+  }
+  /* Same stacked-gutter bug as .icft-top: .icft-inner already pads 20px here. */
+  .icft-steps {
+    padding: 0;
+  }
+  /* The 658/430 ratio leaves ~229px at phone widths — the glass panel (top
+     30%) lands on the avatar row. Taller ratio, capped so the 500-809 band
+     doesn't balloon. */
+  .icft-visual {
+    aspect-ratio: 6 / 7;
+    max-width: 480px;
+  }
+  .icft-brMobile {
+    display: inline;
+  }
+  .icft-brDesktop {
+    display: none;
+  }
+  .icft-heading {
+    font-size: 26px;
+  }
+  .icft-amount {
+    font-size: 30px;
+  }
+  .icft-pillLabel {
+    font-size: 15px;
+    white-space: normal;
+  }
+}
