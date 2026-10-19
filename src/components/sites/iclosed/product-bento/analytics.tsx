@@ -1,7 +1,7 @@
 "use client";
 
 import clsx from "clsx";
-import type { CSSProperties } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { useId } from "react";
 
 import { useCountUp } from "./bento-hooks";
@@ -98,7 +98,7 @@ function PanelHeader({ icon, title, sub, period }: { icon: string; title: string
   );
 }
 
-function MiniChart({ ticks, bars }: { ticks: readonly string[]; bars: React.ReactNode }) {
+function MiniChart({ ticks, bars }: { ticks: readonly string[]; bars: ReactNode }) {
   return (
     <div className={styles.body}>
       <div className={styles.miniChart}>
