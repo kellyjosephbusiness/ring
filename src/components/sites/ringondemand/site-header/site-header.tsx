@@ -3,34 +3,25 @@
 import {
   useCallback,
   useEffect,
-  useId,
   useLayoutEffect,
   useRef,
   useState,
-  type FocusEvent,
-  type KeyboardEvent,
   type MouseEvent,
-  type PointerEvent,
 } from "react";
+import { flushSync } from "react-dom";
 import Link from "next/link";
 
-import { LOGIN_URL, START_FREE_URL } from "../links";
-import { ChevronDownIcon, CloseIcon, MenuIcon } from "./icons";
-import { MenuContent } from "./menu-content";
-import {
-  ANNOUNCEMENT,
-  LOGO_SRC,
-  NAV_LINKS,
-  PRODUCT_MENU,
-  RESOURCES_MENU,
-  type NavMenu,
-} from "./site-header.data";
+import { BOOK_CALL_TARGET, BOOK_CALL_URL } from "../links";
+import { BOOK_CALL_LABEL, NAV_LINKS } from "./site-header.data";
 import styles from "./site-header.module.css";
 
-type MenuId = NavMenu["id"];
-
 const PHONE_QUERY = "(max-width: 809.98px)";
-const TABLET_QUERY = "(min-width: 810px) and (max-width: 1279.98px)";
+
+const BOOK_CALL_LINK = {
+  href: BOOK_CALL_URL,
+  target: BOOK_CALL_TARGET,
+  rel: BOOK_CALL_TARGET ? "noopener" : undefined,
+};
 
 /** Framer's scroll-direction effect: a run of scroll events in one direction
  * that moves at least 4px from where the direction last changed hides the
@@ -79,315 +70,137 @@ function useMediaQuery(query: string, onChange: (matches: boolean) => void) {
   }, [query]);
 }
 
-function Logo() {
+function MenuIcon({ className }: { className: string }) {
   return (
-    <Link className={styles.logo} href="/" aria-label="iClosed home">
-      <img src={LOGO_SRC} alt="" width={181} height={37} />
+    <svg className={className} viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path
+        d="M 4 8 L 20 8 M 4 16 L 20 16"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function CloseIcon({ className }: { className: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path
+        d="M 18 6 L 6 18 M 6 6 L 18 18"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function Wordmark() {
+  return (
+    <Link className={styles.wordmark} href="/" aria-label="RingOnDemand home">
+      RingOnDemand
     </Link>
   );
 }
 
-function AnnouncementBar({ closed, onClose }: { closed: boolean; onClose: () => void }) {
+function BookCallButton({ className }: { className: string }) {
   return (
-    <div className={styles.barWrap} data-closed={closed || undefined}>
-      <a
-        className={styles.bar}
-        href={ANNOUNCEMENT.href}
-        tabIndex={closed ? -1 : undefined}
-        aria-hidden={closed || undefined}
-      >
-        <span className={styles.barContent}>
-          <svg className={styles.barDot} viewBox="0 0 8 8" aria-hidden="true">
-            <path
-              d="M 4 0 C 6.209 0 8 1.791 8 4 C 8 6.209 6.209 8 4 8 C 1.791 8 0 6.209 0 4 C 0 1.791 1.791 0 4 0 Z"
-              fill="rgb(49, 196, 141)"
-              stroke="rgb(70, 250, 175)"
-              strokeWidth="2"
-            />
-          </svg>
-          <span className={styles.barLabel}>
-            <span className={styles.barText}>{ANNOUNCEMENT.label}</span>
-            <svg className={styles.barChevron} viewBox="0 0 16 16" aria-hidden="true">
-              <path
-                d="M6 4L10 8L6 12"
-                fill="none"
-                stroke="#fff"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </span>
-        </span>
-      </a>
-      <button
-        type="button"
-        className={styles.barClose}
-        onClick={onClose}
-        aria-label="Dismiss announcement"
-        tabIndex={closed ? -1 : undefined}
-        aria-hidden={closed || undefined}
-      >
-        <svg viewBox="0 0 16 16" aria-hidden="true">
-          <path
-            d="M 12.8 3.2 L 3.2 12.8 M 3.2 3.2 L 12.8 12.8"
-            fill="none"
-            stroke="#fff"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </button>
-    </div>
-  );
-}
-
-function StartButton({ className }: { className: string }) {
-  return (
-    <a className={`${styles.startBtn} ${className}`} href={START_FREE_URL}>
-      <span>Start For Free</span>
+    <a className={`${styles.bookBtn} ${className}`} {...BOOK_CALL_LINK}>
+      <span>{BOOK_CALL_LABEL}</span>
     </a>
   );
 }
 
-interface DesktopNavProps {
-  open: MenuId | null;
-  stickyDesktop: boolean;
-  onOpen: (id: MenuId) => void;
-  onClose: () => void;
-}
-
-function DesktopNav({ open, stickyDesktop, onOpen, onClose }: DesktopNavProps) {
-  const baseId = useId();
-  const navRef = useRef<HTMLElement>(null);
-  const triggerRefs = useRef<Record<MenuId, HTMLButtonElement | null>>({
-    product: null,
-    resources: null,
-  });
-  const focusFirstLink = useRef(false);
-  const panelRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (open && focusFirstLink.current) {
-      focusFirstLink.current = false;
-      panelRef.current?.querySelector<HTMLAnchorElement>("a")?.focus();
-    }
-  }, [open]);
-
-  const openFromKeyboard = (id: MenuId) => {
-    focusFirstLink.current = true;
-    onOpen(id);
-  };
-
-  const onTriggerClick = (id: MenuId) => (event: MouseEvent<HTMLButtonElement>) => {
-    // Pointer clicks keep the menu open (as on the source); keyboard
-    // activation toggles it and moves focus into the panel.
-    if (event.detail === 0) {
-      if (open === id) onClose();
-      else openFromKeyboard(id);
-      return;
-    }
-    onOpen(id);
-  };
-
-  const onTriggerKeyDown = (id: MenuId) => (event: KeyboardEvent<HTMLButtonElement>) => {
-    if (event.key === "ArrowDown") {
-      event.preventDefault();
-      openFromKeyboard(id);
-    }
-  };
-
-  const onTriggerEnter = (id: MenuId) => (event: PointerEvent<HTMLButtonElement>) => {
-    if (event.pointerType === "mouse") onOpen(id);
-  };
-
-  const onKeyDown = (event: KeyboardEvent<HTMLElement>) => {
-    if (event.key === "Escape" && open) {
-      event.preventDefault();
-      const trigger = triggerRefs.current[open];
-      onClose();
-      trigger?.focus();
-    }
-  };
-
-  const onBlur = (event: FocusEvent<HTMLElement>) => {
-    const next = event.relatedTarget;
-    if (open && !(next instanceof Node && navRef.current?.contains(next))) onClose();
-  };
-
-  const onPointerLeave = (event: PointerEvent<HTMLElement>) => {
-    if (event.pointerType === "mouse" && open) onClose();
-  };
-
-  const trigger = (menu: NavMenu, extraClass: string) => (
-    <button
-      ref={(node) => {
-        triggerRefs.current[menu.id] = node;
-      }}
-      type="button"
-      className={`${styles.trigger} ${extraClass}`}
-      aria-expanded={open === menu.id}
-      aria-controls={`${baseId}-${menu.id}`}
-      data-open={open === menu.id || undefined}
-      onPointerEnter={onTriggerEnter(menu.id)}
-      onClick={onTriggerClick(menu.id)}
-      onKeyDown={onTriggerKeyDown(menu.id)}
-    >
-      <span className={styles.triggerLabel}>{menu.label}</span>
-      <ChevronDownIcon className={styles.triggerChevron} />
-    </button>
-  );
-
-  const activeMenu = open === "product" ? PRODUCT_MENU : open === "resources" ? RESOURCES_MENU : null;
-
+function DesktopNav() {
   return (
-    <nav
-      ref={navRef}
-      className={styles.deskNav}
-      aria-label="Main"
-      data-open={open ?? undefined}
-      data-sticky-desktop={stickyDesktop || undefined}
-      onPointerLeave={onPointerLeave}
-      onKeyDown={onKeyDown}
-      onBlur={onBlur}
-    >
+    <nav className={styles.deskNav} aria-label="Main">
       <div className={styles.row}>
         <div className={styles.logoWrap}>
-          <Logo />
+          <Wordmark />
         </div>
         <div className={styles.links}>
-          {trigger(PRODUCT_MENU, styles.triggerProduct)}
-          <div className={styles.linkCell}>
-            <a className={styles.textLink} href={NAV_LINKS.results.href}>
-              {NAV_LINKS.results.label}
-            </a>
-          </div>
-          <div className={styles.linkCell}>
-            <a className={styles.textLink} href={NAV_LINKS.pricing.href}>
-              {NAV_LINKS.pricing.label}
-            </a>
-          </div>
-          {trigger(RESOURCES_MENU, styles.triggerResources)}
-          <div className={`${styles.linkCell} ${styles.mcpCell}`}>
-            <a className={styles.textLink} href={NAV_LINKS.mcp.href}>
-              {NAV_LINKS.mcp.label}
-            </a>
-          </div>
-        </div>
-        <div className={styles.dropdown}>
-          <div className={styles.dropdownCatcher} aria-hidden="true" />
-          {activeMenu && (
-            <div
-              ref={panelRef}
-              id={`${baseId}-${activeMenu.id}`}
-              className={styles.panel}
-              data-menu={activeMenu.id}
-            >
-              <MenuContent menu={activeMenu} layout="desktop" />
+          {NAV_LINKS.map((link) => (
+            <div key={link.href} className={styles.linkCell}>
+              <a className={styles.textLink} href={link.href}>
+                {link.label}
+              </a>
             </div>
-          )}
+          ))}
         </div>
         <div className={styles.actions}>
-          <div className={styles.loginCell}>
-            <a className={`${styles.textLink} ${styles.loginLink}`} href={LOGIN_URL}>
-              Login
-            </a>
-          </div>
-          <StartButton className={styles.startDesktop} />
+          <BookCallButton className={styles.bookDesktop} />
         </div>
       </div>
       <div className={styles.strokeBot} aria-hidden="true" />
-      <div className={styles.backdrop} aria-hidden="true" />
     </nav>
   );
 }
 
-function Accordion({
-  menu,
-  open,
-  onToggle,
-}: {
-  menu: NavMenu;
-  open: boolean;
-  onToggle: () => void;
-}) {
-  const bodyId = useId();
-  const bodyRef = useRef<HTMLDivElement>(null);
-  const [bodyHeight, setBodyHeight] = useState(0);
-
-  useLayoutEffect(() => {
-    const body = bodyRef.current;
-    if (!body) return;
-    const measure = () => setBodyHeight(body.offsetHeight);
-    measure();
-    const observer = new ResizeObserver(measure);
-    observer.observe(body);
-    return () => observer.disconnect();
-  }, []);
-
-  return (
-    <div
-      className={`${styles.acc} ${menu.id === "product" ? styles.accProduct : styles.accResources}`}
-      data-open={open || undefined}
-      style={{ height: open ? 40 + bodyHeight : 44 }}
-    >
-      <button
-        type="button"
-        className={styles.accTrigger}
-        aria-expanded={open}
-        aria-controls={bodyId}
-        onClick={onToggle}
-      >
-        <span className={styles.accLabel}>{menu.label}</span>
-        <ChevronDownIcon className={styles.accChevron} />
-      </button>
-      <div ref={bodyRef} id={bodyId} className={styles.accBody} inert={!open}>
-        <MenuContent menu={menu} layout="mobile" />
-      </div>
-    </div>
-  );
-}
-
 function MobileNav({ open, onOpen, onClose }: { open: boolean; onOpen: () => void; onClose: () => void }) {
-  const [expanded, setExpanded] = useState<Record<MenuId, boolean>>({
-    product: false,
-    resources: false,
-  });
   const openButton = useRef<HTMLButtonElement>(null);
   const closeButton = useRef<HTMLButtonElement>(null);
   const wasOpen = useRef(open);
+  /** Closing from a link hands focus to the page the link jumps to, not
+   * back to the hamburger. */
+  const restoreFocus = useRef(true);
 
   useEffect(() => {
     if (open === wasOpen.current) return;
     wasOpen.current = open;
     if (open) closeButton.current?.focus();
-    else openButton.current?.focus({ preventScroll: true });
+    else if (restoreFocus.current) openButton.current?.focus({ preventScroll: true });
+    restoreFocus.current = true;
   }, [open]);
 
-  useEffect(() => {
+  // Lock page scroll while the menu is open. A layout effect, so a link that
+  // closes the menu with flushSync has scrolling back before it jumps.
+  useLayoutEffect(() => {
     if (!open) return;
     const { body } = document;
     const previous = body.style.overflow;
     body.style.overflow = "hidden";
+    return () => {
+      body.style.overflow = previous;
+    };
+  }, [open]);
+
+  useEffect(() => {
+    if (!open) return;
     const onKey = (event: globalThis.KeyboardEvent) => {
       if (event.key === "Escape") onClose();
     };
     window.addEventListener("keydown", onKey);
-    return () => {
-      body.style.overflow = previous;
-      window.removeEventListener("keydown", onKey);
-    };
+    return () => window.removeEventListener("keydown", onKey);
   }, [open, onClose]);
 
-  const toggle = (id: MenuId) => () => setExpanded((state) => ({ ...state, [id]: !state[id] }));
+  /** Close the menu (and unlock scrolling) first, then follow the link. */
+  const onLinkClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    const href = event.currentTarget.getAttribute("href") ?? "";
+    if (!href.startsWith("#") || href.length < 2) {
+      onClose();
+      return;
+    }
+    event.preventDefault();
+    restoreFocus.current = false;
+    flushSync(onClose);
+    if (window.location.hash === href) {
+      document.getElementById(decodeURIComponent(href.slice(1)))?.scrollIntoView();
+    } else {
+      window.location.hash = href;
+    }
+  };
 
   return (
     <nav className={styles.mNav} aria-label="Main" data-open={open || undefined}>
       {open ? (
         <div className={styles.mScroll}>
           <div className={`${styles.mRow} ${styles.mRowOpen}`}>
-            <Logo />
+            <Wordmark />
             <button
               ref={closeButton}
               type="button"
@@ -400,44 +213,25 @@ function MobileNav({ open, onOpen, onClose }: { open: boolean; onOpen: () => voi
             </button>
           </div>
           <div className={styles.mLinks}>
-            <Accordion menu={PRODUCT_MENU} open={expanded.product} onToggle={toggle("product")} />
-            <div className={styles.mLinkCell}>
-              <a className={styles.mTextLink} href={NAV_LINKS.results.href} onClick={onClose}>
-                {NAV_LINKS.results.label}
-              </a>
-            </div>
-            <div className={styles.mLinkCell}>
-              <a className={styles.mTextLink} href={NAV_LINKS.pricing.href} onClick={onClose}>
-                {NAV_LINKS.pricing.label}
-              </a>
-            </div>
-            <Accordion
-              menu={RESOURCES_MENU}
-              open={expanded.resources}
-              onToggle={toggle("resources")}
-            />
-            <div className={styles.mLinkCell}>
-              <a className={styles.mTextLink} href={NAV_LINKS.mcp.href} onClick={onClose}>
-                {NAV_LINKS.mcp.label}
-              </a>
-            </div>
+            {NAV_LINKS.map((link) => (
+              <div key={link.href} className={styles.mLinkCell}>
+                <a className={styles.mTextLink} href={link.href} onClick={onLinkClick}>
+                  {link.label}
+                </a>
+              </div>
+            ))}
           </div>
           <div className={styles.mActions}>
-            <div className={styles.mLinkCellLogin}>
-              <a className={styles.mTextLink} href={LOGIN_URL} target="_blank" rel="noopener">
-                Login
-              </a>
-            </div>
-            <a className={styles.mStartBlack} href={START_FREE_URL} onClick={onClose}>
-              <span>Start For Free</span>
+            <a className={styles.mBookBlack} {...BOOK_CALL_LINK} onClick={onLinkClick}>
+              <span>{BOOK_CALL_LABEL}</span>
             </a>
           </div>
         </div>
       ) : (
         <div className={styles.mRow}>
-          <Logo />
+          <Wordmark />
           <div className={styles.mRowEnd}>
-            <StartButton className={styles.startMobile} />
+            <BookCallButton className={styles.bookMobile} />
             <button
               ref={openButton}
               type="button"
@@ -458,44 +252,21 @@ function MobileNav({ open, onOpen, onClose }: { open: boolean; onOpen: () => voi
 
 export function SiteHeader() {
   const scrollHidden = useHideOnScrollDown();
-  const [barClosed, setBarClosed] = useState(false);
-  const [openMenu, setOpenMenu] = useState<MenuId | null>(null);
-  const [stickyDesktop, setStickyDesktop] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const openDesktopMenu = useCallback((id: MenuId) => {
-    setOpenMenu(id);
-    // Once a dropdown has opened, the source keeps its desktop layout at
-    // tablet widths too (MCP link back, centred links).
-    setStickyDesktop(true);
-  }, []);
-  const closeDesktopMenu = useCallback(() => setOpenMenu(null), []);
   const openMobile = useCallback(() => setMobileOpen(true), []);
   const closeMobile = useCallback(() => setMobileOpen(false), []);
 
-  useMediaQuery(TABLET_QUERY, () => setStickyDesktop(false));
   useMediaQuery(PHONE_QUERY, (isPhone) => {
-    if (isPhone) setOpenMenu(null);
-    else setMobileOpen(false);
+    if (!isPhone) setMobileOpen(false);
   });
 
   const hidden = scrollHidden && !mobileOpen;
-  const [prevHidden, setPrevHidden] = useState(hidden);
-  if (hidden !== prevHidden) {
-    setPrevHidden(hidden);
-    if (hidden) setOpenMenu(null);
-  }
 
   return (
     <header className={styles.top} data-section="site-header" data-hidden={hidden || undefined}>
-      <AnnouncementBar closed={barClosed} onClose={() => setBarClosed(true)} />
       <div className={styles.navWrap}>
-        <DesktopNav
-          open={openMenu}
-          stickyDesktop={stickyDesktop}
-          onOpen={openDesktopMenu}
-          onClose={closeDesktopMenu}
-        />
+        <DesktopNav />
         <MobileNav open={mobileOpen} onOpen={openMobile} onClose={closeMobile} />
       </div>
     </header>

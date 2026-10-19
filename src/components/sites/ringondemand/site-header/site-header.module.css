@@ -1,18 +1,15 @@
-/* Fixed site header: announcement bar (40px) + nav (64px).
+/* Fixed site header: a single 64px white nav with a bottom hairline.
 
-   Timings come from the source components: header/nav variants and buttons
-   tween 0.6s on cubic-bezier(.6,0,.05,1); the scroll hide/show tweens 0.4s
-   on the same curve; the announcement bar and text links use 0.4s
-   cubic-bezier(.44,0,.56,1); dropdown tiles use a short 0.4s spring. */
+   Timings come from the source components: nav variants and buttons tween
+   0.6s on cubic-bezier(.6,0,.05,1); the scroll hide/show tweens 0.4s on the
+   same curve; text links use 0.4s cubic-bezier(.44,0,.56,1). */
 
 .top {
   --nav-ease: cubic-bezier(0.6, 0, 0.05, 1);
   --link-ease: cubic-bezier(0.44, 0, 0.56, 1);
-  --tile-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --ink: rgb(2, 4, 24);
-  --muted-ink: rgb(49, 53, 63);
+  --wordmark-ink: #0a0d14;
   --hover-wash: rgb(249, 250, 251);
-  --hairline: rgb(229, 231, 235);
   position: fixed;
   top: 0;
   left: 0;
@@ -30,122 +27,14 @@
 }
 
 .top[data-hidden] {
-  transform: translateY(-110px);
+  transform: translateY(calc(-100% - 6px));
   opacity: 0;
 }
 
-/* ---------- Announcement bar ---------- */
-
-.barWrap {
-  position: relative;
-  z-index: 10;
-  width: 100%;
-  height: 40px;
-  overflow: hidden;
-  background: #fff;
-  transition: height 0.4s var(--link-ease);
-}
-
-.barWrap[data-closed] {
-  height: 1px;
-}
-
-.bar {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 40px;
-  padding: 8px 20px;
-  background: #000;
-  color: #fff;
-  text-decoration: none;
-  transition:
-    background-color 0.4s var(--link-ease),
-    opacity 0.4s var(--link-ease);
-}
-
-.barWrap[data-closed] .bar,
-.barWrap[data-closed] .barClose {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.barContent {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  width: 100%;
-  padding: 2px 0;
-  overflow: hidden;
-  transition: gap 0.4s var(--link-ease);
-}
-
-.barDot {
-  display: block;
-  flex: none;
-  width: 8px;
-  height: 8px;
-  overflow: visible;
-}
-
-.barLabel {
-  display: flex;
-  flex: none;
-  align-items: center;
-  gap: 6px;
-}
-
-.barText {
-  font-family: var(--site-font-inter-display);
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 20px;
-  letter-spacing: 0.28px;
-  white-space: pre;
-  color: #fff;
-}
-
-.barChevron {
-  display: block;
-  flex: none;
-  width: 12px;
-  height: 12px;
-}
-
-.barClose {
-  position: absolute;
-  top: 10px;
-  right: 20px;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 20px;
-  height: 20px;
-  padding: 0;
-  border: 0;
-  background: none;
-  cursor: pointer;
-  transition: opacity 0.4s var(--link-ease);
-}
-
-.barClose svg {
-  display: block;
-  width: 16px;
-  height: 16px;
-}
-
-@media (hover: hover) {
-  .barWrap:not([data-closed]):hover .bar {
-    background: var(--muted-ink);
-  }
-
-  .barWrap:not([data-closed]):hover .barContent {
-    gap: 12px;
-  }
+/* Keyboard focus inside a scrolled-away header brings it back into view. */
+.top[data-hidden]:has(:focus-visible) {
+  transform: none;
+  opacity: 1;
 }
 
 /* ---------- Nav (shared) ---------- */
@@ -156,18 +45,17 @@
   width: 100%;
 }
 
-.logo {
+.wordmark {
   display: block;
   flex: none;
-  width: 120px;
-  height: 24px;
-}
-
-.logo img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+  font-family: var(--site-font-display);
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 28px;
+  letter-spacing: -0.6px;
+  white-space: nowrap;
+  color: var(--wordmark-ink);
+  text-decoration: none;
 }
 
 .strokeBot {
@@ -182,7 +70,7 @@
   pointer-events: none;
 }
 
-.startBtn {
+.bookBtn {
   position: relative;
   display: flex;
   flex: none;
@@ -204,7 +92,7 @@
   transition: background-color 0.6s var(--nav-ease);
 }
 
-.startBtn::after {
+.bookBtn::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -214,22 +102,21 @@
   transition: border-color 0.6s var(--nav-ease);
 }
 
-.startDesktop {
+.bookDesktop {
   height: 36px;
 }
 
-.startMobile {
-  width: 119px;
+.bookMobile {
   height: 33px;
-  padding: 0;
+  padding: 0 16px;
 }
 
 @media (hover: hover) {
-  .startBtn:hover {
+  .bookBtn:hover {
     background: rgb(0, 28, 105);
   }
 
-  .startBtn:hover::after {
+  .bookBtn:hover::after {
     border-color: rgb(0, 28, 105);
   }
 }
@@ -284,71 +171,16 @@
   min-width: 0;
 }
 
-.trigger {
-  display: flex;
-  flex: none;
-  align-items: center;
-  gap: 2px;
-  height: 34px;
-  padding: 6px 16px;
-  border: 0;
-  background: #fff;
-  cursor: pointer;
-  transition: background-color 0.6s var(--nav-ease);
-}
-
-.triggerProduct[data-open] {
-  background: var(--hover-wash);
-}
-
-.triggerLabel {
-  font-size: 14px;
-  line-height: 22px;
-  letter-spacing: -0.14px;
-  white-space: pre;
-  color: var(--muted-ink);
-}
-
-.triggerChevron {
-  display: block;
-  flex: none;
-  width: 20px;
-  height: 20px;
-  transition: transform 0.6s var(--nav-ease);
-}
-
-.triggerProduct .triggerChevron {
-  color: var(--muted-ink);
-}
-
-.triggerResources .triggerChevron {
-  color: #000;
-}
-
-.trigger[data-open] .triggerChevron {
-  transform: rotate(-180deg);
-}
-
 /* Plain links render as padded inline anchors inside a 22px line, so the
    hover wash overhangs the row exactly like the source's link preset. */
-.linkCell,
-.loginCell {
+.linkCell {
   position: relative;
   flex: none;
-  text-align: center;
-  white-space: pre;
-}
-
-.linkCell {
   font-size: 14px;
   line-height: 22px;
   letter-spacing: -0.14px;
-}
-
-.loginCell {
-  font-size: 15px;
-  line-height: 24px;
-  letter-spacing: -0.15px;
+  text-align: center;
+  white-space: pre;
 }
 
 .textLink {
@@ -365,293 +197,6 @@
   .textLink:hover {
     background: var(--hover-wash);
   }
-}
-
-/* The dropdown spans the full nav width (like the source container), grows
-   from the 64px bar to bar + panel, and clips the panel as it opens. */
-.dropdown {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  height: 64px;
-  padding-top: 64px;
-  overflow: clip;
-  pointer-events: none;
-  transition: height 0.6s var(--nav-ease);
-}
-
-.deskNav[data-open] .dropdown {
-  height: 479px;
-}
-
-.dropdownCatcher {
-  position: absolute;
-  inset: 64px 0 0;
-  pointer-events: auto;
-}
-
-.panel {
-  position: relative;
-  flex: none;
-  height: 415px;
-  padding: 16px;
-  overflow: hidden;
-  background: #fff;
-  pointer-events: auto;
-}
-
-.panel[data-menu="product"] {
-  width: 940px;
-}
-
-.panel[data-menu="resources"] {
-  width: 939px;
-}
-
-.backdrop {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: -1;
-  height: 100vh;
-  background: #000;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.6s var(--nav-ease);
-}
-
-.deskNav[data-open] .backdrop {
-  opacity: 0.1;
-}
-
-/* ---------- Dropdown content (tiles + featured video) ---------- */
-
-.menuDesktop,
-.menuMobile {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.menuDesktop {
-  height: 100%;
-}
-
-.tiles {
-  display: flex;
-  gap: 10px;
-}
-
-.menuMobile .tiles {
-  flex-direction: column;
-}
-
-.tile {
-  position: relative;
-  isolation: isolate;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 16px;
-  background: #fff;
-  color: inherit;
-  text-decoration: none;
-}
-
-.menuDesktop .tile {
-  flex: 1 1 0px;
-  min-width: 0;
-}
-
-.tile::after,
-.video::after,
-.iconBox::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border: 1px solid var(--hairline);
-  pointer-events: none;
-}
-
-.tileCollapsed {
-  position: relative;
-  height: 1px;
-}
-
-.tileCollapsed .tile {
-  overflow: hidden;
-}
-
-.tileTop {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 12px;
-}
-
-.iconBox {
-  position: relative;
-  display: block;
-  flex: none;
-  width: 36px;
-  height: 36px;
-  overflow: hidden;
-  background: #fff;
-  box-shadow:
-    0 0.75px 1.5px 0 rgba(10, 12, 18, 0.05),
-    inset 0 -1.5px 0 0 rgba(10, 12, 18, 0.05),
-    inset 0 0 0 0.75px rgba(10, 12, 18, 0.18);
-}
-
-.iconBox::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(225deg, rgb(0, 28, 105) 0%, #000 100%);
-  box-shadow:
-    inset 0 -1.5px 0 0 rgba(10, 12, 18, 0.05),
-    inset 0 0 0 0.75px rgba(10, 12, 18, 0.18);
-  opacity: 0;
-  transition: opacity 0.4s var(--tile-ease);
-}
-
-.tileGlyph {
-  position: absolute;
-  top: 6px;
-  left: 6px;
-  z-index: 1;
-  display: block;
-  width: 24px;
-  height: 24px;
-  color: rgb(2, 54, 194);
-  transition: color 0.4s var(--tile-ease);
-}
-
-@media (hover: hover) {
-  .tile:hover .iconBox::before {
-    opacity: 1;
-  }
-
-  .tile:hover .tileGlyph {
-    color: #fff;
-  }
-}
-
-.tileTitle {
-  display: block;
-  font-size: 18px;
-  font-weight: 500;
-  line-height: 24px;
-  letter-spacing: -0.18px;
-  color: var(--ink);
-}
-
-.tileDesc,
-.videoDesc {
-  display: block;
-  font-size: 14px;
-  line-height: 22px;
-  letter-spacing: -0.14px;
-  color: rgb(75, 85, 99);
-}
-
-.video {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 32px;
-  padding: 16px;
-  background: rgb(248, 249, 250);
-  color: inherit;
-  text-decoration: none;
-}
-
-.videoText {
-  display: flex;
-  flex: 1 1 0px;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  gap: 16px;
-  min-width: 0;
-}
-
-.videoTop {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.videoTitle {
-  display: block;
-  font-size: 20px;
-  font-weight: 500;
-  line-height: 32px;
-  color: var(--ink);
-}
-
-.watch {
-  display: inline-flex;
-  align-items: center;
-  gap: 0;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 20px;
-  letter-spacing: -0.14px;
-  white-space: pre;
-  color: rgb(2, 54, 194);
-  transition: gap 0.6s var(--nav-ease);
-}
-
-.watchIcon {
-  display: block;
-  flex: none;
-  width: 20px;
-  height: 20px;
-}
-
-@media (hover: hover) {
-  .watch:hover {
-    gap: 4px;
-  }
-}
-
-.videoImg {
-  position: relative;
-  display: block;
-  flex: none;
-  width: 305px;
-  height: 159px;
-  overflow: hidden;
-}
-
-.videoImg img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: fill;
-}
-
-.menuMobile .video {
-  flex-direction: column;
-  gap: 24px;
-}
-
-.menuMobile .videoText {
-  flex: none;
-  width: 100%;
-}
-
-.menuMobile .videoImg {
-  width: 100%;
-  height: auto;
-  aspect-ratio: 305 / 159;
 }
 
 /* ---------- Phone nav ---------- */
@@ -730,20 +275,16 @@
   mask-image: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, #000 15%, #000 96%, rgba(0, 0, 0, 0) 100%);
 }
 
-.mLinkCell,
-.mLinkCellLogin {
+.mLinkCell {
+  flex: none;
   width: 100%;
+  height: 44px;
+  padding: 8px 0;
   font-size: 20px;
   line-height: 28px;
   letter-spacing: -0.2px;
   text-align: center;
   white-space: pre-wrap;
-}
-
-.mLinkCell {
-  flex: none;
-  height: 44px;
-  padding: 8px 0;
 }
 
 .mTextLink {
@@ -769,7 +310,7 @@
   gap: 20px;
 }
 
-.mStartBlack {
+.mBookBlack {
   position: relative;
   display: flex;
   align-items: center;
@@ -791,7 +332,7 @@
   transition: background-color 0.6s var(--nav-ease);
 }
 
-.mStartBlack::after {
+.mBookBlack::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -801,97 +342,39 @@
 }
 
 @media (hover: hover) {
-  .mStartBlack:hover {
+  .mBookBlack:hover {
     background: rgb(0, 28, 105);
   }
 
-  .mStartBlack:hover::after {
+  .mBookBlack:hover::after {
     border-color: rgb(0, 28, 105);
   }
-}
-
-/* Phone accordions (Product / Resources). Height is driven inline: 44px
-   closed, trigger + measured body when open. */
-.acc {
-  position: relative;
-  flex: none;
-  overflow: hidden;
-  background: #fff;
-  transition: height 0.6s var(--nav-ease);
-}
-
-.accTrigger {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  width: 100%;
-  height: 40px;
-  padding: 6px 10px 6px 16px;
-  border: 0;
-  background: #fff;
-  cursor: pointer;
-  transition: background-color 0.6s var(--nav-ease);
-}
-
-.accProduct[data-open] .accTrigger {
-  background: var(--hover-wash);
-}
-
-.accLabel {
-  font-size: 20px;
-  line-height: 28px;
-  letter-spacing: -0.2px;
-  white-space: pre;
-  color: var(--muted-ink);
-}
-
-.accChevron {
-  display: block;
-  flex: none;
-  width: 28px;
-  height: 28px;
-  transition: transform 0.6s var(--nav-ease);
-}
-
-.accProduct .accChevron {
-  color: var(--muted-ink);
-}
-
-.accResources .accChevron {
-  color: #000;
-}
-
-.acc[data-open] .accChevron {
-  transform: rotate(-180deg);
-}
-
-.accBody {
-  padding: 16px 0 20px;
 }
 
 /* ---------- Breakpoints ---------- */
 
 @media (min-width: 810px) and (max-width: 1279.98px) {
-  /* Tablet layout until a dropdown has been opened; the source then keeps
-     its desktop variant (centred links, MCP back) for the rest of the visit. */
-  .deskNav:not([data-sticky-desktop]) .row {
+  /* Tablet: wordmark, links and button spread edge to edge. */
+  .row {
     justify-content: space-between;
     gap: 0;
   }
 
-  .deskNav:not([data-sticky-desktop]) .logoWrap {
+  .logoWrap {
     flex: none;
     justify-content: flex-start;
     gap: 10px;
   }
 
-  .deskNav:not([data-sticky-desktop]) .actions {
+  .actions {
     flex: none;
   }
+}
 
-  .deskNav:not([data-sticky-desktop]) .mcpCell {
-    display: none;
+/* Narrow tablets: tighter link padding so the row keeps air at 810px. */
+@media (min-width: 810px) and (max-width: 959.98px) {
+  .textLink {
+    padding: 8px 12px;
   }
 }
 
@@ -904,6 +387,18 @@
 @media (min-width: 810px) {
   .mNav {
     display: none;
+  }
+}
+
+/* Very narrow phones: shrink the wordmark so the row keeps its button. */
+@media (max-width: 359.98px) {
+  .mRow .wordmark {
+    font-size: 17px;
+    letter-spacing: -0.4px;
+  }
+
+  .bookMobile {
+    padding: 0 12px;
   }
 }
 

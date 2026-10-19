@@ -1,0 +1,204 @@
+/* Setup card inside the Getting started frame. Light-UI values from the
+   clone's Qualify & Route scheduler: the step header's dot and #04072a ink,
+   Gray/50 fields with Gray/200 edges that turn Green/400 once valid, and the
+   checklist's green discs. Values are never shown, only a neutral bar, so the
+   card restates the three asks without inventing an answer to any. */
+
+.card {
+  --ink: #04072a;
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-500: #6b7280;
+  --gray-900: #111928;
+  --green-400: #31c48d;
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  font-family: var(--site-font-body);
+}
+
+/* ---- Step header ---- */
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px var(--pad-r) 11px var(--pad-l);
+  border-bottom: 1px solid var(--gray-200);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.headDot {
+  flex: none;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--ink);
+}
+
+/* ---- The three asks ---- */
+
+.needs {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin: 0;
+  padding: 22px var(--pad-r) 24px var(--pad-l);
+  list-style: none;
+}
+
+.need {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+/* The scheduler's selected-day chip, used as a step numeral. */
+.num {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  background: var(--ink);
+  color: #ffffff;
+  font-size: 12px;
+  line-height: 1;
+  font-weight: 600;
+}
+
+.needBody {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 600;
+  color: var(--gray-900);
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 34px;
+  padding: 0 10px;
+  border: 1px solid var(--green-400);
+  border-radius: 6px;
+  background: var(--gray-50);
+}
+
+/* A neutral stand-in for the value: never a made-up number or time. */
+.fieldBar {
+  display: block;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--gray-200);
+  transform-origin: left center;
+}
+
+.need:nth-child(1) .fieldBar {
+  width: 46%;
+}
+
+.need:nth-child(2) .fieldBar {
+  width: 34%;
+}
+
+.need:nth-child(3) .fieldBar {
+  width: 22%;
+}
+
+.fieldCheck {
+  --disc: 18px;
+  margin-left: auto;
+}
+
+/* ---- Footer line ---- */
+
+.foot {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px var(--pad-r) 14px var(--pad-l);
+  border-top: 1px solid var(--gray-200);
+  background: var(--gray-50);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  color: var(--gray-900);
+}
+
+.footCheck {
+  --disc: 20px;
+}
+
+/* ---- Entrance: each field fills and validates in turn ---- */
+
+[data-reveal="armed"] .need {
+  opacity: 0.45;
+}
+
+[data-reveal="armed"] .field {
+  border-color: var(--gray-200);
+}
+
+[data-reveal="armed"] .fieldBar {
+  transform: scaleX(0);
+}
+
+[data-reveal="armed"] .fieldCheck {
+  opacity: 0;
+  transform: scale(0.55);
+}
+
+[data-reveal="armed"] .foot {
+  opacity: 0;
+  translate: 0 4px;
+}
+
+[data-reveal="shown"] .need {
+  --at: calc(250ms + var(--i, 0) * 520ms);
+  transition: opacity 350ms ease var(--at);
+}
+
+[data-reveal="shown"] .field {
+  transition: border-color 220ms ease calc(var(--at) + 380ms);
+}
+
+[data-reveal="shown"] .fieldBar {
+  transition: transform 420ms var(--ease-out) calc(var(--at) + 60ms);
+}
+
+[data-reveal="shown"] .fieldCheck {
+  transition:
+    opacity 400ms ease calc(var(--at) + 380ms),
+    transform 400ms var(--ease-out) calc(var(--at) + 380ms);
+}
+
+[data-reveal="shown"] .foot {
+  transition:
+    opacity 450ms ease 1900ms,
+    translate 450ms var(--ease-out) 1900ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] .need,
+  [data-reveal] .field,
+  [data-reveal] .fieldBar,
+  [data-reveal] .fieldCheck,
+  [data-reveal] .foot {
+    transition: none;
+  }
+}

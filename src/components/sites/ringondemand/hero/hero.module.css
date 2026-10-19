@@ -1,12 +1,11 @@
-/* Hero (source prefix `icnhi`). The frame's top padding lives on `main`; this
-   section starts where the source `<section class="icnhi-root">` starts. */
+/* Hero. Layout, type scale and CTA carried over from the clone's hero; the
+   frame's top padding lives on `main`. */
 
 .root {
   --white: #ffffff;
-  --gray200: #e5e7eb;
   --gray500: #6b7280;
   --gray600: #4b5563;
-  --gray900: #111928;
+  --accent: #1c64f2;
   --hairline: #e5e7eb;
   --heading: #0a0d14;
   --cta: #0236c2;
@@ -30,7 +29,7 @@
 }
 
 .root :where(:focus-visible) {
-  outline: 2px solid #1c64f2;
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
@@ -99,10 +98,12 @@
   text-transform: none;
 }
 
-/* Justified so the single line fills its span exactly. */
+/* Justified so the single line fills its span exactly. The tracking keeps
+   this short line from being carried by its word gaps alone. */
 .eyebrowText {
   display: block;
   width: 95%;
+  letter-spacing: 0.24em;
   text-align: justify;
   text-align-last: justify;
 }
@@ -122,10 +123,6 @@
   line-height: 1.4;
   font-weight: 500;
   color: var(--heading);
-}
-
-.nowrap {
-  white-space: nowrap;
 }
 
 .sub {
@@ -165,6 +162,11 @@
   transition: filter 150ms ease;
 }
 
+/* The trailing arrow is decorative and kept out of the label. */
+.ctaArrow {
+  margin-left: 0.3em;
+}
+
 .cta:hover {
   filter: brightness(1.1);
 }
@@ -181,141 +183,32 @@
   color: var(--gray500);
 }
 
-/* ---------- Proof: faces + rating ---------- */
+/* ---------- Proof line (the clone's rating row) ---------- */
+/* Badge set inline so a wrapped line stays one centred paragraph. */
 .proof {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 12px;
-}
-
-.faces {
-  display: flex;
-  align-items: center;
-}
-
-/* Ring in the page background so overlapped faces cut cleanly. No
-   overflow:hidden — it would clip the tooltip; the img crops itself. */
-.face {
-  position: relative;
-  width: 44px;
-  height: 44px;
-  flex: 0 0 auto;
-  border-radius: 50%;
-  border: 2px solid var(--white);
-  background: var(--gray200);
-}
-
-.face + .face {
-  margin-left: -10px;
-}
-
-.faceImg {
-  display: block;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
-  object-position: 50% 20%;
-}
-
-/* Name tooltip, from data-name. */
-.face::after {
-  content: attr(data-name);
-  position: absolute;
-  bottom: calc(100% + 8px);
-  left: 50%;
-  transform: translate(-50%, 2px);
-  padding: 5px 9px;
-  border-radius: 6px;
-  background: var(--gray900);
-  color: var(--white);
-  font-size: 12px;
-  line-height: 16px;
-  font-weight: 500;
-  letter-spacing: 0;
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-  transition:
-    opacity 0.15s ease,
-    transform 0.15s ease;
-}
-
-/* Caret under the bubble. */
-.face::before {
-  content: "";
-  position: absolute;
-  bottom: calc(100% + 3px);
-  left: 50%;
-  transform: translate(-50%, 2px);
-  border: 5px solid transparent;
-  border-top-color: var(--gray900);
-  border-bottom: none;
-  opacity: 0;
-  pointer-events: none;
-  transition:
-    opacity 0.15s ease,
-    transform 0.15s ease;
-}
-
-/* Above the overlapping neighbour, so the bubble never sits under a face. */
-.face:hover {
-  z-index: 2;
-}
-
-.face:hover::after,
-.face:hover::before {
-  opacity: 1;
-  transform: translate(-50%, 0);
-}
-
-.rating {
-  display: flex;
-  align-items: center;
-  gap: 6px;
   font-size: 15px;
   line-height: 20px;
   color: var(--gray600);
+  text-wrap: balance;
 }
 
-.ratingStrong {
+.proofStrong {
   font-weight: 600;
+  white-space: nowrap;
   color: var(--heading);
 }
 
-.g2 {
-  display: block;
-  width: 18px;
-  height: 18px;
-  flex: 0 0 auto;
+.badge {
+  display: inline-block;
+  margin-right: 8px;
+  vertical-align: -4px;
+  color: var(--accent);
 }
 
-.stars {
-  display: inline-flex;
-  align-items: center;
-  gap: 1px;
-}
-
-.star {
-  display: block;
-}
-
-/* ---------- Visual: the still composite ---------- */
+/* ---------- Visual: the live-transfer illustration ---------- */
 .visual {
   flex: 1 0 0;
   min-width: 0;
-}
-
-/* Height-capped at 500px; width follows the aspect ratio and the box centres
-   in the column. max-width keeps it inside narrow phones. */
-.shot {
-  display: block;
-  width: auto;
-  height: auto;
-  max-height: 500px;
-  max-width: 100%;
-  margin-inline: auto;
 }
 
 /* ---------- Tablet ---------- */
@@ -346,9 +239,13 @@
   }
   .ctaGroup {
     align-items: center;
+    text-align: center;
+  }
+  .micro {
+    text-wrap: balance;
   }
   .proof {
-    align-items: center;
+    text-align: center;
   }
   .visual {
     flex: none;
@@ -378,15 +275,15 @@
   .eyebrow {
     font-size: 12px;
   }
+  /* Looser tracking would push the phone line past the ghost and wrap it. */
+  .eyebrowText {
+    letter-spacing: 0.18em;
+  }
+  .micro {
+    line-height: 20px;
+  }
   .eyebrowGhost {
     font-size: 28px;
-  }
-  .face {
-    width: 38px;
-    height: 38px;
-  }
-  .face + .face {
-    margin-left: -8px;
   }
   .cta {
     width: 100%;

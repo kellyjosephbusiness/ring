@@ -1,27 +1,18 @@
-import { START_FREE_URL } from "../links";
+import { BOOK_CALL_TARGET, BOOK_CALL_URL } from "../links";
+import { TransferVisual } from "./transfer-visual";
 import styles from "./hero.module.css";
 
-const IMG = "/sites/iclosed/images";
+const HEADLINE_LINE_1 = "Signed MVA Cases for";
 
-const FACES = [
-  { name: "Iman Gadzhi", src: `${IMG}/04ec1e6d694d.webp` },
-  { name: "Alex Becker", src: `${IMG}/d7a1bc5c82b5.webp` },
-  { name: "Hunter Dickinson", src: `${IMG}/9172b0f19880.webp` },
-  { name: "Jordan Platten", src: `${IMG}/32d741a86b8d.webp` },
-  { name: "Matt Gray", src: `${IMG}/dee7b247b94a.webp` },
-  { name: "Daniel Dalen", src: `${IMG}/2720d47181b5.webp` },
-  { name: "Matt Par", src: `${IMG}/279447db60f5.webp` },
-  { name: "Padraig Jordan", src: `${IMG}/6cd0a2fb2e77.webp` },
-] as const;
-
-const HEADLINE_LINE_1 = "Triple your leads with";
-
-function Star() {
+/** Verified badge (scalloped seal with a check), drawn at 18px beside the proof line. */
+function CheckBadge() {
   return (
-    <svg className={styles.star} width="16" height="16" viewBox="0 0 24 24" fill="none">
+    <svg className={styles.badge} width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
       <path
-        d="M11.9988 17L6.12099 20.5902L7.71909 13.8906L2.48828 9.40983L9.35381 8.85942L11.9988 2.5L14.6439 8.85942L21.5094 9.40983L16.2786 13.8906L17.8767 20.5902L11.9988 17Z"
-        fill="#EAAA45"
+        fill="currentColor"
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M8.603 3.799A4.49 4.49 0 0 1 12 2.25c1.357 0 2.573.6 3.397 1.549a4.49 4.49 0 0 1 3.498 1.307 4.491 4.491 0 0 1 1.307 3.497A4.49 4.49 0 0 1 21.75 12a4.49 4.49 0 0 1-1.549 3.397 4.491 4.491 0 0 1-1.307 3.497 4.491 4.491 0 0 1-3.497 1.307A4.49 4.49 0 0 1 12 21.75a4.49 4.49 0 0 1-3.397-1.549 4.49 4.49 0 0 1-3.498-1.306 4.491 4.491 0 0 1-1.307-3.498A4.49 4.49 0 0 1 2.25 12c0-1.357.6-2.573 1.549-3.397a4.49 4.49 0 0 1 1.307-3.497 4.49 4.49 0 0 1 3.497-1.307Zm7.007 6.387a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z"
       />
     </svg>
   );
@@ -37,9 +28,7 @@ export function Hero() {
               <span className={styles.eyebrowGhost} aria-hidden="true">
                 {HEADLINE_LINE_1}
               </span>
-              <span className={styles.eyebrowText}>
-                Only 3 out of 10 leads book from your scheduler
-              </span>
+              <span className={styles.eyebrowText}>For personal injury law firms</span>
             </p>
             <div className={styles.text}>
               <h1 className={styles.h1}>
@@ -47,49 +36,41 @@ export function Hero() {
                 <span>
                   {" "}
                   <br className={styles.h1Break} />
-                  <span className={styles.nowrap}>high-converting</span> Scheduler
+                  Personal Injury Firms
                 </span>
               </h1>
               <p className={styles.sub}>
-                iClosed is the conversion-first scheduler that recovers drop-offs and follows up in
-                the right channel to maximize profit.
+                You give us your case criteria. We run the ads, screen every caller, and send you a
+                live transfer or a signed retainer. You pay per transfer or per signed case and
+                nothing else.
               </p>
             </div>
             <div className={styles.ctaGroup}>
-              <a className={styles.cta} href={START_FREE_URL} target="_blank">
-                Start for free →
-              </a>
-              <p className={styles.micro}>7-day free trial - cancel anytime</p>
-            </div>
-            <div className={styles.proof}>
-              <div className={styles.faces}>
-                {FACES.map((face) => (
-                  <span key={face.name} className={styles.face} data-name={face.name}>
-                    <img className={styles.faceImg} src={face.src} alt={face.name} />
-                  </span>
-                ))}
-              </div>
-              <p className={styles.rating}>
-                <img className={styles.g2} src={`${IMG}/da84388f60e1.webp`} alt="G2" />
-                <span className={styles.stars} aria-hidden="true">
-                  <Star />
-                  <Star />
-                  <Star />
-                  <Star />
-                  <Star />
+              <a
+                className={styles.cta}
+                href={BOOK_CALL_URL}
+                target={BOOK_CALL_TARGET}
+                rel={BOOK_CALL_TARGET ? "noopener noreferrer" : undefined}
+              >
+                Book a call
+                <span className={styles.ctaArrow} aria-hidden="true">
+                  →
                 </span>
-                <b className={styles.ratingStrong}>5/5 on G2</b>
+              </a>
+              <p className={styles.micro}>
+                The call is with a licensed attorney on our team, not a sales rep.
               </p>
             </div>
+            <p className={styles.proof}>
+              <CheckBadge />
+              <span>
+                Over <b className={styles.proofStrong}>1,500 signed retainers</b> delivered last
+                quarter
+              </span>
+            </p>
           </div>
           <div className={styles.visual}>
-            <img
-              className={styles.shot}
-              src={`${IMG}/fb6236a5cf2d.webp`}
-              alt="iClosed scheduler capturing a lead, with a customer testimonial"
-              width={990}
-              height={977}
-            />
+            <TransferVisual />
           </div>
         </div>
       </div>

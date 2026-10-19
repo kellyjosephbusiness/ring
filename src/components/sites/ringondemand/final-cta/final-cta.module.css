@@ -2,13 +2,15 @@
 
    Same dark navy family as the page's other dark band: a top-to-bottom navy
    gradient, two blue radial glows and a masked dot grid. The CTA is the white
-   dark-band pill rather than the blue button. */
+   dark-band pill rather than the blue button. It is also the "Book a call"
+   anchor (#book-a-call). */
 
 .outer {
   position: relative;
   z-index: 6;
   width: 100%;
   container-type: inline-size;
+  scroll-margin-top: 80px;
 }
 
 .band {
@@ -60,28 +62,9 @@
   width: 100%;
   max-width: 1440px;
   margin-inline: auto;
-  padding-inline: 40px;
+  /* The source's empty note line below the button kept 18px of flex gap. */
+  padding: 0 40px 18px;
   text-align: center;
-}
-
-.eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  margin: 0;
-  font-size: 12px;
-  line-height: 16px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--blue-400);
-}
-
-.eyebrow::before {
-  content: "";
-  width: 18px;
-  height: 1px;
-  background: var(--blue-400);
 }
 
 .heading {
@@ -93,10 +76,18 @@
   font-weight: 500;
   letter-spacing: -0.4px;
   color: #ffffff;
+  text-wrap: balance;
 }
 
 .headingAccent {
   color: var(--blue-400);
+}
+
+/* Where it fits, keep the accented clause together on its own line. */
+@container (min-width: 810px) {
+  .headingAccent {
+    display: inline-block;
+  }
 }
 
 .subcopy {
@@ -106,6 +97,7 @@
   line-height: 28px;
   letter-spacing: -0.27px;
   color: #c3c9d6;
+  text-wrap: balance;
 }
 
 .cta {
@@ -126,8 +118,19 @@
   transition: filter 150ms ease;
 }
 
+.ctaArrow {
+  display: inline-block;
+  transition: transform 0.4s cubic-bezier(0.44, 0, 0.56, 1);
+}
+
 .cta:hover {
   filter: brightness(0.94);
+}
+
+@media (hover: hover) {
+  .cta:hover .ctaArrow {
+    transform: translateX(3px);
+  }
 }
 
 .cta:active {
@@ -139,14 +142,29 @@
   outline-offset: 2px;
 }
 
-/* The source ships the note with a lone collapsible space, so it renders with
-   no height but still takes its flex gap. */
-.note {
-  margin: 0;
-  font-size: 13px;
-  line-height: 20px;
-  letter-spacing: -0.13px;
-  color: rgba(255, 255, 255, 0.42);
+/* Enter motion: heading, body and button rise in, lightly staggered. */
+.outer[data-reveal] .heading,
+.outer[data-reveal] .subcopy,
+.outer[data-reveal] .cta {
+  transition:
+    opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 150ms ease;
+}
+
+.outer[data-reveal="armed"] .heading,
+.outer[data-reveal="armed"] .subcopy,
+.outer[data-reveal="armed"] .cta {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.outer[data-reveal="shown"] .subcopy {
+  transition-delay: 80ms, 80ms, 0ms;
+}
+
+.outer[data-reveal="shown"] .cta {
+  transition-delay: 160ms, 160ms, 0ms;
 }
 
 @container (max-width: 1279px) {
@@ -179,7 +197,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cta {
-    transition-duration: 0.001ms;
+  .cta,
+  .ctaArrow,
+  .heading,
+  .subcopy {
+    transition-duration: 0.001ms !important;
   }
 }

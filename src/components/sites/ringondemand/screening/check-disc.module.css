@@ -1,0 +1,21 @@
+/* Qualify & Route check disc (source prefix `icptq`, `.checkSwapChk`):
+   Green/100 #def7ec ground, #057a55 glyph at two thirds of the disc. */
+
+.disc {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--disc, 20px);
+  height: var(--disc, 20px);
+  border-radius: 999px;
+  background: #def7ec;
+  color: #057a55;
+}
+
+.glyph {
+  display: block;
+  width: calc(var(--disc, 20px) * 0.6667);
+  height: calc(var(--disc, 20px) * 0.6667);
+  max-width: none;
+}

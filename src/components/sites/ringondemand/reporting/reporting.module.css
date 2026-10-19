@@ -1,0 +1,278 @@
+/* Posted-transfer record inside the Reporting frame. The rows are the
+   clone's Qualify & Route checklist: a dim ring that swaps for the green
+   check disc, then a Green/100 badge with the outcome. The "Delivery update"
+   chip is the dark band's floating status chip, on white. */
+
+.visual {
+  --ink: #04072a;
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-500: #6b7280;
+  --gray-700: #374151;
+  --gray-900: #111928;
+  --green-100: #def7ec;
+  --green-200: #bcf0da;
+  --green-500: #0e9f6e;
+  --green-800: #03543f;
+  --blue-600: #1c64f2;
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.card {
+  font-family: var(--site-font-body);
+}
+
+/* ---- Header ---- */
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px var(--pad-r) 12px var(--pad-l);
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.liveDot {
+  position: relative;
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--green-500);
+}
+
+.headTitle {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  color: var(--gray-900);
+  white-space: nowrap;
+}
+
+.caption {
+  margin: 0;
+  padding: 16px var(--pad-r) 4px var(--pad-l);
+  font-size: 11px;
+  line-height: 16px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gray-500);
+}
+
+/* ---- Answers ---- */
+
+.answers {
+  margin: 0;
+  padding: 0 var(--pad-r) 12px var(--pad-l);
+  list-style: none;
+}
+
+.answer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 0;
+}
+
+.answer + .answer {
+  border-top: 1px solid var(--gray-100);
+}
+
+.swap {
+  position: relative;
+  flex: none;
+  width: 20px;
+  height: 20px;
+}
+
+/* Pending ring, under the check until the row is answered. */
+.swapDim {
+  position: absolute;
+  inset: 2px;
+  border: 1.5px solid var(--gray-300);
+  border-radius: 999px;
+  opacity: 0;
+}
+
+.swapCheck {
+  --disc: 20px;
+  position: absolute;
+  inset: 0;
+}
+
+.question {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  color: var(--gray-700);
+}
+
+.badge {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 6px;
+  border: 1px solid var(--green-200);
+  border-radius: 6px;
+  background: var(--green-100);
+  font-size: 13px;
+  line-height: 1.5;
+  font-weight: 500;
+  color: var(--green-800);
+  white-space: nowrap;
+}
+
+/* ---- Delivery update chip ---- */
+
+.chip {
+  position: absolute;
+  right: 18px;
+  top: 14px;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px 6px 10px;
+  border: 1px solid var(--gray-200);
+  border-radius: 999px;
+  background: #ffffff;
+  box-shadow:
+    0 10px 24px -10px rgba(4, 7, 42, 0.45),
+    0 1px 2px rgba(16, 24, 40, 0.06);
+  font-family: var(--site-font-body);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  color: var(--gray-900);
+  white-space: nowrap;
+}
+
+.chipPulse {
+  position: relative;
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--blue-600);
+}
+
+.chipPulse::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--blue-600);
+  animation: chipPulse 2.2s ease-out infinite;
+}
+
+@keyframes chipPulse {
+  0% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  70%,
+  100% {
+    opacity: 0;
+    transform: scale(2.6);
+  }
+}
+
+/* ---- Entrance: answers check off in turn, then the update lands ---- */
+
+[data-reveal="armed"] .answer {
+  opacity: 0.4;
+}
+
+[data-reveal="armed"] .swapDim {
+  opacity: 1;
+}
+
+[data-reveal="armed"] .swapCheck {
+  opacity: 0;
+  transform: scale(0.55);
+}
+
+[data-reveal="armed"] .badge {
+  opacity: 0;
+  transform: translateX(-4px) scale(0.9);
+}
+
+[data-reveal="armed"] .chip {
+  opacity: 0;
+  translate: 0 -8px;
+}
+
+[data-reveal="shown"] .answer {
+  --at: calc(300ms + var(--i, 0) * 360ms);
+  transition: opacity 450ms ease var(--at);
+}
+
+[data-reveal="shown"] .swapDim,
+[data-reveal="shown"] .swapCheck {
+  transition:
+    opacity 400ms ease var(--at),
+    transform 400ms var(--ease-out) var(--at);
+}
+
+[data-reveal="shown"] .badge {
+  transition:
+    opacity 350ms ease calc(var(--at) + 80ms),
+    transform 350ms var(--ease-out) calc(var(--at) + 80ms);
+}
+
+[data-reveal="shown"] .chip {
+  transition:
+    opacity 450ms ease 2250ms,
+    translate 450ms var(--ease-out) 2250ms;
+}
+
+/* ---- Tablet / phone ---- */
+
+@container (max-width: 1279px) {
+  .chip {
+    right: 54px;
+    top: 18px;
+  }
+}
+
+@container (max-width: 809px) {
+  .chip {
+    right: 26px;
+    top: 8px;
+    padding: 5px 10px 5px 8px;
+    font-size: 11px;
+  }
+
+  .answer {
+    gap: 8px;
+    padding: 10px 0;
+  }
+
+  .question {
+    font-size: 13px;
+  }
+
+  .badge {
+    font-size: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chipPulse::after {
+    animation: none;
+    opacity: 0;
+  }
+
+  [data-reveal] .answer,
+  [data-reveal] .swapDim,
+  [data-reveal] .swapCheck,
+  [data-reveal] .badge,
+  [data-reveal] .chip {
+    transition: none;
+  }
+}

@@ -1,6 +1,6 @@
-/* "Plug in. Take it back." (source prefix `icuc`). The page's one dark band.
+/* "Who this is for": the clone's dark use-cases band (source prefix `icuc`).
    It runs full-window and sits above the page rails (z-index 6), while the
-   copy and the card row are each capped at 1440 with their own gutters. */
+   heading and the card row are capped at 1440 with their own gutters. */
 
 .outer {
   position: relative;
@@ -58,46 +58,14 @@
   gap: 64px;
 }
 
-/* ---- Copy ---- */
+/* ---- Heading ---- */
 
-.head {
+.heading {
+  margin: 0;
   /* 812 is the frame's copy measure; the gutters sit outside it. */
   width: calc(812px + var(--container-pad) * 2);
   max-width: 100%;
   padding-inline: var(--container-pad);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 30px;
-}
-
-.eyebrow {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 13px;
-  line-height: 24px;
-  font-weight: 600;
-  letter-spacing: 1.82px;
-  color: #8fb5fb;
-}
-
-.eyebrowRule {
-  width: 22px;
-  height: 2px;
-  border-radius: 1px;
-  background: linear-gradient(to right, var(--blue-600), var(--blue-400));
-}
-
-.headText {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-  width: 100%;
-}
-
-.heading {
   font-family: var(--site-font-display);
   font-size: 36px;
   line-height: 1.4;
@@ -107,64 +75,26 @@
   color: var(--white);
 }
 
-/* The second line is a horizontal gradient clipped to the glyphs. */
-.headingAccent {
-  background-image: linear-gradient(91.54deg, #76a9fa 8%, #b7d2ff 92%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.subcopy {
-  font-size: 18px;
-  line-height: 28px;
-  font-weight: 400;
-  letter-spacing: -0.27px;
-  text-align: center;
-  color: #c3c9d6;
-}
-
-.pills {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.pill {
-  padding: 9px 17px;
-  border: 1px solid #d5d7da;
-  border-radius: 32px;
-  background: var(--white);
-  font-size: 14px;
-  line-height: 16px;
-  font-weight: 500;
-  color: #525252;
-}
-
 /* ---- Cards ---- */
 
 .cards {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   /* Every card runs the full height of the tallest one; the badge pins to
      the bottom edge, so the row reads as one block. */
   align-items: stretch;
   gap: 16px;
   width: 100%;
   max-width: var(--container-max);
+  margin: 0;
   padding-inline: var(--container-pad);
+  list-style: none;
 }
 
 /* Glass: a top-down white wash at 5% falling to 2%, held by a 9% hairline. */
 .card {
   position: relative;
-  flex: 1 0 0;
   min-width: 0;
-  max-width: 448px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -192,7 +122,29 @@
   );
 }
 
+/* The roster row's slot: one 44px disc carrying a line icon. */
+.iconDisc {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 auto;
+  margin-bottom: 16px;
+  border-radius: 50%;
+  border: 1px solid rgba(118, 169, 250, 0.28);
+  background: radial-gradient(120% 120% at 30% 20%, rgba(118, 169, 250, 0.2) 0%, rgba(28, 100, 242, 0.06) 70%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  color: #8fb5fb;
+}
+
+.icon {
+  display: block;
+  width: 22px;
+  height: 22px;
+}
+
 .cardTitle {
+  margin: 0;
   font-family: var(--site-font-display);
   font-size: 20px;
   line-height: 28px;
@@ -201,6 +153,7 @@
 }
 
 .cardText {
+  margin: 0;
   font-size: 15px;
   line-height: 25px;
   font-weight: 400;
@@ -209,67 +162,11 @@
   margin-bottom: 12px;
 }
 
-/* ---- Client-proof rows: three roster faces (or two brand marks) ---- */
-
-.cardFaces {
-  margin-bottom: 16px;
-  display: flex;
-  align-items: center;
-}
-
-.faceRing {
-  width: 44px;
-  height: 44px;
-  flex: 0 0 auto;
-  border-radius: 50%;
-  overflow: hidden;
-  /* Ring in the band's navy so overlapped faces cut cleanly. */
-  border: 2px solid rgba(2, 4, 24, 0.9);
-  /* The roster photos are cut-outs on transparency — give them a ground. */
-  background: #232b45;
-}
-
-.faceRing + .faceRing {
-  margin-left: -12px;
-}
-
-.face {
-  display: block;
-  width: 100%;
-  height: 100%;
-  max-width: 100%;
-  object-fit: cover;
-  /* Bias toward the top of the cut-out so the crop frames the face. */
-  object-position: 50% 12%;
-}
-
-/* Logo circles: the mark floats centred instead of cover-cropping. */
-.isLogo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.logoMark {
-  display: block;
-  width: 22px;
-  height: 22px;
-  max-width: 100%;
-  object-fit: contain;
-}
-
-/* The HYROS mark ships as black glyphs on alpha — paint it white. */
-.isHyros {
-  filter: brightness(0) invert(1);
-  opacity: 0.92;
-}
-
-/* ---- Funnel badge ----
-   Not a flex container — the space between the two tones is a text node.
+/* ---- Tag chip ----
    margin-top: auto pins the chip to the card's bottom edge. */
 
 .cardBadge {
-  margin-top: auto;
+  margin: auto 0 0;
   padding: 7px 12px;
   border-radius: 4px;
   background: rgba(118, 169, 250, 0.1);
@@ -282,11 +179,7 @@
   color: #dbe4f6;
 }
 
-.cardBadgeAccent {
-  color: #8fb5fb;
-}
-
-/* ---- Tablet: two-up cards, even widths ---- */
+/* ---- Tablet: two-up cards, the odd one out spans the row ---- */
 @container (max-width: 1279px) {
   .section {
     padding-block: 72px;
@@ -294,26 +187,23 @@
   .inner {
     gap: 48px;
   }
-  .head {
+  .heading {
     width: 100%;
     max-width: 720px;
-  }
-  .heading {
     font-size: 32px;
   }
   .cards {
-    display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    align-items: stretch;
   }
-  .card {
-    max-width: none;
+  .card:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
   }
 }
 
 /* ---- Mobile: single column ---- */
 @container (max-width: 809px) {
   .section {
+    --container-pad: 20px;
     padding-block: 56px;
   }
   .inner {
@@ -322,12 +212,7 @@
   .heading {
     font-size: 26px;
   }
-  .subcopy {
-    font-size: 16px;
-    line-height: 26px;
-  }
   .cards {
     grid-template-columns: minmax(0, 1fr);
-    padding-inline: 20px;
   }
 }
