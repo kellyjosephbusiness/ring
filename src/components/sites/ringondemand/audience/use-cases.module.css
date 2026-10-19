@@ -1,0 +1,333 @@
+/* "Plug in. Take it back." (source prefix `icuc`). The page's one dark band.
+   It runs full-window and sits above the page rails (z-index 6), while the
+   copy and the card row are each capped at 1440 with their own gutters. */
+
+.outer {
+  position: relative;
+  z-index: 6;
+  width: 100%;
+  container-type: inline-size;
+}
+
+.section {
+  --nav: #020418;
+  --container-pad: 40px;
+  --container-max: 1440px;
+  --blue-600: #1c64f2;
+  --blue-400: #76a9fa;
+  --white: #ffffff;
+
+  position: relative;
+  width: 100%;
+  font-family: var(--site-font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  color: #111928;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Not Gray/900 — the band is the deepest navy in the palette, the same one
+     the nav links use. */
+  background: var(--nav);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding-block: 101px 100px;
+  overflow: hidden;
+}
+
+/* Three ellipse glows: a large blue one top-right, a paler one top-left, and a
+   third rising from the bottom edge. */
+.section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(44.4% 36.7% at 74% 18%, rgba(28, 100, 242, 0.14) 0%, rgba(28, 100, 242, 0) 70%),
+    radial-gradient(36.1% 29.7% at 12% 6%, rgba(118, 169, 250, 0.08) 0%, rgba(118, 169, 250, 0) 70%),
+    radial-gradient(38.9% 26.2% at 50% 100%, rgba(28, 100, 242, 0.1) 0%, rgba(28, 100, 242, 0) 72%);
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 64px;
+}
+
+/* ---- Copy ---- */
+
+.head {
+  /* 812 is the frame's copy measure; the gutters sit outside it. */
+  width: calc(812px + var(--container-pad) * 2);
+  max-width: 100%;
+  padding-inline: var(--container-pad);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  line-height: 24px;
+  font-weight: 600;
+  letter-spacing: 1.82px;
+  color: #8fb5fb;
+}
+
+.eyebrowRule {
+  width: 22px;
+  height: 2px;
+  border-radius: 1px;
+  background: linear-gradient(to right, var(--blue-600), var(--blue-400));
+}
+
+.headText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+}
+
+.heading {
+  font-family: var(--site-font-display);
+  font-size: 36px;
+  line-height: 1.4;
+  font-weight: 500;
+  letter-spacing: -0.4px;
+  text-align: center;
+  color: var(--white);
+}
+
+/* The second line is a horizontal gradient clipped to the glyphs. */
+.headingAccent {
+  background-image: linear-gradient(91.54deg, #76a9fa 8%, #b7d2ff 92%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.subcopy {
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 400;
+  letter-spacing: -0.27px;
+  text-align: center;
+  color: #c3c9d6;
+}
+
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pill {
+  padding: 9px 17px;
+  border: 1px solid #d5d7da;
+  border-radius: 32px;
+  background: var(--white);
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 500;
+  color: #525252;
+}
+
+/* ---- Cards ---- */
+
+.cards {
+  display: flex;
+  /* Every card runs the full height of the tallest one; the badge pins to
+     the bottom edge, so the row reads as one block. */
+  align-items: stretch;
+  gap: 16px;
+  width: 100%;
+  max-width: var(--container-max);
+  padding-inline: var(--container-pad);
+}
+
+/* Glass: a top-down white wash at 5% falling to 2%, held by a 9% hairline. */
+.card {
+  position: relative;
+  flex: 1 0 0;
+  min-width: 0;
+  max-width: 448px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 4px;
+  padding: 25px 21px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 8px;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+}
+
+/* A hairline of blue light across the top edge, fading out at both ends. */
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 14px;
+  right: 13.67px;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    rgba(118, 169, 250, 0),
+    rgba(118, 169, 250, 0.55) 50%,
+    rgba(118, 169, 250, 0)
+  );
+}
+
+.cardTitle {
+  font-family: var(--site-font-display);
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 600;
+  color: var(--white);
+}
+
+.cardText {
+  font-size: 15px;
+  line-height: 25px;
+  font-weight: 400;
+  color: #aab1c2;
+  /* Minimum breathing room above the bottom-pinned badge. */
+  margin-bottom: 12px;
+}
+
+/* ---- Client-proof rows: three roster faces (or two brand marks) ---- */
+
+.cardFaces {
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.faceRing {
+  width: 44px;
+  height: 44px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  overflow: hidden;
+  /* Ring in the band's navy so overlapped faces cut cleanly. */
+  border: 2px solid rgba(2, 4, 24, 0.9);
+  /* The roster photos are cut-outs on transparency — give them a ground. */
+  background: #232b45;
+}
+
+.faceRing + .faceRing {
+  margin-left: -12px;
+}
+
+.face {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  object-fit: cover;
+  /* Bias toward the top of the cut-out so the crop frames the face. */
+  object-position: 50% 12%;
+}
+
+/* Logo circles: the mark floats centred instead of cover-cropping. */
+.isLogo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logoMark {
+  display: block;
+  width: 22px;
+  height: 22px;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+/* The HYROS mark ships as black glyphs on alpha — paint it white. */
+.isHyros {
+  filter: brightness(0) invert(1);
+  opacity: 0.92;
+}
+
+/* ---- Funnel badge ----
+   Not a flex container — the space between the two tones is a text node.
+   margin-top: auto pins the chip to the card's bottom edge. */
+
+.cardBadge {
+  margin-top: auto;
+  padding: 7px 12px;
+  border-radius: 4px;
+  background: rgba(118, 169, 250, 0.1);
+  font-size: 12.5px;
+  line-height: 16px;
+  font-weight: 600;
+  letter-spacing: 1.1px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: #dbe4f6;
+}
+
+.cardBadgeAccent {
+  color: #8fb5fb;
+}
+
+/* ---- Tablet: two-up cards, even widths ---- */
+@container (max-width: 1279px) {
+  .section {
+    padding-block: 72px;
+  }
+  .inner {
+    gap: 48px;
+  }
+  .head {
+    width: 100%;
+    max-width: 720px;
+  }
+  .heading {
+    font-size: 32px;
+  }
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+  }
+  .card {
+    max-width: none;
+  }
+}
+
+/* ---- Mobile: single column ---- */
+@container (max-width: 809px) {
+  .section {
+    padding-block: 56px;
+  }
+  .inner {
+    gap: 36px;
+  }
+  .heading {
+    font-size: 26px;
+  }
+  .subcopy {
+    font-size: 16px;
+    line-height: 26px;
+  }
+  .cards {
+    grid-template-columns: minmax(0, 1fr);
+    padding-inline: 20px;
+  }
+}
