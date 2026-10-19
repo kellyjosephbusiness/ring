@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
-import { BOOK_CALL_TARGET, BOOK_CALL_URL } from "../links";
+import { BookingWidget } from "./booking-widget";
 import styles from "./final-cta.module.css";
 
 type Reveal = "idle" | "armed" | "shown";
@@ -43,7 +43,23 @@ function useRevealOnEnter() {
   return { ref, reveal };
 }
 
-export function FinalCta() {
+interface FinalCtaProps {
+  /** Heading, split where the blue accent starts. */
+  heading?: { lead: string; accent: string };
+  body?: string;
+}
+
+const DEFAULT_HEADING = {
+  lead: "Tell us your case criteria and",
+  accent: "we will tell you what we can deliver",
+};
+
+const DEFAULT_BODY =
+  "Book a call with a licensed attorney on our team. We show you the ads, the intake questions, and the firms we already work with, and you decide.";
+
+/** The closing band every page ends with. It is the "Book a call" anchor
+ * (#book-a-call) and holds the iClosed booking widget. */
+export function FinalCta({ heading = DEFAULT_HEADING, body = DEFAULT_BODY }: FinalCtaProps) {
   const { ref, reveal } = useRevealOnEnter();
 
   return (
@@ -57,24 +73,10 @@ export function FinalCta() {
       <div className={styles.band}>
         <div className={styles.inner}>
           <h2 className={styles.heading}>
-            Tell us your case criteria and{" "}
-            <span className={styles.headingAccent}>we will tell you what we can deliver</span>
+            {heading.lead} <span className={styles.headingAccent}>{heading.accent}</span>
           </h2>
-          <p className={styles.subcopy}>
-            Book a call with a licensed attorney on our team. We show you the ads, the intake
-            questions, and the firms we already work with, and you decide.
-          </p>
-          <a
-            className={styles.cta}
-            href={BOOK_CALL_URL}
-            target={BOOK_CALL_TARGET}
-            rel={BOOK_CALL_TARGET ? "noopener" : undefined}
-          >
-            <span>Book a call</span>
-            <span className={styles.ctaArrow} aria-hidden="true">
-              →
-            </span>
-          </a>
+          <p className={styles.subcopy}>{body}</p>
+          <BookingWidget />
         </div>
       </div>
     </section>

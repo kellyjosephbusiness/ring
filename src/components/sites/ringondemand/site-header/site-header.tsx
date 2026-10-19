@@ -3,16 +3,21 @@
 import {
   useCallback,
   useEffect,
+  useId,
   useLayoutEffect,
   useRef,
   useState,
+  type FocusEvent,
+  type KeyboardEvent,
   type MouseEvent,
+  type PointerEvent,
 } from "react";
 import { flushSync } from "react-dom";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 import { BOOK_CALL_TARGET, BOOK_CALL_URL } from "../links";
-import { BOOK_CALL_LABEL, NAV_LINKS } from "./site-header.data";
+import { BOOK_CALL_LABEL, LEGAL_MENU, NAV_LINKS } from "./site-header.data";
 import styles from "./site-header.module.css";
 
 const PHONE_QUERY = "(max-width: 809.98px)";
@@ -70,6 +75,21 @@ function useMediaQuery(query: string, onChange: (matches: boolean) => void) {
   }, [query]);
 }
 
+/** A link on this page with a #fragment: the menus close first, then jump. */
+function samePageHash(href: string): string | null {
+  const url = new URL(href, window.location.href);
+  if (url.pathname !== window.location.pathname || url.hash.length < 2) return null;
+  return url.hash;
+}
+
+function jumpToHash(hash: string) {
+  if (window.location.hash === hash) {
+    document.getElementById(decodeURIComponent(hash.slice(1)))?.scrollIntoView();
+  } else {
+    window.location.hash = hash;
+  }
+}
+
 function MenuIcon({ className }: { className: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -100,6 +120,21 @@ function CloseIcon({ className }: { className: string }) {
   );
 }
 
+function ChevronDownIcon({ className }: { className: string }) {
+  return (
+    <svg className={className} viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+      <path
+        d="M 6 8 L 10 12 L 14 8"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 function Wordmark() {
   return (
     <Link className={styles.wordmark} href="/" aria-label="RingOnDemand home">
@@ -116,27 +151,148 @@ function BookCallButton({ className }: { className: string }) {
   );
 }
 
-function DesktopNav() {
+function LegalTiles({ onNavigate }: { onNavigate: () => void }) {
   return (
-    <nav className={styles.deskNav} aria-label="Main">
+    <ul className={styles.tiles}>
+      {LEGAL_MENU.tiles.map(({ label, href, description, icon: Icon }) => (
+        <li key={href} className={styles.tileItem}>
+          <Link className={styles.tile} href={href} onClick={onNavigate}>
+            <span className={styles.iconBox}>
+              <Icon className={styles.tileGlyph} strokeWidth={1.75} aria-hidden="true" />
+            </span>
+            <span className={styles.tileTitle}>{label}</span>
+            <span className={styles.tileDesc}>{description}</span>
+          </Link>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+interface DesktopNavProps {
+  open: boolean;
+  onOpen: () => void;
+  onClose: () => void;
+}
+
+function DesktopNav({ open, onOpen, onClose }: DesktopNavProps) {
+  const panelId = useId();
+  const navRef = useRef<HTMLElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const focusFirstLink = useRef(false);
+
+  useEffect(() => {
+    if (open && focusFirstLink.current) {
+      focusFirstLink.current = false;
+      panelRef.current?.querySelector<HTMLAnchorElement>("a")?.focus();
+    }
+  }, [open]);
+
+  const openFromKeyboard = () => {
+    focusFirstLink.current = true;
+    onOpen();
+  };
+
+  // Pointer clicks keep the menu open (hover already opened it); keyboard
+  // activation toggles it and moves focus into the panel.
+  const onTriggerClick = (event: MouseEvent<HTMLButtonElement>) => {
+    if (event.detail === 0) {
+      if (open) onClose();
+      else openFromKeyboard();
+      return;
+    }
+    onOpen();
+  };
+
+  const onTriggerKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
+    if (event.key === "ArrowDown") {
+      event.preventDefault();
+      openFromKeyboard();
+    }
+  };
+
+  const onTriggerEnter = (event: PointerEvent<HTMLButtonElement>) => {
+    if (event.pointerType === "mouse") onOpen();
+  };
+
+  const onKeyDown = (event: KeyboardEvent<HTMLElement>) => {
+    if (event.key === "Escape" && open) {
+      event.preventDefault();
+      onClose();
+      triggerRef.current?.focus();
+    }
+  };
+
+  const onBlur = (event: FocusEvent<HTMLElement>) => {
+    const next = event.relatedTarget;
+    if (open && !(next instanceof Node && navRef.current?.contains(next))) onClose();
+  };
+
+  const onPointerLeave = (event: PointerEvent<HTMLElement>) => {
+    if (event.pointerType === "mouse" && open) onClose();
+  };
+
+  const onLinkClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    onClose();
+    const hash = samePageHash(event.currentTarget.href);
+    if (hash) {
+      event.preventDefault();
+      jumpToHash(hash);
+    }
+  };
+
+  return (
+    <nav
+      ref={navRef}
+      className={styles.deskNav}
+      aria-label="Main"
+      data-open={open || undefined}
+      onPointerLeave={onPointerLeave}
+      onKeyDown={onKeyDown}
+      onBlur={onBlur}
+    >
       <div className={styles.row}>
         <div className={styles.logoWrap}>
           <Wordmark />
         </div>
         <div className={styles.links}>
+          <button
+            ref={triggerRef}
+            type="button"
+            className={styles.trigger}
+            aria-expanded={open}
+            aria-controls={panelId}
+            data-open={open || undefined}
+            onPointerEnter={onTriggerEnter}
+            onClick={onTriggerClick}
+            onKeyDown={onTriggerKeyDown}
+          >
+            <span className={styles.triggerLabel}>{LEGAL_MENU.label}</span>
+            <ChevronDownIcon className={styles.triggerChevron} />
+          </button>
           {NAV_LINKS.map((link) => (
             <div key={link.href} className={styles.linkCell}>
-              <a className={styles.textLink} href={link.href}>
+              <Link className={styles.textLink} href={link.href} onClick={onLinkClick}>
                 {link.label}
-              </a>
+              </Link>
             </div>
           ))}
+        </div>
+        <div className={styles.dropdown}>
+          <div className={styles.dropdownCatcher} aria-hidden="true" />
+          {open ? (
+            <div ref={panelRef} id={panelId} className={styles.panel}>
+              <LegalTiles onNavigate={onClose} />
+            </div>
+          ) : null}
         </div>
         <div className={styles.actions}>
           <BookCallButton className={styles.bookDesktop} />
         </div>
       </div>
       <div className={styles.strokeBot} aria-hidden="true" />
+      <div className={styles.backdrop} aria-hidden="true" />
     </nav>
   );
 }
@@ -145,8 +301,8 @@ function MobileNav({ open, onOpen, onClose }: { open: boolean; onOpen: () => voi
   const openButton = useRef<HTMLButtonElement>(null);
   const closeButton = useRef<HTMLButtonElement>(null);
   const wasOpen = useRef(open);
-  /** Closing from a link hands focus to the page the link jumps to, not
-   * back to the hamburger. */
+  /** Closing from a link hands focus to the page the link opens, not back to
+   * the hamburger. */
   const restoreFocus = useRef(true);
 
   useEffect(() => {
@@ -180,19 +336,15 @@ function MobileNav({ open, onOpen, onClose }: { open: boolean; onOpen: () => voi
 
   /** Close the menu (and unlock scrolling) first, then follow the link. */
   const onLinkClick = (event: MouseEvent<HTMLAnchorElement>) => {
-    const href = event.currentTarget.getAttribute("href") ?? "";
-    if (!href.startsWith("#") || href.length < 2) {
+    restoreFocus.current = false;
+    const hash = samePageHash(event.currentTarget.href);
+    if (!hash) {
       onClose();
       return;
     }
     event.preventDefault();
-    restoreFocus.current = false;
     flushSync(onClose);
-    if (window.location.hash === href) {
-      document.getElementById(decodeURIComponent(href.slice(1)))?.scrollIntoView();
-    } else {
-      window.location.hash = href;
-    }
+    jumpToHash(hash);
   };
 
   return (
@@ -213,11 +365,19 @@ function MobileNav({ open, onOpen, onClose }: { open: boolean; onOpen: () => voi
             </button>
           </div>
           <div className={styles.mLinks}>
+            <div className={styles.mGroup}>
+              <p className={styles.mGroupLabel}>{LEGAL_MENU.label}</p>
+              {LEGAL_MENU.tiles.map((tile) => (
+                <Link key={tile.href} className={styles.mSubLink} href={tile.href} onClick={onLinkClick}>
+                  {tile.label}
+                </Link>
+              ))}
+            </div>
             {NAV_LINKS.map((link) => (
               <div key={link.href} className={styles.mLinkCell}>
-                <a className={styles.mTextLink} href={link.href} onClick={onLinkClick}>
+                <Link className={styles.mTextLink} href={link.href} onClick={onLinkClick}>
                   {link.label}
-                </a>
+                </Link>
               </div>
             ))}
           </div>
@@ -253,20 +413,33 @@ function MobileNav({ open, onOpen, onClose }: { open: boolean; onOpen: () => voi
 export function SiteHeader() {
   const scrollHidden = useHideOnScrollDown();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   const openMobile = useCallback(() => setMobileOpen(true), []);
   const closeMobile = useCallback(() => setMobileOpen(false), []);
+  const openMenu = useCallback(() => setMenuOpen(true), []);
+  const closeMenu = useCallback(() => setMenuOpen(false), []);
+
+  // A route change closes whichever menu led to it.
+  const [lastPath, setLastPath] = useState(pathname);
+  if (pathname !== lastPath) {
+    setLastPath(pathname);
+    setMobileOpen(false);
+    setMenuOpen(false);
+  }
 
   useMediaQuery(PHONE_QUERY, (isPhone) => {
-    if (!isPhone) setMobileOpen(false);
+    if (isPhone) setMenuOpen(false);
+    else setMobileOpen(false);
   });
 
-  const hidden = scrollHidden && !mobileOpen;
+  const hidden = scrollHidden && !mobileOpen && !menuOpen;
 
   return (
     <header className={styles.top} data-section="site-header" data-hidden={hidden || undefined}>
       <div className={styles.navWrap}>
-        <DesktopNav />
+        <DesktopNav open={menuOpen} onOpen={openMenu} onClose={closeMenu} />
         <MobileNav open={mobileOpen} onOpen={openMobile} onClose={closeMobile} />
       </div>
     </header>

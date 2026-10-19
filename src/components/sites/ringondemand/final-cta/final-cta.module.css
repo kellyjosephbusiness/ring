@@ -1,9 +1,9 @@
 /* Closing CTA band (source prefix `icuic`).
 
    Same dark navy family as the page's other dark band: a top-to-bottom navy
-   gradient, two blue radial glows and a masked dot grid. The CTA is the white
-   dark-band pill rather than the blue button. It is also the "Book a call"
-   anchor (#book-a-call). */
+   gradient, two blue radial glows and a masked dot grid. It is also the
+   "Book a call" anchor (#book-a-call): the iClosed scheduler sits in a white
+   card under the heading. */
 
 .outer {
   position: relative;
@@ -62,8 +62,7 @@
   width: 100%;
   max-width: 1440px;
   margin-inline: auto;
-  /* The source's empty note line below the button kept 18px of flex gap. */
-  padding: 0 40px 18px;
+  padding: 0 40px;
   text-align: center;
 }
 
@@ -100,71 +99,98 @@
   text-wrap: balance;
 }
 
-.cta {
-  display: inline-flex;
+/* ---------- Booking widget ---------- */
+
+/* 900px is the narrowest frame iClosed lays out in two columns (its
+   809px card); narrower frames get its stacked layout. */
+.booking {
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 8px;
-  height: 44px;
-  margin-top: 10px;
-  padding-inline: 20px;
-  border-radius: 8px;
+  gap: 14px;
+  width: 100%;
+  max-width: 900px;
+  margin-top: 22px;
+}
+
+.widgetFrame {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 12px;
   background: #ffffff;
-  box-shadow: 0 12px 40px -12px rgba(118, 169, 250, 0.45);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 24px 64px -24px rgba(118, 169, 250, 0.35);
+}
+
+/* Shown under the iframe until iClosed's page paints over it. */
+.widgetLoading {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  margin: 0;
+  transform: translateY(-50%);
   font-size: 15px;
-  font-weight: 600;
-  white-space: nowrap;
-  color: #04072a;
-  text-decoration: none;
-  transition: filter 150ms ease;
+  line-height: 22px;
+  color: #6b7280;
 }
 
-.ctaArrow {
-  display: inline-block;
-  transition: transform 0.4s cubic-bezier(0.44, 0, 0.56, 1);
+/* Holds the space until the widget mounts. */
+.widgetPlaceholder {
+  height: 620px;
 }
 
-.cta:hover {
-  filter: brightness(0.94);
+/* iClosed's script resizes this box from the scheduler's own height messages
+   (490px for the two-column desktop layout, about 790px on phones). */
+.widget {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 620px;
 }
 
-@media (hover: hover) {
-  .cta:hover .ctaArrow {
-    transform: translateX(3px);
-  }
+.widgetFallback {
+  margin: 0;
+  font-size: 14px;
+  line-height: 22px;
+  color: #9aa3b5;
 }
 
-.cta:active {
-  filter: brightness(0.96);
+.widgetFallback a {
+  color: #ffffff;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
-.cta:focus-visible {
-  outline: 2px solid #1c64f2;
+.widgetFallback a:focus-visible {
+  outline: 2px solid var(--blue-400);
   outline-offset: 2px;
 }
 
 /* Enter motion: heading, body and button rise in, lightly staggered. */
 .outer[data-reveal] .heading,
 .outer[data-reveal] .subcopy,
-.outer[data-reveal] .cta {
+.outer[data-reveal] .booking {
   transition:
     opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
-    filter 150ms ease;
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .outer[data-reveal="armed"] .heading,
 .outer[data-reveal="armed"] .subcopy,
-.outer[data-reveal="armed"] .cta {
+.outer[data-reveal="armed"] .booking {
   opacity: 0;
   transform: translateY(16px);
 }
 
 .outer[data-reveal="shown"] .subcopy {
-  transition-delay: 80ms, 80ms, 0ms;
+  transition-delay: 80ms;
 }
 
-.outer[data-reveal="shown"] .cta {
-  transition-delay: 160ms, 160ms, 0ms;
+.outer[data-reveal="shown"] .booking {
+  transition-delay: 160ms;
 }
 
 @container (max-width: 1279px) {
@@ -197,8 +223,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cta,
-  .ctaArrow,
+  .booking,
   .heading,
   .subcopy {
     transition-duration: 0.001ms !important;

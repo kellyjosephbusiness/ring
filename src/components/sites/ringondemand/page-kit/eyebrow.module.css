@@ -1,0 +1,17 @@
+.eyebrow {
+  margin: 0;
+  font-family: var(--site-font-body);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0.72px;
+  text-transform: uppercase;
+  color: rgb(2, 4, 24);
+}
+
+.text {
+  background: linear-gradient(90deg, rgb(2, 4, 24) 0%, rgb(2, 54, 194) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

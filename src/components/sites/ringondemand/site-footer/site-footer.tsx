@@ -1,4 +1,7 @@
-import { ANCHORS, PENDING_PAGES } from "../links";
+import Link from "next/link";
+
+import { PRACTICE_AREAS, practiceAreaHref } from "../legal/practice-areas";
+import { ANCHORS, PENDING_PAGES, ROUTES } from "../links";
 import styles from "./site-footer.module.css";
 
 interface FooterLink {
@@ -13,6 +16,10 @@ interface FooterColumn {
 
 const COLUMNS: FooterColumn[] = [
   {
+    heading: "Practice areas",
+    links: PRACTICE_AREAS.map((area) => ({ label: area.navLabel, href: practiceAreaHref(area) })),
+  },
+  {
     heading: "Offers",
     links: [
       { label: "Live Transfers", href: ANCHORS.liveTransfers },
@@ -23,9 +30,10 @@ const COLUMNS: FooterColumn[] = [
   {
     heading: "Company",
     links: [
-      { label: "Results", href: ANCHORS.results },
+      { label: "Results", href: ROUTES.results },
+      { label: "About", href: ROUTES.about },
+      { label: "Partners", href: ROUTES.partners },
       { label: "Contact", href: PENDING_PAGES.contact },
-      { label: "Publishers", href: PENDING_PAGES.publishers },
     ],
   },
   {
@@ -52,11 +60,17 @@ export function SiteFooter() {
             {COLUMNS.map((column) => (
               <div key={column.heading} className={styles.column}>
                 <p className={styles.heading}>{column.heading}</p>
-                {column.links.map((link) => (
-                  <a key={link.label} className={styles.link} href={link.href}>
-                    {link.label}
-                  </a>
-                ))}
+                {column.links.map((link) =>
+                  link.href.startsWith("/") ? (
+                    <Link key={link.label} className={styles.link} href={link.href}>
+                      {link.label}
+                    </Link>
+                  ) : (
+                    <a key={link.label} className={styles.link} href={link.href}>
+                      {link.label}
+                    </a>
+                  ),
+                )}
               </div>
             ))}
           </nav>

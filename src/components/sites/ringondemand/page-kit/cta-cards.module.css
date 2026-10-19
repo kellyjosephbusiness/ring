@@ -1,0 +1,175 @@
+/* Two CTA cards (iClosed /results "CTA"): 556px cards 20px apart, a plain
+   #f8f9fa card and a blue-tinted one with a 1px blue edge. Padding is
+   roomier than the source's 20px so longer copy breathes. */
+
+.section {
+  position: relative;
+  width: 100%;
+  container-type: inline-size;
+  padding: 40px 0 60px;
+  background: #ffffff;
+  font-family: var(--site-font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.section[data-heading] {
+  padding-top: 80px;
+}
+
+.section::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: #e5e7eb;
+}
+
+.headWrap {
+  padding: 0 40px 48px;
+}
+
+.inner {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  width: 100%;
+  max-width: 1212px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.inner[data-count="1"] {
+  grid-template-columns: minmax(0, 1fr);
+  max-width: 676px;
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 28px;
+  padding: 28px;
+  background: #f8f9fa;
+  scroll-margin-top: 96px;
+}
+
+.card[data-tone="blue"] {
+  background: linear-gradient(180deg, #e6ebf6 0%, #f8f9fa 100%);
+}
+
+.card[data-tone="blue"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgb(2, 54, 194);
+  pointer-events: none;
+}
+
+.cardHead {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 16px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: rgb(2, 54, 194);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--site-font-display);
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 42px;
+  letter-spacing: -0.32px;
+  color: rgb(2, 4, 24);
+}
+
+.price {
+  margin: -4px 0 0;
+  color: rgb(2, 4, 24);
+}
+
+.amount {
+  font-family: var(--site-font-display);
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 32px;
+}
+
+.unit {
+  font-size: 15px;
+  line-height: 20px;
+  color: #737373;
+}
+
+.body {
+  max-width: 460px;
+  font-size: 15px;
+  line-height: 22px;
+  letter-spacing: -0.15px;
+  color: #737373;
+}
+
+.body p {
+  margin: 0;
+}
+
+.body strong {
+  font-weight: 400;
+  color: #31353f;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 20px;
+}
+
+.aside {
+  margin: 0;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: -0.12px;
+  color: rgb(2, 4, 24);
+}
+
+@container (max-width: 809px) {
+  .section {
+    padding: 32px 0 48px;
+  }
+
+  .section[data-heading] {
+    padding-top: 64px;
+  }
+
+  .headWrap {
+    padding: 0 20px 32px;
+  }
+
+  .inner {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 0 20px;
+  }
+
+  .card {
+    padding: 24px 20px;
+  }
+
+  .title {
+    font-size: 24px;
+    line-height: 32px;
+    letter-spacing: -0.24px;
+  }
+}

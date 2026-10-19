@@ -1,0 +1,144 @@
+/* Feature columns (iClosed analytics "Video" section, minus the video):
+   three 400px cells in a 1200px block, hairlines between them and across
+   the window above and below, then the button 72px lower. */
+
+.section {
+  position: relative;
+  width: 100%;
+  container-type: inline-size;
+  padding-bottom: 80px;
+  background: #ffffff;
+  font-family: var(--site-font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.section[data-heading] {
+  padding-top: 80px;
+}
+
+.headWrap {
+  padding: 0 40px 56px;
+}
+
+.band {
+  border-top: 1px solid #e5e7eb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.section:not([data-heading]) .band {
+  border-top: 0;
+}
+
+.cells {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+.cells[data-layout="grid"] {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.cell {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 32px 20px;
+}
+
+.cell + .cell {
+  border-left: 1px solid #e5e7eb;
+}
+
+/* Two across: a hairline between the rows, none down the left edge. */
+.cells[data-layout="grid"] .cell:nth-child(2n + 1) {
+  border-left: 0;
+}
+
+.cells[data-layout="grid"] .cell:nth-child(n + 3) {
+  border-top: 1px solid #e5e7eb;
+}
+
+.icon {
+  width: 36px;
+  height: 36px;
+  margin-bottom: 14px;
+  color: rgb(2, 4, 24);
+}
+
+.title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 32px;
+  color: rgb(2, 4, 24);
+}
+
+.body {
+  margin: 0;
+  font-size: 18px;
+  line-height: 24px;
+  letter-spacing: -0.18px;
+  color: #31353f;
+}
+
+.ctaRow {
+  display: flex;
+  justify-content: center;
+  margin-top: 72px;
+  padding: 0 20px;
+}
+
+@container (max-width: 1279px) {
+  .cells {
+    padding: 0 20px;
+  }
+
+  .body {
+    font-size: 16px;
+    line-height: 24px;
+  }
+}
+
+@container (max-width: 809px) {
+  .section {
+    padding-bottom: 64px;
+  }
+
+  .section[data-heading] {
+    padding-top: 64px;
+  }
+
+  .headWrap {
+    padding: 0 20px 40px;
+  }
+
+  .cells,
+  .cells[data-layout="grid"] {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 0;
+  }
+
+  .cell {
+    padding: 28px 24px;
+  }
+
+  .cell + .cell,
+  .cells[data-layout="grid"] .cell:nth-child(n) {
+    border-left: 0;
+    border-top: 1px solid #e5e7eb;
+  }
+
+  .cells[data-layout="grid"] .cell:first-child {
+    border-top: 0;
+  }
+
+  .ctaRow {
+    margin-top: 48px;
+  }
+}

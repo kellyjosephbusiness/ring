@@ -1,0 +1,92 @@
+/* Interior page hero (iClosed /product/analytics "Hero"): 180px of top
+   padding under a 104px header there, so the eyebrow sits 76px below the
+   header; ours is 64px tall, hence 140px. */
+
+.root {
+  position: relative;
+  width: 100%;
+  container-type: inline-size;
+  background: #ffffff;
+  font-family: var(--site-font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 140px 40px 72px;
+  text-align: center;
+}
+
+.h1 {
+  max-width: 1000px;
+  margin: 16px 0 0;
+  font-family: var(--site-font-display);
+  font-size: 42px;
+  font-weight: 500;
+  line-height: 56px;
+  letter-spacing: -0.42px;
+  color: rgb(2, 4, 24);
+  text-wrap: balance;
+}
+
+.line {
+  display: block;
+}
+
+.accent {
+  color: #1c64f2;
+}
+
+.sub {
+  max-width: 640px;
+  margin: 20px 0 0;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 28px;
+  letter-spacing: -0.18px;
+  color: #4b5563;
+  text-wrap: pretty;
+}
+
+.ctaGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin-top: 32px;
+}
+
+.note {
+  margin: 0;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: -0.14px;
+  color: #6b7280;
+}
+
+@container (max-width: 809px) {
+  .inner {
+    padding: 124px 20px 56px;
+  }
+
+  .h1 {
+    font-size: 32px;
+    line-height: 42px;
+    letter-spacing: -0.32px;
+  }
+
+  .line {
+    display: inline;
+  }
+
+  .sub {
+    font-size: 16px;
+    line-height: 26px;
+  }
+}
