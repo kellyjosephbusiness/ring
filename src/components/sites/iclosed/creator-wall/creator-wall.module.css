@@ -279,7 +279,8 @@
 
 /* Motion off: the rows sit still and simply overflow-hide. */
 @media (prefers-reduced-motion: reduce) {
-  .track {
+  .rowLeft .track,
+  .rowRight .track {
     animation: none;
   }
 

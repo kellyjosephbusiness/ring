@@ -203,7 +203,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .track {
+  .track,
+  .rowReverse .track {
     animation: none;
   }
 
