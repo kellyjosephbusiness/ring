@@ -34,14 +34,15 @@ const TABLET_QUERY = "(min-width: 810px) and (max-width: 1279.98px)";
 
 /** Framer's scroll-direction effect: a run of scroll events in one direction
  * that moves at least 4px from where the direction last changed hides the
- * header (down) or brings it back (up). */
+ * header (down) or brings it back (up). The page starts out "scrolling down"
+ * from the top, so the very first downward scroll already hides it. */
 function useHideOnScrollDown() {
   const [hidden, setHidden] = useState(false);
 
   useEffect(() => {
     let previous: number | undefined;
     let anchor = 0;
-    let direction: "up" | "down" | undefined;
+    let direction: "up" | "down" = "down";
 
     const onScroll = () => {
       const y = window.scrollY;

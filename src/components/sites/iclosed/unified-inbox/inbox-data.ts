@@ -27,8 +27,8 @@ export const ASSETS = {
   closerThumb: `${IMG}/inbox-closer-thumb.webp`,
   closerPoster: `${IMG}/inbox-closer-poster.webp`,
   leadPoster: `${IMG}/inbox-lead-poster.webp`,
-  closerLoop: "/sites/iclosed/video/inbox-closer-loop.mp4",
-  leadLoop: "/sites/iclosed/video/inbox-lead-loop.mp4",
+  closerLoop: "/sites/iclosed/video/closer-loop.mp4",
+  leadLoop: "/sites/iclosed/video/lead-loop.mp4",
   sky: `${IMG}/1197201fe9c6.webp`,
 } as const;
 

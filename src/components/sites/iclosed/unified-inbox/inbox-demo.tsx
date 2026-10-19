@@ -176,9 +176,6 @@ export function InboxDemo() {
       ref={rootRef}
       className={cx(styles.root, held && styles.held)}
       aria-hidden="true"
-      data-ui-window=""
-      data-held={held ? "true" : "false"}
-      data-step={step}
     >
       {/* ---- Conversation list ---- */}
       <section className={styles.list}>

@@ -70,8 +70,8 @@ export const IMG = {
 } as const;
 
 export const VIDEO = {
-  closerLoop: "/sites/iclosed/video/product-tabs-closer-loop.mp4",
-  leadLoop: "/sites/iclosed/video/product-tabs-lead-loop.mp4",
+  closerLoop: "/sites/iclosed/video/closer-loop.mp4",
+  leadLoop: "/sites/iclosed/video/lead-loop.mp4",
 } as const;
 
 /** Claude, Codex (OpenAI) and Cursor, in the order the tab and the chat draw them. */
