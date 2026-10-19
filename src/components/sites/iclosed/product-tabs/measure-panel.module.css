@@ -1,0 +1,1200 @@
+/* ==== analytics ==== */
+/* Analytics panel — 1238 x 680 stage.
+
+   Ported 1:1 from ic-website's `AnalyticsPanelAnimated.icpta-jsx` (home-new). Every
+   value is a Figma export kept at its full precision (0.761, 12.175, 18.262 …)
+   rather than rounded, so the port stays traceable to the frame.
+
+   The root also folds in the wrapper ic-website rendered this panel inside —
+   `.icpta-hn-tabs-shot.icpta-hn-tabs-shot-analytics` from ProductTabsV14.icpta-jsx:
+     .icpta-hn-tabs-shot { display: flex; justify-content: center; width: 100%; height: 680px; }
+   i.icpta-e. a full-width 680px-tall box that horizontally centres the fixed 1238px
+   stage. Here the stage centres itself with `margin-inline: auto` and keeps the
+   680px height it already had, so the extra element is unnecessary. The same
+   wrapper also carried the tab's reveal animations, which are folded in at the
+   bottom of this file. */
+
+.panel {
+  position: relative;
+  width: 1238px;
+  /* from .icpta-hn-tabs-shot's flex centring */
+  margin-inline: auto;
+  height: 680px;
+  background: var(--gray-50);
+  overflow: hidden;
+  font-family: var(--ic-font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+.panel *,
+.panel *::before,
+.panel *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.panel img {
+  display: block;
+  border: 0;
+}
+
+/* ============ App window ============ */
+.window {
+  /* identical frame to the Unified Inbox tab's .icpta-hn-ip-app, so switching
+     tabs reads as the same app window changing content */
+  position: absolute;
+  left: 71px;
+  top: 36px;
+  width: 1096px;
+  height: 607px;
+  background: var(--gray-50);
+  border: 1px solid var(--gray-200);
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(16, 24, 40, 0.05), 0 1px 3px rgba(16, 24, 40, 0.04);
+  overflow: hidden;
+}
+
+/* ============ Sidebar ============ */
+/* Identical to the Unified Inbox tab's .icpta-hn-ip-rail so the sidebar
+   doesn't shift when switching tabs — only the highlighted item differs. */
+.sidebar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 40px;
+  background: var(--white);
+  border-right: 1px solid var(--gray-200);
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebarLogo {
+  height: 39.5px;
+  flex: 0 0 auto;
+  border-bottom: 1px solid var(--gray-200);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebarLogo img {
+  width: 13.69px;
+  height: 12.18px;
+}
+
+.sidebarNav {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+}
+
+.sidebarTop {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 9.1px 0;
+}
+
+.sidebarBottom {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5px;
+}
+
+.navItem {
+  height: 24.36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navLink {
+  width: 21.45px;
+  height: 21.45px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navLinkActive {
+  background: var(--blue-100);
+}
+
+.navLink img {
+  width: 12.18px;
+  height: 12.18px;
+}
+
+.sidebarAvatarWrap {
+  padding: 6.1px 6.1px 12.2px;
+  display: flex;
+  justify-content: center;
+}
+
+.sidebarAvatarBox {
+  width: 24.36px;
+  height: 24.36px;
+  background: var(--white);
+  border: 1px solid var(--gray-300);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebarAvatar {
+  width: 18px;
+  height: 18px;
+  border-radius: 100px;
+  object-fit: cover;
+}
+
+/* ============ Top bar ============ */
+.topbar {
+  position: absolute;
+  left: 40px;
+  right: 0;
+  top: 0;
+  height: 39.569px;
+  background: var(--white);
+  border-bottom: 0.761px solid var(--gray-200);
+  display: flex;
+  align-items: center;
+  gap: 4.566px;
+  padding: 0 18.262px;
+}
+
+.topbarIcon {
+  width: 12.175px;
+  height: 12.175px;
+}
+
+.topbarTitle {
+  font-size: 12.17px;
+  font-weight: 500;
+  line-height: 18.262px;
+  color: var(--gray-900);
+}
+
+/* ============ KPI cards ============ */
+.kpis {
+  position: absolute;
+  left: 65.5px;
+  top: 53.41px;
+  width: 1003.1px;
+  display: flex;
+  gap: 10.72px;
+  align-items: center;
+}
+
+.kpi {
+  flex: 1 0 0;
+  min-width: 1px;
+  height: 101.69px;
+  background: var(--white);
+  border: 1.044px solid var(--gray-200);
+  border-radius: 4.175px;
+  padding: 12.526px;
+  display: flex;
+  flex-direction: column;
+  gap: 6.356px;
+}
+
+.kpiHighlight {
+  border-color: var(--blue-600);
+}
+
+.kpiTop {
+  flex: 1 0 0;
+  min-height: 1px;
+  display: flex;
+  flex-direction: column;
+  gap: 6.263px;
+  align-items: flex-start;
+}
+
+.kpiLabel {
+  font-size: 11.122px;
+  font-weight: 500;
+  line-height: 15.889px;
+  color: var(--gray-900);
+  white-space: nowrap;
+}
+
+.kpiValue {
+  font-size: 23.834px;
+  font-weight: 600;
+  line-height: 28.6px;
+  color: var(--gray-900);
+  white-space: nowrap;
+}
+
+.kpiMeta {
+  display: flex;
+  gap: 6.263px;
+  align-items: center;
+}
+
+.kpiBadge {
+  display: flex;
+  gap: 3.283px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4.924px;
+  background: var(--green-100);
+  border: 0.821px solid var(--green-200);
+  border-radius: 6px;
+}
+
+.kpiBadge img {
+  width: 11.49px;
+  height: 11.49px;
+}
+
+.kpiBadge span {
+  font-size: 10.67px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--green-800);
+  white-space: nowrap;
+}
+
+.kpiPeriod {
+  font-size: 11.122px;
+  font-weight: 500;
+  line-height: 15.889px;
+  color: var(--gray-500);
+  white-space: nowrap;
+}
+
+/* ============ Shared card pieces ============ */
+.cardHead {
+  width: 100%;
+  background: var(--gray-50);
+  border: 0.761px solid var(--gray-200);
+  border-radius: 6.087px 6.087px 0 0;
+  padding: 6.087px 12.175px;
+  display: flex;
+  flex-direction: column;
+  gap: 3.044px;
+}
+
+.cardHeadRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.cardHeadLeft {
+  display: flex;
+  gap: 6.087px;
+  align-items: center;
+}
+
+.cardHeadIcon {
+  width: 15.219px;
+  height: 15.219px;
+}
+
+.cardHeadTitle {
+  font-size: 10.65px;
+  font-weight: 600;
+  line-height: 18.262px;
+  color: var(--gray-900);
+  white-space: nowrap;
+}
+
+.cardHeadInfo {
+  width: 12.175px;
+  height: 12.175px;
+}
+
+.cardHeadRight {
+  display: flex;
+  gap: 6.087px;
+  align-items: center;
+}
+
+.cardHeadSub {
+  font-size: 10.65px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--gray-700);
+  height: 16.24px;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.playBtn {
+  background: var(--gray-100);
+  border-radius: 4px;
+  padding: 3.044px;
+  display: flex;
+}
+
+.playBtn img {
+  width: 15.219px;
+  height: 15.219px;
+}
+
+.toggle {
+  width: 228.281px;
+  background: var(--gray-100);
+  border-radius: 4px;
+  padding: 1.522px;
+  display: flex;
+  align-items: center;
+}
+
+.toggleSeg {
+  flex: 1 0 0;
+  min-width: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3.044px 12.175px;
+  font-size: 9.13px;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--gray-900);
+  white-space: nowrap;
+}
+
+.toggleSegActive {
+  background: var(--gray-500);
+  color: var(--white);
+  border-radius: 3.044px;
+  height: 18.262px;
+}
+
+/* ============ Row 2 ============ */
+.row2 {
+  position: absolute;
+  left: 65.02px;
+  top: 172.45px;
+  display: flex;
+  gap: 18.262px;
+  align-items: center;
+}
+
+/* --- Scheduling funnel --- */
+.funnelCard {
+  width: 493.087px;
+  background: var(--white);
+  border: 0.761px solid var(--gray-200);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.funnelBody {
+  display: flex;
+  gap: 12.175px;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 12.175px;
+  width: 100%;
+}
+
+.funnelChart {
+  flex: 1 0 0;
+  min-width: 1px;
+  height: 182.625px;
+  display: flex;
+  flex-direction: column;
+  gap: 4.566px;
+  align-items: flex-start;
+}
+
+.funnelCols {
+  height: 159.797px;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+}
+
+.funnelDivider {
+  width: 0.761px;
+  height: 100%;
+  background: var(--gray-200);
+  flex-shrink: 0;
+}
+
+.funnelCol {
+  flex: 1 0 0;
+  min-width: 1px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.funnelColData {
+  display: flex;
+  flex-direction: column;
+  gap: 6.087px;
+  padding: 0 9.131px;
+}
+
+.funnelColLabel {
+  height: 12.175px;
+  display: flex;
+  align-items: center;
+  font-size: 10.65px;
+  font-weight: 600;
+  line-height: 18.262px;
+  color: var(--gray-500);
+  white-space: nowrap;
+}
+
+.funnelColValue {
+  font-size: 12.17px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--gray-900);
+  white-space: nowrap;
+}
+
+.funnelGraph {
+  width: 100%;
+  border-bottom: 0.761px solid var(--gray-200);
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+}
+
+.funnelGraphViews {
+  height: 105.009px;
+  align-items: flex-start;
+}
+
+.funnelGraphContacts {
+  height: 93.595px;
+}
+
+.funnelGraphCalls {
+  height: 58.592px;
+}
+
+.funnelBarViews {
+  width: 30.437px;
+  height: 104.248px;
+  flex-shrink: 0;
+  background: linear-gradient(180deg, #4f88e4 0%, var(--blue-600) 100%);
+}
+
+.funnelBarContacts {
+  width: 30.437px;
+  height: 100%;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.funnelBarContactsTop {
+  flex: 1 0 0;
+  min-height: 1px;
+  width: 100%;
+  background: var(--blue-400);
+}
+
+.funnelBarContactsBottom {
+  flex: 1 0 0;
+  min-height: 1px;
+  width: 100%;
+  background: linear-gradient(180deg, #4f88e4 0%, var(--blue-600) 100%);
+}
+
+.funnelBarCalls {
+  width: 30.437px;
+  height: 100%;
+  flex-shrink: 0;
+  background: linear-gradient(180deg, #4f88e4 0%, var(--blue-600) 100%);
+}
+
+.funnelArea {
+  flex: 1 0 0;
+  min-width: 1px;
+  height: 100%;
+  display: block;
+}
+
+.funnelSteps {
+  flex: 1 0 0;
+  min-height: 1px;
+  display: flex;
+  align-items: center;
+}
+
+.funnelStep {
+  width: 121.75px;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.funnelStepCircleWrap {
+  width: 30.437px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.funnelStepCircle {
+  width: 18.262px;
+  height: 18.262px;
+  background: var(--white);
+  border: 1.522px solid var(--gray-200);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10.65px;
+  font-weight: 700;
+  color: var(--gray-900);
+}
+
+.funnelStepLine {
+  width: 91.312px;
+  height: 1.522px;
+  background: var(--gray-200);
+}
+
+.funnelRates {
+  width: 88.269px;
+  align-self: stretch;
+  background: var(--gray-50);
+  display: flex;
+  flex-direction: column;
+  gap: 24.35px;
+  align-items: center;
+  justify-content: center;
+  padding: 18.262px 0;
+  text-align: center;
+}
+
+.funnelRate {
+  display: flex;
+  flex-direction: column;
+  gap: 3.044px;
+  align-items: center;
+  padding: 0 9.131px;
+  width: 100%;
+}
+
+.funnelRateValue {
+  font-size: 13.7px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--gray-900);
+  white-space: nowrap;
+}
+
+.funnelRateLabel {
+  font-size: 9.13px;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--gray-500);
+}
+
+/* --- Calls created breakdown --- */
+.callsCard {
+  width: 493.087px;
+  display: flex;
+  flex-direction: column;
+}
+
+.callsBody {
+  width: 100%;
+  height: 206.975px;
+  background: var(--white);
+  border: 0.761px solid var(--gray-200);
+  border-top: none;
+  border-radius: 0 0 6.087px 6.087px;
+  padding: 12.175px 18.262px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.callsInner {
+  display: flex;
+  gap: 12.175px;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.callsYaxis {
+  position: relative;
+  width: 16px;
+  height: 154.47px;
+  flex-shrink: 0;
+}
+
+.callsYlabel {
+  position: absolute;
+  right: 0;
+  font-size: 9.13px;
+  font-weight: 500;
+  line-height: 15.219px;
+  color: var(--gray-500);
+  white-space: nowrap;
+}
+
+.callsPlotcol {
+  flex: 1 0 0;
+  min-width: 1px;
+  display: flex;
+  flex-direction: column;
+  gap: 12.175px;
+}
+
+.callsPlot {
+  position: relative;
+  width: 100%;
+  height: 154.47px;
+  border-left: 0.761px solid var(--gray-300);
+  border-bottom: 0.761px solid var(--gray-300);
+}
+
+.callsGridline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 0.761px;
+  background: var(--gray-200);
+}
+
+.callsBars {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  gap: 6.087px;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.callsBar {
+  flex: 1 0 0;
+  min-width: 1px;
+  background: linear-gradient(180deg, #4f88e4 0%, var(--blue-600) 100%);
+}
+
+.callsXaxis,
+.salesXaxis {
+  display: flex;
+  gap: 6.087px;
+  align-items: center;
+  width: 100%;
+  text-align: center;
+}
+
+.callsXlabel,
+.salesXlabel {
+  flex: 1 0 0;
+  min-width: 1px;
+  font-size: 9.13px;
+  font-weight: 500;
+  line-height: 15.219px;
+  color: var(--gray-500);
+  white-space: nowrap;
+}
+
+/* ============ Row 3 ============ */
+.row3 {
+  position: absolute;
+  left: 65.19px;
+  top: 446.95px;
+  display: flex;
+  gap: 18.262px;
+  align-items: center;
+}
+
+.statCard {
+  width: 152.187px;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.statCard .cardHead {
+  gap: 6.087px;
+}
+
+.statHeadRow {
+  height: 21.306px;
+  display: flex;
+  align-items: center;
+}
+
+.statCard .cardHeadTitle {
+  font-size: 10.653px;
+}
+
+.statCard .cardHeadSub {
+  font-size: 10.653px;
+}
+
+.statBody {
+  width: 100%;
+  height: 206.975px;
+  background: var(--white);
+  border: 0.761px solid var(--gray-200);
+  border-top: none;
+  border-radius: 0 0 6.087px 6.087px;
+  padding: 16.675px 18.262px 12.175px;
+  display: flex;
+  flex-direction: column;
+  gap: 9.131px;
+  align-items: center;
+  justify-content: center;
+}
+
+.statValue {
+  font-size: 30.437px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--gray-900);
+  white-space: nowrap;
+}
+
+.statBadge {
+  display: flex;
+  gap: 3.044px;
+  align-items: center;
+  justify-content: center;
+  padding: 1.522px 4.566px;
+  background: var(--green-100);
+  border: 0.761px solid #84e1bc;
+  border-radius: 6px;
+}
+
+.statBadge img {
+  width: 10.653px;
+  height: 10.653px;
+}
+
+.statBadge span {
+  font-size: 9.13px;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--green-800);
+  white-space: nowrap;
+}
+
+.statPeriod {
+  font-size: 9.131px;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--gray-500);
+  white-space: nowrap;
+}
+
+/* --- Sales breakdown --- */
+.salesCard {
+  width: 493.087px;
+  display: flex;
+  flex-direction: column;
+}
+
+.salesBody {
+  width: 100%;
+  background: var(--white);
+  border: 0.761px solid var(--gray-200);
+  border-top: none;
+  border-radius: 0 0 6.087px 6.087px;
+  padding: 12.175px 18.262px;
+  display: flex;
+  flex-direction: column;
+  gap: 12.175px;
+  align-items: center;
+}
+
+.salesInner {
+  display: flex;
+  gap: 12.175px;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.salesYaxis {
+  position: relative;
+  width: 16px;
+  height: 100.444px;
+  flex-shrink: 0;
+}
+
+.salesYlabel {
+  position: absolute;
+  right: 0;
+  font-size: 9.13px;
+  font-weight: 500;
+  line-height: 15.219px;
+  color: var(--gray-500);
+  white-space: nowrap;
+}
+
+.salesPlotcol {
+  flex: 1 0 0;
+  min-width: 1px;
+  display: flex;
+  flex-direction: column;
+  gap: 12.175px;
+}
+
+.salesPlot {
+  position: relative;
+  width: 100%;
+  height: 100.444px;
+}
+
+.salesGridline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 0.761px;
+  background: var(--gray-200);
+}
+
+.salesSvg {
+  position: absolute;
+  left: -0.76px;
+  top: 0;
+  width: 430.69px;
+  height: 101.534px;
+  overflow: visible;
+  display: block;
+}
+
+.salesStats {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.salesStat {
+  flex: 1 0 0;
+  min-width: 1px;
+  height: 42.612px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6.087px 12.175px;
+  background: var(--blue-50);
+}
+
+.salesStatRevenue {
+  background: var(--blue-100);
+}
+
+.salesStatValue {
+  font-size: 10.65px;
+  font-weight: 600;
+  line-height: 18.262px;
+  color: var(--gray-900);
+  white-space: nowrap;
+}
+
+.salesStatSub {
+  display: flex;
+  gap: 3.044px;
+  align-items: center;
+  font-size: 9.13px;
+  font-weight: 500;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+.salesStatCount {
+  color: var(--blue-600);
+}
+
+.salesStatLabel {
+  color: var(--gray-500);
+}
+
+/* ===================== Reveal cards + grow bars =====================
+   Folded in from ProductTabsV14's `.icpta-hn-tabs-shot-analytics …` rules, which
+   lived on the wrapper this panel was mounted in. Fill is 'backwards' (not
+   'both'): the delays need backwards-fill, but a finished forwards-fill pins
+   each element composited → soft text. */
+.panel .kpi,
+.panel .statCard,
+.panel .salesStat,
+.panel .funnelCol,
+.panel .callsCard,
+.panel .funnelCard,
+.panel .salesCard {
+  animation: fadeIn 0.55s ease backwards;
+}
+
+/* The KPI row was the one group left out of the reveal, so those three read as
+   already-there while everything under them arrived. Staggered left to right
+   and ahead of the cards below, since they are the top row. Safe to count with
+   nth-child here: .icpta-kpis holds the three cards and nothing else — unlike
+   .icpta-funnelCols, whose dividers are why the delays below never match. */
+.panel .kpi:nth-child(2) {
+  animation-delay: 0.08s;
+}
+
+.panel .kpi:nth-child(3) {
+  animation-delay: 0.16s;
+}
+
+.panel .salesCard {
+  animation-delay: 0.1s;
+}
+
+.panel .funnelCard {
+  animation-delay: 0.25s;
+}
+
+.panel .callsCard {
+  animation-delay: 0.4s;
+}
+
+/* Verbatim from the source. Note these three never match: inside .icpta-funnelCols the
+   columns are children 2, 4 and 6 — 1, 3 and 5 are the dividers — so every
+   .icpta-funnelCol keeps the 0s delay of the rule above. */
+.panel .funnelCol:nth-child(1) {
+  animation-delay: 0.45s;
+}
+
+.panel .funnelCol:nth-child(3) {
+  animation-delay: 0.65s;
+}
+
+.panel .funnelCol:nth-child(5) {
+  animation-delay: 0.85s;
+}
+
+.panel .funnelGraph {
+  animation: growBar 1s cubic-bezier(0.4, 0, 0.2, 1) backwards;
+  transform-origin: bottom;
+  animation-delay: 0.5s;
+}
+
+.panel .callsBar {
+  animation: growBar 0.9s cubic-bezier(0.4, 0, 0.2, 1) backwards;
+  transform-origin: bottom;
+}
+
+.panel .callsBar:nth-child(odd) {
+  animation-delay: 0.5s;
+}
+
+.panel .callsBar:nth-child(even) {
+  animation-delay: 0.62s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes growBar {
+  from {
+    transform: scaleY(0);
+    opacity: 0.3;
+  }
+  to {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* ic-website writes this as `[class*="hn-ap-"]`; module class names are
+     hashed, so the animated classes are listed out instead — same set. */
+  .panel .statCard,
+.panel .salesStat,
+.panel .funnelCol,
+.panel .callsCard,
+.panel .funnelCard,
+.panel .salesCard,
+.panel .funnelGraph,
+.panel .callsBar {
+    animation: none !important;
+  }
+}
+
+/* Below 1279px ic-website scales the whole 1238x680 stage down with a measured
+   JS fitter that lives in ProductTabs, not in the panel. These are the two
+   properties that rule set puts on the panel itself. */
+@container (max-width: 1279px) {
+  .panel {
+    transform-origin: top center;
+    flex-shrink: 0;
+  }
+}
+
+/* ===== Mobile (<810): one column, cut off at the bottom =====
+
+   The dashboard is a 1096-wide window whose three bands (KPI row, funnel +
+   calls, stats + sales) are absolutely positioned at fixed offsets. Scaled down
+   to fit 375 it landed at ~15% and nothing in it could be read.
+
+   Here the bands come out of absolute positioning and stack in DOM order, each
+   card taking the full width, and the window runs off the bottom of the panel —
+   the same crop the scheduler takes on this breakpoint. You get the KPIs and
+   the funnel at a legible size instead of the whole dashboard at none. */
+@container (max-width: 809px) {
+  .panel {
+    width: 100%;
+    /* Matches the pane's shared height, so the tab runs to the bottom of the
+       container instead of stopping short with a gray band under it. */
+    height: 720px;
+  }
+  /* A complete card — all four corners rounded, all four borders drawn — that
+     fills the container top to bottom. The dashboard inside is far taller than
+     it, so the CONTENT is what gets cut; the card itself is never cut, which is
+     what left the bottom corners square before. */
+  .window {
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: auto;
+    height: auto;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .sidebar {
+    display: none;
+  }
+  /* Out of absolute positioning and into flow, in DOM order: topbar, KPIs,
+     funnel + calls, stats + sales. */
+  .topbar,
+.kpis,
+.row2,
+.row3 {
+    position: static;
+    width: auto;
+  }
+  /* `flex: 0 0 auto` throughout: the window is now shorter than its content, so
+     without it every band would shrink to fit instead of overflowing and being
+     clipped. */
+  .topbar,
+.kpis,
+.row2,
+.row3 {
+    flex: 0 0 auto;
+  }
+  .kpis,
+.row2,
+.row3 {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 10px 12px 0;
+  }
+  .kpis {
+    padding-top: 12px;
+  }
+  /* Every card is authored at a fixed width for the 1096 window. `flex: 0 0
+     auto` matters as much as the width: these rows shared their WIDTH on
+     desktop, and the same `flex: 1 1 0` in a column divides the HEIGHT — which
+     crushed each KPI card to 51px, collapsed `.icpta-kpiTop` to its 1px min, and
+     stacked the label, value and badge on top of each other. */
+  .kpi,
+.funnelCard,
+.callsCard,
+.salesCard,
+.statCard {
+    width: auto;
+    flex: 0 0 auto;
+  }
+  .kpi {
+    height: auto;
+  }
+  .kpiTop {
+    flex: 0 0 auto;
+    min-height: 0;
+  }
+
+  /* ---- Inner widths authored for the 1096 window ---- */
+
+  /* The head's filter toggle is 228px wide and cannot sit beside a title in
+     311; let the row wrap so it drops to its own line, and let the toggle take
+     that line rather than keeping its desktop width. */
+  .cardHeadRow {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .cardHeadRight {
+    width: 100%;
+    justify-content: flex-start;
+  }
+  .toggle {
+    width: 100%;
+  }
+  .toggleSeg {
+    padding: 3.044px 4px;
+  }
+  /* One line at 1096, two or three here — `nowrap` on a fixed 16px height ran
+     the description straight out of the card. */
+  .cardHeadSub {
+    height: auto;
+    display: block;
+    white-space: normal;
+  }
+  .funnelCard .cardHeadRight {
+    display: none;
+  }
+  .funnelCard .playBtn {
+    display: none;
+  }
+
+  /* The funnel is a chart beside its step rail; stacked, the rail gets the
+     width and its connector lines flex instead of standing at 91px each. */
+  .funnelBody {
+    flex-direction: column;
+  }
+  .funnelChart {
+    width: 100%;
+    height: auto;
+    flex: 0 0 auto;
+    gap: 8px;
+  }
+  .funnelSteps {
+    width: 100%;
+    min-height: 20px;
+    flex: 0 0 20px;
+    align-items: flex-start;
+  }
+  .funnelRates {
+    width: 100%;
+    flex-direction: row;
+    gap: 16px;
+    padding: 12px 0;
+  }
+  .funnelStep {
+    width: auto;
+    flex: 1 1 0;
+    min-width: 0;
+  }
+  .funnelStepLine {
+    width: auto;
+    flex: 1 1 0;
+    min-width: 0;
+  }
+}
+
