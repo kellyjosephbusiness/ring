@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
 
 import {
   ASSETS,
@@ -648,7 +648,7 @@ export function InboxDemo() {
   );
 }
 
-function Field({ icon, label, children }: { icon: string; label: string; children: React.ReactNode }) {
+function Field({ icon, label, children }: { icon: string; label: string; children: ReactNode }) {
   return (
     <div className={styles.fr}>
       <span className={styles.fl}>
