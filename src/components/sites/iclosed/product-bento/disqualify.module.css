@@ -1,0 +1,397 @@
+/* Card 1 — Disqualify automatically. Fixed 384×260 graphic; the card scales it. */
+
+.root {
+  position: relative;
+  width: 384px;
+  height: 260px;
+  background: transparent;
+  overflow: hidden;
+  font-family: var(--ic-font-body);
+}
+
+.connectors {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 384px;
+  height: 260px;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.card {
+  position: absolute;
+  left: 22.99px;
+  top: 33.6px;
+  width: 149px;
+  height: 200px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 5.97px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.cardHead {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 4px;
+  width: 100%;
+  padding: 9.947px 14.921px;
+  border-bottom: 1.243px solid #e5e7eb;
+}
+
+.logo {
+  display: block;
+  flex: none;
+  width: 13.472px;
+  height: 12.375px;
+}
+
+.cardTitle {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 11.452px;
+  color: #000000;
+  white-space: nowrap;
+}
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  width: 100%;
+  padding: 9.947px 14.921px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+  width: 100%;
+}
+
+.label {
+  font-weight: 500;
+  font-size: 12.434px;
+  line-height: 1.3;
+  color: #111928;
+  white-space: nowrap;
+}
+
+.input {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  background: #f9fafb;
+  border: 0.82px solid #e5e7eb;
+  border-radius: 3px;
+  padding: 4px 6px;
+}
+
+.inputText {
+  width: 100%;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.3;
+  color: #111928;
+}
+
+.caret {
+  display: none;
+  width: 1px;
+  height: 12px;
+  margin-left: 1px;
+  vertical-align: -2px;
+  background: #111928;
+}
+
+.company {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+}
+
+.companyLabel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4.405px;
+  height: 21.138px;
+}
+
+.radioRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5.505px;
+}
+
+.radio {
+  display: block;
+  flex: none;
+}
+
+.radioUnsel {
+  width: 11.01px;
+  height: 11.01px;
+}
+
+.radioSel {
+  width: 12.818px;
+  height: 12.941px;
+}
+
+/* animation-only glyph variants; hidden in the static render */
+.r1Sel,
+.r3Unsel {
+  display: none;
+}
+
+.radioTxt {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16.515px;
+  color: #111928;
+  white-space: nowrap;
+}
+
+.chip {
+  position: absolute;
+  left: 221.99px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border: 1px solid;
+  border-radius: 5.97px;
+  padding: 8px 14px;
+}
+
+.chip1 {
+  top: 23.1px;
+  gap: 5px;
+}
+
+.chip2 {
+  top: 106.11px;
+  gap: 4.974px;
+  width: 140px;
+}
+
+.chip3 {
+  top: 178.11px;
+  gap: 4.974px;
+  width: 140px;
+}
+
+.chipRed {
+  background: #fdf2f2;
+  border-color: #fbd5d5;
+}
+
+.chipGreen {
+  background: #f3faf7;
+  border-color: #bcf0da;
+}
+
+.chipHead {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+.chipHeadRed {
+  color: #9b1c1c;
+}
+
+.chipHeadGreen {
+  color: #03543f;
+}
+
+.chipRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4.974px;
+}
+
+.chipVal {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.3;
+  color: #111928;
+  white-space: nowrap;
+}
+
+.chipRadio {
+  display: block;
+  flex: none;
+  width: 12px;
+  height: 12px;
+}
+
+/* --- choreography: everything below only applies under .isPlay ---
+   Beats (ms): typing 300–3915, conn1 1600, chip1 2050, chip1Relax 3000,
+   valid 4100, r1 4600, conn2 4800, chip2 5200, r2 + chip2Relax 6000,
+   conn3 6200, chip3 6600, settle 7400. */
+
+.root.isPlay .inputText {
+  white-space: nowrap;
+}
+
+.root.isPlay .caret {
+  display: inline-block;
+  animation: blink 0.9s steps(1, end) infinite;
+}
+
+.root.isPlay.stSettle .caret {
+  display: none;
+  animation: none;
+}
+
+.root.isPlay .conn {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.root.isPlay.stConn1 .conn1,
+.root.isPlay.stConn2 .conn2,
+.root.isPlay.stConn3 .conn3 {
+  stroke-dashoffset: 0;
+}
+
+.root.isPlay .chip {
+  opacity: 0.35;
+  transform: scale(0.97);
+  transform-origin: left center;
+  transition: opacity 0.4s ease;
+}
+
+.root.isPlay.stChip1 .chip1 {
+  opacity: 1;
+  animation: popRed 0.95s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.root.isPlay.stChip1Relax .chip1 {
+  opacity: 0.55;
+}
+
+.root.isPlay.stChip2 .chip2 {
+  opacity: 1;
+  animation: popRed 0.95s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.root.isPlay.stChip2Relax .chip2 {
+  opacity: 0.55;
+}
+
+.root.isPlay.stChip3 .chip3 {
+  opacity: 1;
+  animation: popGreen 1.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* settle last so it outranks the relax rules */
+.root.isPlay.stSettle .chip {
+  opacity: 1;
+}
+
+.c1Good {
+  display: none;
+}
+
+.root.isPlay.stValid .chip1 .c1Bad {
+  display: none;
+}
+
+.root.isPlay.stValid .chip1 .c1Good {
+  display: inline;
+}
+
+.root.isPlay.stValid .chip1 {
+  opacity: 1;
+  background: #f3faf7;
+  border-color: #bcf0da;
+  animation: popGreen 1.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.root.isPlay.stValid .chip1 .chipHeadRed {
+  color: #03543f;
+}
+
+.root.isPlay.stValid .input {
+  animation: valid 0.6s ease-out both;
+}
+
+.root.isPlay:not(.stR2) .r3Sel {
+  display: none;
+}
+
+.root.isPlay:not(.stR2) .r3Unsel {
+  display: block;
+}
+
+.root.isPlay.stR1:not(.stR2) .r1Unsel {
+  display: none;
+}
+
+.root.isPlay.stR1:not(.stR2) .r1Sel {
+  display: block;
+  animation: radioPop 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.root.isPlay.stR2 .r3Sel {
+  animation: radioPop 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes radioPop {
+  0% { transform: scale(0.3); opacity: 0; }
+  55% { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes valid {
+  0% { border-color: #e5e7eb; box-shadow: 0 0 0 0 rgba(14, 159, 110, 0); }
+  18% { border-color: #0e9f6e; box-shadow: 0 0 0 3px rgba(14, 159, 110, 0.16); }
+  100% { border-color: #e5e7eb; box-shadow: 0 0 0 0 rgba(14, 159, 110, 0); }
+}
+
+/* pop .97 -> 1.05 -> 1 with a double red glow pulse (~950ms) */
+@keyframes popRed {
+  0% { transform: scale(0.97); box-shadow: 0 0 0 0 rgba(224, 36, 36, 0); }
+  16% { transform: scale(1.05); }
+  20% { box-shadow: 0 0 0 3px rgba(224, 36, 36, 0.15); }
+  34% { transform: scale(1); }
+  46% { box-shadow: 0 0 0 1px rgba(224, 36, 36, 0.04); }
+  70% { box-shadow: 0 0 0 3px rgba(224, 36, 36, 0.15); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(224, 36, 36, 0); }
+}
+
+/* bigger pop (1.08), double green pulse, subtle held glow, fade (1.6s) */
+@keyframes popGreen {
+  0% { transform: scale(0.97); box-shadow: 0 0 0 0 rgba(14, 159, 110, 0); }
+  12% { transform: scale(1.08); }
+  16% { box-shadow: 0 0 0 4px rgba(14, 159, 110, 0.18); }
+  26% { transform: scale(1); }
+  32% { box-shadow: 0 0 0 1px rgba(14, 159, 110, 0.06); }
+  48% { box-shadow: 0 0 0 4px rgba(14, 159, 110, 0.18); }
+  60% { box-shadow: 0 0 0 3px rgba(14, 159, 110, 0.1); }
+  84% { box-shadow: 0 0 0 3px rgba(14, 159, 110, 0.1); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(14, 159, 110, 0); }
+}
