@@ -36,7 +36,7 @@ export function RoutingGraphic({ play = false }: { play?: boolean }) {
   const gradientId = `${uid}rtConn`;
 
   return (
-    <div className={clsx(styles.root, play && styles.isPlay, ...(play ? BEAT_CLASSES.slice(0, beats) : []))}>
+    <div className={clsx(styles.root, play && styles.isPlay, ...BEAT_CLASSES.slice(0, beats))}>
       <svg className={styles.connector} viewBox="0 0 384 260" fill="none" aria-hidden="true">
         <defs>
           <linearGradient id={gradientId} x1="145" y1="0" x2="304" y2="0" gradientUnits="userSpaceOnUse">
