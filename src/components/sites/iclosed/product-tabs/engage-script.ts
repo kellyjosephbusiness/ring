@@ -125,10 +125,12 @@ export type EngageFrame = EngageState & { ca: boolean; cb: boolean };
 export function engageStateAt(index: number): EngageFrame {
   const state: EngageState = { ...START, a: { ...START.a }, b: { ...START.b } };
   for (let i = 0; i <= index; i++) {
-    const { d: _hold, ca: _ca, cb: _cb, a, b, ...patch } = ENGAGE_STEPS[i];
-    Object.assign(state, patch);
-    if (a) state.a = { ...state.a, ...a };
-    if (b) state.b = { ...state.b, ...b };
+    const step = ENGAGE_STEPS[i];
+    for (const key of Object.keys(step) as (keyof Step)[]) {
+      if (key === "d" || key === "ca" || key === "cb") continue;
+      if (key === "a" || key === "b") state[key] = { ...state[key], ...step[key] };
+      else Object.assign(state, { [key]: step[key] });
+    }
   }
   return { ...state, ca: !!ENGAGE_STEPS[index].ca, cb: !!ENGAGE_STEPS[index].cb };
 }
