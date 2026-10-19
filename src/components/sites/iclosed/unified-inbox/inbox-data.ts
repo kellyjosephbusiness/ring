@@ -146,14 +146,19 @@ export const START_RATIO = 0.6;
 export const START_DELAY = 400;
 export const PAUSE_RATIO = 0.15;
 
+/** Frame keys that are not state patches. */
+const FRAME_META = new Set(["d", "ca", "cb", "a", "b"]);
+
 /** Cumulative state at frame `index`; click rings belong to that frame only. */
 export function stateAt(index: number): DemoState & { ca: boolean; cb: boolean } {
-  let s: DemoState = { ...BASE, a: { ...BASE.a }, b: { ...BASE.b } };
+  const s: DemoState = { ...BASE, a: { ...BASE.a }, b: { ...BASE.b } };
   for (let i = 0; i <= index; i++) {
-    const { d: _d, ca: _ca, cb: _cb, a, b, ...rest } = FRAMES[i];
-    s = { ...s, ...rest };
-    if (a) s.a = { ...s.a, ...a };
-    if (b) s.b = { ...s.b, ...b };
+    const frame = FRAMES[i];
+    for (const [key, value] of Object.entries(frame)) {
+      if (!FRAME_META.has(key)) (s as Record<string, unknown>)[key] = value;
+    }
+    if (frame.a) s.a = { ...s.a, ...frame.a };
+    if (frame.b) s.b = { ...s.b, ...frame.b };
   }
   return { ...s, ca: !!FRAMES[index].ca, cb: !!FRAMES[index].cb };
 }
