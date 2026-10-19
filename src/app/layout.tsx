@@ -24,7 +24,7 @@ const inter = localFont({
   ],
 });
 
-const title = "RingOnDemand | Inbound Calls for 8- and 9-Figure Companies";
+const title = "RingOnDemand | Inbound Calls for Enterprise Companies";
 const description =
   "You set the criteria. We run the ads, screen every caller, and send the ones who qualify to your team as inbound calls or live transfers.";
 
@@ -60,6 +60,7 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${poppins.variable} ${inter.variable} antialiased`}
+      data-scroll-behavior="smooth"
     >
       <body>{children}</body>
     </html>

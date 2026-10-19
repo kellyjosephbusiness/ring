@@ -31,7 +31,7 @@ export function Hero() {
                 <span>
                   {" "}
                   <br className={styles.h1Break} />
-                  8- and 9-Figure Companies
+                  Enterprise Companies
                 </span>
               </h1>
               <p className={styles.sub}>

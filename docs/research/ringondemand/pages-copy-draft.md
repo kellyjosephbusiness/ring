@@ -64,8 +64,8 @@ Where the copy lives in code:
    - If the homepage should book a general event, add it to `BOOKING_EVENTS`
      in `links.ts`, then pass it to `FinalCta` as `booking`.
 10. **Homepage (general).**
-    - The headline is "Inbound Calls for 8- and 9-Figure Companies".
-      "Inbound Calls for Enterprise Companies" is the alternative (`hero/hero.tsx`).
+    - The headline is "Inbound Calls for Enterprise Companies"
+      (`hero/hero.tsx`).
     - Check the hero, industry cards, steps and "Who this is for" copy below.
     - It keeps the copy doc's proof line, scoped as "Over 1,500 signed
       retainers delivered to personal injury firms last quarter".
@@ -93,7 +93,7 @@ Same sections and styling as before, with general copy. The MVA-only sections
 (the screening list, pricing and FAQ) moved to `/legal/mva`.
 
 - Eyebrow: Inbound calls and live transfers
-- Headline: Inbound Calls for / **8- and 9-Figure Companies**
+- Headline: Inbound Calls for / **Enterprise Companies**
 - Sub: You set the criteria. We run the ads, screen every caller, and send the
   ones who qualify to your team as inbound calls or live transfers.
 - Under the button: Tell us your criteria. We tell you what we can deliver.

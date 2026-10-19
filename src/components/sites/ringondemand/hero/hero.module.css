@@ -83,12 +83,11 @@
 }
 
 /* ---------- Headline + subcopy ---------- */
-/* Wide enough for "8- and 9-Figure Companies" on one 40px line. */
 .text {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  width: 600px;
+  width: 540px;
   letter-spacing: -0.4px;
 }
 

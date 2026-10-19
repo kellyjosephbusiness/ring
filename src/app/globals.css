@@ -143,3 +143,12 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* In-page jumps ("Book a call", menu links to a section) glide instead of
+   cutting. `data-scroll-behavior="smooth"` on <html> tells Next.js to switch
+   it off during route changes, so new pages still open at the top at once. */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
