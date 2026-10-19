@@ -1,0 +1,5700 @@
+
+.icpt--band,
+.icpt--portal {
+  --font-display: Poppins, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --color-heading: #0a0d14;
+  --color-accent: #1c64f2;
+  --container-pad: 40px;
+  --gray-600: #4b5563;
+  --color-hairline: #e5e7eb;
+  --font-body: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --black: #000000;
+  --white: #ffffff;
+  --gray-200: #e5e7eb;
+  --gray-50: #f9fafb;
+  --blue-600: #1c64f2;
+  --gray-900: #111928;
+  --green-100: #def7ec;
+  --green-200: #bcf0da;
+  --green-800: #03543f;
+  --gray-500: #6b7280;
+  --blue-50: #ebf5ff;
+  --gray-400: #9ca3af;
+  --blue-400: #76a9fa;
+  --green-400: #31c48d;
+  --gray-100: #f3f4f6;
+  --gray-300: #d1d5db;
+  --gray-700: #374151;
+  --blue-100: #e1effe;
+  --container-max: 1440px;
+  --color-cta: #0236c2;
+  --shadow-cta: inset 0 1px 4px 1px rgba(255,255,255,.24), inset 0 4px 16px 1px rgba(255,255,255,.2);
+  --color-text-primary: #111928;
+  --color-surface: #ffffff;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.icpt--outer { position: relative; width: 100%; container-type: inline-size; }
+.icpt--band { position: relative; width: 100%; background: var(--color-surface); font-size: 16px; line-height: 1.5; color: var(--color-text-primary); }
+.icpt--band *, .icpt--portal * { box-sizing: border-box; }
+:where(.icpt--band, .icpt--portal) :where(h1, h2, h3, h4, h5, h6) { margin: 0; font-family: var(--font-display); font-weight: 500; color: var(--color-text-primary); }
+:where(.icpt--band, .icpt--portal) :where(p, figure, blockquote) { margin: 0; }
+:where(.icpt--band, .icpt--portal) :where(a) { color: inherit; text-decoration: none; }
+:where(.icpt--band, .icpt--portal) :where(img, svg, video) { display: block; max-width: 100%; }
+:where(.icpt--band, .icpt--portal) :where(button) { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+:where(.icpt--band, .icpt--portal) :where(ul, ol) { margin: 0; padding: 0; list-style: none; }
+.icpt--wrap { position: relative; width: 100%; max-width: var(--container-max); margin: 0 auto; }
+.icpt--rule::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--color-hairline); }
+.icpt--band :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { .icpt--band *, .icpt--band *::before, .icpt--band *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; } }
+
+
+/* ==== shell ==== */
+/* Tabbed product walkthrough (Figma 14:876).
+
+   Three bands stacked: the headline, a full-bleed tab strip whose hairlines run
+   the whole viewport while its tabs stay capped at the container, and the panel
+   itself. The rails continue through all three — the tab strip draws its own
+   left/right edges in the design for exactly that reason. */
+
+/* No flex gap: the heading carries its own space down to the tab strip, and
+   the strip sits DIRECTLY on the panel — Isma cut the white slice that used to
+   separate them (2026-07-26). */
+.icpt-root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 120px;
+}
+
+.icpt-heading {
+  margin-bottom: 40px;
+  font-family: var(--font-display);
+  font-size: 36px;
+  line-height: 1.4;
+  font-weight: 500;
+  letter-spacing: -0.4px;
+  text-align: center;
+  color: var(--color-heading);
+}
+
+/* Second line carries the promise, so it takes the accent. */
+.icpt-headingAccent {
+  color: var(--color-accent);
+}
+
+/* When a subcopy follows, the heading hands its air down to the paragraph.
+   Two classes, so it also beats the breakpoint overrides on .icpt-heading below. */
+.icpt-heading.icpt-headingTight {
+  margin-bottom: 16px;
+}
+
+.icpt-subcopy {
+  max-width: 640px;
+  margin: 0 auto 40px;
+  padding-inline: var(--container-pad);
+  font-size: 18px;
+  line-height: 28px;
+  letter-spacing: -0.04px;
+  text-align: center;
+  color: var(--gray-600);
+}
+
+/* ---- Tab strip ---- */
+
+.icpt-band {
+  width: 100%;
+  border-block: 1px solid var(--color-hairline);
+}
+
+.icpt-tabs {
+  display: flex;
+  align-items: stretch;
+  height: 56px;
+  padding-top: 1px;
+}
+
+/* No hover state and no colour transition — idle↔active is an instant snap in
+   ic-website, and this is a straight port of that mechanic. */
+.icpt-tab {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  letter-spacing: -0.084px;
+  color: #737373;
+  cursor: pointer;
+}
+
+.icpt-tabOn {
+  background: #fafafa;
+  color: var(--black);
+  cursor: default;
+}
+
+/* The two stacked 2px bars in the design are a progress track and its fill:
+   the black bar sweeps left-to-right across the active tab over that tab's
+   dwell, so the strip doubles as a countdown to the next panel. */
+.icpt-tabOn::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 2px;
+  background: #e5e5e5;
+}
+
+.icpt-prog {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 0;
+  background: var(--black);
+  pointer-events: none;
+}
+
+/* The fourth tab, "AI Agent": the agent marks sit before the label. Same
+   backgrounds as the other tabs (its light blue wash came off 2026-10-08). */
+.icpt-tabAgent {
+  gap: 8px;
+}
+
+/* The Claude / Codex / Cursor marks, overlapping on white discs. */
+.icpt-agentMarks {
+  display: inline-flex;
+  flex: none;
+}
+
+.icpt-agentMarks > span {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border: 1.5px solid var(--white);
+  border-radius: 50%;
+  background: var(--white);
+  box-shadow: 0 0 0 1px var(--gray-200);
+}
+
+.icpt-agentMarks > span + span {
+  margin-left: -6px;
+}
+
+.icpt-agentMarks img {
+  width: 11px;
+  height: 11px;
+}
+
+.icpt-tabDivider {
+  flex: none;
+  width: 1px;
+  background: rgba(4, 7, 42, 0.05);
+}
+
+/* ---- Panel ---- */
+
+/* The panels are fixed-size shots that centre themselves in here; the fitter in
+   ProductTabs.icpt-tsx scales them and writes an explicit height when the column is
+   narrower than 1238. */
+.icpt-panel {
+  position: relative;
+  height: 680px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--gray-50);
+  overflow: hidden;
+}
+
+/* Engage: InboxHeroGraphic, the /unified-inbox hero's rigid 1308 x 720 window.
+   It sits on the canvas the old InboxPanel had (1238 x 680, the box the fitter
+   measures) at that panel's window height — 607 / 720 = 0.8431, so 1103 x 607
+   centred, a 36px margin above and below as before. */
+.icpt-inboxCanvas {
+  position: relative;
+  flex: none;
+  width: 1238px;
+  height: 680px;
+}
+
+.icpt-inboxWindow {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(0.8431);
+}
+
+@container (max-width: 1279px) {
+  .icpt-root {
+    padding-top: 72px;
+  }
+  .icpt-heading {
+    font-size: 30px;
+    margin-bottom: 32px;
+  }
+  .icpt-subcopy {
+    margin-bottom: 32px;
+  }
+  /* Height is written by the fitter once it knows the scale. */
+  .icpt-panel {
+    height: auto;
+    align-items: flex-start;
+  }
+}
+
+@container (max-width: 809px) {
+  .icpt-root {
+    padding-top: 48px;
+  }
+  .icpt-heading {
+    font-size: 24px;
+  }
+  .icpt-heading br {
+    display: none;
+  }
+  .icpt-subcopy {
+    font-size: 16px;
+    line-height: 26px;
+    padding-inline: 20px;
+  }
+  /* ic-website's mobile treatment: the strip becomes a 2-column grid, and
+     with three tabs the last one spans the full row rather than leaving a
+     hole. */
+  .icpt-tabs {
+    height: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .icpt-tab {
+    height: 48px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  }
+  .icpt-tabs > div:nth-child(odd) .icpt-tab {
+    border-right: 1px solid rgba(0, 0, 0, 0.05);
+  }
+  /* Only when it is the last tab — with the fourth "AI Agent" tab the grid
+     is a clean 2 x 2. */
+  .icpt-tabs > div:nth-child(3):last-child .icpt-tab {
+    grid-column: 1 / -1;
+    border-right: none;
+  }
+  .icpt-tabDivider {
+    display: none;
+  }
+  /* One shared inset for every mobile tab. The fitter measures the content box,
+     so each panel fills the same 24px-padded area without scaling past it. */
+  .icpt-panel {
+    padding: 24px;
+  }
+  /* The three panels' natural heights here are ~600 / 394 / 206, and the pane
+     took whichever was showing — so every auto-advance shunted the rest of the
+     page up or down by hundreds of pixels. A floor the tallest of them fits
+     inside holds it still; the shorter two sit at the top of it. The fitter
+     writes an inline `height` for the scaled panels, and min-height overrides
+     that whenever it is the larger of the two. */
+  .icpt-panel {
+    /* Preserve the established mobile floor; content can grow beyond it when
+       the 24px inset makes a narrow card wrap onto additional lines. */
+    min-height: 720px;
+  }
+  /* The whole window would shrink to a thumbnail here, so the canvas becomes
+     the conversation column alone (x 300–976, the same crop the /unified-inbox
+     hero takes on phones) and the fitter scales that to the pane. */
+  .icpt-inboxCanvas {
+    width: 676px;
+    height: 720px;
+    overflow: hidden;
+    border-radius: 8px;
+  }
+  .icpt-inboxWindow {
+    left: -300px;
+    top: 0;
+    transform: none;
+  }
+}
+
+
+/* ==== qualify ==== */
+/* Qualify & Route panel — ported 1:1 from ic-website's `QualifyPane` and its
+   share of the <style> block in ProductTabsV14.icptq-jsx. Every px value, easing
+   curve and sub-pixel Figma export (17.76, 32.56, 33.196 …) is verbatim.
+
+   Rule order is the source's rule order: several selectors override an earlier
+   one at equal specificity (`.icptq-qsBlurwrap` over `.icptq-blurwrap`, the second
+   `.icptq-schedPhoneinput` / `.icptq-kpicard` blocks, the V14 `.icptq-bigcard` override), so
+   moving them would change the computed style. */
+
+/* The source's DOM inherits these from `.icptq-hn-tabs-root`, which lives in the tab
+   shell rather than in the pane. Reapplied on the pane's own two roots so the
+   port is self-contained without adding a wrapper element. */
+.icptq-kpirow,
+.icptq-kpirow *,
+.icptq-kpirow *::before,
+.icptq-kpirow *::after,
+.icptq-bigcard,
+.icptq-bigcard *,
+.icptq-bigcard *::before,
+.icptq-bigcard *::after {
+  box-sizing: border-box;
+}
+.icptq-kpirow,
+.icptq-bigcard {
+  font-family: var(--font-body);
+}
+.icptq-kpirow img,
+.icptq-bigcard img {
+  display: block;
+}
+
+/* ----- KPI cards ----- */
+.icptq-kpirow {
+  position: absolute;
+  top: 40px;
+  left: calc(50% - 0.5px);
+  transform: translateX(-50%);
+  width: 1021px;
+  height: 98px;
+  display: flex;
+  align-items: center;
+  gap: 10.27px;
+}
+.icptq-kpicard {
+  flex: 1 1 0;
+  min-width: 0;
+  height: 97.422px;
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: 4px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6.089px;
+}
+.icptq-kpicardActive {
+  border-color: var(--blue-600);
+}
+.icptq-kpitop {
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+.icptq-kpilabel {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  color: var(--gray-900);
+  white-space: nowrap;
+}
+.icptq-kpivalue {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 27.4px;
+  color: var(--gray-900);
+  white-space: nowrap;
+}
+.icptq-kpibottom {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.icptq-kpibadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3.145px;
+  padding: 0 4.718px;
+  background: var(--green-100);
+  border: 0.786px solid var(--green-200);
+  border-radius: 6px;
+}
+.icptq-kpibadge img {
+  width: 11.008px;
+  height: 11.008px;
+}
+.icptq-kpibadge span:last-child {
+  font-size: 10.22px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--green-800);
+  white-space: nowrap;
+}
+.icptq-kpisub {
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 15.222px;
+  color: var(--gray-500);
+  white-space: nowrap;
+}
+
+/* ----- Big card (centered in the responsive content) ----- */
+.icptq-bigcard {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 170px;
+  width: 1144px;
+  height: 452px;
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: 4px;
+  padding: 16px 24px;
+  filter: drop-shadow(0px 0px 6px rgba(0, 0, 0, 0.12));
+  display: flex;
+  align-items: flex-start;
+  gap: 46.08px;
+}
+
+/* V14 override, emitted by ProductTabsV14 for version >= 7:
+   "KPI row gone. Keep the gray pane a FIXED 680px (same on every tab, height
+   never changes) and center the card — at its natural content height — in the
+   middle of it. No white space inside the card."
+   The source writes this as `.icptq-hn-tabs-content .icptq-hn-tabs-bigcard`; here it is a
+   later same-specificity rule, which computes identically. The companion
+   `.icptq-hn-tabs-content { display:flex; align-items:center; justify-content:center }`
+   half of that override belongs to the tab shell, not to this pane. */
+.icptq-bigcard {
+  position: static;
+  transform: none;
+  top: auto;
+  /* Well inside the tab shell's fixed 680px pane, which centres the card. */
+  height: 480px;
+  margin: 0;
+}
+
+.icptq-copy {
+  width: 501.12px;
+  flex: 0 0 auto;
+  align-self: stretch;
+  padding: 7.68px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.icptq-copytop {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 23.04px;
+}
+.icptq-copyhead {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 11.52px;
+}
+.icptq-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.36px;
+  color: #171717;
+}
+.icptq-titleMobileWord {
+  display: none;
+}
+.icptq-para {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 23.04px;
+  letter-spacing: -0.24px;
+  color: #31353f;
+}
+
+/* ----- Checklist ----- */
+.icptq-checklist {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.icptq-checkItem {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+.icptq-checkIconcol {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2px;
+}
+.icptq-checkLinewrap {
+  flex: 1 1 0;
+  min-height: 1px;
+  width: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.icptq-checkLine {
+  display: block;
+  width: 1px;
+  height: 100%;
+  background: #d9d9d9;
+}
+.icptq-checkConnector {
+  width: 20px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.icptq-checkConnectorDim {
+  opacity: 0.4;
+}
+.icptq-checkTextcol {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+.icptq-checkTextcolTight {
+  gap: 2px;
+}
+.icptq-checkTitlerow {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+.icptq-checkTitle {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  color: var(--gray-900);
+  white-space: nowrap;
+}
+.icptq-checkTitleBold {
+  font-weight: 600;
+}
+.icptq-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 6px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
+  text-align: center;
+  white-space: nowrap;
+}
+.icptq-badgeGreen {
+  background: var(--green-100);
+  border: 1px solid var(--green-200);
+  color: var(--green-800);
+}
+.icptq-checkDesc {
+  width: 100%;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  color: var(--gray-500);
+}
+
+/* ----- Right panels -----
+   The panel stretches to the card's height and holds the scheduler, so nothing
+   here depends on a magic offset the way the old absolute `.icptq-blurwrap` did.
+   22px of blue on three sides and NONE on the right: the scheduler runs off
+   that edge, and every layer runs off with it. Padding there would stack the
+   glass inset on top of the blue on top of the card's own 24px and read as a
+   margin the composition never intended. */
+.icptq-panel {
+  flex: 1 1 0;
+  min-width: 0;
+  align-self: stretch;
+  border-radius: 4px 0 0 4px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  padding: 22px 0 22px 22px;
+}
+.icptq-panelBlue {
+  background: var(--blue-50);
+}
+
+/* ----- Scheduler illustration -----
+
+   This is the HERO's scheduler (src/components/home/Hero/HeroVisual.icptq-tsx), not
+   the Recover tab's older one — same glass window, same flexed columns, same
+   phone control. Its "Name *" field and Continue button give way to the two
+   qualifying questions, which is the point of this tab.
+
+   NOTE: this app's CSS pipeline strips `backdrop-filter` out of every CSS
+   Module, so the frost is set inline in the TSX. The declaration is kept here
+   for the Framer port (which injects raw CSS and is unaffected) and as the
+   record of what the surface is meant to be. */
+.icptq-window {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  /* The card is wider than the glass and runs off its right edge, so the glass
+     is what crops it — same as ic-website's original, where the rigid 598.92
+     card bleeds off its panel. No padding, border or radius on that edge: the
+     glass ends where the cut is, rather than framing it. */
+  overflow: hidden;
+  padding: 13px 0 13px 13px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-right: none;
+  border-radius: 8px 0 0 8px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 0 42.8px 0 rgba(43, 47, 65, 0.17), inset 0 0 0 2px rgba(255, 255, 255, 0.3);
+}
+.icptq-sched {
+  /* 598.92 is the source's authored card — wider than the glass it sits in, so
+     the calendar column is cut off at the right rather than being squeezed to
+     fit. That crop is the point: it buys the form column its full 263.44 and
+     reads as a window onto a larger screen. */
+  width: 598.92px;
+  /* Fills the glass vertically — the calendar and the form keep their own
+     heights and top-align inside it. */
+  flex: 1 1 auto;
+  min-height: 0;
+  background: var(--white);
+  /* Square on the right — that corner is cut off, not rounded. */
+  border-radius: 4px 0 0 4px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  box-shadow:
+    0px 8.33px 8.33px 0px rgba(25, 44, 128, 0.02),
+    0px 2.082px 4.165px 0px rgba(196, 196, 215, 0.17),
+    0px 1.041px 2.082px 0px rgba(196, 196, 215, 0.25),
+    0px 0px 0px 1.041px rgba(196, 196, 215, 0.25);
+}
+.icptq-schedHead {
+  width: 100%;
+  background: var(--white);
+  border-bottom: 1px solid var(--gray-200);
+  padding: 7.4px 11.84px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 11.84px;
+}
+.icptq-schedStep {
+  display: flex;
+  align-items: center;
+  gap: 5.92px;
+}
+.icptq-schedDot {
+  width: 5.92px;
+  height: 5.92px;
+  border-radius: 50%;
+  background: var(--gray-400);
+}
+.icptq-schedDotOn {
+  background: #04072a;
+}
+.icptq-schedSteplabel {
+  font-size: 10.36px;
+  font-weight: 500;
+  line-height: 14.8px;
+  color: var(--gray-400);
+  white-space: nowrap;
+}
+.icptq-schedSteplabelOn {
+  color: #04072a;
+}
+.icptq-schedBody {
+  width: 100%;
+  /* Takes the height the card has left instead of a fixed 300.88 — the two
+     columns top-align in it and the rule between them runs its full height. */
+  flex: 1 1 auto;
+  min-height: 0;
+  background: var(--white);
+  padding: 0 17.76px;
+  display: flex;
+  align-items: flex-start;
+  gap: 17.76px;
+}
+/* Both columns stand at the source's 263.44 rather than splitting what the
+   glass allows. Together they overrun it, which is what puts the cut on the
+   right — and what keeps the form wide enough to read. */
+.icptq-schedForm {
+  width: 263.44px;
+  flex: 0 0 auto;
+  padding: 17.76px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 11.84px;
+}
+.icptq-schedTitleblock {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8.88px;
+}
+.icptq-schedTitle {
+  width: 100%;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 17.76px;
+  color: var(--gray-900);
+}
+.icptq-schedSub {
+  width: 100%;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--gray-600);
+}
+.icptq-schedFields {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 11.84px;
+}
+/* The focus state colours the border of BOTH halves — the flag button and the
+   input are separate boxes sharing one outline, so the class lives on the row.
+   No outer glow: the border is the whole signal, and it turns green once the
+   number validates. */
+.icptq-phoneRow {
+  width: 100%;
+  display: flex;
+  align-items: stretch;
+}
+.icptq-phoneRowLit .icptq-flagBtn,
+.icptq-phoneRowLit .icptq-phoneInput {
+  border-color: var(--blue-400);
+}
+.icptq-phoneRowOk .icptq-flagBtn,
+.icptq-phoneRowOk .icptq-phoneInput {
+  border-color: var(--green-400);
+}
+.icptq-flagBtn {
+  background: var(--gray-100);
+  border: 0.74px solid var(--gray-200);
+  border-right: none;
+  transition: border-color 180ms ease;
+  border-radius: 5.92px 0 0 5.92px;
+  padding-left: 7.4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7.4px;
+}
+.icptq-flagBtn img:first-child {
+  width: 14.8px;
+  height: 10.36px;
+}
+.icptq-flagBtn img:nth-child(2) {
+  width: 13.32px;
+  height: 13.32px;
+  margin-left: -4.44px;
+}
+.icptq-flagDiv {
+  width: 0.74px;
+  align-self: stretch;
+  background: var(--gray-200);
+}
+.icptq-phoneInput {
+  flex: 1 1 0;
+  min-width: 0;
+  height: 32px;
+  background: var(--gray-50);
+  border: 0.74px solid var(--gray-200);
+  border-left: none;
+  border-radius: 0 5.92px 5.92px 0;
+  padding: 0 8.88px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--gray-900);
+  display: flex;
+  align-items: center;
+  transition: border-color 180ms ease;
+}
+.icptq-schedDivider {
+  width: 1px;
+  align-self: stretch;
+  background: var(--gray-200);
+  flex: 0 0 auto;
+}
+.icptq-schedCal {
+  width: 263.44px;
+  flex: 0 0 auto;
+  height: 300.88px;
+  position: relative;
+}
+/* Month, day names and dates are out of reach until the form is filled, so they
+   carry a layer blur on top of the existing 30%. Figma's layer blur is `filter`,
+   not `backdrop-filter` — the latter would sample the card behind instead. It
+   applies only to this inner block; the tip is a sibling and stays sharp. */
+.icptq-schedCalinner {
+  width: 100%;
+  opacity: 0.3;
+  filter: blur(2px);
+  padding: 17.76px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.icptq-schedCalhead {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8.88px;
+}
+.icptq-schedMonth {
+  font-size: 11.84px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--gray-900);
+  text-align: center;
+  white-space: nowrap;
+}
+.icptq-schedMonth span {
+  font-weight: 600;
+}
+.icptq-schedNavs {
+  display: flex;
+  align-items: center;
+  gap: 5.92px;
+}
+.icptq-schedNavbtn {
+  background: var(--white);
+  border: 0.74px solid var(--gray-300);
+  border-radius: 2.96px;
+  padding: 5.92px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.icptq-schedNavbtn img {
+  width: 11.84px;
+  height: 11.84px;
+}
+.icptq-schedNavbtnPrev {
+  opacity: 0.5;
+}
+.icptq-schedNavflip {
+  transform: rotate(180deg);
+}
+.icptq-schedWeeks {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5.92px;
+}
+.icptq-schedWeek {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 5.92px;
+  overflow: hidden;
+}
+.icptq-schedDayname {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 5.18px 2.96px;
+  font-size: 8.88px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--gray-900);
+  text-align: center;
+}
+.icptq-schedDay {
+  flex: 1 1 0;
+  min-width: 0;
+  height: 32.56px;
+  padding: 6.66px 1.48px;
+  border-radius: 5.92px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 11.84px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--gray-900);
+  text-align: center;
+  white-space: nowrap;
+}
+/* Weeks 1 and 5 are short rows (6 and 5 days) that must still line up with the
+   7-column grid above them, so their cells take a fixed width instead of
+   flexing. Expressed against the column rather than hardcoded at the source's
+   33.196px: that figure is one seventh of a 263.44px column, and this column
+   now flexes — left hard, the row overruns its box and the last day is clipped
+   away. */
+.icptq-schedDayFixed {
+  flex: 0 0 calc((100% - 5.92px * 6) / 7);
+  width: auto;
+}
+/* Days with open slots: Gray/100 chip, numeral stays Gray/900 and goes
+   semibold. The weight is the only signal — no colour shift. (The hero's
+   treatment; the Recover tab tinted these Blue/100.) */
+.icptq-schedDayAvail {
+  background: var(--gray-100);
+  font-weight: 600;
+}
+.icptq-schedDaySelected {
+  background: #04072a;
+  color: var(--white);
+  font-weight: 600;
+  gap: 2.96px;
+  justify-content: flex-start;
+}
+.icptq-schedDaydot {
+  width: 4.44px;
+  height: 4.44px;
+  border-radius: 50%;
+  background: var(--white);
+}
+/* The calendar column runs off the right edge, so only ~170px of it is on
+   screen. Left-anchored and sized to that strip rather than centred on the full
+   263.44 column — centred, two thirds of the tip lands past the crop and the
+   one instruction in the panel reads as broken. */
+.icptq-schedCaltip {
+  position: absolute;
+  left: 0;
+  top: 117.66px;
+  background: var(--white);
+  border: 0.74px solid var(--gray-300);
+  border-radius: 2.96px;
+  padding: 8.88px;
+  width: 160px;
+  /* 11.36, not the frame's 10.36 — it is the one legible instruction in a
+     blurred panel, so it carries the extra pixel. */
+  font-size: 11.36px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--gray-900);
+  text-align: center;
+}
+
+/* ===================== Recover-tab animation ===================== */
+
+/* KPI flash on each milestone */
+.icptq-kpicard {
+  transition: box-shadow 0.3s ease;
+}
+.icptq-kpicardFlash {
+  animation: icptq-kflash 1s ease;
+}
+@keyframes icptq-kflash {
+  0% {
+    box-shadow: 0 0 0 3px rgba(28, 100, 242, 0.3);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(28, 100, 242, 0);
+  }
+}
+
+/* Checklist item: pending -> done -> current.
+   Only the step the sequence is ON is highlighted. A step that has already
+   fired keeps its check, badge and outcome, but recedes to 0.7 so the row it
+   hands off to is the only one at full strength — the lit rows no longer
+   accumulate until all three read as equally important. */
+.icptq-checkAnim {
+  transition: opacity 0.45s ease;
+}
+.icptq-checkAnim.icptq-isDim {
+  opacity: 0.4;
+}
+.icptq-checkAnim.icptq-isChecked {
+  opacity: 0.7;
+}
+.icptq-checkAnim.icptq-isChecked.icptq-isCurrent {
+  opacity: 1;
+}
+.icptq-checkSwap {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  flex: 0 0 auto;
+}
+.icptq-checkSwapDim,
+.icptq-checkSwapChk {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.icptq-checkSwapDim img {
+  width: 16px;
+  height: 16px;
+}
+.icptq-checkSwapChk {
+  border-radius: 27.5px;
+  background: var(--green-100);
+  opacity: 0;
+  transform: scale(0.55);
+}
+.icptq-checkSwapChk img {
+  width: 13.333px;
+  height: 13.333px;
+}
+.icptq-checkAnim.icptq-isChecked .icptq-checkSwapDim {
+  opacity: 0;
+  transform: scale(0.55);
+}
+.icptq-checkAnim.icptq-isChecked .icptq-checkSwapChk {
+  opacity: 1;
+  transform: none;
+}
+.icptq-badgeReveal {
+  opacity: 0;
+  transform: translateX(-4px) scale(0.9);
+  transition: opacity 0.35s ease 0.08s, transform 0.35s ease 0.08s;
+}
+.icptq-checkAnim.icptq-isChecked .icptq-badgeReveal {
+  opacity: 1;
+  transform: none;
+}
+
+/* Scheduler phone field */
+.icptq-phoneText {
+  white-space: nowrap;
+}
+.icptq-phoneTextIdle {
+  color: var(--gray-400);
+}
+.icptq-caret {
+  width: 1px;
+  height: 15px;
+  margin-left: 1px;
+  background: var(--gray-900);
+  animation: icptq-caretBlink 1s steps(1, end) infinite;
+  flex: 0 0 auto;
+}
+@keyframes icptq-caretBlink {
+  50% {
+    opacity: 0;
+  }
+}
+.icptq-validCheck {
+  width: 12px;
+  height: 12px;
+  margin-left: auto;
+  flex: 0 0 auto;
+}
+
+/* Right-panel layered stage: scheduler <-> inbox */
+.icptq-rightstage {
+  position: relative;
+}
+
+/* ===================== Qualify & Route tab ===================== */
+
+/* last checklist item: keep the icon top-aligned but drop the trailing line */
+.icptq-checkLinewrapLast .icptq-checkLine {
+  display: none;
+}
+
+/* red badge (disqualify) */
+.icptq-badgeRed {
+  background: #fde8e8;
+  border: 1px solid #f8b4b4;
+  color: #9b1c1c;
+}
+.icptq-checkSwap.icptq-isRed .icptq-checkSwapChk {
+  background: #fde8e8;
+}
+
+/* step outcome rows (reveal when the step checks) */
+.icptq-checkOutcome {
+  margin-top: 6px;
+}
+.icptq-checkOutcomeReveal {
+  opacity: 0;
+  transform: translateY(3px);
+  transition: opacity 0.35s ease 0.12s, transform 0.35s ease 0.12s;
+}
+.icptq-checkAnim.icptq-isChecked .icptq-checkOutcomeReveal {
+  opacity: 1;
+  transform: none;
+}
+.icptq-qsOutcome {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 9px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+}
+.icptq-qsOutcomeRoute {
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  color: var(--gray-700);
+}
+.icptq-qsOutcomeDq {
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  color: #8a4a42;
+}
+.icptq-qsOutcomeAv {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex: 0 0 auto;
+}
+.icptq-qsOutcomeIc {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+.icptq-qsOutcomeTxt {
+  white-space: nowrap;
+}
+.icptq-qsOutcomeTxt b {
+  font-weight: 600;
+}
+.icptq-qsOutcomePix {
+  margin-left: 2px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 0 2px 5px;
+  color: #057a55;
+  font-size: 10.5px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.icptq-qsOutcomePix img {
+  width: 14px;
+  height: 10px;
+  display: block;
+  flex: 0 0 auto;
+}
+
+/* scheduler questions + radio options */
+.icptq-qsFields {
+  gap: 9px !important;
+}
+.icptq-qsQuestion {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.icptq-qsQlabel {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--gray-700);
+  margin-bottom: 3px;
+}
+.icptq-qsOpt {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 2.5px 2px;
+  font-size: 12px;
+  line-height: 1.3;
+  color: var(--gray-600);
+}
+.icptq-qsOpt.icptq-isSel {
+  color: var(--gray-900);
+  font-weight: 600;
+}
+.icptq-qsRadio {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  border: 1.4px solid #cbd2dc;
+  flex: 0 0 auto;
+  position: relative;
+  transition: border-color 0.2s;
+}
+.icptq-qsOpt.icptq-isSel .icptq-qsRadio {
+  border-color: var(--blue-600);
+}
+.icptq-qsOpt.icptq-isSel .icptq-qsRadio::after {
+  content: "";
+  position: absolute;
+  inset: 2.5px;
+  border-radius: 50%;
+  background: var(--blue-600);
+}
+.icptq-qsOptlabel {
+  white-space: nowrap;
+}
+
+/* clicking cursor */
+.icptq-qsCursor {
+  position: absolute;
+  width: 19px;
+  height: 19px;
+  z-index: 30;
+  opacity: 0;
+  pointer-events: none;
+  filter: drop-shadow(0 2px 4px rgba(16, 24, 40, 0.4));
+  transition: left 0.55s cubic-bezier(0.4, 0, 0.2, 1), top 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.3s;
+}
+.icptq-qsCursor.icptq-isShow {
+  opacity: 1;
+}
+.icptq-qsCursor.icptq-isClick {
+  animation: icptq-curclick 0.4s ease;
+}
+@keyframes icptq-curclick {
+  40% {
+    transform: scale(0.78);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .icptq-checkAnim,
+  .icptq-checkSwapDim,
+  .icptq-checkSwapChk,
+  .icptq-badgeReveal,
+  .icptq-checkOutcomeReveal,
+  .icptq-kpicard {
+    transition: none;
+  }
+  .icptq-kpicardFlash {
+    animation: none;
+  }
+  .icptq-schedCaret {
+    display: none;
+  }
+  .icptq-qsCursor {
+    display: none;
+  }
+}
+
+/* ============ Stage fitter (inert on desktop) ============ */
+.icptq-stagefit {
+  display: contents;
+}
+
+/* ============ Tablet & below (≤1279): stacked layout ============ */
+@container (max-width: 1279px) {
+  .icptq-kpirow {
+    position: static;
+    transform: none;
+    width: 100%;
+    max-width: 680px;
+    height: auto;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .icptq-kpicard {
+    height: auto;
+    min-height: 97px;
+  }
+  .icptq-kpilabel {
+    white-space: normal;
+  }
+  .icptq-bigcard {
+    position: static;
+    transform: none;
+    width: 100%;
+    max-width: 680px;
+    height: auto;
+    margin: 16px auto 0;
+    flex-direction: column;
+    gap: 24px;
+    padding: 16px;
+  }
+  .icptq-copy {
+    width: 100%;
+    padding: 4px;
+    gap: 24px;
+  }
+  .icptq-stagefit {
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    width: 100%;
+  }
+  .icptq-stagefit .icptq-panel {
+    width: 547.2px;
+    flex: none;
+    /* The card stacks and goes auto-height here, so `align-self: stretch` has
+       nothing to stretch against — the panel states its own height, matching
+       the desktop card's 520 less its 16px padding. */
+    align-self: auto;
+    height: 448px;
+    transform-origin: top center;
+  }
+}
+
+/* ============ Mobile (<810) — Figma 377:34004 ============ */
+@container (max-width: 809px) {
+  .icptq-bigcard {
+    width: 100%;
+    max-width: none;
+    height: 720px;
+    margin: 0 auto;
+    padding: 24px;
+    gap: 12px;
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(16, 24, 40, 0.05), 0 1px 3px rgba(16, 24, 40, 0.04);
+    filter: none;
+    overflow: hidden;
+  }
+  .icptq-copy,
+  .icptq-copytop {
+    display: contents;
+  }
+  .icptq-copyhead {
+    order: 1;
+    flex: 0 0 auto;
+    gap: 4px;
+    padding-block: 0.5px;
+  }
+  .icptq-titleDesktopWord {
+    display: none;
+  }
+  .icptq-titleMobileWord {
+    display: inline;
+  }
+  .icptq-para {
+    font-size: 14px;
+    line-height: 23px;
+  }
+
+  .icptq-stagefit {
+    order: 2;
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 372px;
+    flex: 0 0 372px;
+    overflow: hidden;
+  }
+  .icptq-stagefit .icptq-panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 372px;
+    padding: 0;
+    border-radius: 4px;
+    display: block;
+  }
+  .icptq-window {
+    position: absolute;
+    top: 23px;
+    left: 24px;
+    right: 24px;
+    width: auto;
+    height: 372px;
+    padding: 0;
+    border: 0;
+    border-radius: 8px;
+    background: var(--gray-50);
+    box-shadow: 0 2px 10px rgba(16, 24, 40, 0.06);
+    justify-content: center;
+  }
+  .icptq-sched {
+    width: 100%;
+    height: 372px;
+    flex: 0 0 372px;
+    border-radius: 4px;
+  }
+  .icptq-schedBody {
+    flex: 0 0 auto;
+    min-height: 0;
+    flex-direction: column;
+    padding: 0 17.76px;
+    gap: 17.76px;
+    overflow: visible;
+  }
+  .icptq-schedForm {
+    width: 100%;
+    padding: 17.76px 0;
+    gap: 11.84px;
+  }
+  .icptq-schedTitleblock {
+    gap: 4px;
+  }
+  .icptq-schedSub {
+    display: none;
+  }
+  .icptq-phoneInput,
+  .icptq-phoneText {
+    font-size: 14px;
+  }
+  .icptq-phoneRow {
+    margin: 0;
+  }
+  .icptq-qsFields {
+    gap: 11.84px !important;
+  }
+  .icptq-qsQuestion {
+    gap: 4px;
+  }
+  .icptq-qsQlabel {
+    margin-bottom: 3px;
+    font-size: 14px;
+    line-height: 20px;
+  }
+  .icptq-qsOpt {
+    padding: 2.5px 2px;
+    font-size: 14px;
+    line-height: 15.6px;
+  }
+  .icptq-schedDivider {
+    display: block;
+    width: 1px;
+    height: 346.87px;
+    align-self: flex-start;
+    flex: 0 0 auto;
+  }
+  .icptq-schedCal {
+    display: flex;
+    width: 100%;
+    height: 300.88px;
+    min-height: 300.88px;
+    flex: 0 0 300.88px;
+    overflow: visible;
+  }
+
+  .icptq-checklist {
+    order: 3;
+    flex: 0 0 auto;
+    /* Keep every animated state in one grid cell. Transparent states still
+       reserve the tallest result's height, so the card never jumps mid-cycle. */
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    padding: 4px 5px 10px;
+  }
+  .icptq-checkItem {
+    grid-area: 1 / 1;
+  }
+  .icptq-checkConnector,
+  .icptq-checkLinewrap {
+    display: none;
+  }
+  .icptq-checkIconcol {
+    align-self: flex-start;
+    justify-content: flex-start;
+  }
+  .icptq-checkTitlerow {
+    flex-wrap: wrap;
+  }
+  .icptq-checkTitle {
+    white-space: normal;
+  }
+  .icptq-qsOutcome {
+    flex-wrap: wrap;
+    max-width: 100%;
+  }
+  .icptq-qsOutcomeTxt,
+  .icptq-qsOutcomePix {
+    white-space: normal;
+  }
+  .icptq-checkAnim.icptq-isDim,
+  .icptq-checkAnim.icptq-isChecked {
+    opacity: 0;
+  }
+  .icptq-checkAnim.icptq-isChecked.icptq-isCurrent {
+    opacity: 1;
+  }
+  .icptq-checklist:not(:has(.icptq-isCurrent)) .icptq-checkItem:first-child {
+    opacity: 1;
+  }
+}
+
+@container (max-width: 340px) {
+  .icptq-stagefit,
+  .icptq-stagefit .icptq-panel {
+    height: 340px;
+  }
+  .icptq-stagefit {
+    flex-basis: 340px;
+  }
+  .icptq-schedForm {
+    padding-block: 14px;
+    gap: 8px;
+  }
+  .icptq-qsFields {
+    gap: 8px !important;
+  }
+  .icptq-qsQlabel {
+    font-size: 12px;
+    line-height: 18px;
+  }
+  .icptq-qsOpt {
+    padding-block: 1.5px;
+    font-size: 12px;
+    line-height: 14px;
+  }
+  .icptq-checkTitle,
+  .icptq-checkDesc {
+    font-size: 12px;
+    line-height: 16px;
+  }
+  .icptq-badge {
+    padding-inline: 4px;
+    font-size: 11px;
+  }
+  .icptq-qsOutcome {
+    gap: 4px;
+    padding: 4px 6px;
+    font-size: 10px;
+  }
+  .icptq-qsOutcomeAv,
+  .icptq-qsOutcomeIc {
+    width: 14px;
+    height: 14px;
+  }
+  .icptq-flagBtn {
+    gap: 4px;
+    padding-left: 5px;
+  }
+  .icptq-phoneInput {
+    padding-inline: 6px;
+  }
+  .icptq-phoneInput,
+  .icptq-phoneText {
+    font-size: 12px;
+  }
+}
+
+
+/* ==== analytics ==== */
+/* Analytics panel — 1238 x 680 stage.
+
+   Ported 1:1 from ic-website's `AnalyticsPanelAnimated.icpta-jsx` (home-new). Every
+   value is a Figma export kept at its full precision (0.761, 12.175, 18.262 …)
+   rather than rounded, so the port stays traceable to the frame.
+
+   The root also folds in the wrapper ic-website rendered this panel inside —
+   `.icpta-hn-tabs-shot.icpta-hn-tabs-shot-analytics` from ProductTabsV14.icpta-jsx:
+     .icpta-hn-tabs-shot { display: flex; justify-content: center; width: 100%; height: 680px; }
+   i.icpta-e. a full-width 680px-tall box that horizontally centres the fixed 1238px
+   stage. Here the stage centres itself with `margin-inline: auto` and keeps the
+   680px height it already had, so the extra element is unnecessary. The same
+   wrapper also carried the tab's reveal animations, which are folded in at the
+   bottom of this file. */
+
+.icpta-panel {
+  position: relative;
+  width: 1238px;
+  /* from .icpta-hn-tabs-shot's flex centring */
+  margin-inline: auto;
+  height: 680px;
+  background: var(--gray-50);
+  overflow: hidden;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+.icpta-panel *,
+.icpta-panel *::before,
+.icpta-panel *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.icpta-panel img {
+  display: block;
+  border: 0;
+}
+
+/* ============ App window ============ */
+.icpta-window {
+  /* identical frame to the Unified Inbox tab's .icpta-hn-ip-app, so switching
+     tabs reads as the same app window changing content */
+  position: absolute;
+  left: 71px;
+  top: 36px;
+  width: 1096px;
+  height: 607px;
+  background: var(--gray-50);
+  border: 1px solid var(--gray-200);
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(16, 24, 40, 0.05), 0 1px 3px rgba(16, 24, 40, 0.04);
+  overflow: hidden;
+}
+
+/* ============ Sidebar ============ */
+/* Identical to the Unified Inbox tab's .icpta-hn-ip-rail so the sidebar
+   doesn't shift when switching tabs — only the highlighted item differs. */
+.icpta-sidebar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 40px;
+  background: var(--white);
+  border-right: 1px solid var(--gray-200);
+  display: flex;
+  flex-direction: column;
+}
+
+.icpta-sidebarLogo {
+  height: 39.5px;
+  flex: 0 0 auto;
+  border-bottom: 1px solid var(--gray-200);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icpta-sidebarLogo img {
+  width: 13.69px;
+  height: 12.18px;
+}
+
+.icpta-sidebarNav {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+}
+
+.icpta-sidebarTop {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 9.1px 0;
+}
+
+.icpta-sidebarBottom {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5px;
+}
+
+.icpta-navItem {
+  height: 24.36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icpta-navLink {
+  width: 21.45px;
+  height: 21.45px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icpta-navLinkActive {
+  background: var(--blue-100);
+}
+
+.icpta-navLink img {
+  width: 12.18px;
+  height: 12.18px;
+}
+
+.icpta-sidebarAvatarWrap {
+  padding: 6.1px 6.1px 12.2px;
+  display: flex;
+  justify-content: center;
+}
+
+.icpta-sidebarAvatarBox {
+  width: 24.36px;
+  height: 24.36px;
+  background: var(--white);
+  border: 1px solid var(--gray-300);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icpta-sidebarAvatar {
+  width: 18px;
+  height: 18px;
+  border-radius: 100px;
+  object-fit: cover;
+}
+
+/* ============ Top bar ============ */
+.icpta-topbar {
+  position: absolute;
+  left: 40px;
+  right: 0;
+  top: 0;
+  height: 39.569px;
+  background: var(--white);
+  border-bottom: 0.761px solid var(--gray-200);
+  display: flex;
+  align-items: center;
+  gap: 4.566px;
+  padding: 0 18.262px;
+}
+
+.icpta-topbarIcon {
+  width: 12.175px;
+  height: 12.175px;
+}
+
+.icpta-topbarTitle {
+  font-size: 12.17px;
+  font-weight: 500;
+  line-height: 18.262px;
+  color: var(--gray-900);
+}
+
+/* ============ KPI cards ============ */
+.icpta-kpis {
+  position: absolute;
+  left: 65.5px;
+  top: 53.41px;
+  width: 1003.1px;
+  display: flex;
+  gap: 10.72px;
+  align-items: center;
+}
+
+.icpta-kpi {
+  flex: 1 0 0;
+  min-width: 1px;
+  height: 101.69px;
+  background: var(--white);
+  border: 1.044px solid var(--gray-200);
+  border-radius: 4.175px;
+  padding: 12.526px;
+  display: flex;
+  flex-direction: column;
+  gap: 6.356px;
+}
+
+.icpta-kpiHighlight {
+  border-color: var(--blue-600);
+}
+
+.icpta-kpiTop {
+  flex: 1 0 0;
+  min-height: 1px;
+  display: flex;
+  flex-direction: column;
+  gap: 6.263px;
+  align-items: flex-start;
+}
+
+.icpta-kpiLabel {
+  font-size: 11.122px;
+  font-weight: 500;
+  line-height: 15.889px;
+  color: var(--gray-900);
+  white-space: nowrap;
+}
+
+.icpta-kpiValue {
+  font-size: 23.834px;
+  font-weight: 600;
+  line-height: 28.6px;
+  color: var(--gray-900);
+  white-space: nowrap;
+}
+
+.icpta-kpiMeta {
+  display: flex;
+  gap: 6.263px;
+  align-items: center;
+}
+
+.icpta-kpiBadge {
+  display: flex;
+  gap: 3.283px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4.924px;
+  background: var(--green-100);
+  border: 0.821px solid var(--green-200);
+  border-radius: 6px;
+}
+
+.icpta-kpiBadge img {
+  width: 11.49px;
+  height: 11.49px;
+}
+
+.icpta-kpiBadge span {
+  font-size: 10.67px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--green-800);
+  white-space: nowrap;
+}
+
+.icpta-kpiPeriod {
+  font-size: 11.122px;
+  font-weight: 500;
+  line-height: 15.889px;
+  color: var(--gray-500);
+  white-space: nowrap;
+}
+
+/* ============ Shared card pieces ============ */
+.icpta-cardHead {
+  width: 100%;
+  background: var(--gray-50);
+  border: 0.761px solid var(--gray-200);
+  border-radius: 6.087px 6.087px 0 0;
+  padding: 6.087px 12.175px;
+  display: flex;
+  flex-direction: column;
+  gap: 3.044px;
+}
+
+.icpta-cardHeadRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.icpta-cardHeadLeft {
+  display: flex;
+  gap: 6.087px;
+  align-items: center;
+}
+
+.icpta-cardHeadIcon {
+  width: 15.219px;
+  height: 15.219px;
+}
+
+.icpta-cardHeadTitle {
+  font-size: 10.65px;
+  font-weight: 600;
+  line-height: 18.262px;
+  color: var(--gray-900);
+  white-space: nowrap;
+}
+
+.icpta-cardHeadInfo {
+  width: 12.175px;
+  height: 12.175px;
+}
+
+.icpta-cardHeadRight {
+  display: flex;
+  gap: 6.087px;
+  align-items: center;
+}
+
+.icpta-cardHeadSub {
+  font-size: 10.65px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--gray-700);
+  height: 16.24px;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.icpta-playBtn {
+  background: var(--gray-100);
+  border-radius: 4px;
+  padding: 3.044px;
+  display: flex;
+}
+
+.icpta-playBtn img {
+  width: 15.219px;
+  height: 15.219px;
+}
+
+.icpta-toggle {
+  width: 228.281px;
+  background: var(--gray-100);
+  border-radius: 4px;
+  padding: 1.522px;
+  display: flex;
+  align-items: center;
+}
+
+.icpta-toggleSeg {
+  flex: 1 0 0;
+  min-width: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3.044px 12.175px;
+  font-size: 9.13px;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--gray-900);
+  white-space: nowrap;
+}
+
+.icpta-toggleSegActive {
+  background: var(--gray-500);
+  color: var(--white);
+  border-radius: 3.044px;
+  height: 18.262px;
+}
+
+/* ============ Row 2 ============ */
+.icpta-row2 {
+  position: absolute;
+  left: 65.02px;
+  top: 172.45px;
+  display: flex;
+  gap: 18.262px;
+  align-items: center;
+}
+
+/* --- Scheduling funnel --- */
+.icpta-funnelCard {
+  width: 493.087px;
+  background: var(--white);
+  border: 0.761px solid var(--gray-200);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.icpta-funnelBody {
+  display: flex;
+  gap: 12.175px;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 12.175px;
+  width: 100%;
+}
+
+.icpta-funnelChart {
+  flex: 1 0 0;
+  min-width: 1px;
+  height: 182.625px;
+  display: flex;
+  flex-direction: column;
+  gap: 4.566px;
+  align-items: flex-start;
+}
+
+.icpta-funnelCols {
+  height: 159.797px;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+}
+
+.icpta-funnelDivider {
+  width: 0.761px;
+  height: 100%;
+  background: var(--gray-200);
+  flex-shrink: 0;
+}
+
+.icpta-funnelCol {
+  flex: 1 0 0;
+  min-width: 1px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.icpta-funnelColData {
+  display: flex;
+  flex-direction: column;
+  gap: 6.087px;
+  padding: 0 9.131px;
+}
+
+.icpta-funnelColLabel {
+  height: 12.175px;
+  display: flex;
+  align-items: center;
+  font-size: 10.65px;
+  font-weight: 600;
+  line-height: 18.262px;
+  color: var(--gray-500);
+  white-space: nowrap;
+}
+
+.icpta-funnelColValue {
+  font-size: 12.17px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--gray-900);
+  white-space: nowrap;
+}
+
+.icpta-funnelGraph {
+  width: 100%;
+  border-bottom: 0.761px solid var(--gray-200);
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+}
+
+.icpta-funnelGraphViews {
+  height: 105.009px;
+  align-items: flex-start;
+}
+
+.icpta-funnelGraphContacts {
+  height: 93.595px;
+}
+
+.icpta-funnelGraphCalls {
+  height: 58.592px;
+}
+
+.icpta-funnelBarViews {
+  width: 30.437px;
+  height: 104.248px;
+  flex-shrink: 0;
+  background: linear-gradient(180deg, #4f88e4 0%, var(--blue-600) 100%);
+}
+
+.icpta-funnelBarContacts {
+  width: 30.437px;
+  height: 100%;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.icpta-funnelBarContactsTop {
+  flex: 1 0 0;
+  min-height: 1px;
+  width: 100%;
+  background: var(--blue-400);
+}
+
+.icpta-funnelBarContactsBottom {
+  flex: 1 0 0;
+  min-height: 1px;
+  width: 100%;
+  background: linear-gradient(180deg, #4f88e4 0%, var(--blue-600) 100%);
+}
+
+.icpta-funnelBarCalls {
+  width: 30.437px;
+  height: 100%;
+  flex-shrink: 0;
+  background: linear-gradient(180deg, #4f88e4 0%, var(--blue-600) 100%);
+}
+
+.icpta-funnelArea {
+  flex: 1 0 0;
+  min-width: 1px;
+  height: 100%;
+  display: block;
+}
+
+.icpta-funnelSteps {
+  flex: 1 0 0;
+  min-height: 1px;
+  display: flex;
+  align-items: center;
+}
+
+.icpta-funnelStep {
+  width: 121.75px;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.icpta-funnelStepCircleWrap {
+  width: 30.437px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.icpta-funnelStepCircle {
+  width: 18.262px;
+  height: 18.262px;
+  background: var(--white);
+  border: 1.522px solid var(--gray-200);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10.65px;
+  font-weight: 700;
+  color: var(--gray-900);
+}
+
+.icpta-funnelStepLine {
+  width: 91.312px;
+  height: 1.522px;
+  background: var(--gray-200);
+}
+
+.icpta-funnelRates {
+  width: 88.269px;
+  align-self: stretch;
+  background: var(--gray-50);
+  display: flex;
+  flex-direction: column;
+  gap: 24.35px;
+  align-items: center;
+  justify-content: center;
+  padding: 18.262px 0;
+  text-align: center;
+}
+
+.icpta-funnelRate {
+  display: flex;
+  flex-direction: column;
+  gap: 3.044px;
+  align-items: center;
+  padding: 0 9.131px;
+  width: 100%;
+}
+
+.icpta-funnelRateValue {
+  font-size: 13.7px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--gray-900);
+  white-space: nowrap;
+}
+
+.icpta-funnelRateLabel {
+  font-size: 9.13px;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--gray-500);
+}
+
+/* --- Calls created breakdown --- */
+.icpta-callsCard {
+  width: 493.087px;
+  display: flex;
+  flex-direction: column;
+}
+
+.icpta-callsBody {
+  width: 100%;
+  height: 206.975px;
+  background: var(--white);
+  border: 0.761px solid var(--gray-200);
+  border-top: none;
+  border-radius: 0 0 6.087px 6.087px;
+  padding: 12.175px 18.262px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.icpta-callsInner {
+  display: flex;
+  gap: 12.175px;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.icpta-callsYaxis {
+  position: relative;
+  width: 16px;
+  height: 154.47px;
+  flex-shrink: 0;
+}
+
+.icpta-callsYlabel {
+  position: absolute;
+  right: 0;
+  font-size: 9.13px;
+  font-weight: 500;
+  line-height: 15.219px;
+  color: var(--gray-500);
+  white-space: nowrap;
+}
+
+.icpta-callsPlotcol {
+  flex: 1 0 0;
+  min-width: 1px;
+  display: flex;
+  flex-direction: column;
+  gap: 12.175px;
+}
+
+.icpta-callsPlot {
+  position: relative;
+  width: 100%;
+  height: 154.47px;
+  border-left: 0.761px solid var(--gray-300);
+  border-bottom: 0.761px solid var(--gray-300);
+}
+
+.icpta-callsGridline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 0.761px;
+  background: var(--gray-200);
+}
+
+.icpta-callsBars {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  gap: 6.087px;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.icpta-callsBar {
+  flex: 1 0 0;
+  min-width: 1px;
+  background: linear-gradient(180deg, #4f88e4 0%, var(--blue-600) 100%);
+}
+
+.icpta-callsXaxis,
+.icpta-salesXaxis {
+  display: flex;
+  gap: 6.087px;
+  align-items: center;
+  width: 100%;
+  text-align: center;
+}
+
+.icpta-callsXlabel,
+.icpta-salesXlabel {
+  flex: 1 0 0;
+  min-width: 1px;
+  font-size: 9.13px;
+  font-weight: 500;
+  line-height: 15.219px;
+  color: var(--gray-500);
+  white-space: nowrap;
+}
+
+/* ============ Row 3 ============ */
+.icpta-row3 {
+  position: absolute;
+  left: 65.19px;
+  top: 446.95px;
+  display: flex;
+  gap: 18.262px;
+  align-items: center;
+}
+
+.icpta-statCard {
+  width: 152.187px;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.icpta-statCard .icpta-cardHead {
+  gap: 6.087px;
+}
+
+.icpta-statHeadRow {
+  height: 21.306px;
+  display: flex;
+  align-items: center;
+}
+
+.icpta-statCard .icpta-cardHeadTitle {
+  font-size: 10.653px;
+}
+
+.icpta-statCard .icpta-cardHeadSub {
+  font-size: 10.653px;
+}
+
+.icpta-statBody {
+  width: 100%;
+  height: 206.975px;
+  background: var(--white);
+  border: 0.761px solid var(--gray-200);
+  border-top: none;
+  border-radius: 0 0 6.087px 6.087px;
+  padding: 16.675px 18.262px 12.175px;
+  display: flex;
+  flex-direction: column;
+  gap: 9.131px;
+  align-items: center;
+  justify-content: center;
+}
+
+.icpta-statValue {
+  font-size: 30.437px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--gray-900);
+  white-space: nowrap;
+}
+
+.icpta-statBadge {
+  display: flex;
+  gap: 3.044px;
+  align-items: center;
+  justify-content: center;
+  padding: 1.522px 4.566px;
+  background: var(--green-100);
+  border: 0.761px solid #84e1bc;
+  border-radius: 6px;
+}
+
+.icpta-statBadge img {
+  width: 10.653px;
+  height: 10.653px;
+}
+
+.icpta-statBadge span {
+  font-size: 9.13px;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--green-800);
+  white-space: nowrap;
+}
+
+.icpta-statPeriod {
+  font-size: 9.131px;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--gray-500);
+  white-space: nowrap;
+}
+
+/* --- Sales breakdown --- */
+.icpta-salesCard {
+  width: 493.087px;
+  display: flex;
+  flex-direction: column;
+}
+
+.icpta-salesBody {
+  width: 100%;
+  background: var(--white);
+  border: 0.761px solid var(--gray-200);
+  border-top: none;
+  border-radius: 0 0 6.087px 6.087px;
+  padding: 12.175px 18.262px;
+  display: flex;
+  flex-direction: column;
+  gap: 12.175px;
+  align-items: center;
+}
+
+.icpta-salesInner {
+  display: flex;
+  gap: 12.175px;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.icpta-salesYaxis {
+  position: relative;
+  width: 16px;
+  height: 100.444px;
+  flex-shrink: 0;
+}
+
+.icpta-salesYlabel {
+  position: absolute;
+  right: 0;
+  font-size: 9.13px;
+  font-weight: 500;
+  line-height: 15.219px;
+  color: var(--gray-500);
+  white-space: nowrap;
+}
+
+.icpta-salesPlotcol {
+  flex: 1 0 0;
+  min-width: 1px;
+  display: flex;
+  flex-direction: column;
+  gap: 12.175px;
+}
+
+.icpta-salesPlot {
+  position: relative;
+  width: 100%;
+  height: 100.444px;
+}
+
+.icpta-salesGridline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 0.761px;
+  background: var(--gray-200);
+}
+
+.icpta-salesSvg {
+  position: absolute;
+  left: -0.76px;
+  top: 0;
+  width: 430.69px;
+  height: 101.534px;
+  overflow: visible;
+  display: block;
+}
+
+.icpta-salesStats {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.icpta-salesStat {
+  flex: 1 0 0;
+  min-width: 1px;
+  height: 42.612px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6.087px 12.175px;
+  background: var(--blue-50);
+}
+
+.icpta-salesStatRevenue {
+  background: var(--blue-100);
+}
+
+.icpta-salesStatValue {
+  font-size: 10.65px;
+  font-weight: 600;
+  line-height: 18.262px;
+  color: var(--gray-900);
+  white-space: nowrap;
+}
+
+.icpta-salesStatSub {
+  display: flex;
+  gap: 3.044px;
+  align-items: center;
+  font-size: 9.13px;
+  font-weight: 500;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+.icpta-salesStatCount {
+  color: var(--blue-600);
+}
+
+.icpta-salesStatLabel {
+  color: var(--gray-500);
+}
+
+/* ===================== Reveal cards + grow bars =====================
+   Folded in from ProductTabsV14's `.icpta-hn-tabs-shot-analytics …` rules, which
+   lived on the wrapper this panel was mounted in. Fill is 'backwards' (not
+   'both'): the delays need backwards-fill, but a finished forwards-fill pins
+   each element composited → soft text. */
+.icpta-panel .icpta-kpi,
+.icpta-panel .icpta-statCard,
+.icpta-panel .icpta-salesStat,
+.icpta-panel .icpta-funnelCol,
+.icpta-panel .icpta-callsCard,
+.icpta-panel .icpta-funnelCard,
+.icpta-panel .icpta-salesCard {
+  animation: icpta-fadeIn 0.55s ease backwards;
+}
+
+/* The KPI row was the one group left out of the reveal, so those three read as
+   already-there while everything under them arrived. Staggered left to right
+   and ahead of the cards below, since they are the top row. Safe to count with
+   nth-child here: .icpta-kpis holds the three cards and nothing else — unlike
+   .icpta-funnelCols, whose dividers are why the delays below never match. */
+.icpta-panel .icpta-kpi:nth-child(2) {
+  animation-delay: 0.08s;
+}
+
+.icpta-panel .icpta-kpi:nth-child(3) {
+  animation-delay: 0.16s;
+}
+
+.icpta-panel .icpta-salesCard {
+  animation-delay: 0.1s;
+}
+
+.icpta-panel .icpta-funnelCard {
+  animation-delay: 0.25s;
+}
+
+.icpta-panel .icpta-callsCard {
+  animation-delay: 0.4s;
+}
+
+/* Verbatim from the source. Note these three never match: inside .icpta-funnelCols the
+   columns are children 2, 4 and 6 — 1, 3 and 5 are the dividers — so every
+   .icpta-funnelCol keeps the 0s delay of the rule above. */
+.icpta-panel .icpta-funnelCol:nth-child(1) {
+  animation-delay: 0.45s;
+}
+
+.icpta-panel .icpta-funnelCol:nth-child(3) {
+  animation-delay: 0.65s;
+}
+
+.icpta-panel .icpta-funnelCol:nth-child(5) {
+  animation-delay: 0.85s;
+}
+
+.icpta-panel .icpta-funnelGraph {
+  animation: icpta-growBar 1s cubic-bezier(0.4, 0, 0.2, 1) backwards;
+  transform-origin: bottom;
+  animation-delay: 0.5s;
+}
+
+.icpta-panel .icpta-callsBar {
+  animation: icpta-growBar 0.9s cubic-bezier(0.4, 0, 0.2, 1) backwards;
+  transform-origin: bottom;
+}
+
+.icpta-panel .icpta-callsBar:nth-child(odd) {
+  animation-delay: 0.5s;
+}
+
+.icpta-panel .icpta-callsBar:nth-child(even) {
+  animation-delay: 0.62s;
+}
+
+@keyframes icpta-fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes icpta-growBar {
+  from {
+    transform: scaleY(0);
+    opacity: 0.3;
+  }
+  to {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* ic-website writes this as `[class*="hn-ap-"]`; module class names are
+     hashed, so the animated classes are listed out instead — same set. */
+  .icpta-panel .icpta-statCard,
+  .icpta-panel .icpta-salesStat,
+  .icpta-panel .icpta-funnelCol,
+  .icpta-panel .icpta-callsCard,
+  .icpta-panel .icpta-funnelCard,
+  .icpta-panel .icpta-salesCard,
+  .icpta-panel .icpta-funnelGraph,
+  .icpta-panel .icpta-callsBar {
+    animation: none !important;
+  }
+}
+
+/* Below 1279px ic-website scales the whole 1238x680 stage down with a measured
+   JS fitter that lives in ProductTabs, not in the panel. These are the two
+   properties that rule set puts on the panel itself. */
+@container (max-width: 1279px) {
+  .icpta-panel {
+    transform-origin: top center;
+    flex-shrink: 0;
+  }
+}
+
+/* ===== Mobile (<810): one column, cut off at the bottom =====
+
+   The dashboard is a 1096-wide window whose three bands (KPI row, funnel +
+   calls, stats + sales) are absolutely positioned at fixed offsets. Scaled down
+   to fit 375 it landed at ~15% and nothing in it could be read.
+
+   Here the bands come out of absolute positioning and stack in DOM order, each
+   card taking the full width, and the window runs off the bottom of the panel —
+   the same crop the scheduler takes on this breakpoint. You get the KPIs and
+   the funnel at a legible size instead of the whole dashboard at none. */
+@container (max-width: 809px) {
+  .icpta-panel {
+    width: 100%;
+    /* Matches the pane's shared height, so the tab runs to the bottom of the
+       container instead of stopping short with a gray band under it. */
+    height: 720px;
+  }
+  /* A complete card — all four corners rounded, all four borders drawn — that
+     fills the container top to bottom. The dashboard inside is far taller than
+     it, so the CONTENT is what gets cut; the card itself is never cut, which is
+     what left the bottom corners square before. */
+  .icpta-window {
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: auto;
+    height: auto;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .icpta-sidebar {
+    display: none;
+  }
+  /* Out of absolute positioning and into flow, in DOM order: topbar, KPIs,
+     funnel + calls, stats + sales. */
+  .icpta-topbar,
+  .icpta-kpis,
+  .icpta-row2,
+  .icpta-row3 {
+    position: static;
+    width: auto;
+  }
+  /* `flex: 0 0 auto` throughout: the window is now shorter than its content, so
+     without it every band would shrink to fit instead of overflowing and being
+     clipped. */
+  .icpta-topbar,
+  .icpta-kpis,
+  .icpta-row2,
+  .icpta-row3 {
+    flex: 0 0 auto;
+  }
+  .icpta-kpis,
+  .icpta-row2,
+  .icpta-row3 {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 10px 12px 0;
+  }
+  .icpta-kpis {
+    padding-top: 12px;
+  }
+  /* Every card is authored at a fixed width for the 1096 window. `flex: 0 0
+     auto` matters as much as the width: these rows shared their WIDTH on
+     desktop, and the same `flex: 1 1 0` in a column divides the HEIGHT — which
+     crushed each KPI card to 51px, collapsed `.icpta-kpiTop` to its 1px min, and
+     stacked the label, value and badge on top of each other. */
+  .icpta-kpi,
+  .icpta-funnelCard,
+  .icpta-callsCard,
+  .icpta-salesCard,
+  .icpta-statCard {
+    width: auto;
+    flex: 0 0 auto;
+  }
+  .icpta-kpi {
+    height: auto;
+  }
+  .icpta-kpiTop {
+    flex: 0 0 auto;
+    min-height: 0;
+  }
+
+  /* ---- Inner widths authored for the 1096 window ---- */
+
+  /* The head's filter toggle is 228px wide and cannot sit beside a title in
+     311; let the row wrap so it drops to its own line, and let the toggle take
+     that line rather than keeping its desktop width. */
+  .icpta-cardHeadRow {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .icpta-cardHeadRight {
+    width: 100%;
+    justify-content: flex-start;
+  }
+  .icpta-toggle {
+    width: 100%;
+  }
+  .icpta-toggleSeg {
+    padding: 3.044px 4px;
+  }
+  /* One line at 1096, two or three here — `nowrap` on a fixed 16px height ran
+     the description straight out of the card. */
+  .icpta-cardHeadSub {
+    height: auto;
+    display: block;
+    white-space: normal;
+  }
+  .icpta-funnelCard .icpta-cardHeadRight {
+    display: none;
+  }
+  .icpta-funnelCard .icpta-playBtn {
+    display: none;
+  }
+
+  /* The funnel is a chart beside its step rail; stacked, the rail gets the
+     width and its connector lines flex instead of standing at 91px each. */
+  .icpta-funnelBody {
+    flex-direction: column;
+  }
+  .icpta-funnelChart {
+    width: 100%;
+    height: auto;
+    flex: 0 0 auto;
+    gap: 8px;
+  }
+  .icpta-funnelSteps {
+    width: 100%;
+    min-height: 20px;
+    flex: 0 0 20px;
+    align-items: flex-start;
+  }
+  .icpta-funnelRates {
+    width: 100%;
+    flex-direction: row;
+    gap: 16px;
+    padding: 12px 0;
+  }
+  .icpta-funnelStep {
+    width: auto;
+    flex: 1 1 0;
+    min-width: 0;
+  }
+  .icpta-funnelStepLine {
+    width: auto;
+    flex: 1 1 0;
+    min-width: 0;
+  }
+}
+
+
+/* ==== inbox graphic ==== */
+/* Unified Inbox hero graphic (iteration E). A rigid 1308 x 720 app window:
+   list 0–300 | chat 300–976 | contact panel 976–1256 | rail 1256–1308.
+   Product values come from design-prototypes proto/inbox-r2 + proto/ui-updates
+   (Tailwind default palette, Inter, 14/20 body, 13px panel fields). The cursor
+   targets in InboxHeroGraphic.icptg-tsx depend on these numbers. */
+
+.icptg-root {
+  position: relative;
+  width: 1308px;
+  height: 720px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 4px 16px rgba(16, 24, 40, 0.05), 0 1px 3px rgba(16, 24, 40, 0.04);
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  color: #111827;
+  text-align: left;
+  -webkit-font-smoothing: antialiased;
+}
+
+.icptg-root * {
+  box-sizing: border-box;
+}
+
+.icptg-ico {
+  display: block;
+  flex: none;
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.icptg-fic {
+  display: block;
+  flex: none;
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+  stroke: none;
+}
+
+.icptg-icoS {
+  width: 12px;
+  height: 12px;
+}
+
+.icptg-dotico {
+  stroke-width: 3.2;
+}
+
+.icptg-mut {
+  color: #6b7280;
+}
+
+.icptg-m5 {
+  font-weight: 500;
+}
+
+.icptg-ment {
+  color: #2563eb;
+  font-weight: 500;
+}
+
+.icptg-blue {
+  color: #2563eb;
+}
+
+.icptg-lnk {
+  color: #2563eb;
+}
+
+.icptg-green {
+  color: #059669;
+}
+
+/* ---- Conversation list ---- */
+
+.icptg-list {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 300px;
+  border-right: 1px solid #e5e7eb;
+  background: #fff;
+  overflow: hidden;
+}
+
+.icptg-lh {
+  display: flex;
+  align-items: center;
+  height: 52px;
+  padding: 0 16px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.icptg-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.icptg-brand img {
+  width: 18px;
+  height: 16px;
+}
+
+.icptg-rows {
+  padding: 4px 0;
+}
+
+.icptg-rw {
+  padding: 4px 8px;
+  overflow: hidden;
+}
+
+.icptg-rwNew {
+  animation: icptg-grow 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.icptg-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  min-height: 56px;
+  padding: 6px 8px;
+  border-radius: 8px;
+}
+
+.icptg-rowSel {
+  background: #eff6ff;
+}
+
+.icptg-rowNew {
+  animation: icptg-flash 1.8s ease both;
+}
+
+.icptg-av24 {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  margin-top: -2px;
+  border: 1px solid #fff;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.icptg-ini {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e5e7eb;
+  color: #374151;
+  font-size: 10px;
+  line-height: 1;
+  font-weight: 600;
+}
+
+.icptg-rmain {
+  flex: 1;
+  min-width: 0;
+}
+
+.icptg-rtop {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 20px;
+}
+
+.icptg-rname {
+  min-width: 0;
+  overflow: hidden;
+  font-weight: 500;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.icptg-rowSel .icptg-rname,
+.icptg-rowUnr .icptg-rname {
+  font-weight: 600;
+}
+
+.icptg-rtime {
+  flex: none;
+  margin-left: auto;
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+.icptg-rprev {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 20px;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.icptg-rowUnr .icptg-rprev {
+  color: #111827;
+}
+
+.icptg-rprev .icptg-ico {
+  width: 14px;
+  height: 14px;
+  color: #9ca3af;
+}
+
+.icptg-rtxt {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.icptg-unread {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border: 1px solid #60a5fa;
+  border-radius: 999px;
+  background: #eff6ff;
+  color: #3b82f6;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+/* The RECOVERED badge is the onboarding tour's (tour/conversation-flow.icptg-js). */
+.icptg-recov {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 3px;
+  height: 18px;
+  padding: 0 6px;
+  border: 1px solid #bfdbfe;
+  border-radius: 4px;
+  background: #eff6ff;
+  color: #1d4ed8;
+  font-size: 10px;
+  line-height: 16px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.icptg-recov .icptg-fic {
+  width: 10px;
+  height: 10px;
+}
+
+/* ---- Chat column ---- */
+
+.icptg-chat {
+  position: absolute;
+  left: 300px;
+  right: 332px;
+  top: 0;
+  bottom: 0;
+  background: #f9fafb;
+}
+
+.icptg-head {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 52px;
+  padding: 0 16px;
+  border-bottom: 1px solid #e5e7eb;
+  background: #fff;
+}
+
+.icptg-hl {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icptg-lead {
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.icptg-life {
+  display: flex;
+  height: 32px;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.icptg-lifeA {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 8px;
+  border-right: 1px solid #e5e7eb;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.icptg-lifeB {
+  display: flex;
+  align-items: center;
+  padding: 0 4px;
+  color: #6b7280;
+}
+
+.icptg-stLead {
+  color: #6b7280;
+}
+
+.icptg-stBooked {
+  color: #2563eb;
+}
+
+.icptg-stWon {
+  color: #059669;
+}
+
+.icptg-asg {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 34px;
+  padding: 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: #fff;
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: border-color 0.15s;
+}
+
+.icptg-asgOpen {
+  border-color: #60a5fa;
+}
+
+.icptg-asg img {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Assignee dropdown — right-aligned under the button. */
+.icptg-ddp {
+  position: absolute;
+  top: 47px;
+  right: 16px;
+  z-index: 20;
+  width: 320px;
+  padding-bottom: 4px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  animation: icptg-pop 0.18s ease-out both;
+}
+
+.icptg-dds {
+  padding: 12px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.icptg-ddi {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: #f9fafb;
+  color: #6b7280;
+}
+
+.icptg-ddl {
+  padding: 4px 12px;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.icptg-ddr {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  padding: 8px 12px;
+  font-weight: 500;
+}
+
+.icptg-ddrHov {
+  background: #f9fafb;
+}
+
+.icptg-ddsep {
+  height: 1px;
+  margin-bottom: 4px;
+  background: #e5e7eb;
+}
+
+.icptg-cb {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  background: #f3f4f6;
+  color: #fff;
+}
+
+.icptg-cbOn {
+  border-color: #2563eb;
+  background: #2563eb;
+}
+
+.icptg-cb .icptg-ico {
+  width: 12px;
+  height: 12px;
+  stroke-width: 3;
+}
+
+.icptg-av20 {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.icptg-gini {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #fff;
+  background: linear-gradient(94deg, #031953 -43.11%, rgba(0, 45, 164, 0.9) 99.55%);
+  color: #fff;
+  font-size: 8px;
+  line-height: 1;
+  font-weight: 500;
+}
+
+.icptg-unas {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 32px;
+  margin-top: 4px;
+  padding: 6px 12px;
+  border-top: 1px solid #e5e7eb;
+  color: #2563eb;
+  font-weight: 500;
+}
+
+/* ---- Thread (bottom-anchored, like a chat) ---- */
+
+.icptg-thread {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 52px;
+  bottom: 156px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 12px 16px 40px;
+  overflow: hidden;
+}
+
+.icptg-it {
+  flex: none;
+  animation: icptg-msgIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.icptg-sep {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 20px;
+}
+
+.icptg-sep > i {
+  flex: 1;
+  height: 1px;
+  background: #e5e7eb;
+}
+
+.icptg-sep > span {
+  padding: 2px 8px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background: #f3f4f6;
+  font-size: 12px;
+  line-height: 14px;
+  font-weight: 500;
+}
+
+.icptg-act {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 16px;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.icptg-act > i {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #d1d5db;
+}
+
+.icptg-msg {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.icptg-msgOut {
+  justify-content: flex-end;
+}
+
+.icptg-meta {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 2px;
+  font-size: 12px;
+  line-height: 16px;
+  color: #9ca3af;
+  white-space: nowrap;
+}
+
+.icptg-meta .icptg-ico {
+  color: #6b7280;
+}
+
+.icptg-bub {
+  max-width: 520px;
+  padding: 8px 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.icptg-bubOut {
+  background: #eff6ff;
+}
+
+/* Automated messages wear the product's gradient hairline. */
+.icptg-auto {
+  max-width: 522px;
+  padding: 1px;
+  border-radius: 9px;
+  background: linear-gradient(to top right, #d3e1fd, #7299e7, #b8cef8);
+}
+
+.icptg-auto .icptg-bub {
+  border: 0;
+  background: #eff6ff;
+}
+
+.icptg-mail {
+  width: 560px;
+  max-width: 560px;
+}
+
+.icptg-msub {
+  font-weight: 600;
+}
+
+.icptg-mfrom {
+  margin-top: 2px;
+  overflow: hidden;
+  font-size: 12px;
+  line-height: 16px;
+  color: #9ca3af;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.icptg-mdiv {
+  height: 1px;
+  margin: 8px 0;
+  background: #f3f4f6;
+}
+
+.icptg-avc {
+  position: relative;
+  flex: none;
+  width: 28px;
+  height: 28px;
+}
+
+.icptg-av28 {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.icptg-badge {
+  position: absolute;
+  right: -4px;
+  bottom: -4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.icptg-badge img {
+  width: 14px;
+  height: 14px;
+}
+
+.icptg-agent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 2px dashed #2563eb;
+  border-radius: 50%;
+  background: #bfdbfe;
+}
+
+.icptg-agin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #428bff;
+  border-radius: 50%;
+  background: linear-gradient(
+    147.43deg,
+    rgb(0, 27, 180) 19.83%,
+    rgba(0, 19, 144, 0.685) 43.29%,
+    rgba(0, 18, 143, 0.674) 63.7%,
+    rgba(0, 8, 101, 0.3) 97.16%
+  );
+}
+
+.icptg-agin img {
+  width: 11px;
+  height: 10px;
+}
+
+.icptg-tip {
+  position: absolute;
+  right: -8px;
+  bottom: calc(100% + 10px);
+  z-index: 5;
+  width: 310px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: #111928;
+  color: #fff;
+  font-weight: 500;
+  animation: icptg-pop 0.2s ease-out both;
+}
+
+.icptg-tip > span {
+  display: block;
+  color: #60a5fa;
+}
+
+.icptg-tip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  right: 16px;
+  border: 6px solid transparent;
+  border-top-color: #111928;
+}
+
+/* Event cards: the product's collapsed thread-event rows. */
+.icptg-ev {
+  margin: 0 8px;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.icptg-evh {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 12px;
+  font-size: 13px;
+  line-height: 20px;
+  white-space: nowrap;
+}
+
+.icptg-evh b {
+  font-weight: 500;
+}
+
+.icptg-evdot {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #3b82f6;
+}
+
+.icptg-av16 {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.icptg-evr {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.icptg-evdiv {
+  width: 1px;
+  height: 16px;
+  background: #e5e7eb;
+}
+
+.icptg-chev {
+  color: #9ca3af;
+}
+
+.icptg-ok {
+  color: #10b981;
+}
+
+.icptg-zi {
+  flex: none;
+  width: 14px;
+  height: 14px;
+}
+
+.icptg-recb {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 64px;
+  padding: 0 12px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.icptg-thumb {
+  flex: none;
+  width: 88px;
+  height: 44px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.icptg-rect {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  font-size: 13px;
+  line-height: 18px;
+  color: #6b7280;
+  white-space: nowrap;
+}
+
+.icptg-rect > * {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.icptg-rect b {
+  font-weight: 500;
+}
+
+.icptg-vrec {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 132px;
+  height: 30px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  transition: background 0.15s;
+}
+
+.icptg-vrecHov {
+  background: #f3f4f6;
+}
+
+.icptg-vrec .icptg-fic {
+  width: 12px;
+  height: 12px;
+  color: #2563eb;
+}
+
+.icptg-paytile {
+  display: flex;
+  padding: 4px;
+  border-radius: 4px;
+  background: #ecfdf5;
+  color: #059669;
+}
+
+.icptg-paytile .icptg-ico {
+  width: 14px;
+  height: 14px;
+}
+
+/* ---- Composer ---- */
+
+.icptg-typing {
+  position: absolute;
+  left: 20px;
+  bottom: 162px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 22px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #6b7280;
+  animation: icptg-pop 0.2s ease-out both;
+}
+
+.icptg-tdots {
+  width: 22px;
+  height: 22px;
+}
+
+.icptg-tdots circle {
+  fill: #6b7280;
+  animation: icptg-bounce 1.4s infinite ease-in-out;
+  transform-box: fill-box;
+}
+
+.icptg-tdots circle:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.icptg-tdots circle:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+.icptg-tdots circle:nth-child(4) {
+  animation-delay: 0.6s;
+}
+
+.icptg-comp {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  height: 140px;
+  padding: 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.icptg-cr1 {
+  display: flex;
+  align-items: center;
+  height: 30px;
+}
+
+.icptg-chan {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 30px;
+  padding: 0 8px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: border-color 0.15s;
+}
+
+.icptg-chanOpen {
+  border-color: #60a5fa;
+}
+
+.icptg-chan img {
+  width: 16px;
+  height: 16px;
+}
+
+.icptg-chan i {
+  font-style: normal;
+  font-size: 12px;
+  font-weight: 400;
+  color: #9ca3af;
+}
+
+/* Channel picker — opens upward from the channel button. */
+.icptg-chm {
+  position: absolute;
+  left: 12px;
+  bottom: 130px;
+  z-index: 8;
+  width: 300px;
+  padding: 4px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  animation: icptg-pop 0.18s ease-out both;
+}
+
+.icptg-chl {
+  height: 24px;
+  padding: 4px 8px;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.icptg-chr {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 8px;
+  border-radius: 6px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.icptg-chrHov {
+  background: #f3f4f6;
+}
+
+.icptg-chr img {
+  flex: none;
+  width: 16px;
+  height: 16px;
+}
+
+.icptg-chr i {
+  min-width: 0;
+  overflow: hidden;
+  font-style: normal;
+  font-size: 12px;
+  font-weight: 400;
+  color: #9ca3af;
+  text-overflow: ellipsis;
+}
+
+.icptg-chr > .icptg-ico {
+  margin-left: auto;
+  color: #2563eb;
+}
+
+.icptg-ed {
+  height: 44px;
+  padding: 8px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.icptg-ph {
+  color: #6b7280;
+}
+
+.icptg-typed {
+  display: inline-block;
+  white-space: nowrap;
+  animation: icptg-type 2.1s steps(60, end) both;
+}
+
+.icptg-cr3 {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 32px;
+}
+
+.icptg-tb {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  color: #6b7280;
+}
+
+.icptg-cnt {
+  margin-left: auto;
+  margin-right: 8px;
+  font-size: 12px;
+  color: #6b7280;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.icptg-send {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 76px;
+  height: 32px;
+  border-radius: 8px;
+  background: linear-gradient(132deg, #031953 0%, #031953 0.01%, rgba(0, 45, 164, 0.9) 100%);
+  color: #fff;
+  font-weight: 500;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+
+.icptg-sendOn {
+  opacity: 1;
+}
+
+/* ---- Contact details, docked (production's sticky panel, slimmed) ---- */
+
+.icptg-np {
+  position: absolute;
+  right: 52px;
+  top: 0;
+  bottom: 0;
+  z-index: 15;
+  width: 280px;
+  border-left: 1px solid #e5e7eb;
+  background: #fff;
+}
+
+.icptg-nph {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 52px;
+  padding: 0 16px;
+  border-bottom: 1px solid #e5e7eb;
+  font-weight: 500;
+}
+
+.icptg-npx {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 8px;
+  color: #6b7280;
+}
+
+.icptg-ctabs {
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+  height: 47px;
+  padding: 0 16px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.icptg-ctab {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  height: 47px;
+  margin-bottom: -1px;
+  padding-top: 2px;
+  border-bottom: 2px solid transparent;
+  font-size: 13px;
+  font-weight: 500;
+  color: #6b7280;
+  white-space: nowrap;
+}
+
+.icptg-ctabOn {
+  border-color: #2563eb;
+  color: #2563eb;
+}
+
+.icptg-cexp {
+  align-self: center;
+  margin-left: auto;
+  color: #6b7280;
+}
+
+.icptg-ctab .icptg-ico,
+.icptg-cexp .icptg-ico,
+.icptg-csec .icptg-ico,
+.icptg-fl .icptg-ico,
+.icptg-showall .icptg-ico {
+  width: 14px;
+  height: 14px;
+}
+
+.icptg-cbody {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 99px;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px;
+}
+
+.icptg-csec {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 20px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.icptg-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.icptg-fr {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 32px;
+  padding: 6px;
+  border-radius: 6px;
+  transition: background 0.15s;
+}
+
+.icptg-frHov {
+  background: #f9fafb;
+}
+
+.icptg-fl {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 6px;
+  width: 46%;
+  min-width: 0;
+  overflow: hidden;
+  font-size: 13px;
+  color: #4b5563;
+  white-space: nowrap;
+}
+
+.icptg-fl > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.icptg-fv {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  padding-left: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.icptg-fv > .icptg-ico {
+  color: #9ca3af;
+}
+
+.icptg-t {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.icptg-dash {
+  color: #9ca3af;
+}
+
+.icptg-evbar {
+  flex: none;
+  width: 4px;
+  height: 20px;
+  border-radius: 2px;
+  background: #3b82f6;
+}
+
+.icptg-av18 {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.icptg-sdot8 {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.icptg-sdd {
+  position: absolute;
+  left: 126px;
+  top: calc(100% + 4px);
+  z-index: 5;
+  width: 132px;
+  padding: 4px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  animation: icptg-pop 0.18s ease-out both;
+}
+
+.icptg-sdr {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 32px;
+  padding: 0 8px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.icptg-sdrHov {
+  background: #f3f4f6;
+}
+
+.icptg-sdr > .icptg-ico {
+  margin-left: auto;
+  color: #2563eb;
+}
+
+.icptg-showall {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+/* ---- Right rail ---- */
+
+.icptg-rail {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 52px;
+  padding: 10px 9px;
+  border-left: 1px solid #e5e7eb;
+  background: #fff;
+}
+
+.icptg-rb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  color: #6b7280;
+}
+
+.icptg-rbOn {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+/* ---- Recording modal (proto/call-comments design) ---- */
+
+.icptg-mbk {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  background: rgba(107, 114, 128, 0.75);
+  animation: icptg-fade 0.25s ease both;
+}
+
+.icptg-mod {
+  position: absolute;
+  left: 54px;
+  top: 16px;
+  width: 1200px;
+  height: 688px;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+  animation: icptg-rise 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.icptg-mh {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 48px;
+  padding: 0 16px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.icptg-mh > img {
+  width: 16px;
+  height: 16px;
+}
+
+.icptg-mh b {
+  font-weight: 500;
+}
+
+.icptg-bdg {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 20px;
+  padding: 0 6px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background: #f9fafb;
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 500;
+}
+
+.icptg-bdg .icptg-ico {
+  width: 14px;
+  height: 14px;
+}
+
+.icptg-mhr {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.icptg-obtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 8px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+  font-weight: 500;
+}
+
+.icptg-obtn .icptg-ico {
+  color: #6b7280;
+}
+
+.icptg-xbtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 32px;
+  border-radius: 8px;
+  color: #6b7280;
+}
+
+.icptg-ml {
+  position: absolute;
+  left: 0;
+  top: 48px;
+  bottom: 0;
+  width: 780px;
+  padding: 16px;
+  border-right: 1px solid #e5e7eb;
+}
+
+.icptg-mt {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 40px;
+}
+
+.icptg-mt h3 {
+  flex: 1;
+  margin: 0;
+  overflow: hidden;
+  font-family: inherit;
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 600;
+  color: #111827;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.icptg-mavs {
+  display: flex;
+}
+
+.icptg-av36 {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.icptg-av36R {
+  margin-left: -12px;
+  box-shadow: 0 0 0 2px #fff;
+}
+
+.icptg-mmeta {
+  white-space: nowrap;
+}
+
+.icptg-player {
+  width: 748px;
+  margin-top: 12px;
+  border-radius: 8px;
+  background: #171717;
+  color: #fff;
+}
+
+.icptg-vst {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  height: 421px;
+  border-radius: 8px 8px 0 0;
+  background: #262626;
+}
+
+.icptg-tile {
+  position: relative;
+  width: 356px;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 6px;
+  background: #3a3a3a;
+}
+
+.icptg-v {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+}
+
+.icptg-tag {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.45);
+  color: #fff;
+  font-size: 11px;
+  line-height: 14px;
+  font-weight: 600;
+}
+
+.icptg-play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  margin: -32px 0 0 -32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  color: #111827;
+}
+
+.icptg-play .icptg-fic {
+  width: 28px;
+  height: 28px;
+  margin-left: 4px;
+}
+
+.icptg-tl {
+  padding: 4px 16px;
+}
+
+.icptg-lane {
+  position: relative;
+  height: 32px;
+}
+
+.icptg-mk {
+  position: absolute;
+  top: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  margin-left: -14px;
+  border-radius: 50%;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.icptg-mkSel {
+  box-shadow: 0 0 0 2px #60a5fa;
+  transform: scale(1.1);
+}
+
+.icptg-mk img,
+.icptg-g {
+  width: 24px;
+  height: 24px;
+  border: 1px solid #fff;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.icptg-g {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(94deg, #031953 -43.11%, rgba(0, 45, 164, 0.9) 99.55%);
+  color: #fff;
+  font-size: 9.6px;
+  line-height: 1;
+  font-weight: 500;
+}
+
+.icptg-mk::after {
+  content: "";
+  position: absolute;
+  left: 13.5px;
+  top: 28px;
+  width: 1px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.icptg-prev {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 320px;
+  padding: 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  color: #111827;
+  animation: icptg-pop 0.18s ease-out both;
+}
+
+.icptg-pvh {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.icptg-pvh b {
+  font-weight: 500;
+}
+
+.icptg-av24p {
+  width: 24px;
+  height: 24px;
+  margin-right: 2px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.icptg-pvf {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.icptg-scrub {
+  position: relative;
+  height: 20px;
+}
+
+.icptg-track {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 8px;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.icptg-fill {
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 0;
+  height: 4px;
+  border-radius: 999px;
+  background: #3b82f6;
+  transition: width 1s linear;
+}
+
+.icptg-thd {
+  position: absolute;
+  left: 0;
+  top: 5px;
+  width: 10px;
+  height: 10px;
+  margin-left: -5px;
+  border-radius: 50%;
+  background: #fff;
+  transition: left 1s linear;
+}
+
+.icptg-ctr {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 46px;
+  padding: 4px 12px 10px;
+}
+
+.icptg-mb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 34px;
+  height: 32px;
+  padding: 0 8px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.icptg-time {
+  margin-left: 4px;
+  color: rgba(255, 255, 255, 0.8);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.icptg-time > span {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.icptg-sp {
+  flex: 1;
+}
+
+.icptg-mr {
+  position: absolute;
+  left: 780px;
+  right: 0;
+  top: 48px;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.icptg-tabs {
+  display: flex;
+  flex: none;
+  gap: 16px;
+  padding: 16px 16px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.icptg-tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: -1px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid transparent;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.icptg-tabOn {
+  border-color: #2563eb;
+  color: #2563eb;
+}
+
+.icptg-tcnt {
+  height: 20px;
+  padding: 0 6px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background: #f9fafb;
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 500;
+}
+
+.icptg-cl {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 4px;
+  min-height: 0;
+  padding: 8px;
+  overflow: hidden;
+}
+
+.icptg-cmt {
+  display: flex;
+  gap: 12px;
+  padding: 10px 8px;
+  border-radius: 8px;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+.icptg-cmtSel {
+  background: #eff6ff;
+  box-shadow: inset 0 0 0 1px #bfdbfe;
+}
+
+.icptg-av28c {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  margin-top: 2px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.icptg-gini2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(94deg, #031953 -43.11%, rgba(0, 45, 164, 0.9) 99.55%);
+  color: #fff;
+  font-size: 11px;
+  line-height: 1;
+  font-weight: 500;
+}
+
+.icptg-cmm {
+  flex: 1;
+  min-width: 0;
+}
+
+.icptg-cmh {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  white-space: nowrap;
+}
+
+.icptg-cmh b {
+  font-weight: 500;
+}
+
+.icptg-ts {
+  padding: 0 8px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #6b7280;
+  font-variant-numeric: tabular-nums;
+}
+
+.icptg-ago {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.icptg-rep {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+  font-size: 12px;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.icptg-rep .icptg-ico {
+  width: 14px;
+  height: 14px;
+}
+
+.icptg-kb {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: #fff;
+  color: #6b7280;
+}
+
+.icptg-rpl {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 32px;
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.icptg-rpl img {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 0 2px #fff;
+}
+
+.icptg-mcomp {
+  position: relative;
+  flex: none;
+  padding: 4px 16px 16px;
+}
+
+.icptg-mta {
+  height: 80px;
+  padding: 8px 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #f9fafb;
+  color: #6b7280;
+}
+
+.icptg-mtb {
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.icptg-cat {
+  display: flex;
+  align-items: center;
+  height: 32px;
+  margin-left: auto;
+  padding: 0 8px;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #b6c2e2, #b1bad1);
+  color: #fff;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* ---- Cursors ---- */
+
+.icptg-curs {
+  position: absolute;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+}
+
+.icptg-cur {
+  position: absolute;
+  left: -2px;
+  top: -1px;
+  transition: transform 0.75s cubic-bezier(0.65, 0, 0.35, 1), opacity 0.3s ease;
+}
+
+.icptg-cursvg {
+  width: 22px;
+  height: 22px;
+  stroke: #fff;
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.28));
+}
+
+.icptg-curl {
+  position: absolute;
+  left: 16px;
+  top: 20px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+}
+
+.icptg-ring {
+  position: absolute;
+  left: -10px;
+  top: -10px;
+  width: 24px;
+  height: 24px;
+  border: 2px solid;
+  border-radius: 50%;
+  animation: icptg-ring 0.55s ease-out both;
+}
+
+/* ---- Motion ---- */
+
+/* Until the window is properly on screen, the opening frame's entrance
+   animations sit on their first keyframe: Sara's row not yet in the list, the
+   first notes not yet in the thread. `!important` because every `animation`
+   shorthand resets the play state. */
+.icptg-held,
+.icptg-held *,
+.icptg-held *::before,
+.icptg-held *::after {
+  animation-play-state: paused !important;
+}
+
+@keyframes icptg-msgIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes icptg-grow {
+  from {
+    max-height: 0;
+    opacity: 0;
+  }
+  to {
+    max-height: 72px;
+    opacity: 1;
+  }
+}
+
+@keyframes icptg-flash {
+  0% {
+    background: #bfdbfe;
+  }
+  100% {
+    background: #eff6ff;
+  }
+}
+
+@keyframes icptg-pop {
+  from {
+    opacity: 0;
+    transform: translateY(4px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes icptg-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes icptg-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes icptg-type {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes icptg-ring {
+  from {
+    transform: scale(0.4);
+    opacity: 1;
+  }
+  to {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+@keyframes icptg-bounce {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-3px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .icptg-root *,
+  .icptg-root *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+
+/* ==== agent chat ==== */
+/* The dark AI-agent chat window (AgentChat.icptx-tsx). Lifted out of
+   CombineChat.icptx-module.icptx-css with the component (2026-10-08). No shadows inside
+   the window (Qasim) — hairlines only. 8px corners.
+
+   `.icptx-section` is /mcp's size and its own tablet/phone layouts; `.icptx-shot` is the
+   ProductTabs panel's rigid shot (scaled by the tab fitter above phones, so
+   it takes none of the section's tablet changes). */
+
+/* ---- Window ---- */
+
+.icptx-window {
+  /* the window's palette */
+  --cc-bg: #1c1c1b;
+  --cc-side: #151514;
+  --cc-card: #222221;
+  --cc-field: #232322;
+  --cc-raised: #2a2a28;
+  --cc-line: #2e2e2c;
+  --cc-line-2: #333331;
+  --cc-text: #f2f2ef;
+  --cc-text-2: #cfcfca;
+  --cc-text-3: #8c8c87;
+  --cc-text-4: #6f6f6a;
+  --cc-blue: #8fb5fb;
+
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  /* One row locked to the window's height, so a long answer scrolls the
+     thread up (it is bottom-anchored) instead of pushing the composer out. */
+  grid-template-rows: minmax(0, 1fr);
+  width: 100%;
+  max-width: 1160px;
+  height: 740px;
+  overflow: hidden;
+  border: 1px solid var(--cc-line);
+  border-radius: 8px;
+  background: var(--cc-bg);
+  font-family: var(--font-body);
+  color: var(--cc-text);
+  text-align: left;
+}
+
+/* The tab panel's product shot: the size the Engage tab draws its inbox at
+   (1308 x 720 at 0.8431), so the two windows match. */
+.icptx-shot {
+  flex: none;
+  width: 1103px;
+  max-width: none;
+  height: 607px;
+}
+
+/* Too short for the whole exchange: once the answer is in, the finished steps
+   fold into their one-line summary, so the question stays in view. (Phones
+   also drop the "Thought for" line — see the phone block.) */
+.icptx-shot .icptx-actsDone .icptx-act {
+  display: none;
+}
+
+.icptx-shot .icptx-actsDone .icptx-actsHead {
+  border-bottom: 0;
+}
+
+/* ---- Sidebar ---- */
+
+.icptx-side {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  padding: 16px 12px;
+  border-right: 1px solid var(--cc-raised);
+  background: var(--cc-side);
+}
+
+.icptx-sideTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 6px 12px;
+}
+
+.icptx-lights {
+  display: flex;
+  gap: 6px;
+}
+
+.icptx-lights i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #3a3a38;
+}
+
+.icptx-search {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: #77776f;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.icptx-newChat {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 34px;
+  padding: 0 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--cc-text);
+}
+
+.icptx-newChat > span {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--cc-text);
+}
+
+.icptx-newChat svg {
+  width: 12px;
+  height: 12px;
+  fill: none;
+  stroke: var(--cc-bg);
+  stroke-width: 2.6;
+  stroke-linecap: round;
+}
+
+.icptx-sideLabel {
+  padding: 16px 8px 6px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--cc-text-4);
+}
+
+.icptx-sideItem {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  height: 32px;
+  padding: 0 8px;
+  overflow: hidden;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #b9b9b4;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.icptx-sideItem img {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+
+.icptx-sideItemOn {
+  background: var(--cc-raised);
+  font-weight: 500;
+  color: var(--cc-text);
+}
+
+.icptx-icMark {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 16px;
+  height: 16px;
+  color: var(--cc-text);
+}
+
+.icptx-icMark svg {
+  width: 15px;
+  height: 13px;
+}
+
+.icptx-dot {
+  flex: none;
+  width: 7px;
+  height: 7px;
+  margin-left: auto;
+  border-radius: 50%;
+  background: #0e9f6e;
+}
+
+/* ---- Main pane ---- */
+
+.icptx-main {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  background: var(--cc-bg);
+}
+
+.icptx-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 52px;
+  padding: 0 20px;
+}
+
+.icptx-model {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--cc-text);
+}
+
+
+/* "Your AI agent": three overlapping marks on dark discs. */
+.icptx-agents {
+  display: inline-flex;
+  flex: none;
+}
+
+.icptx-agent {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--cc-bg);
+  border-radius: 50%;
+  background: var(--cc-raised);
+}
+
+.icptx-agent + .icptx-agent {
+  margin-left: -7px;
+}
+
+.icptx-agent img {
+  width: 12px;
+  height: 12px;
+}
+
+.icptx-agentsLg .icptx-agent {
+  width: 38px;
+  height: 38px;
+  border-width: 3px;
+}
+
+.icptx-agentsLg .icptx-agent + .icptx-agent {
+  margin-left: -10px;
+}
+
+.icptx-agentsLg .icptx-agent img {
+  width: 20px;
+  height: 20px;
+}
+
+.icptx-invert {
+  filter: invert(1);
+}
+
+
+.icptx-barTitle {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--cc-text-3);
+}
+
+.icptx-share {
+  display: inline-flex;
+  align-items: center;
+  height: 28px;
+  padding: 0 12px;
+  border: 1px solid var(--cc-line-2);
+  border-radius: 8px;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--cc-text-2);
+}
+
+/* Bottom-anchored thread with a soft fade at the top, like a chat that has
+   scrolled. */
+.icptx-thread {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+  padding: 0 28px 8px;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 20px);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 20px);
+}
+
+.icptx-greet {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-align: center;
+}
+
+
+.icptx-greet b {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--cc-text);
+}
+
+.icptx-greet span {
+  font-size: 13.5px;
+  color: #77776f;
+}
+
+.icptx-col {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.icptx-you {
+  align-self: flex-end;
+  max-width: 92%;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: var(--cc-raised);
+  font-size: 14px;
+  line-height: 21px;
+  color: var(--cc-text);
+}
+
+.icptx-turn {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.icptx-who {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+
+.icptx-thought {
+  font-size: 13px;
+  color: #77776f;
+}
+
+/* The activity card: the agent's steps across the connectors. */
+.icptx-acts {
+  overflow: hidden;
+  border: 1px solid var(--cc-line);
+  border-radius: 8px;
+  background: var(--cc-card);
+}
+
+.icptx-actsHead {
+  display: flex;
+  align-items: center;
+  height: 36px;
+  padding: 0 12px;
+  border-bottom: 1px solid var(--cc-raised);
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--cc-text-3);
+}
+
+.icptx-act {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 38px;
+  padding: 0 12px;
+  font-size: 13px;
+  color: var(--cc-text-2);
+}
+
+/* the timeline thread between steps */
+.icptx-act + .icptx-act::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: 22px;
+  width: 2px;
+  height: 16px;
+  background: var(--cc-line-2);
+}
+
+.icptx-act b,
+.icptx-strong {
+  font-weight: 600;
+  color: var(--cc-text);
+}
+
+.icptx-actLogo {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+}
+
+.icptx-actLogo img {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+.icptx-icMarkLg {
+  color: var(--cc-text);
+}
+
+.icptx-icMarkLg svg {
+  width: 17px;
+  height: 15px;
+}
+
+.icptx-spark {
+  background: rgba(28, 100, 242, 0.2);
+}
+
+.icptx-spark svg {
+  width: 13px;
+  height: 13px;
+  fill: none;
+  stroke: var(--cc-blue);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.icptx-meta {
+  margin-left: 4px;
+  font-size: 12.5px;
+  color: #77776f;
+}
+
+.icptx-ok {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 16px;
+  height: 16px;
+  margin-left: auto;
+  border-radius: 50%;
+  background: #0e9f6e;
+}
+
+.icptx-ok svg {
+  width: 9px;
+  height: 9px;
+  fill: none;
+  stroke: #fff;
+  stroke-width: 3.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.icptx-spin {
+  flex: none;
+  width: 15px;
+  height: 15px;
+  margin-left: auto;
+  border: 2px solid rgba(118, 169, 250, 0.3);
+  border-top-color: #1c64f2;
+  border-radius: 50%;
+  animation: icptx-ccSpin 0.8s linear infinite;
+}
+
+@keyframes icptx-ccSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.icptx-shim {
+  background: linear-gradient(90deg, #6f6f6a 0%, #ffffff 45%, #6f6f6a 90%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: 500;
+  animation: icptx-ccShim 1.3s linear infinite;
+}
+
+@keyframes icptx-ccShim {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: -100% 0;
+  }
+}
+
+.icptx-rise {
+  animation: icptx-ccRise 0.38s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes icptx-ccRise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---- The answer ---- */
+
+.icptx-answer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.icptx-answer p {
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--cc-text-2);
+}
+
+.icptx-table {
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid var(--cc-line);
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+.icptx-table th {
+  padding: 7px 12px;
+  border-bottom: 1px solid var(--cc-line);
+  background: #262625;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--cc-text-3);
+}
+
+.icptx-table td {
+  padding: 7px 12px;
+  border-top: 1px solid var(--cc-raised);
+  background: #1f1f1e;
+  color: var(--cc-text-2);
+}
+
+.icptx-table tr:first-child td {
+  border-top: 0;
+}
+
+.icptx-table td:first-child {
+  font-weight: 600;
+  color: var(--cc-text);
+}
+
+/* The recommendation in the chat app's own neutrals (Qasim: not blue). */
+.icptx-rec {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 14px;
+  border: 1px solid var(--cc-line-2);
+  border-radius: 8px;
+  background: var(--cc-raised);
+}
+
+.icptx-rec span {
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--cc-text-3);
+}
+
+.icptx-rec b {
+  font-size: 14.5px;
+  line-height: 22px;
+  font-weight: 600;
+  color: var(--cc-text);
+}
+
+/* ---- Composer ---- */
+
+.icptx-composerWrap {
+  padding: 10px 28px 20px;
+}
+
+.icptx-composer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 12px 12px 10px 16px;
+  border: 1px solid var(--cc-line-2);
+  border-radius: 8px;
+  background: var(--cc-field);
+}
+
+.icptx-input {
+  min-height: 22px;
+  font-size: 14.5px;
+  line-height: 22px;
+  color: var(--cc-text);
+}
+
+.icptx-placeholder {
+  color: var(--cc-text-4);
+}
+
+.icptx-caret {
+  display: inline-block;
+  width: 2px;
+  height: 17px;
+  margin-left: 1px;
+  vertical-align: -3px;
+  background: #76a9fa;
+  animation: icptx-ccBlink 1s steps(1) infinite;
+}
+
+@keyframes icptx-ccBlink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.icptx-tools {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icptx-plus {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--cc-line-2);
+  border-radius: 8px;
+}
+
+.icptx-plus svg,
+.icptx-connChip svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: #a3a3a0;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.icptx-connChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 28px;
+  padding: 0 10px;
+  border: 1px solid var(--cc-line-2);
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--cc-text-2);
+}
+
+.icptx-send {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  margin-left: auto;
+  border-radius: 8px;
+  background: #3a3a38;
+}
+
+.icptx-send svg {
+  width: 15px;
+  height: 15px;
+  fill: none;
+  stroke: var(--cc-text-3);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.icptx-sendOn {
+  background: #1c64f2;
+}
+
+.icptx-sendOn svg {
+  stroke: #fff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .icptx-rise,
+  .icptx-shim,
+  .icptx-spin,
+  .icptx-caret {
+    animation: none;
+  }
+  .icptx-shim {
+    color: var(--cc-text-2);
+    background: none;
+  }
+}
+
+/* ---- Tablet: narrower sidebar (the /mcp section only — the shot is scaled
+   as a whole by the tab fitter instead) ---- */
+@container (max-width: 1279px) {
+  .icptx-section {
+    grid-template-columns: 200px minmax(0, 1fr);
+    height: 720px;
+  }
+  .icptx-section .icptx-thread,
+  .icptx-section .icptx-composerWrap {
+    padding-inline: 20px;
+  }
+}
+
+/* ---- Phone: the chat pane only (both sizes) ---- */
+@container (max-width: 809px) {
+  .icptx-window {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .icptx-section {
+    height: 720px;
+  }
+  /* Fluid here: the panel gives it the pane's width and height. */
+  .icptx-shot {
+    width: 100%;
+    height: 100%;
+  }
+  .icptx-side,
+  .icptx-barTitle {
+    display: none;
+  }
+  .icptx-bar {
+    padding: 0 14px;
+  }
+  /* `.icptx-window` so these outrank the tablet block's `.icptx-section .icptx-thread`. */
+  .icptx-window .icptx-thread,
+  .icptx-window .icptx-composerWrap {
+    padding-inline: 12px;
+  }
+  .icptx-window .icptx-composerWrap {
+    padding-bottom: 12px;
+  }
+  .icptx-table {
+    font-size: 12px;
+  }
+  .icptx-table th,
+  .icptx-table td {
+    padding: 7px 8px;
+  }
+  .icptx-act {
+    font-size: 12px;
+  }
+  .icptx-meta {
+    display: none;
+  }
+  /* Phones are too short for the whole exchange, so once the answer is in
+     the finished steps fold into their one-line summary and the "Thought
+     for" line goes — the question stays in view. */
+  .icptx-actsDone .icptx-act,
+  .icptx-whoDone {
+    display: none;
+  }
+  .icptx-actsDone .icptx-actsHead {
+    border-bottom: 0;
+  }
+}
+
+
+/* ==== agent panel ==== */
+/* The "AI Agent" tab's shot: the old panel canvas (1238 x 680, the box the tab
+   fitter measures and scales) with the chat window centred on it at the size
+   the Engage tab draws its inbox — 1103 x 607, a 36px margin above and below. */
+.icptk-canvas {
+  position: relative;
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 1238px;
+  height: 680px;
+}
+
+.icptk-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Phones: the window goes fluid and fills the pane's width, so the fitter
+   leaves it at full size — the chat stays readable instead of shrinking a
+   desktop window to a thumbnail. 720 tall (a 768 pane, the height Qualify
+   already takes here): at 672 the question wrapped off the top on a 320px
+   phone. */
+@container (max-width: 809px) {
+  .icptk-canvas {
+    width: 100%;
+    height: 720px;
+  }
+}

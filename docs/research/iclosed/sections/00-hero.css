@@ -1,0 +1,291 @@
+
+.icnhi-root {
+  --icnhi-white: #ffffff;
+  --icnhi-gray200: #e5e7eb;
+  --icnhi-gray500: #6b7280;
+  --icnhi-gray600: #4b5563;
+  --icnhi-gray900: #111928;
+  --icnhi-hairline: #e5e7eb;
+  --icnhi-heading: #0a0d14;
+  --icnhi-cta: #0236c2;
+  --icnhi-display: Poppins, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --icnhi-body: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  container: icnhi / inline-size;
+  position: relative;
+  width: 100%;
+  background: var(--icnhi-white);
+  font-family: var(--icnhi-body);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.icnhi-root *, .icnhi-root *::before, .icnhi-root *::after { box-sizing: border-box; }
+.icnhi-root img { display: block; }
+.icnhi-root h1, .icnhi-root p { margin: 0; }
+.icnhi-root a { text-decoration: none; }
+.icnhi-root :focus-visible { outline: 2px solid #1c64f2; outline-offset: 2px; }
+
+/* Full-window hairline along the bottom edge, drawn on the outer band rather
+   than the 1440 container so it spans the whole screen. */
+.icnhi-rule::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 1px;
+  background: var(--icnhi-hairline);
+}
+
+.icnhi-inner {
+  position: relative;
+  width: 100%;
+  max-width: var(--icnhi-container);
+  margin: 0 auto;
+  padding: 0 var(--icnhi-gutter);
+}
+
+/* ---------- Grid (Figma hero frame 12:592) ---------- */
+.icnhi-grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding-block: 64px;
+}
+.icnhi-copy {
+  flex: none;
+  width: 676px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* Tighter than the shipped hero's 30: this column carries five blocks. */
+  gap: 24px;
+}
+
+/* ---------- Eyebrow, width-locked to the headline ---------- */
+.icnhi-eyebrow {
+  width: fit-content;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  /* Zero: the label must fit a span 5% narrower than the headline line, and
+     tracking eats that headroom — justification airs the word gaps instead. */
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: var(--icnhi-gray500);
+}
+/* Headline line 1 at the heading's own metrics, flattened to zero height: its
+   only job is setting the eyebrow box's width. text-transform reset —
+   uppercase would measure wider than the real mixed-case line. */
+.icnhi-eyebrow-ghost {
+  display: block;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  white-space: nowrap;
+  font-family: var(--icnhi-display);
+  font-size: 40px;
+  line-height: 0;
+  font-weight: 500;
+  letter-spacing: -0.4px;
+  text-transform: none;
+}
+/* Justified so the single line fills its span exactly. If the label ever
+   outgrows the ghost, fit-content widens the box and the justification
+   quietly becomes a no-op. */
+.icnhi-eyebrow-text {
+  display: block;
+  width: 95%;
+  text-align: justify;
+  text-align-last: justify;
+}
+
+/* ---------- Headline + subcopy ---------- */
+.icnhi-text {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 540px;
+  letter-spacing: -0.4px;
+}
+.icnhi-h1 {
+  font-family: var(--icnhi-display);
+  font-size: 40px;
+  line-height: 1.4;
+  font-weight: 500;
+  color: var(--icnhi-heading);
+}
+.icnhi-sub {
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 500;
+  color: var(--icnhi-gray600);
+}
+
+/* ---------- CTA ---------- */
+.icnhi-cta-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+.icnhi-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 203px;
+  height: 54px;
+  border: 1px solid var(--icnhi-cta);
+  border-radius: 8px;
+  background: var(--icnhi-cta);
+  box-shadow: inset 0 1px 4px 1px rgba(255,255,255,0.24), inset 0 4px 16px 1px rgba(255,255,255,0.2);
+  color: var(--icnhi-white);
+  font-family: var(--icnhi-body);
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  letter-spacing: -0.1px;
+  white-space: nowrap;
+  transition: filter 150ms ease;
+}
+.icnhi-cta:hover { filter: brightness(1.1); }
+.icnhi-cta:active { filter: brightness(0.96); }
+.icnhi-micro {
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 400;
+  letter-spacing: -0.28px;
+  color: var(--icnhi-gray500);
+}
+
+/* ---------- Proof: faces + rating ---------- */
+.icnhi-proof {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+.icnhi-faces { display: flex; align-items: center; }
+.icnhi-face {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  /* Ring in the page background so overlapped faces cut cleanly. No
+     overflow:hidden here — it would clip the tooltip; the img crops itself. */
+  border: 2px solid var(--icnhi-white);
+  background: var(--icnhi-gray200);
+}
+.icnhi-face + .icnhi-face { margin-left: -10px; }
+.icnhi-face img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: 50% 20%;
+  display: block;
+}
+/* Name tooltip, from data-name. */
+.icnhi-face::after {
+  content: attr(data-name);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translate(-50%, 2px);
+  padding: 5px 9px;
+  border-radius: 6px;
+  background: var(--icnhi-gray900);
+  color: var(--icnhi-white);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  letter-spacing: 0;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+/* Caret under the bubble. */
+.icnhi-face::before {
+  content: "";
+  position: absolute;
+  bottom: calc(100% + 3px);
+  left: 50%;
+  transform: translate(-50%, 2px);
+  border: 5px solid transparent;
+  border-top-color: var(--icnhi-gray900);
+  border-bottom: none;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+/* Above the overlapping neighbour, so the bubble never sits under a face. */
+.icnhi-face:hover { z-index: 2; }
+.icnhi-face:hover::after,
+.icnhi-face:hover::before {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+.icnhi-rating {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 15px;
+  line-height: 20px;
+  color: var(--icnhi-gray600);
+}
+.icnhi-rating b { font-weight: 600; color: var(--icnhi-heading); }
+.icnhi-g2 { width: 18px; height: 18px; flex: 0 0 auto; display: block; }
+.icnhi-stars { display: inline-flex; align-items: center; gap: 1px; }
+
+/* ---------- Visual: the still composite ---------- */
+.icnhi-visual {
+  flex: 1 0 0;
+  min-width: 0;
+}
+/* The composite ships its own rounded card and background, so no frame here.
+   Height-capped at 500px (the square-ish shot at full column width ran ~650
+   tall and dwarfed the copy); width follows the aspect ratio and the box
+   centres in the column. max-width keeps it inside narrow phones. */
+.icnhi-shot {
+  display: block;
+  width: auto;
+  height: auto;
+  max-height: 500px;
+  max-width: 100%;
+  margin-inline: auto;
+}
+
+/* ---------- Tablet ---------- */
+@container icnhi (max-width: 1279px) {
+  .icnhi-grid { flex-direction: column; gap: 48px; padding-block: 56px; }
+  .icnhi-copy { width: 100%; max-width: 640px; align-items: center; }
+  .icnhi-text { width: 100%; text-align: center; }
+  .icnhi-h1 { font-size: 36px; }
+  /* The ghost tracks the heading's size so the eyebrow stays width-locked.
+     At 36px the line drops under the label's minimum, so the 95% span would
+     wrap it — full width here, where the column is centred anyway. */
+  .icnhi-eyebrow-ghost { font-size: 36px; }
+  .icnhi-eyebrow-text { width: 100%; }
+  .icnhi-cta-group { align-items: center; }
+  .icnhi-proof { align-items: center; }
+  .icnhi-visual { flex: none; width: 100%; }
+}
+
+/* ---------- Phone ----------
+   The desktop gutter is sized to sit inside the page rails; phones draw none,
+   so holding 40px there just narrows the column for nothing. */
+@container icnhi (max-width: 809px) {
+  .icnhi-inner { padding-inline: var(--icnhi-gutter-mobile, 20px); }
+  .icnhi-grid { gap: 36px; padding-block: 40px; }
+  .icnhi-h1 { font-size: 28px; }
+  .icnhi-h1 br { display: none; }
+  .icnhi-sub { font-size: 16px; line-height: 26px; }
+  .icnhi-eyebrow { font-size: 12px; }
+  .icnhi-eyebrow-ghost { font-size: 28px; }
+  .icnhi-face { width: 38px; height: 38px; }
+  .icnhi-face + .icnhi-face { margin-left: -8px; }
+  .icnhi-cta { width: 100%; max-width: 260px; }
+}

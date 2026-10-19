@@ -1,0 +1,287 @@
+/* Light split panel, reworked from the clone's API band (source prefix
+   `icapi`): a #f8f9fa panel inside the 1440 container, so the 40px gutters
+   stay white and the band reads as a card on the page; text on one side, a
+   framed visual on the other. The section's own hairline runs the full window
+   width underneath. Getting started uses it as is; Reporting adds
+   `.panelReverse` to put the visual on the left.
+
+   The visual keeps the API band's frame: the deep blue grain gradient, with a
+   glass window holding a white light-UI card in place of the old
+   screenshot. The window runs off the frame's outer edge, as the shot did. */
+
+.outer {
+  position: relative;
+  width: 100%;
+  container-type: inline-size;
+}
+
+.band {
+  --heading: #0a0d14;
+  --accent: #1c64f2;
+  --gray-600: #4b5563;
+  --hairline: #e5e7eb;
+
+  position: relative;
+  width: 100%;
+  background: #ffffff;
+  font-family: var(--site-font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  color: #111928;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.wrap {
+  position: relative;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding-inline: 40px;
+}
+
+.panel {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  padding: 36px 48px;
+  background: #f8f9fa;
+}
+
+.panelReverse {
+  flex-direction: row-reverse;
+}
+
+/* ---- Text ---- */
+
+.text {
+  flex: 1 0 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 24px;
+}
+
+/* Mirrored, the copy sits a gutter clear of the frame like the API band's. */
+.panelReverse .text {
+  padding-left: 24px;
+}
+
+.heading {
+  margin: 0;
+  font-family: var(--site-font-display);
+  font-size: 36px;
+  line-height: 1.4;
+  font-weight: 500;
+  letter-spacing: -0.4px;
+  color: var(--heading);
+}
+
+.headingAccent {
+  color: var(--accent);
+}
+
+.body {
+  margin: 0;
+  max-width: 547px;
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 400;
+  letter-spacing: -0.04px;
+  color: var(--gray-600);
+}
+
+/* ---- Visual frame ---- */
+
+.visual {
+  position: relative;
+  isolation: isolate;
+  flex: 1 0 0;
+  min-width: 0;
+  min-height: 420px;
+  display: flex;
+  align-items: center;
+  padding: 32px 0 32px 32px;
+  overflow: hidden;
+}
+
+/* The API band's backdrop: near-black top and right, a lit blue bloom down
+   the left edge, a pale teal floor and a dark lobe in the middle. */
+.visual::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(34% 44% at 4% 50%, rgba(70, 152, 222, 0.95) 0%, rgba(56, 134, 204, 0.5) 50%, transparent 100%),
+    radial-gradient(52% 30% at 14% 100%, rgba(150, 186, 196, 0.9) 0%, transparent 100%),
+    radial-gradient(40% 52% at 100% 58%, #01040a 0%, rgba(1, 4, 10, 0.6) 45%, transparent 100%),
+    radial-gradient(46% 34% at 58% 74%, rgba(16, 46, 76, 0.95) 0%, transparent 100%),
+    linear-gradient(180deg, #05090f 0%, #0d2238 26%, #1c4a74 62%, #3f7aa6 100%);
+}
+
+/* Film grain over the gradient. */
+.visual::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.22;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+}
+
+.panelReverse .visual {
+  padding: 32px 32px 32px 0;
+}
+
+.panelReverse .visual::before {
+  transform: scaleX(-1);
+}
+
+/* Glass window: the Qualify & Route scheduler's, open on the frame edge. */
+.window {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin-right: -24px;
+  padding: 13px 0 13px 13px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-right: none;
+  border-radius: 8px 0 0 8px;
+  background: rgba(255, 255, 255, 0.2);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  box-shadow:
+    0 0 42.8px 0 rgba(43, 47, 65, 0.17),
+    inset 0 0 0 2px rgba(255, 255, 255, 0.3);
+}
+
+.panelReverse .window {
+  margin-right: 0;
+  margin-left: -24px;
+  padding: 13px 13px 13px 0;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-left: none;
+  border-radius: 0 8px 8px 0;
+}
+
+/* The scheduler card's white sheet and layered hairline shadow. Rows pad
+   with --pad-l / --pad-r; the open side carries the 24px that runs past the
+   frame on top of the usual inset. */
+.card {
+  --card-pad: 24px;
+  --card-pad-open: 48px;
+  --pad-l: var(--card-pad);
+  --pad-r: var(--card-pad-open);
+
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px 0 0 4px;
+  background: #ffffff;
+  box-shadow:
+    0 8.33px 8.33px 0 rgba(25, 44, 128, 0.02),
+    0 2.082px 4.165px 0 rgba(196, 196, 215, 0.17),
+    0 1.041px 2.082px 0 rgba(196, 196, 215, 0.25),
+    0 0 0 1.041px rgba(196, 196, 215, 0.25);
+}
+
+.panelReverse .card {
+  --pad-l: var(--card-pad-open);
+  --pad-r: var(--card-pad);
+  border-radius: 0 4px 4px 0;
+}
+
+/* ---- Tablet: stack, text first and centred ---- */
+@container (max-width: 1279px) {
+  .panel,
+  .panelReverse {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 32px;
+    padding: 40px;
+  }
+
+  .text,
+  .visual {
+    flex: none;
+  }
+
+  .text {
+    align-items: center;
+    text-align: center;
+  }
+
+  .panelReverse .text {
+    padding-left: 0;
+  }
+
+  .body {
+    max-width: 560px;
+  }
+
+  .heading {
+    font-size: 32px;
+  }
+
+  .visual {
+    min-height: 0;
+    padding: 40px 0 40px 40px;
+    justify-content: center;
+  }
+
+  .panelReverse .visual {
+    padding: 40px 40px 40px 0;
+  }
+}
+
+/* ---- Phone ---- */
+@container (max-width: 809px) {
+  .wrap {
+    padding-inline: 20px;
+  }
+
+  .panel,
+  .panelReverse {
+    gap: 28px;
+    padding: 32px 20px;
+  }
+
+  .heading {
+    font-size: 28px;
+  }
+
+  .headingBreak {
+    display: none;
+  }
+
+  .body {
+    font-size: 16px;
+    line-height: 26px;
+  }
+
+  .visual {
+    padding: 20px 0 20px 16px;
+  }
+
+  .panelReverse .visual {
+    padding: 20px 16px 20px 0;
+  }
+
+  .window {
+    padding: 8px 0 8px 8px;
+  }
+
+  .panelReverse .window {
+    padding: 8px 8px 8px 0;
+  }
+
+  .card {
+    --card-pad: 16px;
+    --card-pad-open: 40px;
+  }
+}

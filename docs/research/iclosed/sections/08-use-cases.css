@@ -1,0 +1,365 @@
+
+.icuc--band,
+.icuc--portal {
+  --color-nav: #020418;
+  --container-pad: 40px;
+  --blue-600: #1c64f2;
+  --blue-400: #76a9fa;
+  --font-display: Poppins, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --white: #ffffff;
+  --container-max: 1440px;
+  --color-hairline: #e5e7eb;
+  --color-cta: #0236c2;
+  --shadow-cta: inset 0 1px 4px 1px rgba(255,255,255,.24), inset 0 4px 16px 1px rgba(255,255,255,.2);
+  --font-body: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --color-text-primary: #111928;
+  --color-accent: #1c64f2;
+  --color-surface: #ffffff;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.icuc--outer { position: relative; width: 100%; container-type: inline-size; }
+.icuc--covers { z-index: 6; }
+.icuc--band { position: relative; width: 100%; background: var(--color-surface); font-size: 16px; line-height: 1.5; color: var(--color-text-primary); }
+.icuc--band *, .icuc--portal * { box-sizing: border-box; }
+:where(.icuc--band, .icuc--portal) :where(h1, h2, h3, h4, h5, h6) { margin: 0; font-family: var(--font-display); font-weight: 500; color: var(--color-text-primary); }
+:where(.icuc--band, .icuc--portal) :where(p, figure, blockquote) { margin: 0; }
+:where(.icuc--band, .icuc--portal) :where(a) { color: inherit; text-decoration: none; }
+:where(.icuc--band, .icuc--portal) :where(img, svg, video) { display: block; max-width: 100%; }
+:where(.icuc--band, .icuc--portal) :where(button) { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+:where(.icuc--band, .icuc--portal) :where(ul, ol) { margin: 0; padding: 0; list-style: none; }
+.icuc--band :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+.icuc--cta:active { filter: brightness(0.96); }
+@media (prefers-reduced-motion: reduce) { .icuc--band *, .icuc--band *::before, .icuc--band *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; } }
+.icuc--wrap { position: relative; width: 100%; max-width: var(--container-max); margin: 0 auto; }
+.icuc--pad { padding-inline: var(--container-pad); }
+.icuc--bleed { max-width: none; }
+.icuc--rule::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--color-hairline); }
+.icuc--cta { display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--color-cta); border-radius: 8px; background: var(--color-cta); box-shadow: var(--shadow-cta); color: #fff; font-family: var(--font-body); font-weight: 600; white-space: nowrap; transition: filter 150ms ease; }
+.icuc--cta:hover { filter: brightness(1.1); }
+.icuc--cta-md { width: 144px; height: 40px; font-size: 14px; line-height: 20px; letter-spacing: -0.1px; }
+.icuc--cta-lg { width: 203px; height: 54px; font-size: 16px; line-height: 24px; letter-spacing: -0.1px; }
+@container (max-width: 809px) { .icuc--cta-lg { width: 100%; max-width: 260px; } }
+
+/* "Plug in. Take it back." — Figma 16:10372.
+
+   The page's one dark band. It runs full-window (the rails stop at its edges,
+   which Section handles via tone="dark") while the copy and the card row are
+   each capped at 1440 with their own 40px gutters. The section opts out of
+   Section's padding so the copy can measure itself at the frame's 812. */
+
+.icuc-section {
+  /* Not Gray/900 — the band is the deepest navy in the palette, the same one
+     the nav links use. */
+  background: var(--color-nav);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding-block: 101px 100px;
+  overflow: hidden;
+}
+
+/* Three ellipse glows: a large blue one top-right, a paler one top-left, and a
+   third rising from the bottom edge. Percentages are the frame's own, converted
+   from its 1728x906.4 gradient box. Painted on the full-width band rather than
+   the 1440 stack, because that is the box the frame measures them against. */
+.icuc-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(44.4% 36.7% at 74% 18%, rgba(28, 100, 242, 0.14) 0%, rgba(28, 100, 242, 0) 70%),
+    radial-gradient(36.1% 29.7% at 12% 6%, rgba(118, 169, 250, 0.08) 0%, rgba(118, 169, 250, 0) 70%),
+    radial-gradient(38.9% 26.2% at 50% 100%, rgba(28, 100, 242, 0.1) 0%, rgba(28, 100, 242, 0) 72%);
+}
+
+.icuc-inner {
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 64px;
+}
+
+/* ---- Copy ---- */
+
+.icuc-head {
+  /* 812 is the frame's copy measure; the gutters sit outside it. */
+  width: calc(812px + var(--container-pad) * 2);
+  max-width: 100%;
+  padding-inline: var(--container-pad);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+.icuc-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  line-height: 24px;
+  font-weight: 600;
+  letter-spacing: 1.82px;
+  color: #8fb5fb;
+}
+
+.icuc-eyebrowRule {
+  width: 22px;
+  height: 2px;
+  border-radius: 1px;
+  background: linear-gradient(to right, var(--blue-600), var(--blue-400));
+}
+
+.icuc-headText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+}
+
+.icuc-heading {
+  font-family: var(--font-display);
+  font-size: 36px;
+  line-height: 1.4;
+  font-weight: 500;
+  letter-spacing: -0.4px;
+  text-align: center;
+  color: var(--white);
+}
+
+/* The second line is a horizontal gradient clipped to the glyphs. */
+.icuc-headingAccent {
+  background-image: linear-gradient(91.54deg, #76a9fa 8%, #b7d2ff 92%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.icuc-subcopy {
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 400;
+  letter-spacing: -0.27px;
+  text-align: center;
+  color: #c3c9d6;
+}
+
+.icuc-pills {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  list-style: none;
+}
+
+.icuc-pill {
+  padding: 9px 17px;
+  border: 1px solid #d5d7da;
+  border-radius: 32px;
+  background: var(--white);
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 500;
+  color: #525252;
+}
+
+/* ---- Cards ----
+
+   Four equal cards sitting directly on the band — the white panel, the weighted
+   2.7fr column, the icon tiles and the tag chips are all gone as of the frame's
+   card revision (44:4685). */
+
+.icuc-cards {
+  display: flex;
+  /* Every card runs the full height of the tallest one; the badge pins to
+     the bottom edge (margin-top: auto), so the row reads as one block. */
+  align-items: stretch;
+  gap: 16px;
+  width: 100%;
+  max-width: var(--container-max);
+  padding-inline: var(--container-pad);
+}
+
+/* Glass: a top-down white wash at 5% falling to 2%, held by a 9% hairline.
+   Nothing here is opaque, so the band's glows read through the cards. */
+.icuc-card {
+  position: relative;
+  flex: 1 0 0;
+  min-width: 0;
+  max-width: 448px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 4px;
+  padding: 25px 21px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 8px;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+}
+
+/* A hairline of blue light across the top edge, fading out to nothing at both
+   ends. Inset ~14px so it stops short of the rounded corners. */
+.icuc-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 14px;
+  right: 13.67px;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    rgba(118, 169, 250, 0),
+    rgba(118, 169, 250, 0.55) 50%,
+    rgba(118, 169, 250, 0)
+  );
+}
+
+.icuc-cardTitle {
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 600;
+  color: var(--white);
+}
+
+.icuc-cardText {
+  font-size: 15px;
+  line-height: 25px;
+  font-weight: 400;
+  color: #aab1c2;
+  /* Minimum breathing room above the bottom-pinned badge. */
+  margin-bottom: 12px;
+}
+
+/* ---- Client-proof rows (2026-07-26) ----
+   Three roster faces per audience card — at the TOP of the card, above the
+   title. The SaaS card carries the HYROS and Sendblue MARKS in the same
+   circular treatment, so all four rows read as one system, 44px tall. */
+
+.icuc-cardFaces {
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.icuc-faceRing {
+  width: 44px;
+  height: 44px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  overflow: hidden;
+  /* Ring in the band's navy so overlapped faces cut cleanly. */
+  border: 2px solid rgba(2, 4, 24, 0.9);
+  /* The roster photos are cut-outs on transparency — give them a ground. */
+  background: #232b45;
+}
+
+.icuc-faceRing + .icuc-faceRing {
+  margin-left: -12px;
+}
+
+.icuc-face {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Bias toward the top of the cut-out so the crop frames the face. */
+  object-position: 50% 12%;
+}
+
+/* Logo circles: the mark floats centred instead of cover-cropping. */
+.icuc-faceRing.icuc-isLogo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icuc-logoMark {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+
+.icuc-logoMark.icuc-isHyros {
+  /* The mark ships as black glyphs on alpha — paint it white. */
+  filter: brightness(0) invert(1);
+  opacity: 0.92;
+}
+
+/* ---- Funnel badge (2026-07-26) ----
+   The marketing frame's funnel-type chip, translated to the dark band: the
+   light-blue tint becomes a translucent accent wash, the navy ink becomes the
+   card's light ink, the blue accent stays the eyebrow blue. */
+
+.icuc-cardBadge {
+  /* Not a flex container — the space between the two tones is a text node,
+     which flex layout would drop. The card's align-items: flex-start already
+     shrink-wraps it. margin-top: auto pins the chip to the card's bottom
+     edge, so the badges land on one shared baseline across the row. */
+  margin-top: auto;
+  padding: 7px 12px;
+  border-radius: 4px;
+  background: rgba(118, 169, 250, 0.1);
+  font-size: 12.5px;
+  line-height: 16px;
+  font-weight: 600;
+  letter-spacing: 1.1px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: #dbe4f6;
+}
+
+.icuc-cardBadgeAccent {
+  color: #8fb5fb;
+}
+
+/* ---- Tablet: two-up cards, even widths ---- */
+@container (max-width: 1279px) {
+  .icuc-section {
+    padding-block: 72px;
+  }
+  .icuc-inner {
+    gap: 48px;
+  }
+  .icuc-head {
+    width: 100%;
+    max-width: 720px;
+  }
+  .icuc-heading {
+    font-size: 32px;
+  }
+  /* Two up. The cards stop being flex siblings so a wrapped row still splits
+     evenly instead of the last card stretching to fill. */
+  .icuc-cards {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+  }
+  .icuc-card {
+    max-width: none;
+  }
+}
+
+/* ---- Mobile: single column ---- */
+@container (max-width: 809px) {
+  .icuc-section {
+    padding-block: 56px;
+  }
+  .icuc-inner {
+    gap: 36px;
+  }
+  .icuc-heading {
+    font-size: 26px;
+  }
+  .icuc-subcopy {
+    font-size: 16px;
+    line-height: 26px;
+  }
+  .icuc-cards {
+    grid-template-columns: minmax(0, 1fr);
+    padding-inline: 20px;
+  }
+}

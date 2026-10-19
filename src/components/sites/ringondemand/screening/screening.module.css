@@ -1,0 +1,243 @@
+/* "What we check before a caller reaches you". Built from the product-bento
+   band: centred heading with an accent line, the bento's pale blue gradient
+   cards and its 100 / 72 / 56px section padding. The check discs are the
+   Qualify & Route checklist's. */
+
+.section {
+  --heading: #0a0d14;
+  --accent: #1c64f2;
+  --gray-300: #d1d5db;
+  --gray-500: #6b7280;
+  --gray-900: #111928;
+  --hairline: #e5e7eb;
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  position: relative;
+  width: 100%;
+  container-type: inline-size;
+  background: #ffffff;
+  font-family: var(--site-font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--gray-900);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Full-window hairline closing the band. */
+.section::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--hairline);
+}
+
+.inner {
+  position: relative;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 100px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ---------------------------------------------------------------- heading */
+
+.heading {
+  margin: 0;
+  max-width: 812px;
+  font-family: var(--site-font-display);
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 1.4;
+  letter-spacing: -0.4px;
+  text-align: center;
+  color: var(--heading);
+}
+
+.headingAccent {
+  color: var(--accent);
+}
+
+/* ------------------------------------------------------------------- list */
+
+.reveal {
+  width: 100%;
+  max-width: 1080px;
+  margin-top: 56px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Bento card chrome: Gray/200 hairline over the pale blue two-stop tint. */
+.item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 24px 28px;
+  border: 1px solid var(--hairline);
+  border-radius: 6px;
+  background: linear-gradient(163deg, #ecf2fc 0%, #fafbfe 100%);
+  transition:
+    transform 200ms ease,
+    border-color 200ms ease,
+    box-shadow 200ms ease;
+}
+
+.item:hover {
+  transform: translateY(-2px);
+  border-color: var(--gray-300);
+  box-shadow: 0 14px 32px -18px rgba(28, 100, 242, 0.35);
+}
+
+/* Optically on the first line's x-height: 28px line, 26px disc. */
+.disc {
+  --disc: 26px;
+  margin-top: 1px;
+}
+
+.itemText {
+  min-width: 0;
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 500;
+  letter-spacing: -0.04px;
+  color: var(--gray-900);
+}
+
+/* ---------------------------------------------------------- line under it */
+
+.note {
+  margin: 40px 0 0;
+  max-width: 840px;
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 500;
+  letter-spacing: -0.04px;
+  text-align: center;
+  text-wrap: balance;
+  color: var(--gray-500);
+}
+
+/* The phrase the line is really selling, lifted out of the grey. */
+.noteMark {
+  color: var(--gray-900);
+}
+
+/* --------------------------------------------------------------- entrance */
+
+[data-reveal="armed"] .item {
+  opacity: 0;
+  translate: 0 14px;
+}
+
+[data-reveal="shown"] .item {
+  transition:
+    opacity 600ms var(--ease-out) calc(var(--i, 0) * 70ms),
+    translate 600ms var(--ease-out) calc(var(--i, 0) * 70ms),
+    transform 200ms ease,
+    border-color 200ms ease,
+    box-shadow 200ms ease;
+}
+
+/* ------------------------------------------------------------- responsive */
+
+@container (max-width: 1279px) {
+  .inner {
+    padding-block: 72px;
+  }
+
+  .heading {
+    max-width: 640px;
+    font-size: 32px;
+  }
+
+  .reveal {
+    max-width: 720px;
+    margin-top: 40px;
+  }
+
+  .grid {
+    gap: 16px;
+  }
+
+  .item {
+    padding: 22px 24px;
+    gap: 14px;
+  }
+
+  .itemText {
+    font-size: 17px;
+    line-height: 26px;
+  }
+
+  .disc {
+    --disc: 24px;
+  }
+}
+
+@container (max-width: 809px) {
+  .inner {
+    padding: 56px 20px;
+  }
+
+  .heading {
+    font-size: 28px;
+  }
+
+  .headingBreak {
+    display: none;
+  }
+
+  .reveal {
+    margin-top: 32px;
+  }
+
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .item {
+    padding: 18px 20px;
+  }
+
+  .itemText {
+    font-size: 16px;
+    line-height: 26px;
+  }
+
+  .disc {
+    --disc: 24px;
+    margin-top: 1px;
+  }
+
+  .note {
+    margin-top: 28px;
+    font-size: 16px;
+    line-height: 26px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .item,
+  [data-reveal="shown"] .item {
+    transition: none;
+  }
+
+  .item:hover {
+    transform: none;
+  }
+}

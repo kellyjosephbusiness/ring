@@ -1,0 +1,12 @@
+/* The fixed header is 64px tall; the hero starts 41px below the top (61px on
+   phones) so its content keeps the same air under the header as the design. */
+.main {
+  position: relative;
+  padding-top: 41px;
+}
+
+@media (max-width: 809.98px) {
+  .main {
+    padding-top: 61px;
+  }
+}

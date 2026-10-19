@@ -1,0 +1,406 @@
+/* "Pricing". Same band, heading and padding as the offers above, but the two
+   options are plain white cards on the hairline with a green-tick list (the
+   check discs of the screening list), so they read as terms rather than as a
+   second set of offers. The first-order note sits in a Blue/50 callout and the
+   hero's blue "Book a call" button closes the band. */
+
+.section {
+  --heading: #0a0d14;
+  --accent: #1c64f2;
+  --cta: #0236c2;
+  --blue-50: #ebf5ff;
+  --blue-200: #c3ddfd;
+  --gray-300: #d1d5db;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-900: #111928;
+  --hairline: #e5e7eb;
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  position: relative;
+  width: 100%;
+  container-type: inline-size;
+  scroll-margin-top: 80px;
+  background: #ffffff;
+  font-family: var(--site-font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--gray-900);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Full-window hairline closing the band. */
+.section::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--hairline);
+}
+
+.inner {
+  position: relative;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 120px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ---------------------------------------------------------------- heading */
+
+.heading {
+  margin: 0;
+  font-family: var(--site-font-display);
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 1.4;
+  letter-spacing: -0.4px;
+  text-align: center;
+  color: var(--heading);
+}
+
+/* ------------------------------------------------------------------ cards */
+
+.reveal {
+  width: 100%;
+  max-width: 960px;
+  margin-top: 56px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow:
+    0 1px 2px rgba(16, 24, 40, 0.04),
+    0 16px 36px -24px rgba(16, 24, 40, 0.14);
+  transition:
+    transform 200ms ease,
+    border-color 200ms ease,
+    box-shadow 200ms ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  border-color: var(--gray-300);
+  box-shadow:
+    0 1px 2px rgba(16, 24, 40, 0.04),
+    0 18px 36px -20px rgba(28, 100, 242, 0.3);
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 28px 32px 24px;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--site-font-display);
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1.3;
+  letter-spacing: -0.4px;
+  color: var(--gray-900);
+}
+
+.price {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 8px;
+  margin: 0;
+}
+
+.amount {
+  font-family: var(--site-font-display);
+  font-weight: 500;
+  font-size: 40px;
+  line-height: 1.2;
+  letter-spacing: -1px;
+  color: var(--heading);
+}
+
+.unit {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+  letter-spacing: -0.1px;
+  color: var(--gray-500);
+}
+
+.terms {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 0;
+  padding: 24px 32px 32px;
+  list-style: none;
+}
+
+.term {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+  letter-spacing: -0.04px;
+  text-wrap: pretty;
+  color: var(--gray-700);
+}
+
+/* Optically on the first line: 24px line, 22px disc. */
+.disc {
+  --disc: 22px;
+  margin-top: 1px;
+}
+
+/* ---------------------------------------------------- first-order callout */
+
+.note {
+  --i: 2;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 24px 0 0;
+  padding: 18px 24px;
+  border: 1px solid var(--blue-200);
+  border-radius: 8px;
+  background: var(--blue-50);
+}
+
+.noteIcon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--blue-200);
+  border-radius: 8px;
+  background: #ffffff;
+  color: var(--accent);
+}
+
+.noteIcon svg {
+  display: block;
+  width: 20px;
+  height: 20px;
+}
+
+.noteText {
+  min-width: 0;
+  text-wrap: pretty;
+  font-size: 16px;
+  line-height: 26px;
+  font-weight: 500;
+  letter-spacing: -0.04px;
+  color: var(--gray-600);
+}
+
+.noteLead {
+  font-weight: 600;
+  color: var(--heading);
+}
+
+/* -------------------------------------------------------------------- CTA */
+
+.cta {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 48px;
+}
+
+.ctaLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 203px;
+  height: 54px;
+  border: 1px solid var(--cta);
+  border-radius: 8px;
+  background: var(--cta);
+  box-shadow:
+    inset 0 1px 4px 1px rgba(255, 255, 255, 0.24),
+    inset 0 4px 16px 1px rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  letter-spacing: -0.1px;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: filter 150ms ease;
+}
+
+.ctaArrow {
+  margin-left: 0.3em;
+}
+
+.ctaLink:hover {
+  filter: brightness(1.1);
+}
+
+.ctaLink:active {
+  filter: brightness(0.96);
+}
+
+.ctaLink:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------- entrance */
+
+[data-reveal="armed"] .card,
+[data-reveal="armed"] .note {
+  opacity: 0;
+  translate: 0 16px;
+}
+
+[data-reveal="shown"] .card,
+[data-reveal="shown"] .note {
+  transition:
+    opacity 600ms var(--ease-out) calc(var(--i, 0) * 90ms),
+    translate 600ms var(--ease-out) calc(var(--i, 0) * 90ms),
+    transform 200ms ease,
+    border-color 200ms ease,
+    box-shadow 200ms ease;
+}
+
+/* ------------------------------------------------------------- responsive */
+
+@container (max-width: 1279px) {
+  .inner {
+    padding-block: 88px;
+  }
+
+  .heading {
+    font-size: 32px;
+  }
+
+  .reveal {
+    max-width: 730px;
+    margin-top: 40px;
+  }
+
+  .grid {
+    gap: 20px;
+  }
+
+  .head {
+    padding: 24px 24px 20px;
+  }
+
+  .terms {
+    padding: 20px 24px 28px;
+  }
+
+  .amount {
+    font-size: 36px;
+  }
+
+  .note {
+    margin-top: 20px;
+    padding: 16px 20px;
+  }
+
+  .cta {
+    margin-top: 40px;
+  }
+}
+
+@container (max-width: 809px) {
+  .inner {
+    padding: 64px 20px;
+  }
+
+  .heading {
+    font-size: 28px;
+  }
+
+  .reveal {
+    margin-top: 32px;
+  }
+
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  .head {
+    padding: 20px 20px 18px;
+  }
+
+  .terms {
+    gap: 12px;
+    padding: 18px 20px 24px;
+  }
+
+  .amount {
+    font-size: 32px;
+    letter-spacing: -0.8px;
+  }
+
+  .term {
+    font-size: 15px;
+  }
+
+  .note {
+    align-items: flex-start;
+    gap: 14px;
+    margin-top: 16px;
+    padding: 16px;
+  }
+
+  .noteIcon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .noteText {
+    font-size: 15px;
+    line-height: 24px;
+  }
+
+  .cta {
+    margin-top: 32px;
+  }
+
+  .ctaLink {
+    width: 100%;
+    max-width: 260px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  [data-reveal="shown"] .card,
+  [data-reveal="shown"] .note,
+  .ctaLink {
+    transition: none;
+  }
+
+  .card:hover {
+    transform: none;
+  }
+}

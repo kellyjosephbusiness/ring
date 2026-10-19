@@ -1,0 +1,412 @@
+/* Fixed site header: a single 64px white nav with a bottom hairline.
+
+   Timings come from the source components: nav variants and buttons tween
+   0.6s on cubic-bezier(.6,0,.05,1); the scroll hide/show tweens 0.4s on the
+   same curve; text links use 0.4s cubic-bezier(.44,0,.56,1). */
+
+.top {
+  --nav-ease: cubic-bezier(0.6, 0, 0.05, 1);
+  --link-ease: cubic-bezier(0.44, 0, 0.56, 1);
+  --ink: rgb(2, 4, 24);
+  --wordmark-ink: #0a0d14;
+  --hover-wash: rgb(249, 250, 251);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--site-font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition:
+    transform 0.4s var(--nav-ease),
+    opacity 0.4s var(--nav-ease);
+  will-change: transform;
+}
+
+.top[data-hidden] {
+  transform: translateY(calc(-100% - 6px));
+  opacity: 0;
+}
+
+/* Keyboard focus inside a scrolled-away header brings it back into view. */
+.top[data-hidden]:has(:focus-visible) {
+  transform: none;
+  opacity: 1;
+}
+
+/* ---------- Nav (shared) ---------- */
+
+.navWrap {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+}
+
+.wordmark {
+  display: block;
+  flex: none;
+  font-family: var(--site-font-display);
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 28px;
+  letter-spacing: -0.6px;
+  white-space: nowrap;
+  color: var(--wordmark-ink);
+  text-decoration: none;
+}
+
+.strokeBot {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  height: 1px;
+  background: #000;
+  opacity: 0.05;
+  pointer-events: none;
+}
+
+.bookBtn {
+  position: relative;
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 24px;
+  overflow: hidden;
+  border-radius: 8px;
+  background: rgb(0, 55, 194);
+  box-shadow:
+    inset 0 4px 16px 0 rgba(255, 255, 255, 0.2),
+    inset 0 1px 4px 0 rgba(255, 255, 255, 0.24);
+  color: #fff;
+  font-size: 14px;
+  line-height: 22px;
+  letter-spacing: -0.14px;
+  white-space: pre;
+  text-decoration: none;
+  transition: background-color 0.6s var(--nav-ease);
+}
+
+.bookBtn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgb(10, 57, 174);
+  border-radius: inherit;
+  pointer-events: none;
+  transition: border-color 0.6s var(--nav-ease);
+}
+
+.bookDesktop {
+  height: 36px;
+}
+
+.bookMobile {
+  height: 33px;
+  padding: 0 16px;
+}
+
+@media (hover: hover) {
+  .bookBtn:hover {
+    background: rgb(0, 28, 105);
+  }
+
+  .bookBtn:hover::after {
+    border-color: rgb(0, 28, 105);
+  }
+}
+
+/* ---------- Desktop / tablet nav ---------- */
+
+.deskNav {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 64px;
+  padding: 14px 0;
+  background: #fff;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  width: 100%;
+  max-width: 1440px;
+  padding: 0 40px;
+}
+
+.logoWrap {
+  position: relative;
+  display: flex;
+  flex: 1 0 0px;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 0;
+  overflow: clip;
+}
+
+.links {
+  position: relative;
+  display: flex;
+  flex: none;
+  align-items: center;
+  overflow: clip;
+}
+
+.actions {
+  position: relative;
+  display: flex;
+  flex: 1 0 0px;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 16px;
+  min-width: 0;
+}
+
+/* Plain links render as padded inline anchors inside a 22px line, so the
+   hover wash overhangs the row exactly like the source's link preset. */
+.linkCell {
+  position: relative;
+  flex: none;
+  font-size: 14px;
+  line-height: 22px;
+  letter-spacing: -0.14px;
+  text-align: center;
+  white-space: pre;
+}
+
+.textLink {
+  padding: 8px 16px;
+  background: #fff;
+  color: var(--ink);
+  text-decoration: none;
+  transition:
+    background-color 0.4s var(--link-ease),
+    color 0.4s var(--link-ease);
+}
+
+@media (hover: hover) {
+  .textLink:hover {
+    background: var(--hover-wash);
+  }
+}
+
+/* ---------- Phone nav ---------- */
+
+.mNav {
+  position: relative;
+  height: 64px;
+  overflow: hidden;
+  background: #fff;
+  transition: height 0.6s var(--nav-ease);
+}
+
+.mNav[data-open] {
+  height: 100vh;
+}
+
+.mRow {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: space-between;
+  height: 33px;
+  margin: 14px 12px 0;
+}
+
+.mRowOpen {
+  height: 32px;
+  margin: 0;
+}
+
+.mRowEnd {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hamburger {
+  position: relative;
+  flex: none;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.hamburgerIcon {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  display: block;
+  width: 24px;
+  height: 24px;
+}
+
+.mScroll {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding: 14px 12px 112px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.mLinks {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  gap: 12px;
+  padding: 40px 0;
+  -webkit-mask-image: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, #000 15%, #000 96%, rgba(0, 0, 0, 0) 100%);
+  mask-image: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, #000 15%, #000 96%, rgba(0, 0, 0, 0) 100%);
+}
+
+.mLinkCell {
+  flex: none;
+  width: 100%;
+  height: 44px;
+  padding: 8px 0;
+  font-size: 20px;
+  line-height: 28px;
+  letter-spacing: -0.2px;
+  text-align: center;
+  white-space: pre-wrap;
+}
+
+.mTextLink {
+  padding: 8px 16px;
+  background: #fff;
+  color: var(--ink);
+  text-decoration: none;
+  transition: background-color 0.4s var(--link-ease);
+}
+
+@media (hover: hover) {
+  .mTextLink:hover {
+    background: var(--hover-wash);
+  }
+}
+
+.mActions {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 20px;
+}
+
+.mBookBlack {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 48px;
+  padding: 14px 24px;
+  overflow: hidden;
+  background: #000;
+  box-shadow:
+    inset 0 4px 16px 0 rgba(255, 255, 255, 0.2),
+    inset 0 1px 4px 0 rgba(255, 255, 255, 0.24);
+  color: #fff;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: -0.15px;
+  white-space: pre;
+  text-decoration: none;
+  transition: background-color 0.6s var(--nav-ease);
+}
+
+.mBookBlack::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid #000;
+  pointer-events: none;
+  transition: border-color 0.6s var(--nav-ease);
+}
+
+@media (hover: hover) {
+  .mBookBlack:hover {
+    background: rgb(0, 28, 105);
+  }
+
+  .mBookBlack:hover::after {
+    border-color: rgb(0, 28, 105);
+  }
+}
+
+/* ---------- Breakpoints ---------- */
+
+@media (min-width: 810px) and (max-width: 1279.98px) {
+  /* Tablet: wordmark, links and button spread edge to edge. */
+  .row {
+    justify-content: space-between;
+    gap: 0;
+  }
+
+  .logoWrap {
+    flex: none;
+    justify-content: flex-start;
+    gap: 10px;
+  }
+
+  .actions {
+    flex: none;
+  }
+}
+
+/* Narrow tablets: tighter link padding so the row keeps air at 810px. */
+@media (min-width: 810px) and (max-width: 959.98px) {
+  .textLink {
+    padding: 8px 12px;
+  }
+}
+
+@media (max-width: 809.98px) {
+  .deskNav {
+    display: none;
+  }
+}
+
+@media (min-width: 810px) {
+  .mNav {
+    display: none;
+  }
+}
+
+/* Very narrow phones: shrink the wordmark so the row keeps its button. */
+@media (max-width: 359.98px) {
+  .mRow .wordmark {
+    font-size: 17px;
+    letter-spacing: -0.4px;
+  }
+
+  .bookMobile {
+    padding: 0 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .top,
+  .top *,
+  .top *::before,
+  .top *::after {
+    transition-duration: 0.001ms !important;
+  }
+}

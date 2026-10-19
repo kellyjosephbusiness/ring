@@ -1,0 +1,315 @@
+
+.iccw--band,
+.iccw--portal {
+  --font-display: Poppins, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --color-heading: #0a0d14;
+  --color-accent: #1c64f2;
+  --gray-600: #4b5563;
+  --gray-100: #f3f4f6;
+  --white: #ffffff;
+  --container-max: 1440px;
+  --container-pad: 40px;
+  --color-hairline: #e5e7eb;
+  --color-cta: #0236c2;
+  --shadow-cta: inset 0 1px 4px 1px rgba(255,255,255,.24), inset 0 4px 16px 1px rgba(255,255,255,.2);
+  --font-body: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --color-text-primary: #111928;
+  --color-surface: #ffffff;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.iccw--outer { position: relative; width: 100%; container-type: inline-size; }
+.iccw--covers { z-index: 6; }
+.iccw--band { position: relative; width: 100%; background: var(--color-surface); font-size: 16px; line-height: 1.5; color: var(--color-text-primary); }
+.iccw--band *, .iccw--portal * { box-sizing: border-box; }
+:where(.iccw--band, .iccw--portal) :where(h1, h2, h3, h4, h5, h6) { margin: 0; font-family: var(--font-display); font-weight: 500; color: var(--color-text-primary); }
+:where(.iccw--band, .iccw--portal) :where(p, figure, blockquote) { margin: 0; }
+:where(.iccw--band, .iccw--portal) :where(a) { color: inherit; text-decoration: none; }
+:where(.iccw--band, .iccw--portal) :where(img, svg, video) { display: block; max-width: 100%; }
+:where(.iccw--band, .iccw--portal) :where(button) { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+:where(.iccw--band, .iccw--portal) :where(ul, ol) { margin: 0; padding: 0; list-style: none; }
+.iccw--band :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+.iccw--cta:active { filter: brightness(0.96); }
+@media (prefers-reduced-motion: reduce) { .iccw--band *, .iccw--band *::before, .iccw--band *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; } }
+.iccw--wrap { position: relative; width: 100%; max-width: var(--container-max); margin: 0 auto; }
+.iccw--pad { padding-inline: var(--container-pad); }
+.iccw--bleed { max-width: none; }
+.iccw--rule::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--color-hairline); }
+.iccw--cta { display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--color-cta); border-radius: 8px; background: var(--color-cta); box-shadow: var(--shadow-cta); color: #fff; font-family: var(--font-body); font-weight: 600; white-space: nowrap; transition: filter 150ms ease; }
+.iccw--cta:hover { filter: brightness(1.1); }
+.iccw--cta-md { width: 144px; height: 40px; font-size: 14px; line-height: 20px; letter-spacing: -0.1px; }
+.iccw--cta-lg { width: 203px; height: 54px; font-size: 16px; line-height: 24px; letter-spacing: -0.1px; }
+@container (max-width: 809px) { .iccw--cta-lg { width: 100%; max-width: 260px; } }
+
+/* Creator wall (Figma 14:1379).
+
+   Two marquee rows travelling in OPPOSITE directions — the top row left, the
+   bottom row right. Each row renders its cards twice and translates by exactly
+   -50% / +50%, so the loop point lands on an identical frame and there is no
+   visible jump. Duration is set per row from a --speed custom property scaled
+   by the card count, so both rows move at the same pixels-per-second even if
+   they ever hold different numbers of cards. */
+
+.iccw-root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  padding-block: 120px 96px;
+}
+
+.iccw-headingGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding-inline: 40px;
+}
+
+.iccw-heading {
+  font-family: var(--font-display);
+  font-size: 36px;
+  line-height: 1.4;
+  font-weight: 500;
+  letter-spacing: -0.4px;
+  text-align: center;
+  color: var(--color-heading);
+}
+
+.iccw-headingAccent {
+  color: var(--color-accent);
+}
+
+.iccw-subcopy {
+  max-width: 640px;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  letter-spacing: -0.176px;
+  text-align: center;
+  color: var(--gray-600);
+}
+
+/* ---- Marquee ---- */
+
+.iccw-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  /* The tracks are wider than the viewport by design; without this they push
+     the whole page into horizontal scroll. */
+  overflow: hidden;
+  /* The rows run wider than the container; both edges fade so cards enter and
+     leave rather than being cut off by a hard edge. */
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 90px,
+    #000 calc(100% - 90px),
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 90px,
+    #000 calc(100% - 90px),
+    transparent 100%
+  );
+}
+
+.iccw-row {
+  display: flex;
+  width: max-content;
+  gap: 16px;
+}
+
+.iccw-track {
+  display: flex;
+  gap: 16px;
+  flex: none;
+  animation-duration: var(--duration);
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+
+.iccw-rowLeft .iccw-track {
+  animation-name: iccw-marqueeLeft;
+}
+
+.iccw-rowRight .iccw-track {
+  animation-name: iccw-marqueeRight;
+}
+
+/* -50% is exactly one copy of the card list plus the gap that follows it,
+   because the gap is inside the track. */
+@keyframes iccw-marqueeLeft {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-100% - 16px));
+  }
+}
+
+@keyframes iccw-marqueeRight {
+  from {
+    transform: translateX(calc(-100% - 16px));
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* ---- Card ---- */
+
+/* 240 x 285, radius 8 — matched to Isma's "Trusted by Card" Framer variant
+   (2026-07-26); was a 240 square at radius 12 before. */
+.iccw-card {
+  position: relative;
+  flex: none;
+  width: 240px;
+  height: 285px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--gray-100);
+}
+
+.iccw-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Scrim so the name stays legible whatever the photo does underneath. */
+.iccw-card::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 55%;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.72) 100%);
+  pointer-events: none;
+}
+
+.iccw-tag {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding-inline: 8px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  font-size: 11px;
+  line-height: 1;
+  font-weight: 500;
+  color: var(--white);
+  white-space: nowrap;
+}
+
+.iccw-meta {
+  position: absolute;
+  inset: auto 12px 12px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.iccw-name {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  color: var(--white);
+  white-space: nowrap;
+}
+
+.iccw-tick {
+  width: 13px;
+  height: 13px;
+  flex: none;
+}
+
+.iccw-sub {
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.78);
+  white-space: nowrap;
+}
+
+/* Full-width flex row so the Button's mobile width:100% has a real box to
+   fill — as a shrink-to-fit child it collapsed toward its text width. */
+.iccw-cta {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 16px;
+}
+
+/* Motion off: the rows sit still and simply overflow-hide. */
+@media (prefers-reduced-motion: reduce) {
+  .iccw-track {
+    animation: none;
+  }
+}
+
+@container (max-width: 1279px) {
+  .iccw-root {
+    padding-block: 72px 64px;
+    gap: 32px;
+  }
+  .iccw-heading {
+    font-size: 30px;
+  }
+  .iccw-card {
+    width: 200px;
+    height: 238px;
+  }
+}
+
+@container (max-width: 809px) {
+  .iccw-root {
+    padding-block: 48px;
+  }
+  .iccw-heading {
+    font-size: 24px;
+  }
+  .iccw-heading br {
+    display: none;
+  }
+  .iccw-subcopy {
+    font-size: 15px;
+  }
+  .iccw-card {
+    width: 160px;
+    height: 190px;
+  }
+  .iccw-rows {
+    mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 40px,
+      #000 calc(100% - 40px),
+      transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 40px,
+      #000 calc(100% - 40px),
+      transparent 100%
+    );
+  }
+}

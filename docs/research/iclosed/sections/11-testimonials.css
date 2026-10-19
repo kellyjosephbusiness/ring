@@ -1,0 +1,299 @@
+
+.ictt--band,
+.ictt--portal {
+  --container-pad: 40px;
+  --color-accent: #1c64f2;
+  --font-display: Poppins, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --gray-50: #f9fafb;
+  --gray-900: #111928;
+  --blue-400: #76a9fa;
+  --blue-100: #e1effe;
+  --container-max: 1440px;
+  --color-hairline: #e5e7eb;
+  --color-cta: #0236c2;
+  --shadow-cta: inset 0 1px 4px 1px rgba(255,255,255,.24), inset 0 4px 16px 1px rgba(255,255,255,.2);
+  --font-body: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --color-text-primary: #111928;
+  --color-surface: #ffffff;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.ictt--outer { position: relative; width: 100%; container-type: inline-size; }
+.ictt--covers { z-index: 6; }
+.ictt--band { position: relative; width: 100%; background: var(--color-surface); font-size: 16px; line-height: 1.5; color: var(--color-text-primary); }
+.ictt--band *, .ictt--portal * { box-sizing: border-box; }
+:where(.ictt--band, .ictt--portal) :where(h1, h2, h3, h4, h5, h6) { margin: 0; font-family: var(--font-display); font-weight: 500; color: var(--color-text-primary); }
+:where(.ictt--band, .ictt--portal) :where(p, figure, blockquote) { margin: 0; }
+:where(.ictt--band, .ictt--portal) :where(a) { color: inherit; text-decoration: none; }
+:where(.ictt--band, .ictt--portal) :where(img, svg, video) { display: block; max-width: 100%; }
+:where(.ictt--band, .ictt--portal) :where(button) { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+:where(.ictt--band, .ictt--portal) :where(ul, ol) { margin: 0; padding: 0; list-style: none; }
+.ictt--band :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+.ictt--cta:active { filter: brightness(0.96); }
+@media (prefers-reduced-motion: reduce) { .ictt--band *, .ictt--band *::before, .ictt--band *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; } }
+.ictt--wrap { position: relative; width: 100%; max-width: var(--container-max); margin: 0 auto; }
+.ictt--pad { padding-inline: var(--container-pad); }
+.ictt--bleed { max-width: none; }
+.ictt--rule::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--color-hairline); }
+.ictt--cta { display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--color-cta); border-radius: 8px; background: var(--color-cta); box-shadow: var(--shadow-cta); color: #fff; font-family: var(--font-body); font-weight: 600; white-space: nowrap; transition: filter 150ms ease; }
+.ictt--cta:hover { filter: brightness(1.1); }
+.ictt--cta-md { width: 144px; height: 40px; font-size: 14px; line-height: 20px; letter-spacing: -0.1px; }
+.ictt--cta-lg { width: 203px; height: 54px; font-size: 16px; line-height: 24px; letter-spacing: -0.1px; }
+@container (max-width: 809px) { .ictt--cta-lg { width: 100%; max-width: 260px; } }
+
+/* Testimonial ticker — Figma 45:4994 ("Proof, in their own words").
+
+   A centred head block (eyebrow / two-tone heading / subcopy), a masked,
+   slowly scrolling row of 380px star-rated quote cards, then the primary CTA
+   below it — the Figma puts the button under the copy, but it closes the
+   section better under the proof it earns (Isma, 2026-07-27). The
+   marquee mechanics mirror Integrations' tickers: a `width: max-content`
+   track of two identical passes translating -50%, each pass carrying its own
+   trailing gap so the loop lands exactly where it began. */
+
+.ictt-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 72px;
+  padding-block: 100px;
+}
+
+/* ---- Head (Figma 45:4996 — 812 measure, centred) ---- */
+
+.ictt-head {
+  width: calc(812px + var(--container-pad) * 2);
+  max-width: 100%;
+  padding-inline: var(--container-pad);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+}
+
+.ictt-eyebrow {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  letter-spacing: 0.84px;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.ictt-heading {
+  font-family: var(--font-display);
+  font-size: 40px;
+  line-height: 52px;
+  font-weight: 500;
+  letter-spacing: -0.4px;
+  color: #171717;
+}
+
+.ictt-headingAccent {
+  color: var(--color-accent);
+}
+
+.ictt-subcopy {
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 400;
+  letter-spacing: -0.04px;
+  color: #020418;
+}
+
+/* The design's CTA hugs its label (h 54, 21px side padding) — override the
+   Button's fixed hero width, and its ≤809 100%-cap, at higher specificity.
+   It is a direct child of .ictt-inner now, so the section's own gap spaces it off
+   the ticker and align-items keeps it centred. */
+.ictt-inner .ictt-ctaButton {
+  width: auto;
+  max-width: none;
+  padding-inline: 21px;
+}
+
+/* ---- Ticker (Figma 45:5003 — full rail width, faded ends) ---- */
+
+.ictt-ticker {
+  width: 100%;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 6%, #000 94%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 6%, #000 94%, transparent 100%);
+}
+
+.ictt-track {
+  display: flex;
+  width: max-content;
+  animation: ictt-ttMarquee 56s linear infinite;
+}
+
+.ictt-pass {
+  display: flex;
+  gap: 24px;
+  padding-right: 24px;
+}
+
+@keyframes ictt-ttMarquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ictt-track {
+    animation: none;
+  }
+}
+
+/* ---- Card (Figma 53:5917 — 380 x 226) ---- */
+
+.ictt-card {
+  flex: none;
+  width: 380px;
+  height: 226px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  background: var(--gray-50);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+}
+
+.ictt-cardTop {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.ictt-stars {
+  display: flex;
+}
+
+.ictt-star {
+  width: 24px;
+  height: 24px;
+}
+
+.ictt-quote {
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 500;
+  letter-spacing: -0.198px;
+  color: var(--gray-900);
+}
+
+/* The Figma draws the bold run's underline as 4px Blue/400 bars; a thick
+   offset text-decoration is the same mark without the absolute positioning. */
+.ictt-quoteBold {
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--blue-400);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 4px;
+}
+
+.ictt-person {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.ictt-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 4px;
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  flex: 0 0 auto;
+}
+
+/* Rows whose photo hasn't landed yet get an initials tile in the same box,
+   rather than a broken or empty 48px hole. */
+.ictt-avatarFallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--blue-100);
+  border-color: rgba(28, 100, 242, 0.12);
+  font-size: 17px;
+  line-height: 1;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+  color: var(--color-accent);
+  user-select: none;
+}
+
+.ictt-personMeta {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.ictt-nameRow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.ictt-name {
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 500;
+  letter-spacing: -0.27px;
+  color: #171717;
+  white-space: nowrap;
+}
+
+.ictt-tick {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 auto;
+}
+
+.ictt-role {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+  letter-spacing: -0.176px;
+  color: #404040;
+}
+
+/* ============ Tablet (<=1279) ============ */
+@container (max-width: 1279px) {
+  .ictt-inner {
+    gap: 56px;
+    padding-block: 72px;
+  }
+  .ictt-heading {
+    font-size: 32px;
+    line-height: 44px;
+  }
+  .ictt-subcopy {
+    font-size: 17px;
+    line-height: 27px;
+  }
+}
+
+/* ============ Mobile (<810) ============ */
+@container (max-width: 809px) {
+  .ictt-inner {
+    gap: 40px;
+    padding-block: 56px;
+  }
+  .ictt-heading {
+    font-size: 26px;
+    line-height: 36px;
+  }
+  .ictt-subcopy {
+    font-size: 16px;
+    line-height: 26px;
+  }
+}

@@ -1,0 +1,199 @@
+
+.icuic--band,
+.icuic--portal {
+  --container-max: 1440px;
+  --container-pad: 40px;
+  --blue-400: #76a9fa;
+  --font-display: Poppins, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --white: #ffffff;
+  --radius-md: 8px;
+  --color-hairline: #e5e7eb;
+  --color-cta: #0236c2;
+  --shadow-cta: inset 0 1px 4px 1px rgba(255,255,255,.24), inset 0 4px 16px 1px rgba(255,255,255,.2);
+  --font-body: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --color-text-primary: #111928;
+  --color-accent: #1c64f2;
+  --color-text-inverse: #ffffff;
+  --gray-900: #111928;
+  --color-surface: #ffffff;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.icuic--outer { position: relative; width: 100%; container-type: inline-size; }
+.icuic--covers { z-index: 6; }
+.icuic--band { position: relative; width: 100%; background: var(--color-surface); font-size: 16px; line-height: 1.5; color: var(--color-text-primary); }
+.icuic--band *, .icuic--portal * { box-sizing: border-box; }
+.icuic--dark { background: var(--gray-900); color: var(--color-text-inverse); }
+:where(.icuic--band, .icuic--portal) :where(h1, h2, h3, h4, h5, h6) { margin: 0; font-family: var(--font-display); font-weight: 500; color: var(--color-text-primary); }
+:where(.icuic--band, .icuic--portal) :where(p, figure, blockquote) { margin: 0; }
+:where(.icuic--band, .icuic--portal) :where(a) { color: inherit; text-decoration: none; }
+:where(.icuic--band, .icuic--portal) :where(img, svg, video) { display: block; max-width: 100%; }
+:where(.icuic--band, .icuic--portal) :where(button) { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+:where(.icuic--band, .icuic--portal) :where(ul, ol) { margin: 0; padding: 0; list-style: none; }
+.icuic--band :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+.icuic--cta:active { filter: brightness(0.96); }
+@media (prefers-reduced-motion: reduce) { .icuic--band *, .icuic--band *::before, .icuic--band *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; } }
+.icuic--wrap { position: relative; width: 100%; max-width: var(--container-max); margin: 0 auto; }
+.icuic--pad { padding-inline: var(--container-pad); }
+.icuic--bleed { max-width: none; }
+.icuic--rule::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--color-hairline); }
+.icuic--cta { display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--color-cta); border-radius: 8px; background: var(--color-cta); box-shadow: var(--shadow-cta); color: #fff; font-family: var(--font-body); font-weight: 600; white-space: nowrap; transition: filter 150ms ease; }
+.icuic--cta:hover { filter: brightness(1.1); }
+.icuic--cta-md { width: 144px; height: 40px; font-size: 14px; line-height: 20px; letter-spacing: -0.1px; }
+.icuic--cta-lg { width: 203px; height: 54px; font-size: 16px; line-height: 24px; letter-spacing: -0.1px; }
+@container (max-width: 809px) { .icuic--cta-lg { width: 100%; max-width: 260px; } }
+
+/* Closing CTA band.
+
+   The same dark ground as FunnelTakeback — #020418 with layered ambient glows
+   and a masked dot grid — so the page's two dark bands read as one surface.
+   The CTA is the dark-band pill (white on #04072a text), not the blue Button:
+   at this ground the blue slab loses too much contrast. */
+
+/* A lift above the site's near-black (#020418): the footer sits directly under
+   this band and uses that value, so an identical ground made the two read as
+   one slab. The gradient stays in the same navy family, just a few stops up. */
+.icuic-section {
+  padding-block: 96px;
+  /* Darker than the #111c3b -> #0b1329 it shipped with: the band closes the
+     page, and the two blue radials over it read as glow rather than as haze
+     once the ground under them drops. */
+  background: linear-gradient(180deg, #0a1329 0%, #05091a 100%);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  /* Mirrors the top edge — Gray/200 would be invisible on this. */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
+
+.icuic-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(620px 380px at 50% 0%, rgba(28, 100, 242, 0.18), transparent 70%),
+    radial-gradient(520px 320px at 82% 100%, rgba(118, 169, 250, 0.08), transparent 70%);
+}
+
+.icuic-section::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.14) 1px, transparent 1px);
+  background-size: 26px 26px;
+  opacity: 0.14;
+  -webkit-mask-image: radial-gradient(760px 480px at 50% 40%, #000 0%, transparent 74%);
+  mask-image: radial-gradient(760px 480px at 50% 40%, #000 0%, transparent 74%);
+}
+
+.icuic-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-pad);
+  text-align: center;
+}
+
+.icuic-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--blue-400);
+}
+
+.icuic-eyebrow::before {
+  content: "";
+  width: 18px;
+  height: 1px;
+  background: var(--blue-400);
+}
+
+.icuic-heading {
+  max-width: 760px;
+  font-family: var(--font-display);
+  font-size: 40px;
+  line-height: 1.25;
+  font-weight: 500;
+  letter-spacing: -0.4px;
+  color: var(--white);
+}
+
+.icuic-headingAccent {
+  color: var(--blue-400);
+}
+
+.icuic-subcopy {
+  max-width: 560px;
+  font-size: 18px;
+  line-height: 28px;
+  letter-spacing: -0.27px;
+  color: #c3c9d6;
+}
+
+.icuic-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 44px;
+  margin-top: 10px;
+  padding-inline: 20px;
+  border-radius: var(--radius-md);
+  background: var(--white);
+  box-shadow: 0 12px 40px -12px rgba(118, 169, 250, 0.45);
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+  color: #04072a;
+  transition: filter 150ms ease;
+}
+
+.icuic-cta:hover {
+  filter: brightness(0.94);
+}
+
+.icuic-note {
+  font-size: 13px;
+  line-height: 20px;
+  letter-spacing: -0.13px;
+  color: rgba(255, 255, 255, 0.42);
+}
+
+/* ---- Tablet ---- */
+@container (max-width: 1279px) {
+  .icuic-section {
+    padding-block: 72px;
+  }
+  .icuic-heading {
+    font-size: 34px;
+  }
+}
+
+/* ---- Mobile ---- */
+@container (max-width: 809px) {
+  .icuic-section {
+    padding-block: 64px;
+  }
+  .icuic-inner {
+    padding-inline: 20px;
+  }
+  .icuic-heading {
+    font-size: 26px;
+  }
+  .icuic-subcopy {
+    font-size: 16px;
+    line-height: 26px;
+  }
+}

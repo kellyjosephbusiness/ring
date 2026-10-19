@@ -1,0 +1,91 @@
+
+.iclw--band,
+.iclw--portal {
+  --container-max: 1440px;
+  --container-pad: 40px;
+  --color-hairline: #e5e7eb;
+  --color-cta: #0236c2;
+  --shadow-cta: inset 0 1px 4px 1px rgba(255,255,255,.24), inset 0 4px 16px 1px rgba(255,255,255,.2);
+  --font-body: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --color-text-primary: #111928;
+  --font-display: Poppins, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --color-accent: #1c64f2;
+  --color-surface: #ffffff;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.iclw--outer { position: relative; width: 100%; container-type: inline-size; }
+.iclw--covers { z-index: 6; }
+.iclw--band { position: relative; width: 100%; background: var(--color-surface); font-size: 16px; line-height: 1.5; color: var(--color-text-primary); }
+.iclw--band *, .iclw--portal * { box-sizing: border-box; }
+:where(.iclw--band, .iclw--portal) :where(h1, h2, h3, h4, h5, h6) { margin: 0; font-family: var(--font-display); font-weight: 500; color: var(--color-text-primary); }
+:where(.iclw--band, .iclw--portal) :where(p, figure, blockquote) { margin: 0; }
+:where(.iclw--band, .iclw--portal) :where(a) { color: inherit; text-decoration: none; }
+:where(.iclw--band, .iclw--portal) :where(img, svg, video) { display: block; max-width: 100%; }
+:where(.iclw--band, .iclw--portal) :where(button) { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+:where(.iclw--band, .iclw--portal) :where(ul, ol) { margin: 0; padding: 0; list-style: none; }
+.iclw--band :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+.iclw--cta:active { filter: brightness(0.96); }
+@media (prefers-reduced-motion: reduce) { .iclw--band *, .iclw--band *::before, .iclw--band *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; } }
+.iclw--wrap { position: relative; width: 100%; max-width: var(--container-max); margin: 0 auto; }
+.iclw--pad { padding-inline: var(--container-pad); }
+.iclw--bleed { max-width: none; }
+.iclw--rule::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--color-hairline); }
+.iclw--cta { display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--color-cta); border-radius: 8px; background: var(--color-cta); box-shadow: var(--shadow-cta); color: #fff; font-family: var(--font-body); font-weight: 600; white-space: nowrap; transition: filter 150ms ease; }
+.iclw--cta:hover { filter: brightness(1.1); }
+.iclw--cta-md { width: 144px; height: 40px; font-size: 14px; line-height: 20px; letter-spacing: -0.1px; }
+.iclw--cta-lg { width: 203px; height: 54px; font-size: 16px; line-height: 24px; letter-spacing: -0.1px; }
+@container (max-width: 809px) { .iclw--cta-lg { width: 100%; max-width: 260px; } }
+
+/* Customer logo wall (Figma 14:823). Eight equal cells on one row, each 56px
+   tall with 20px of breathing room, capped at the container with 20px gutters
+   rather than the standard 40. */
+
+.iclw-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-block: 16px;
+  padding-inline: 20px;
+}
+
+.iclw-cell {
+  flex: 1 0 0;
+  min-width: 0;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-inline: 20px;
+  overflow: hidden;
+}
+
+/* Each mark keeps the box the design gives it — they are optically balanced
+   rather than uniform, so a single shared height would misweight them. */
+.iclw-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+@container (max-width: 1279px) {
+  .iclw-row {
+    flex-wrap: wrap;
+    row-gap: 8px;
+  }
+  .iclw-cell {
+    flex: 0 0 25%;
+  }
+}
+
+@container (max-width: 809px) {
+  .iclw-row {
+    padding-inline: 12px;
+  }
+  .iclw-cell {
+    flex: 0 0 50%;
+    height: 48px;
+    padding-inline: 12px;
+  }
+}

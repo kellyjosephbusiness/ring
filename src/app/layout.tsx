@@ -1,20 +1,54 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+const poppins = localFont({
+  variable: "--font-poppins",
+  display: "swap",
+  src: [
+    { path: "../../public/sites/ringondemand/fonts/poppins-400.woff2", weight: "400", style: "normal" },
+    { path: "../../public/sites/ringondemand/fonts/poppins-500.woff2", weight: "500", style: "normal" },
+    { path: "../../public/sites/ringondemand/fonts/poppins-600.woff2", weight: "600", style: "normal" },
+    { path: "../../public/sites/ringondemand/fonts/poppins-700.woff2", weight: "700", style: "normal" },
+  ],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const inter = localFont({
+  variable: "--font-inter",
+  display: "swap",
+  src: [
+    { path: "../../public/sites/ringondemand/fonts/inter-400-latin.woff2", weight: "400", style: "normal" },
+    { path: "../../public/sites/ringondemand/fonts/inter-500-latin.woff2", weight: "500", style: "normal" },
+    { path: "../../public/sites/ringondemand/fonts/inter-600-latin.woff2", weight: "600", style: "normal" },
+    { path: "../../public/sites/ringondemand/fonts/inter-700.woff2", weight: "700", style: "normal" },
+  ],
 });
+
+const title = "RingOnDemand | Signed MVA Cases for Personal Injury Firms";
+const description =
+  "You give us your case criteria. We run the ads, screen every caller, and send you a live transfer or a signed retainer. You pay per transfer or per signed case and nothing else.";
+
+const siteUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
+  ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+  : "http://localhost:3000";
 
 export const metadata: Metadata = {
-  title: "Website Clone",
-  description: "Pixel-perfect website clone",
+  metadataBase: new URL(siteUrl),
+  title,
+  description,
+  icons: {
+    icon: [{ url: "/sites/ringondemand/meta/favicon.svg", type: "image/svg+xml" }],
+  },
+  openGraph: {
+    type: "website",
+    title,
+    description,
+  },
+  twitter: {
+    card: "summary",
+    title,
+    description,
+  },
 };
 
 export default function RootLayout({
@@ -25,9 +59,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${poppins.variable} ${inter.variable} antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body>{children}</body>
     </html>
   );
 }

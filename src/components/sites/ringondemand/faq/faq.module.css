@@ -1,0 +1,274 @@
+/* "Questions firms ask us". Section shell, heading and type from the
+   product-bento band (bento card title for the questions, card body for the
+   answers); rows hairline-separated in an 800px centred column. */
+
+.section {
+  --heading: #0a0d14;
+  --accent: #1c64f2;
+  --gray-50: #f9fafb;
+  --gray-300: #d1d5db;
+  --gray-500: #6b7280;
+  --gray-900: #111928;
+  --hairline: #e5e7eb;
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --open-ms: 320ms;
+
+  position: relative;
+  width: 100%;
+  container-type: inline-size;
+  scroll-margin-top: 80px;
+  background: #ffffff;
+  font-family: var(--site-font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--gray-900);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Full-window hairline closing the band. */
+.section::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--hairline);
+}
+
+.inner {
+  position: relative;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 100px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.heading {
+  margin: 0;
+  max-width: 812px;
+  font-family: var(--site-font-display);
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 1.4;
+  letter-spacing: -0.4px;
+  text-align: center;
+  color: var(--heading);
+}
+
+/* ---- Accordion ---- */
+
+.list {
+  width: 100%;
+  max-width: 800px;
+  margin-top: 56px;
+  border-top: 1px solid var(--hairline);
+}
+
+.item {
+  border-bottom: 1px solid var(--hairline);
+}
+
+.question {
+  margin: 0;
+  font: inherit;
+}
+
+.trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  /* Bleeds 12px past the column so the focus ring clears the text. */
+  width: calc(100% + 24px);
+  margin: 0 -12px;
+  padding: 24px 12px;
+  border: 0;
+  border-radius: 6px;
+  background: none;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.trigger:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 0;
+}
+
+.questionText {
+  min-width: 0;
+  font-family: var(--site-font-display);
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1.4;
+  letter-spacing: -0.4px;
+  color: var(--gray-900);
+}
+
+/* Plus that folds into a minus: the vertical bar turns flat onto the
+   horizontal one. */
+.icon {
+  position: relative;
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  background: #ffffff;
+  color: var(--gray-900);
+  transition:
+    background-color 200ms ease,
+    border-color 200ms ease,
+    color 200ms ease;
+}
+
+.icon::before,
+.icon::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 12px;
+  height: 1.5px;
+  margin: -0.75px 0 0 -6px;
+  border-radius: 1px;
+  background: currentColor;
+  transition: transform var(--open-ms) var(--ease-out);
+}
+
+.icon::after {
+  transform: rotate(90deg);
+}
+
+.trigger:hover .icon {
+  border-color: var(--gray-300);
+  background: var(--gray-50);
+}
+
+.itemOpen .icon {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #ffffff;
+}
+
+.itemOpen .icon::after {
+  transform: rotate(0deg);
+}
+
+/* Height runs on a 0fr -> 1fr grid row. Closed, the answer is also
+   visibility:hidden (flipped after the collapse finishes) so it leaves the
+   accessibility tree, not just the screen. */
+.panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  transition:
+    grid-template-rows var(--open-ms) var(--ease-out),
+    visibility 0s linear var(--open-ms);
+}
+
+.itemOpen .panel {
+  grid-template-rows: 1fr;
+  visibility: visible;
+  transition:
+    grid-template-rows var(--open-ms) var(--ease-out),
+    visibility 0s linear 0s;
+}
+
+.panelClip {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.answer {
+  margin: 0;
+  max-width: 680px;
+  padding: 0 56px 24px 0;
+  font-size: 16px;
+  line-height: 28px;
+  font-weight: 500;
+  letter-spacing: -0.04px;
+  color: var(--gray-500);
+  opacity: 0;
+  translate: 0 -4px;
+  transition:
+    opacity 200ms ease,
+    translate var(--open-ms) var(--ease-out);
+}
+
+.itemOpen .answer {
+  opacity: 1;
+  translate: 0 0;
+  transition:
+    opacity 260ms ease 60ms,
+    translate var(--open-ms) var(--ease-out);
+}
+
+/* ---- Responsive ---- */
+
+@container (max-width: 1279px) {
+  .inner {
+    padding-block: 72px;
+  }
+
+  .heading {
+    font-size: 32px;
+  }
+
+  .list {
+    margin-top: 40px;
+  }
+}
+
+@container (max-width: 809px) {
+  .inner {
+    padding: 56px 20px;
+  }
+
+  .heading {
+    font-size: 28px;
+  }
+
+  .list {
+    margin-top: 32px;
+  }
+
+  .trigger {
+    gap: 16px;
+    padding: 20px 12px;
+  }
+
+  .questionText {
+    font-size: 17px;
+  }
+
+  .icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .answer {
+    padding: 0 44px 20px 0;
+    font-size: 15px;
+    line-height: 24px;
+  }
+}
+
+/* Reduced motion: open and close are instant. */
+@media (prefers-reduced-motion: reduce) {
+  .panel,
+  .itemOpen .panel,
+  .answer,
+  .itemOpen .answer,
+  .icon,
+  .icon::before,
+  .icon::after {
+    transition: none;
+  }
+}

@@ -1,0 +1,324 @@
+
+.icint--band,
+.icint--portal {
+  --container-pad: 40px;
+  --blue-600: #1c64f2;
+  --font-display: Poppins, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --color-heading: #0a0d14;
+  --color-nav: #020418;
+  --container-max: 1440px;
+  --white: #ffffff;
+  --color-hairline: #e5e7eb;
+  --color-cta: #0236c2;
+  --shadow-cta: inset 0 1px 4px 1px rgba(255,255,255,.24), inset 0 4px 16px 1px rgba(255,255,255,.2);
+  --font-body: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --color-text-primary: #111928;
+  --color-accent: #1c64f2;
+  --color-surface: #ffffff;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.icint--outer { position: relative; width: 100%; container-type: inline-size; }
+.icint--covers { z-index: 6; }
+.icint--band { position: relative; width: 100%; background: var(--color-surface); font-size: 16px; line-height: 1.5; color: var(--color-text-primary); }
+.icint--band *, .icint--portal * { box-sizing: border-box; }
+:where(.icint--band, .icint--portal) :where(h1, h2, h3, h4, h5, h6) { margin: 0; font-family: var(--font-display); font-weight: 500; color: var(--color-text-primary); }
+:where(.icint--band, .icint--portal) :where(p, figure, blockquote) { margin: 0; }
+:where(.icint--band, .icint--portal) :where(a) { color: inherit; text-decoration: none; }
+:where(.icint--band, .icint--portal) :where(img, svg, video) { display: block; max-width: 100%; }
+:where(.icint--band, .icint--portal) :where(button) { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+:where(.icint--band, .icint--portal) :where(ul, ol) { margin: 0; padding: 0; list-style: none; }
+.icint--band :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+.icint--cta:active { filter: brightness(0.96); }
+@media (prefers-reduced-motion: reduce) { .icint--band *, .icint--band *::before, .icint--band *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; } }
+.icint--wrap { position: relative; width: 100%; max-width: var(--container-max); margin: 0 auto; }
+.icint--pad { padding-inline: var(--container-pad); }
+.icint--bleed { max-width: none; }
+.icint--rule::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--color-hairline); }
+.icint--cta { display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--color-cta); border-radius: 8px; background: var(--color-cta); box-shadow: var(--shadow-cta); color: #fff; font-family: var(--font-body); font-weight: 600; white-space: nowrap; transition: filter 150ms ease; }
+.icint--cta:hover { filter: brightness(1.1); }
+.icint--cta-md { width: 144px; height: 40px; font-size: 14px; line-height: 20px; letter-spacing: -0.1px; }
+.icint--cta-lg { width: 203px; height: 54px; font-size: 16px; line-height: 24px; letter-spacing: -0.1px; }
+@container (max-width: 809px) { .icint--cta-lg { width: 100%; max-width: 260px; } }
+
+/* "Drops into the stack you already have" — Figma 20:15019.
+
+   Three stacked blocks on three different grids, which is why the section runs
+   full-bleed and each block sets its own width: the copy is centred on 812, the
+   tickers keep the 1440 container with its gutters, and the partner strip is a
+   full-window band with a 1440 grid inside it. */
+
+.icint-section {
+  padding-block: 100px;
+}
+
+.icint-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 72px;
+}
+
+/* ---- Copy ---- */
+
+.icint-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  /* The frame measures the copy at 812 and puts the gutters outside it, so the
+     gutters are added to the box rather than taken out of the 812.
+     The 12px over 812: the sub-paragraph is a single line in the frame and the
+     browser sets that same string at 814px, so an exact 812 would wrap it onto
+     a second line. The extra absorbs the metric difference; nothing else in the
+     block is wide enough to notice it. */
+  width: calc(824px + var(--container-pad) * 2);
+  max-width: 100%;
+  padding-inline: var(--container-pad);
+  text-align: center;
+}
+
+.icint-eyebrow {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  letter-spacing: 0.84px;
+  text-transform: uppercase;
+  color: var(--blue-600);
+}
+
+.icint-heading {
+  font-family: var(--font-display);
+  font-size: 36px;
+  line-height: 1.4;
+  font-weight: 500;
+  letter-spacing: -0.4px;
+  color: var(--color-heading);
+}
+
+.icint-headingAccent {
+  color: var(--blue-600);
+}
+
+.icint-subcopy {
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 400;
+  letter-spacing: -0.04px;
+  color: var(--color-nav);
+}
+
+/* ---- Tickers ---- */
+
+.icint-tickers {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  max-width: var(--container-max);
+  padding-inline: var(--container-pad);
+  overflow: hidden;
+}
+
+/* The frame fades both ends with a mask asset; a gradient mask does the same
+   job without shipping an image. */
+.icint-row {
+  height: 76px;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 6%, #000 94%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 6%, #000 94%, transparent 100%);
+}
+
+.icint-track {
+  display: flex;
+  width: max-content;
+  animation: icint-ticker 44s linear infinite;
+}
+
+.icint-rowReverse .icint-track {
+  animation-name: icint-tickerReverse;
+  animation-duration: 40s;
+}
+
+/* Each pass carries its own trailing gap, so the track is a whole number of
+   passes wide and a -50% translate lands pass 3 exactly where pass 1 began. Put
+   the gap on the track instead and the loop drifts by half a gap each cycle. */
+.icint-pass {
+  display: flex;
+  gap: 10px;
+  padding-right: 10px;
+}
+
+.icint-tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 76px;
+  height: 76px;
+  padding: 4px;
+  border-radius: 12px;
+  background: var(--white);
+  filter: drop-shadow(0 0.869px 0.869px rgba(10, 12, 18, 0.05));
+}
+
+.icint-tile img {
+  width: 68px;
+  height: 68px;
+  object-fit: contain;
+}
+
+@keyframes icint-ticker {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes icint-tickerReverse {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .icint-track {
+    animation: none;
+  }
+}
+
+/* ---- Partner strip ---- */
+
+.icint-strip {
+  width: 100%;
+  border-top: 1px solid var(--color-hairline);
+  border-bottom: 1px solid var(--color-hairline);
+  padding-inline: 20px;
+}
+
+.icint-stripGrid {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  list-style: none;
+}
+
+/* The frame gives every cell a right divider, including the last — but that one
+   would land exactly on the page's right rail and double it, so the dividers
+   run between cells only. */
+.icint-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  flex: 1 0 0;
+  min-width: 0;
+  padding: 24px 20px;
+}
+
+.icint-cell + .icint-cell {
+  border-left: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.icint-logoRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 32px;
+  width: 100%;
+}
+
+/* Mark and wordmark are positioned rather than flowed, because the two sit on
+   different vertical centres in the design. */
+.icint-lockup {
+  position: relative;
+  display: block;
+  height: 32px;
+  flex: none;
+}
+
+.icint-mark,
+.icint-word {
+  position: absolute;
+}
+
+.icint-wholeLogo {
+  display: block;
+  flex: none;
+  object-fit: contain;
+}
+
+.icint-cellBody {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  letter-spacing: -0.14px;
+  text-align: center;
+  color: #737373;
+}
+
+/* ---- Tablet ---- */
+@container (max-width: 1279px) {
+  .icint-section {
+    padding-block: 72px;
+  }
+  .icint-inner {
+    gap: 48px;
+  }
+  .icint-heading {
+    font-size: 32px;
+  }
+  .icint-stripGrid {
+    flex-wrap: wrap;
+  }
+  .icint-cell {
+    flex: 1 0 44%;
+  }
+  /* With two per row the between-cells rule no longer matches the layout. */
+  .icint-cell + .icint-cell {
+    border-left: 0;
+  }
+  .icint-cell:nth-child(even) {
+    border-left: 1px solid rgba(0, 0, 0, 0.05);
+  }
+  .icint-cell:nth-child(n + 3) {
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+  }
+}
+
+/* ---- Mobile ---- */
+@container (max-width: 809px) {
+  .icint-section {
+    padding-block: 56px;
+  }
+  .icint-inner {
+    gap: 36px;
+  }
+  .icint-heading {
+    font-size: 26px;
+  }
+  .icint-subcopy {
+    font-size: 16px;
+    line-height: 26px;
+  }
+  .icint-tickers {
+    padding-inline: 20px;
+  }
+  .icint-cell {
+    flex: 1 0 100%;
+    border-left: 0 !important;
+  }
+  .icint-cell + .icint-cell {
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+  }
+}

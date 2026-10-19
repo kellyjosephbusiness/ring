@@ -1,0 +1,336 @@
+/* "Where the calls come from": a light section in the product-bento's
+   language: centred Poppins heading and Inter intro, then one pale-blue
+   gradient card holding a small wiring diagram built from the bento's
+   light-UI tiles (white scheduler card, blue workflow panel, green qualify
+   chip). @container queries resolve against .section. */
+
+.section {
+  --heading: #0a0d14;
+  --gray200: #e5e7eb;
+  --gray600: #4b5563;
+  --gray900: #111928;
+  --blue600: #1c64f2;
+  --wire: #5f96f8;
+
+  position: relative;
+  width: 100%;
+  container-type: inline-size;
+  background: #ffffff;
+  font-family: var(--site-font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--gray900);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Full-window hairline closing the band. */
+.section::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--gray200);
+}
+
+.inner {
+  position: relative;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 100px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ---- Heading + intro ---- */
+
+.head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  max-width: 812px;
+  text-align: center;
+}
+
+.heading {
+  margin: 0;
+  font-family: var(--site-font-display);
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 1.4;
+  letter-spacing: -0.4px;
+  color: var(--heading);
+}
+
+.body {
+  margin: 0;
+  max-width: 700px;
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 400;
+  letter-spacing: -0.04px;
+  color: var(--gray600);
+  text-wrap: balance;
+}
+
+/* ---- Card ---- */
+
+/* The bento card chrome: Gray/200 hairline over a pale blue two-stop tint. */
+.panel {
+  width: 100%;
+  margin-top: 56px;
+  padding: 56px 40px;
+  border: 1px solid var(--gray200);
+  border-radius: 6px;
+  background: linear-gradient(163deg, #ecf2fc 0%, #fafbfe 100%);
+}
+
+/* ---- Diagram ----
+   Tiles sit on a grid with fixed lanes between them; the wires are one SVG
+   laid over the whole diagram, measured from the tiles. */
+
+.diagram {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 296px) 120px minmax(0, 264px) 104px minmax(0, 264px);
+  justify-content: center;
+  align-items: center;
+}
+
+.sources {
+  grid-area: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.diagram > .tileScript {
+  grid-area: 1 / 3;
+}
+
+.diagram > .tileLine {
+  grid-area: 1 / 5;
+}
+
+.wires {
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow: visible;
+  pointer-events: none;
+  animation: wiresIn 400ms ease both;
+}
+
+@keyframes wiresIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.wire {
+  fill: none;
+  stroke: var(--wire);
+  stroke-width: 1.5;
+  stroke-dasharray: 6 6;
+}
+
+.arrow {
+  fill: var(--wire);
+}
+
+.inView .wire {
+  animation: dashFlow 1.1s linear infinite;
+}
+
+@keyframes dashFlow {
+  to {
+    stroke-dashoffset: -12;
+  }
+}
+
+/* ---- Tiles ---- */
+
+.tile {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 72px;
+  padding: 14px 18px;
+  border: 1px solid var(--gray200);
+  border-radius: 6px;
+  background: #ffffff;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+}
+
+.tileIcon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  background: #ebf5ff;
+  color: var(--blue600);
+}
+
+.tileIconSvg {
+  display: block;
+  width: 20px;
+  height: 20px;
+}
+
+.tileLabel {
+  min-width: 0;
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 500;
+  letter-spacing: -0.1px;
+  color: var(--gray900);
+}
+
+/* The intake script: the workflow panel's blue, with a soft outer ring. */
+.tileScript {
+  border-color: #a4cafe;
+  background: #ebf5ff;
+  box-shadow: 0 0 0 4px rgba(28, 100, 242, 0.06);
+}
+
+.tileScript .tileIcon {
+  background: #ffffff;
+  box-shadow: inset 0 0 0 1px #c3ddfd;
+}
+
+.tileScript .tileLabel {
+  font-weight: 600;
+  color: #1e429f;
+}
+
+/* The intake line: the qualify chip's green. */
+.tileLine {
+  border-color: #bcf0da;
+  background: #f3faf7;
+}
+
+.tileLine .tileIcon {
+  background: #ffffff;
+  box-shadow: inset 0 0 0 1px #bcf0da;
+  color: #0e9f6e;
+}
+
+.tileLine .tileLabel {
+  font-weight: 600;
+  color: #03543f;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wires,
+  .inView .wire {
+    animation: none;
+  }
+}
+
+/* ---- Tablet: same row, tighter lanes ---- */
+@container (max-width: 1279px) {
+  .inner {
+    padding-block: 72px;
+  }
+
+  .heading {
+    font-size: 32px;
+  }
+
+  .panel {
+    margin-top: 48px;
+    padding: 48px 32px;
+  }
+
+  .diagram {
+    grid-template-columns: minmax(0, 1.12fr) 64px minmax(0, 1fr) 52px minmax(0, 1fr);
+  }
+
+  .tile {
+    gap: 10px;
+    min-height: 64px;
+    padding: 12px;
+  }
+
+  .tileIcon {
+    width: 30px;
+    height: 30px;
+  }
+
+  .tileIconSvg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .tileLabel {
+    font-size: 14px;
+    line-height: 20px;
+  }
+}
+
+/* ---- Mobile: top down, the two sources side by side ---- */
+@container (max-width: 809px) {
+  .inner {
+    padding: 56px 20px;
+  }
+
+  .heading {
+    font-size: 26px;
+  }
+
+  .body {
+    font-size: 16px;
+    line-height: 26px;
+  }
+
+  .panel {
+    margin-top: 36px;
+    padding: 32px 16px;
+  }
+
+  .diagram {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+    row-gap: 64px;
+  }
+
+  .diagram > .tileScript {
+    grid-area: 2 / 1;
+  }
+
+  .diagram > .tileLine {
+    grid-area: 3 / 1;
+  }
+
+  .sources {
+    flex-direction: row;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .tileSource {
+    flex: 1 1 0;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+    text-align: center;
+  }
+
+  .tileScript,
+  .tileLine {
+    width: min(100%, 260px);
+    justify-content: center;
+  }
+}

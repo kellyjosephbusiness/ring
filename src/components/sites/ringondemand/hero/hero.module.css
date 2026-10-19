@@ -1,0 +1,252 @@
+/* Hero. Layout, type scale and CTA carried over from the clone's hero; the
+   frame's top padding lives on `main`. */
+
+.root {
+  --white: #ffffff;
+  --gray500: #6b7280;
+  --gray600: #4b5563;
+  --accent: #1c64f2;
+  --hairline: #e5e7eb;
+  --heading: #0a0d14;
+  --cta: #0236c2;
+  --container: 1440px;
+  --gutter: 40px;
+  --gutter-mobile: 20px;
+
+  container-type: inline-size;
+  position: relative;
+  width: 100%;
+  background: var(--white);
+  font-family: var(--site-font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.root :where(a) {
+  text-decoration: none;
+}
+
+.root :where(:focus-visible) {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Full-window hairline along the bottom edge, drawn on the outer band rather
+   than the 1440 container so it spans the whole screen. */
+.root::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--hairline);
+}
+
+.inner {
+  position: relative;
+  width: 100%;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+/* ---------- Grid ---------- */
+.grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding-block: 64px;
+}
+
+.copy {
+  flex: none;
+  width: 676px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 24px;
+}
+
+/* ---------- Eyebrow, width-locked to the headline ---------- */
+.eyebrow {
+  width: fit-content;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: var(--gray500);
+}
+
+/* ---------- Headline + subcopy ---------- */
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 540px;
+  letter-spacing: -0.4px;
+}
+
+.h1 {
+  font-family: var(--site-font-display);
+  font-size: 40px;
+  line-height: 1.4;
+  font-weight: 500;
+  color: var(--heading);
+}
+
+.sub {
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 500;
+  color: var(--gray600);
+}
+
+/* ---------- CTA ---------- */
+.ctaGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 203px;
+  height: 54px;
+  border: 1px solid var(--cta);
+  border-radius: 8px;
+  background: var(--cta);
+  box-shadow:
+    inset 0 1px 4px 1px rgba(255, 255, 255, 0.24),
+    inset 0 4px 16px 1px rgba(255, 255, 255, 0.2);
+  color: var(--white);
+  font-family: var(--site-font-body);
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  letter-spacing: -0.1px;
+  white-space: nowrap;
+  transition: filter 150ms ease;
+}
+
+/* The trailing arrow is decorative and kept out of the label. */
+.ctaArrow {
+  margin-left: 0.3em;
+}
+
+.cta:hover {
+  filter: brightness(1.1);
+}
+
+.cta:active {
+  filter: brightness(0.96);
+}
+
+.micro {
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 400;
+  letter-spacing: -0.28px;
+  color: var(--gray500);
+}
+
+/* ---------- Proof line (the clone's rating row) ---------- */
+/* Badge set inline so a wrapped line stays one centred paragraph. */
+.proof {
+  font-size: 15px;
+  line-height: 20px;
+  color: var(--gray600);
+  text-wrap: balance;
+}
+
+.proofStrong {
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--heading);
+}
+
+.badge {
+  display: inline-block;
+  margin-right: 8px;
+  vertical-align: -4px;
+  color: var(--accent);
+}
+
+/* ---------- Visual: the live-transfer illustration ---------- */
+.visual {
+  flex: 1 0 0;
+  min-width: 0;
+}
+
+/* ---------- Tablet ---------- */
+@container (max-width: 1279px) {
+  .grid {
+    flex-direction: column;
+    gap: 48px;
+    padding-block: 56px;
+  }
+  .copy {
+    width: 100%;
+    max-width: 640px;
+    align-items: center;
+  }
+  .text {
+    width: 100%;
+    text-align: center;
+  }
+  .h1 {
+    font-size: 36px;
+  }
+  .ctaGroup {
+    align-items: center;
+    text-align: center;
+  }
+  .micro {
+    text-wrap: balance;
+  }
+  .proof {
+    text-align: center;
+  }
+  .visual {
+    flex: none;
+    width: 100%;
+  }
+}
+
+/* ---------- Phone ---------- */
+@container (max-width: 809px) {
+  .inner {
+    padding-inline: var(--gutter-mobile);
+  }
+  .grid {
+    gap: 36px;
+    padding-block: 40px;
+  }
+  .h1 {
+    font-size: 28px;
+  }
+  .h1Break {
+    display: none;
+  }
+  .sub {
+    font-size: 16px;
+    line-height: 26px;
+  }
+  .eyebrow {
+    font-size: 12px;
+  }
+  .micro {
+    line-height: 20px;
+  }
+  .cta {
+    width: 100%;
+    max-width: 260px;
+  }
+}

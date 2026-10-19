@@ -1,0 +1,166 @@
+
+.icts--band,
+.icts--portal {
+  --color-hairline: #e5e7eb;
+  --gray-900: #111928;
+  --container-max: 1440px;
+  --container-pad: 40px;
+  --color-cta: #0236c2;
+  --shadow-cta: inset 0 1px 4px 1px rgba(255,255,255,.24), inset 0 4px 16px 1px rgba(255,255,255,.2);
+  --font-body: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --color-text-primary: #111928;
+  --font-display: Poppins, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --color-accent: #1c64f2;
+  --color-surface: #ffffff;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.icts--outer { position: relative; width: 100%; container-type: inline-size; }
+.icts--covers { z-index: 6; }
+.icts--band { position: relative; width: 100%; background: var(--color-surface); font-size: 16px; line-height: 1.5; color: var(--color-text-primary); }
+.icts--band *, .icts--portal * { box-sizing: border-box; }
+:where(.icts--band, .icts--portal) :where(h1, h2, h3, h4, h5, h6) { margin: 0; font-family: var(--font-display); font-weight: 500; color: var(--color-text-primary); }
+:where(.icts--band, .icts--portal) :where(p, figure, blockquote) { margin: 0; }
+:where(.icts--band, .icts--portal) :where(a) { color: inherit; text-decoration: none; }
+:where(.icts--band, .icts--portal) :where(img, svg, video) { display: block; max-width: 100%; }
+:where(.icts--band, .icts--portal) :where(button) { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+:where(.icts--band, .icts--portal) :where(ul, ol) { margin: 0; padding: 0; list-style: none; }
+.icts--band :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+.icts--cta:active { filter: brightness(0.96); }
+@media (prefers-reduced-motion: reduce) { .icts--band *, .icts--band *::before, .icts--band *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; } }
+.icts--wrap { position: relative; width: 100%; max-width: var(--container-max); margin: 0 auto; }
+.icts--pad { padding-inline: var(--container-pad); }
+.icts--bleed { max-width: none; }
+.icts--rule::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--color-hairline); }
+.icts--cta { display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--color-cta); border-radius: 8px; background: var(--color-cta); box-shadow: var(--shadow-cta); color: #fff; font-family: var(--font-body); font-weight: 600; white-space: nowrap; transition: filter 150ms ease; }
+.icts--cta:hover { filter: brightness(1.1); }
+.icts--cta-md { width: 144px; height: 40px; font-size: 14px; line-height: 20px; letter-spacing: -0.1px; }
+.icts--cta-lg { width: 203px; height: 54px; font-size: 16px; line-height: 24px; letter-spacing: -0.1px; }
+@container (max-width: 809px) { .icts--cta-lg { width: 100%; max-width: 260px; } }
+
+/* Three-up quote strip (Figma 12:773). The columns run to the container edge —
+   no 40px gutter here — and are separated by full-height Gray/200 rules, so the
+   strip reads as one banded row between the hero and the logo wall. */
+
+.icts-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  height: 185px;
+}
+
+.icts-col {
+  flex: 1 0 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding-inline: 24px;
+}
+
+.icts-divider {
+  flex: none;
+  align-self: stretch;
+  width: 1px;
+  background: var(--color-hairline);
+}
+
+.icts-quote {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+  letter-spacing: -0.176px;
+  text-align: center;
+  color: #737373;
+  text-wrap: balance;
+}
+
+/* The phrase each quote is really selling, lifted out of the grey. */
+.icts-mark {
+  color: var(--gray-900);
+}
+
+.icts-person {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.icts-avatar {
+  flex: none;
+  width: 60px;
+  height: 60px;
+  border-radius: 4px;
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.icts-meta {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+}
+
+.icts-name {
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 500;
+  letter-spacing: -0.27px;
+  color: #171717;
+  white-space: nowrap;
+}
+
+/* Figma desaturates the company marks with a white mix-blend-saturation layer;
+   a grayscale filter is the same result with one property. */
+.icts-company {
+  height: 20px;
+  width: auto;
+  object-fit: contain;
+  object-position: left center;
+  filter: grayscale(1);
+}
+
+@container (max-width: 1279px) {
+  .icts-row {
+    height: auto;
+    flex-wrap: wrap;
+    gap: 0;
+  }
+  .icts-col {
+    flex: 1 0 0;
+    padding-block: 32px;
+  }
+  /* Tablet/mobile lead with the HYROS quote (Isma, 2026-07-27): pulled to the
+     front and given the full-width top row; the other two sit below it. The
+     dividers keep DOM order, so hiding the first leaves exactly one between
+     the two lower columns. nth-of-type counts divs only — spans don't. */
+  .icts-col:nth-of-type(2) {
+    order: -1;
+    flex: 1 1 100%;
+    border-bottom: 1px solid var(--color-hairline);
+  }
+  .icts-divider:first-of-type {
+    display: none;
+  }
+}
+
+@container (max-width: 809px) {
+  .icts-row {
+    flex-direction: column;
+  }
+  .icts-col {
+    flex: 1 1 auto;
+    width: 100%;
+    padding-block: 28px;
+  }
+  .icts-col:not(:last-child) {
+    border-bottom: 1px solid var(--color-hairline);
+  }
+  .icts-divider {
+    display: none;
+  }
+}

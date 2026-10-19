@@ -1,0 +1,204 @@
+/* "What firms see". A centred section heading over the clone's three-up
+   testimonial strip (source prefix `icts`), with the quotes swapped for
+   figures: columns run to the container edge, no 40px gutter, separated by
+   full-height hairlines, and the strip sits between full-window hairlines. */
+
+.section {
+  --heading: #0a0d14;
+  --label: #737373;
+  --hairline: #e5e7eb;
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  position: relative;
+  width: 100%;
+  container-type: inline-size;
+  scroll-margin-top: 80px;
+  background: #ffffff;
+  font-family: var(--site-font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  color: #111928;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Full-window hairline closing the band. */
+.section::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--hairline);
+}
+
+.inner {
+  position: relative;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 100px 40px 56px;
+  display: flex;
+  justify-content: center;
+}
+
+.heading {
+  margin: 0;
+  font-family: var(--site-font-display);
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 1.4;
+  letter-spacing: -0.4px;
+  text-align: center;
+  color: var(--heading);
+}
+
+/* ---- Strip ---- */
+
+/* Full-window hairline over the strip; the section's own closes it. */
+.strip {
+  position: relative;
+  width: 100%;
+  border-top: 1px solid var(--hairline);
+}
+
+.wrap {
+  position: relative;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.row {
+  display: flex;
+  align-items: stretch;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.col {
+  flex: 1 0 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  padding: 52px 24px 56px;
+  text-align: center;
+}
+
+.col + .col {
+  border-left: 1px solid var(--hairline);
+}
+
+.figure {
+  margin: 0;
+  font-family: var(--site-font-display);
+  font-weight: 500;
+  font-size: 56px;
+  line-height: 1.15;
+  letter-spacing: -1.2px;
+  color: var(--heading);
+  white-space: nowrap;
+}
+
+.label {
+  margin: 0;
+  max-width: 340px;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+  letter-spacing: -0.176px;
+  color: var(--label);
+  text-wrap: balance;
+}
+
+/* ---- Entrance ---- */
+
+[data-reveal="armed"] .figure,
+[data-reveal="armed"] .label {
+  opacity: 0;
+  translate: 0 12px;
+}
+
+[data-reveal="shown"] .figure,
+[data-reveal="shown"] .label {
+  transition:
+    opacity 650ms var(--ease-out) calc(var(--i, 0) * 110ms),
+    translate 650ms var(--ease-out) calc(var(--i, 0) * 110ms);
+}
+
+[data-reveal="shown"] .label {
+  transition-delay: calc(var(--i, 0) * 110ms + 80ms);
+}
+
+/* ---- Responsive ---- */
+
+@container (max-width: 1279px) {
+  .inner {
+    padding: 72px 40px 40px;
+  }
+
+  .heading {
+    font-size: 32px;
+  }
+
+  .col {
+    padding: 40px 20px 44px;
+  }
+
+  .figure {
+    font-size: 44px;
+    letter-spacing: -0.9px;
+  }
+
+  .label {
+    font-size: 15px;
+    line-height: 22px;
+  }
+}
+
+@container (max-width: 809px) {
+  .inner {
+    padding: 56px 20px 32px;
+  }
+
+  .heading {
+    font-size: 28px;
+  }
+
+  .row {
+    flex-direction: column;
+  }
+
+  .col {
+    flex: 1 1 auto;
+    width: 100%;
+    gap: 8px;
+    padding: 32px 20px;
+  }
+
+  .col + .col {
+    border-left: none;
+    border-top: 1px solid var(--hairline);
+  }
+
+  .figure {
+    font-size: 44px;
+  }
+
+  .label {
+    font-size: 16px;
+    line-height: 24px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] .figure,
+  [data-reveal] .label {
+    transition: none;
+  }
+}

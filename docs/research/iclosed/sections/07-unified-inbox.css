@@ -1,0 +1,2355 @@
+
+.icui--band,
+.icui--portal {
+  --font-display: Poppins, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --color-heading: #0a0d14;
+  --color-accent: #1c64f2;
+  --font-body: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --white: #ffffff;
+  --container-max: 1440px;
+  --container-pad: 40px;
+  --color-hairline: #e5e7eb;
+  --color-cta: #0236c2;
+  --shadow-cta: inset 0 1px 4px 1px rgba(255,255,255,.24), inset 0 4px 16px 1px rgba(255,255,255,.2);
+  --color-text-primary: #111928;
+  --color-text-inverse: #ffffff;
+  --gray-900: #111928;
+  --color-surface: #ffffff;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.icui--outer { position: relative; width: 100%; container-type: inline-size; }
+.icui--covers { z-index: 6; }
+.icui--band { position: relative; width: 100%; background: var(--color-surface); font-size: 16px; line-height: 1.5; color: var(--color-text-primary); }
+.icui--band *, .icui--portal * { box-sizing: border-box; }
+.icui--dark { background: var(--gray-900); color: var(--color-text-inverse); }
+:where(.icui--band, .icui--portal) :where(h1, h2, h3, h4, h5, h6) { margin: 0; font-family: var(--font-display); font-weight: 500; color: var(--color-text-primary); }
+:where(.icui--band, .icui--portal) :where(p, figure, blockquote) { margin: 0; }
+:where(.icui--band, .icui--portal) :where(a) { color: inherit; text-decoration: none; }
+:where(.icui--band, .icui--portal) :where(img, svg, video) { display: block; max-width: 100%; }
+:where(.icui--band, .icui--portal) :where(button) { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+:where(.icui--band, .icui--portal) :where(ul, ol) { margin: 0; padding: 0; list-style: none; }
+.icui--band :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+.icui--cta:active { filter: brightness(0.96); }
+@media (prefers-reduced-motion: reduce) { .icui--band *, .icui--band *::before, .icui--band *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; } }
+.icui--wrap { position: relative; width: 100%; max-width: var(--container-max); margin: 0 auto; }
+.icui--pad { padding-inline: var(--container-pad); }
+.icui--bleed { max-width: none; }
+.icui--rule::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--color-hairline); }
+.icui--cta { display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--color-cta); border-radius: 8px; background: var(--color-cta); box-shadow: var(--shadow-cta); color: #fff; font-family: var(--font-body); font-weight: 600; white-space: nowrap; transition: filter 150ms ease; }
+.icui--cta:hover { filter: brightness(1.1); }
+.icui--cta-md { width: 144px; height: 40px; font-size: 14px; line-height: 20px; letter-spacing: -0.1px; }
+.icui--cta-lg { width: 203px; height: 54px; font-size: 16px; line-height: 24px; letter-spacing: -0.1px; }
+@container (max-width: 809px) { .icui--cta-lg { width: 100%; max-width: 260px; } }
+
+/* Unified Inbox showcase — Figma 16:9096 ("Divider").
+
+   Composition from Figma: a 1440 Content Wrapper 100px below the section top,
+   holding an 812px centred headline block (heading 100 + 16 gap + subcopy 56 =
+   172), a 40px gap, then the sky "Container". Figma drew it at the full
+   section content width (1360 = the 1440 cap minus the 40px gutters); since
+   2026-07-26 it caps at 1200, centred. That container carries a photographic
+   sky as an object-cover image
+   fill, `overflow: clip`, `padding: 24px 24px 0`, and an 8px radius on the TOP
+   corners only: the product shot rises out of the section's bottom edge, so the
+   section has no bottom padding.
+
+   Inside it sits Figma's "Overlay+Border+OverlayBlur" glass frame — 0.748px
+   rgba(255,255,255,0.5) border, rgba(255,255,255,0.2) fill, 4.486px backdrop
+   blur, 9.719px padding, 8px radius — and inside THAT the app window.
+
+   The app window is InboxHeroGraphic (2026-10-07), the /unified-inbox hero's
+   animated 1308 x 720 window; it brings its own styles. */
+
+.icui-root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 100px;
+}
+
+/* ---- Headline block (Figma 16:10793, 812px wide, centred) ---- */
+
+.icui-head {
+  width: 100%;
+  max-width: 812px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: center;
+}
+
+.icui-heading {
+  font-family: var(--font-display);
+  font-size: 36px;
+  line-height: 1.4;
+  font-weight: 500;
+  letter-spacing: -0.4px;
+  color: var(--color-heading);
+}
+
+/* Second line carries the promise, so it takes the accent. */
+.icui-headingAccent {
+  color: var(--color-accent);
+}
+
+.icui-subcopy {
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 400;
+  letter-spacing: -0.04px;
+  /* Figma text fill; the same near-black the nav uses. */
+  color: #020418;
+}
+
+/* ---- Sky band (Figma 16:9113 "Container") ---- */
+
+.icui-sky {
+  position: relative;
+  width: 100%;
+  /* Narrowed from the full 1360 content width (2026-07-26): the band caps at
+     1200 and centres via .icui-root's align-items. Only binds at desktop — tablet
+     content is already under 1200. */
+  max-width: 1200px;
+  margin-top: 40px;
+  padding: 24px 24px 0;
+  border-radius: 8px 8px 0 0;
+  /* Belt and braces: the stage inside is a rigid 1116.93px and is only sized
+     to fit once the fitter has measured. Nothing may escape this box. */
+  overflow: hidden;
+}
+
+.icui-skyImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px 8px 0 0;
+  pointer-events: none;
+}
+
+/* The measured box. Its clientWidth is what the fitter divides by. */
+.icui-stageWrap {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Rigid 1328.934 x 730.467 (the 1308 x 720 app window plus the glass frame's
+   9.719px padding and 0.748px border on the sides and top — no bottom ring,
+   the window attaches flush to the section's bottom edge). Scaled by a
+   measured fitter — see the note in UnifiedInbox.icui-tsx. */
+.icui-stage {
+  transform-origin: top left;
+  width: 1328.934px;
+  height: 730.467px;
+  flex-shrink: 0;
+}
+
+.icui-glass {
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  border: 0.748px solid rgba(255, 255, 255, 0.5);
+  /* Square at the bottom (2026-07-26): the shot rises out of the section's
+     bottom edge, so the frame meets it clean — no rounded notches. The ring
+     is sides-and-top only; the app window sits flush on the bottom edge. */
+  border-bottom: none;
+  border-radius: 8px 8px 0 0;
+  padding: 9.719px 9.719px 0;
+  -webkit-backdrop-filter: blur(4.486px);
+  backdrop-filter: blur(4.486px);
+}
+
+/* ============ Tablet (<=1279) ============ */
+@container (max-width: 1279px) {
+  .icui-root {
+    padding-top: 72px;
+  }
+  .icui-heading {
+    font-size: 30px;
+  }
+  .icui-subcopy {
+    font-size: 17px;
+    line-height: 27px;
+  }
+  .icui-sky {
+    margin-top: 32px;
+    padding: 16px 16px 0;
+  }
+}
+
+/* ============ Mobile (<810) ============
+   The fitter stops shrinking the stage at 0.58 (the same floor ic-website's
+   inbox shot uses) so the rail / smart views / conversation list stay legible;
+   the right of the window is cropped by .icui-stageWrap's overflow. */
+@container (max-width: 809px) {
+  .icui-root {
+    padding-top: 48px;
+  }
+  .icui-heading {
+    font-size: 24px;
+  }
+  .icui-subcopy {
+    font-size: 16px;
+    line-height: 26px;
+  }
+  .icui-sky {
+    margin-top: 24px;
+    padding: 10px 10px 0;
+  }
+}
+
+/* ---- The app window ----
+   No bottom radius and no bottom shadow: this shot rises out of the section's
+   bottom edge, so the window has to meet it flush. The graphic rounds all four
+   corners itself, so its bottom two are squared off here. */
+.icui-crop {
+  position: relative;
+  width: 1308px;
+  height: 720px;
+  overflow: hidden;
+  border-radius: 8px 8px 0 0;
+  background: var(--white);
+}
+
+.icui-offset {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.icui-crop .icui-offset > * {
+  border-radius: 8px 8px 0 0;
+  box-shadow: none;
+}
+
+/* ---- Mobile (<810): the conversation column ----
+   The whole window would shrink to a thumbnail, so the stage crops to the chat
+   column (x 300–976, the /unified-inbox hero's phone crop) and the fitter
+   scales that to the band. */
+@container (max-width: 809px) {
+  /* Out to the viewport edges. Section's 40px gutters plus the sky's padding
+     and the glass ring leave a phone too little width for the thread to read;
+     cancelling the gutters buys back 80px.
+
+     Square, and no side radius: a rounded card inset from the edge reads as a
+     component; edge-to-edge reads as the shot the section is built around. */
+  .icui-sky {
+    /* `align-self: stretch` is load-bearing: .icui-root centres its children, so a
+       flex item with `width: auto` shrink-wraps its content instead of filling
+       the column — the band collapsed to 37px. Stretch first, then let the
+       negative margins carry it out past Section's gutters. */
+    align-self: stretch;
+    width: auto;
+    max-width: none;
+    margin-inline: -40px;
+    padding: 12px 12px 0;
+    border-radius: 0;
+  }
+
+  /* 676 x 720 column plus a 12px ring (it scales to about 6px on a phone). */
+  .icui-stage {
+    width: 701.496px;
+    height: 732.748px;
+  }
+
+  .icui-glass {
+    padding: 12px 12px 0;
+  }
+
+  .icui-crop {
+    width: 676px;
+  }
+
+  .icui-offset {
+    left: -300px;
+  }
+}
+/* ==== hero graphic ==== */
+/* Unified Inbox hero graphic (iteration E). A rigid 1308 x 720 app window:
+   list 0–300 | chat 300–976 | contact panel 976–1256 | rail 1256–1308.
+   Product values come from design-prototypes proto/inbox-r2 + proto/ui-updates
+   (Tailwind default palette, Inter, 14/20 body, 13px panel fields). The cursor
+   targets in InboxHeroGraphic.icuig-tsx depend on these numbers. */
+
+.icuig-root {
+  position: relative;
+  width: 1308px;
+  height: 720px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 4px 16px rgba(16, 24, 40, 0.05), 0 1px 3px rgba(16, 24, 40, 0.04);
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  color: #111827;
+  text-align: left;
+  -webkit-font-smoothing: antialiased;
+}
+
+.icuig-root * {
+  box-sizing: border-box;
+}
+
+.icuig-ico {
+  display: block;
+  flex: none;
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.icuig-fic {
+  display: block;
+  flex: none;
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+  stroke: none;
+}
+
+.icuig-icoS {
+  width: 12px;
+  height: 12px;
+}
+
+.icuig-dotico {
+  stroke-width: 3.2;
+}
+
+.icuig-mut {
+  color: #6b7280;
+}
+
+.icuig-m5 {
+  font-weight: 500;
+}
+
+.icuig-ment {
+  color: #2563eb;
+  font-weight: 500;
+}
+
+.icuig-blue {
+  color: #2563eb;
+}
+
+.icuig-lnk {
+  color: #2563eb;
+}
+
+.icuig-green {
+  color: #059669;
+}
+
+/* ---- Conversation list ---- */
+
+.icuig-list {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 300px;
+  border-right: 1px solid #e5e7eb;
+  background: #fff;
+  overflow: hidden;
+}
+
+.icuig-lh {
+  display: flex;
+  align-items: center;
+  height: 52px;
+  padding: 0 16px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.icuig-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.icuig-brand img {
+  width: 18px;
+  height: 16px;
+}
+
+.icuig-rows {
+  padding: 4px 0;
+}
+
+.icuig-rw {
+  padding: 4px 8px;
+  overflow: hidden;
+}
+
+.icuig-rwNew {
+  animation: icuig-grow 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.icuig-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  min-height: 56px;
+  padding: 6px 8px;
+  border-radius: 8px;
+}
+
+.icuig-rowSel {
+  background: #eff6ff;
+}
+
+.icuig-rowNew {
+  animation: icuig-flash 1.8s ease both;
+}
+
+.icuig-av24 {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  margin-top: -2px;
+  border: 1px solid #fff;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.icuig-ini {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e5e7eb;
+  color: #374151;
+  font-size: 10px;
+  line-height: 1;
+  font-weight: 600;
+}
+
+.icuig-rmain {
+  flex: 1;
+  min-width: 0;
+}
+
+.icuig-rtop {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 20px;
+}
+
+.icuig-rname {
+  min-width: 0;
+  overflow: hidden;
+  font-weight: 500;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.icuig-rowSel .icuig-rname,
+.icuig-rowUnr .icuig-rname {
+  font-weight: 600;
+}
+
+.icuig-rtime {
+  flex: none;
+  margin-left: auto;
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+.icuig-rprev {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 20px;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.icuig-rowUnr .icuig-rprev {
+  color: #111827;
+}
+
+.icuig-rprev .icuig-ico {
+  width: 14px;
+  height: 14px;
+  color: #9ca3af;
+}
+
+.icuig-rtxt {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.icuig-unread {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border: 1px solid #60a5fa;
+  border-radius: 999px;
+  background: #eff6ff;
+  color: #3b82f6;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+/* The RECOVERED badge is the onboarding tour's (tour/conversation-flow.icuig-js). */
+.icuig-recov {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 3px;
+  height: 18px;
+  padding: 0 6px;
+  border: 1px solid #bfdbfe;
+  border-radius: 4px;
+  background: #eff6ff;
+  color: #1d4ed8;
+  font-size: 10px;
+  line-height: 16px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.icuig-recov .icuig-fic {
+  width: 10px;
+  height: 10px;
+}
+
+/* ---- Chat column ---- */
+
+.icuig-chat {
+  position: absolute;
+  left: 300px;
+  right: 332px;
+  top: 0;
+  bottom: 0;
+  background: #f9fafb;
+}
+
+.icuig-head {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 52px;
+  padding: 0 16px;
+  border-bottom: 1px solid #e5e7eb;
+  background: #fff;
+}
+
+.icuig-hl {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icuig-lead {
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.icuig-life {
+  display: flex;
+  height: 32px;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.icuig-lifeA {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 8px;
+  border-right: 1px solid #e5e7eb;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.icuig-lifeB {
+  display: flex;
+  align-items: center;
+  padding: 0 4px;
+  color: #6b7280;
+}
+
+.icuig-stLead {
+  color: #6b7280;
+}
+
+.icuig-stBooked {
+  color: #2563eb;
+}
+
+.icuig-stWon {
+  color: #059669;
+}
+
+.icuig-asg {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 34px;
+  padding: 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: #fff;
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: border-color 0.15s;
+}
+
+.icuig-asgOpen {
+  border-color: #60a5fa;
+}
+
+.icuig-asg img {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Assignee dropdown — right-aligned under the button. */
+.icuig-ddp {
+  position: absolute;
+  top: 47px;
+  right: 16px;
+  z-index: 20;
+  width: 320px;
+  padding-bottom: 4px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  animation: icuig-pop 0.18s ease-out both;
+}
+
+.icuig-dds {
+  padding: 12px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.icuig-ddi {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: #f9fafb;
+  color: #6b7280;
+}
+
+.icuig-ddl {
+  padding: 4px 12px;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.icuig-ddr {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  padding: 8px 12px;
+  font-weight: 500;
+}
+
+.icuig-ddrHov {
+  background: #f9fafb;
+}
+
+.icuig-ddsep {
+  height: 1px;
+  margin-bottom: 4px;
+  background: #e5e7eb;
+}
+
+.icuig-cb {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  background: #f3f4f6;
+  color: #fff;
+}
+
+.icuig-cbOn {
+  border-color: #2563eb;
+  background: #2563eb;
+}
+
+.icuig-cb .icuig-ico {
+  width: 12px;
+  height: 12px;
+  stroke-width: 3;
+}
+
+.icuig-av20 {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.icuig-gini {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #fff;
+  background: linear-gradient(94deg, #031953 -43.11%, rgba(0, 45, 164, 0.9) 99.55%);
+  color: #fff;
+  font-size: 8px;
+  line-height: 1;
+  font-weight: 500;
+}
+
+.icuig-unas {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 32px;
+  margin-top: 4px;
+  padding: 6px 12px;
+  border-top: 1px solid #e5e7eb;
+  color: #2563eb;
+  font-weight: 500;
+}
+
+/* ---- Thread (bottom-anchored, like a chat) ---- */
+
+.icuig-thread {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 52px;
+  bottom: 156px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 12px 16px 40px;
+  overflow: hidden;
+}
+
+.icuig-it {
+  flex: none;
+  animation: icuig-msgIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.icuig-sep {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 20px;
+}
+
+.icuig-sep > i {
+  flex: 1;
+  height: 1px;
+  background: #e5e7eb;
+}
+
+.icuig-sep > span {
+  padding: 2px 8px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background: #f3f4f6;
+  font-size: 12px;
+  line-height: 14px;
+  font-weight: 500;
+}
+
+.icuig-act {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 16px;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.icuig-act > i {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #d1d5db;
+}
+
+.icuig-msg {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.icuig-msgOut {
+  justify-content: flex-end;
+}
+
+.icuig-meta {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 2px;
+  font-size: 12px;
+  line-height: 16px;
+  color: #9ca3af;
+  white-space: nowrap;
+}
+
+.icuig-meta .icuig-ico {
+  color: #6b7280;
+}
+
+.icuig-bub {
+  max-width: 520px;
+  padding: 8px 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.icuig-bubOut {
+  background: #eff6ff;
+}
+
+/* Automated messages wear the product's gradient hairline. */
+.icuig-auto {
+  max-width: 522px;
+  padding: 1px;
+  border-radius: 9px;
+  background: linear-gradient(to top right, #d3e1fd, #7299e7, #b8cef8);
+}
+
+.icuig-auto .icuig-bub {
+  border: 0;
+  background: #eff6ff;
+}
+
+.icuig-mail {
+  width: 560px;
+  max-width: 560px;
+}
+
+.icuig-msub {
+  font-weight: 600;
+}
+
+.icuig-mfrom {
+  margin-top: 2px;
+  overflow: hidden;
+  font-size: 12px;
+  line-height: 16px;
+  color: #9ca3af;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.icuig-mdiv {
+  height: 1px;
+  margin: 8px 0;
+  background: #f3f4f6;
+}
+
+.icuig-avc {
+  position: relative;
+  flex: none;
+  width: 28px;
+  height: 28px;
+}
+
+.icuig-av28 {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.icuig-badge {
+  position: absolute;
+  right: -4px;
+  bottom: -4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.icuig-badge img {
+  width: 14px;
+  height: 14px;
+}
+
+.icuig-agent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 2px dashed #2563eb;
+  border-radius: 50%;
+  background: #bfdbfe;
+}
+
+.icuig-agin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #428bff;
+  border-radius: 50%;
+  background: linear-gradient(
+    147.43deg,
+    rgb(0, 27, 180) 19.83%,
+    rgba(0, 19, 144, 0.685) 43.29%,
+    rgba(0, 18, 143, 0.674) 63.7%,
+    rgba(0, 8, 101, 0.3) 97.16%
+  );
+}
+
+.icuig-agin img {
+  width: 11px;
+  height: 10px;
+}
+
+.icuig-tip {
+  position: absolute;
+  right: -8px;
+  bottom: calc(100% + 10px);
+  z-index: 5;
+  width: 310px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: #111928;
+  color: #fff;
+  font-weight: 500;
+  animation: icuig-pop 0.2s ease-out both;
+}
+
+.icuig-tip > span {
+  display: block;
+  color: #60a5fa;
+}
+
+.icuig-tip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  right: 16px;
+  border: 6px solid transparent;
+  border-top-color: #111928;
+}
+
+/* Event cards: the product's collapsed thread-event rows. */
+.icuig-ev {
+  margin: 0 8px;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.icuig-evh {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 12px;
+  font-size: 13px;
+  line-height: 20px;
+  white-space: nowrap;
+}
+
+.icuig-evh b {
+  font-weight: 500;
+}
+
+.icuig-evdot {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #3b82f6;
+}
+
+.icuig-av16 {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.icuig-evr {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.icuig-evdiv {
+  width: 1px;
+  height: 16px;
+  background: #e5e7eb;
+}
+
+.icuig-chev {
+  color: #9ca3af;
+}
+
+.icuig-ok {
+  color: #10b981;
+}
+
+.icuig-zi {
+  flex: none;
+  width: 14px;
+  height: 14px;
+}
+
+.icuig-recb {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 64px;
+  padding: 0 12px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.icuig-thumb {
+  flex: none;
+  width: 88px;
+  height: 44px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.icuig-rect {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  font-size: 13px;
+  line-height: 18px;
+  color: #6b7280;
+  white-space: nowrap;
+}
+
+.icuig-rect > * {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.icuig-rect b {
+  font-weight: 500;
+}
+
+.icuig-vrec {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 132px;
+  height: 30px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  transition: background 0.15s;
+}
+
+.icuig-vrecHov {
+  background: #f3f4f6;
+}
+
+.icuig-vrec .icuig-fic {
+  width: 12px;
+  height: 12px;
+  color: #2563eb;
+}
+
+.icuig-paytile {
+  display: flex;
+  padding: 4px;
+  border-radius: 4px;
+  background: #ecfdf5;
+  color: #059669;
+}
+
+.icuig-paytile .icuig-ico {
+  width: 14px;
+  height: 14px;
+}
+
+/* ---- Composer ---- */
+
+.icuig-typing {
+  position: absolute;
+  left: 20px;
+  bottom: 162px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 22px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #6b7280;
+  animation: icuig-pop 0.2s ease-out both;
+}
+
+.icuig-tdots {
+  width: 22px;
+  height: 22px;
+}
+
+.icuig-tdots circle {
+  fill: #6b7280;
+  animation: icuig-bounce 1.4s infinite ease-in-out;
+  transform-box: fill-box;
+}
+
+.icuig-tdots circle:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.icuig-tdots circle:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+.icuig-tdots circle:nth-child(4) {
+  animation-delay: 0.6s;
+}
+
+.icuig-comp {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  height: 140px;
+  padding: 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.icuig-cr1 {
+  display: flex;
+  align-items: center;
+  height: 30px;
+}
+
+.icuig-chan {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 30px;
+  padding: 0 8px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: border-color 0.15s;
+}
+
+.icuig-chanOpen {
+  border-color: #60a5fa;
+}
+
+.icuig-chan img {
+  width: 16px;
+  height: 16px;
+}
+
+.icuig-chan i {
+  font-style: normal;
+  font-size: 12px;
+  font-weight: 400;
+  color: #9ca3af;
+}
+
+/* Channel picker — opens upward from the channel button. */
+.icuig-chm {
+  position: absolute;
+  left: 12px;
+  bottom: 130px;
+  z-index: 8;
+  width: 300px;
+  padding: 4px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  animation: icuig-pop 0.18s ease-out both;
+}
+
+.icuig-chl {
+  height: 24px;
+  padding: 4px 8px;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.icuig-chr {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 8px;
+  border-radius: 6px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.icuig-chrHov {
+  background: #f3f4f6;
+}
+
+.icuig-chr img {
+  flex: none;
+  width: 16px;
+  height: 16px;
+}
+
+.icuig-chr i {
+  min-width: 0;
+  overflow: hidden;
+  font-style: normal;
+  font-size: 12px;
+  font-weight: 400;
+  color: #9ca3af;
+  text-overflow: ellipsis;
+}
+
+.icuig-chr > .icuig-ico {
+  margin-left: auto;
+  color: #2563eb;
+}
+
+.icuig-ed {
+  height: 44px;
+  padding: 8px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.icuig-ph {
+  color: #6b7280;
+}
+
+.icuig-typed {
+  display: inline-block;
+  white-space: nowrap;
+  animation: icuig-type 2.1s steps(60, end) both;
+}
+
+.icuig-cr3 {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 32px;
+}
+
+.icuig-tb {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  color: #6b7280;
+}
+
+.icuig-cnt {
+  margin-left: auto;
+  margin-right: 8px;
+  font-size: 12px;
+  color: #6b7280;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.icuig-send {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 76px;
+  height: 32px;
+  border-radius: 8px;
+  background: linear-gradient(132deg, #031953 0%, #031953 0.01%, rgba(0, 45, 164, 0.9) 100%);
+  color: #fff;
+  font-weight: 500;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+
+.icuig-sendOn {
+  opacity: 1;
+}
+
+/* ---- Contact details, docked (production's sticky panel, slimmed) ---- */
+
+.icuig-np {
+  position: absolute;
+  right: 52px;
+  top: 0;
+  bottom: 0;
+  z-index: 15;
+  width: 280px;
+  border-left: 1px solid #e5e7eb;
+  background: #fff;
+}
+
+.icuig-nph {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 52px;
+  padding: 0 16px;
+  border-bottom: 1px solid #e5e7eb;
+  font-weight: 500;
+}
+
+.icuig-npx {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 8px;
+  color: #6b7280;
+}
+
+.icuig-ctabs {
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+  height: 47px;
+  padding: 0 16px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.icuig-ctab {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  height: 47px;
+  margin-bottom: -1px;
+  padding-top: 2px;
+  border-bottom: 2px solid transparent;
+  font-size: 13px;
+  font-weight: 500;
+  color: #6b7280;
+  white-space: nowrap;
+}
+
+.icuig-ctabOn {
+  border-color: #2563eb;
+  color: #2563eb;
+}
+
+.icuig-cexp {
+  align-self: center;
+  margin-left: auto;
+  color: #6b7280;
+}
+
+.icuig-ctab .icuig-ico,
+.icuig-cexp .icuig-ico,
+.icuig-csec .icuig-ico,
+.icuig-fl .icuig-ico,
+.icuig-showall .icuig-ico {
+  width: 14px;
+  height: 14px;
+}
+
+.icuig-cbody {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 99px;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px;
+}
+
+.icuig-csec {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 20px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.icuig-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.icuig-fr {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 32px;
+  padding: 6px;
+  border-radius: 6px;
+  transition: background 0.15s;
+}
+
+.icuig-frHov {
+  background: #f9fafb;
+}
+
+.icuig-fl {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 6px;
+  width: 46%;
+  min-width: 0;
+  overflow: hidden;
+  font-size: 13px;
+  color: #4b5563;
+  white-space: nowrap;
+}
+
+.icuig-fl > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.icuig-fv {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  padding-left: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.icuig-fv > .icuig-ico {
+  color: #9ca3af;
+}
+
+.icuig-t {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.icuig-dash {
+  color: #9ca3af;
+}
+
+.icuig-evbar {
+  flex: none;
+  width: 4px;
+  height: 20px;
+  border-radius: 2px;
+  background: #3b82f6;
+}
+
+.icuig-av18 {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.icuig-sdot8 {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.icuig-sdd {
+  position: absolute;
+  left: 126px;
+  top: calc(100% + 4px);
+  z-index: 5;
+  width: 132px;
+  padding: 4px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  animation: icuig-pop 0.18s ease-out both;
+}
+
+.icuig-sdr {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 32px;
+  padding: 0 8px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.icuig-sdrHov {
+  background: #f3f4f6;
+}
+
+.icuig-sdr > .icuig-ico {
+  margin-left: auto;
+  color: #2563eb;
+}
+
+.icuig-showall {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+/* ---- Right rail ---- */
+
+.icuig-rail {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 52px;
+  padding: 10px 9px;
+  border-left: 1px solid #e5e7eb;
+  background: #fff;
+}
+
+.icuig-rb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  color: #6b7280;
+}
+
+.icuig-rbOn {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+/* ---- Recording modal (proto/call-comments design) ---- */
+
+.icuig-mbk {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  background: rgba(107, 114, 128, 0.75);
+  animation: icuig-fade 0.25s ease both;
+}
+
+.icuig-mod {
+  position: absolute;
+  left: 54px;
+  top: 16px;
+  width: 1200px;
+  height: 688px;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+  animation: icuig-rise 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.icuig-mh {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 48px;
+  padding: 0 16px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.icuig-mh > img {
+  width: 16px;
+  height: 16px;
+}
+
+.icuig-mh b {
+  font-weight: 500;
+}
+
+.icuig-bdg {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 20px;
+  padding: 0 6px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background: #f9fafb;
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 500;
+}
+
+.icuig-bdg .icuig-ico {
+  width: 14px;
+  height: 14px;
+}
+
+.icuig-mhr {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.icuig-obtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 8px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+  font-weight: 500;
+}
+
+.icuig-obtn .icuig-ico {
+  color: #6b7280;
+}
+
+.icuig-xbtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 32px;
+  border-radius: 8px;
+  color: #6b7280;
+}
+
+.icuig-ml {
+  position: absolute;
+  left: 0;
+  top: 48px;
+  bottom: 0;
+  width: 780px;
+  padding: 16px;
+  border-right: 1px solid #e5e7eb;
+}
+
+.icuig-mt {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 40px;
+}
+
+.icuig-mt h3 {
+  flex: 1;
+  margin: 0;
+  overflow: hidden;
+  font-family: inherit;
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 600;
+  color: #111827;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.icuig-mavs {
+  display: flex;
+}
+
+.icuig-av36 {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.icuig-av36R {
+  margin-left: -12px;
+  box-shadow: 0 0 0 2px #fff;
+}
+
+.icuig-mmeta {
+  white-space: nowrap;
+}
+
+.icuig-player {
+  width: 748px;
+  margin-top: 12px;
+  border-radius: 8px;
+  background: #171717;
+  color: #fff;
+}
+
+.icuig-vst {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  height: 421px;
+  border-radius: 8px 8px 0 0;
+  background: #262626;
+}
+
+.icuig-tile {
+  position: relative;
+  width: 356px;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 6px;
+  background: #3a3a3a;
+}
+
+.icuig-v {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+}
+
+.icuig-tag {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.45);
+  color: #fff;
+  font-size: 11px;
+  line-height: 14px;
+  font-weight: 600;
+}
+
+.icuig-play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  margin: -32px 0 0 -32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  color: #111827;
+}
+
+.icuig-play .icuig-fic {
+  width: 28px;
+  height: 28px;
+  margin-left: 4px;
+}
+
+.icuig-tl {
+  padding: 4px 16px;
+}
+
+.icuig-lane {
+  position: relative;
+  height: 32px;
+}
+
+.icuig-mk {
+  position: absolute;
+  top: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  margin-left: -14px;
+  border-radius: 50%;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.icuig-mkSel {
+  box-shadow: 0 0 0 2px #60a5fa;
+  transform: scale(1.1);
+}
+
+.icuig-mk img,
+.icuig-g {
+  width: 24px;
+  height: 24px;
+  border: 1px solid #fff;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.icuig-g {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(94deg, #031953 -43.11%, rgba(0, 45, 164, 0.9) 99.55%);
+  color: #fff;
+  font-size: 9.6px;
+  line-height: 1;
+  font-weight: 500;
+}
+
+.icuig-mk::after {
+  content: "";
+  position: absolute;
+  left: 13.5px;
+  top: 28px;
+  width: 1px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.icuig-prev {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 320px;
+  padding: 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  color: #111827;
+  animation: icuig-pop 0.18s ease-out both;
+}
+
+.icuig-pvh {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.icuig-pvh b {
+  font-weight: 500;
+}
+
+.icuig-av24p {
+  width: 24px;
+  height: 24px;
+  margin-right: 2px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.icuig-pvf {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.icuig-scrub {
+  position: relative;
+  height: 20px;
+}
+
+.icuig-track {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 8px;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.icuig-fill {
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 0;
+  height: 4px;
+  border-radius: 999px;
+  background: #3b82f6;
+  transition: width 1s linear;
+}
+
+.icuig-thd {
+  position: absolute;
+  left: 0;
+  top: 5px;
+  width: 10px;
+  height: 10px;
+  margin-left: -5px;
+  border-radius: 50%;
+  background: #fff;
+  transition: left 1s linear;
+}
+
+.icuig-ctr {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 46px;
+  padding: 4px 12px 10px;
+}
+
+.icuig-mb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 34px;
+  height: 32px;
+  padding: 0 8px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.icuig-time {
+  margin-left: 4px;
+  color: rgba(255, 255, 255, 0.8);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.icuig-time > span {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.icuig-sp {
+  flex: 1;
+}
+
+.icuig-mr {
+  position: absolute;
+  left: 780px;
+  right: 0;
+  top: 48px;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.icuig-tabs {
+  display: flex;
+  flex: none;
+  gap: 16px;
+  padding: 16px 16px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.icuig-tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: -1px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid transparent;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.icuig-tabOn {
+  border-color: #2563eb;
+  color: #2563eb;
+}
+
+.icuig-tcnt {
+  height: 20px;
+  padding: 0 6px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background: #f9fafb;
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 500;
+}
+
+.icuig-cl {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 4px;
+  min-height: 0;
+  padding: 8px;
+  overflow: hidden;
+}
+
+.icuig-cmt {
+  display: flex;
+  gap: 12px;
+  padding: 10px 8px;
+  border-radius: 8px;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+.icuig-cmtSel {
+  background: #eff6ff;
+  box-shadow: inset 0 0 0 1px #bfdbfe;
+}
+
+.icuig-av28c {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  margin-top: 2px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.icuig-gini2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(94deg, #031953 -43.11%, rgba(0, 45, 164, 0.9) 99.55%);
+  color: #fff;
+  font-size: 11px;
+  line-height: 1;
+  font-weight: 500;
+}
+
+.icuig-cmm {
+  flex: 1;
+  min-width: 0;
+}
+
+.icuig-cmh {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  white-space: nowrap;
+}
+
+.icuig-cmh b {
+  font-weight: 500;
+}
+
+.icuig-ts {
+  padding: 0 8px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #6b7280;
+  font-variant-numeric: tabular-nums;
+}
+
+.icuig-ago {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.icuig-rep {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+  font-size: 12px;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.icuig-rep .icuig-ico {
+  width: 14px;
+  height: 14px;
+}
+
+.icuig-kb {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: #fff;
+  color: #6b7280;
+}
+
+.icuig-rpl {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 32px;
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.icuig-rpl img {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 0 2px #fff;
+}
+
+.icuig-mcomp {
+  position: relative;
+  flex: none;
+  padding: 4px 16px 16px;
+}
+
+.icuig-mta {
+  height: 80px;
+  padding: 8px 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #f9fafb;
+  color: #6b7280;
+}
+
+.icuig-mtb {
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.icuig-cat {
+  display: flex;
+  align-items: center;
+  height: 32px;
+  margin-left: auto;
+  padding: 0 8px;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #b6c2e2, #b1bad1);
+  color: #fff;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* ---- Cursors ---- */
+
+.icuig-curs {
+  position: absolute;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+}
+
+.icuig-cur {
+  position: absolute;
+  left: -2px;
+  top: -1px;
+  transition: transform 0.75s cubic-bezier(0.65, 0, 0.35, 1), opacity 0.3s ease;
+}
+
+.icuig-cursvg {
+  width: 22px;
+  height: 22px;
+  stroke: #fff;
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.28));
+}
+
+.icuig-curl {
+  position: absolute;
+  left: 16px;
+  top: 20px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+}
+
+.icuig-ring {
+  position: absolute;
+  left: -10px;
+  top: -10px;
+  width: 24px;
+  height: 24px;
+  border: 2px solid;
+  border-radius: 50%;
+  animation: icuig-ring 0.55s ease-out both;
+}
+
+/* ---- Motion ---- */
+
+/* Until the window is properly on screen, the opening frame's entrance
+   animations sit on their first keyframe: Sara's row not yet in the list, the
+   first notes not yet in the thread. `!important` because every `animation`
+   shorthand resets the play state. */
+.icuig-held,
+.icuig-held *,
+.icuig-held *::before,
+.icuig-held *::after {
+  animation-play-state: paused !important;
+}
+
+@keyframes icuig-msgIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes icuig-grow {
+  from {
+    max-height: 0;
+    opacity: 0;
+  }
+  to {
+    max-height: 72px;
+    opacity: 1;
+  }
+}
+
+@keyframes icuig-flash {
+  0% {
+    background: #bfdbfe;
+  }
+  100% {
+    background: #eff6ff;
+  }
+}
+
+@keyframes icuig-pop {
+  from {
+    opacity: 0;
+    transform: translateY(4px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes icuig-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes icuig-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes icuig-type {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes icuig-ring {
+  from {
+    transform: scale(0.4);
+    opacity: 1;
+  }
+  to {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+@keyframes icuig-bounce {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-3px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .icuig-root *,
+  .icuig-root *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
+    transition-duration: 0.01ms !important;
+  }
+}
