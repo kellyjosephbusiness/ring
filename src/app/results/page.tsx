@@ -1,18 +1,20 @@
 import type { Metadata } from "next";
 
 import { FinalCta } from "@/components/sites/ringondemand/final-cta/final-cta";
+import { GENERAL_CTA } from "@/components/sites/ringondemand/final-cta/general-cta";
 import { GettingStarted } from "@/components/sites/ringondemand/getting-started/getting-started";
-import { ANCHORS, BOOK_CALL_URL } from "@/components/sites/ringondemand/links";
+import { ROUTES } from "@/components/sites/ringondemand/links";
 import { CtaCards } from "@/components/sites/ringondemand/page-kit/cta-cards";
 import { Divider } from "@/components/sites/ringondemand/page-kit/divider";
 import { PageHero } from "@/components/sites/ringondemand/page-kit/page-hero";
 import { PageShell } from "@/components/sites/ringondemand/page-shell/page-shell";
 import { Reporting } from "@/components/sites/ringondemand/reporting/reporting";
-import { Results } from "@/components/sites/ringondemand/results/results";
+import { GENERAL_STATS, Results } from "@/components/sites/ringondemand/results/results";
+import { PROOF } from "@/components/sites/ringondemand/shared/proof-list";
 
 const title = "Results | RingOnDemand";
 const description =
-  "Over 1,500 signed retainers delivered last quarter. 25 to 35% of live transfers signed, higher in California. 24 hours from signed order to first transfer.";
+  "Over 2,000 signed retainers and over 5,000 live transfers delivered. Trusted by the largest insurance and legal organizations in the US.";
 
 export const metadata: Metadata = {
   title,
@@ -27,42 +29,45 @@ export default function ResultsPage() {
     <PageShell>
       <PageHero
         eyebrow="Results"
-        headline={["Signed Retainers, Sign Rates", "and Speed to First Transfer"]}
-        sub="What personal injury firms see when they work with us, and how you see every transfer we send."
+        headline={["Calls That Convert", "Across Legal and Insurance"]}
+        sub="Signed retainers for law firms, inbound calls and live transfers for law firms and insurance agencies, and a record of every call we send."
+        proof={[PROOF.signedRetainers, PROOF.liveTransfers, PROOF.trusted]}
       />
       <Divider />
-      <Results />
+      <Results heading="What our buyers see" stats={GENERAL_STATS} />
       <Reporting />
       <GettingStarted />
       <CtaCards
+        heading={{
+          eyebrow: "Industries",
+          heading: { lead: "See what we deliver", accent: "in your industry" },
+        }}
         cards={[
           {
-            eyebrow: "Pricing",
-            title: "Flat prices for MVA",
+            eyebrow: "Legal",
+            title: "Signed retainers and live transfers",
             body: (
               <p>
-                <strong>Live transfers at $550 per transfer.</strong> Pre-signed cases at $2,500 per
-                signed case. You pay per transfer or per signed case and nothing else.
+                <strong>For law firms and funding companies:</strong> motor vehicle accidents,
+                workers&apos; comp, lemon law, medical malpractice and pre-settlement funding.
               </p>
             ),
-            cta: { label: "See pricing", href: ANCHORS.pricing },
+            cta: { label: "See legal", href: ROUTES.legal },
           },
           {
-            eyebrow: "Book a call",
-            title: "See the ads and the intake script",
+            eyebrow: "Insurance",
+            title: "Inbound calls and live transfers",
             body: (
               <p>
-                On the call you will see <strong>our ads, our landing pages, our intake questions</strong>, and
-                the names of firms we work with.
+                <strong>For insurance agencies:</strong> final expense, auto, home and Medicare.
               </p>
             ),
-            cta: { label: "Book a call", href: BOOK_CALL_URL },
-            aside: "With a licensed attorney on our team",
+            cta: { label: "See insurance", href: ROUTES.insurance },
             tone: "blue",
           },
         ]}
       />
-      <FinalCta />
+      <FinalCta {...GENERAL_CTA} />
     </PageShell>
   );
 }

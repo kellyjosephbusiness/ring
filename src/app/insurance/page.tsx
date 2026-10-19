@@ -16,6 +16,7 @@ import { FeatureColumns } from "@/components/sites/ringondemand/page-kit/feature
 import { LinkGrid } from "@/components/sites/ringondemand/page-kit/link-grid";
 import { PageHero } from "@/components/sites/ringondemand/page-kit/page-hero";
 import { PageShell } from "@/components/sites/ringondemand/page-shell/page-shell";
+import { PROOF } from "@/components/sites/ringondemand/shared/proof-list";
 
 const title = "Inbound Calls and Live Transfers for Insurance Agencies | RingOnDemand";
 const description =
@@ -36,6 +37,7 @@ export default function InsurancePage() {
         eyebrow="Insurance"
         headline={["Inbound Calls and Live Transfers", "for Insurance Agencies"]}
         sub="You give us your criteria. We run the ads, screen every caller, and send the ones who qualify to your licensed agents as inbound calls or live transfers. Pick your line to see what we check."
+        proof={[PROOF.liveTransfers, PROOF.trustedInsurance]}
       />
       <Divider />
       <LinkGrid

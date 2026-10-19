@@ -58,7 +58,7 @@ export const INSURANCE_LINES: readonly InsuranceLine[] = [
     },
     hero: {
       eyebrow: "Insurance : Final expense",
-      headline: ["Final Expense Calls,", "Screened to Your Criteria"],
+      headline: ["Final Expense Calls", "That Convert Like Crazy"],
       sub: "You give us your criteria. We run the ads, screen every caller, and send the ones who qualify to your licensed agents as inbound calls or live transfers. You pay per call.",
     },
     criteria:
@@ -85,7 +85,7 @@ export const INSURANCE_LINES: readonly InsuranceLine[] = [
     },
     hero: {
       eyebrow: "Insurance : Auto",
-      headline: ["Auto Insurance Calls,", "Screened to Your Criteria"],
+      headline: ["Auto Insurance Calls", "That Convert Like Crazy"],
       sub: "You give us your criteria. We run the ads, screen every driver who calls, and send the ones who qualify to your licensed agents as inbound calls or live transfers. You pay per call.",
     },
     criteria:
@@ -113,7 +113,7 @@ export const INSURANCE_LINES: readonly InsuranceLine[] = [
     },
     hero: {
       eyebrow: "Insurance : Home",
-      headline: ["Home Insurance Calls,", "Screened to Your Criteria"],
+      headline: ["Home Insurance Calls", "That Convert Like Crazy"],
       sub: "You give us your criteria. We run the ads, screen every homeowner who calls, and send the ones who qualify to your licensed agents as inbound calls or live transfers. You pay per call.",
     },
     criteria:
@@ -140,7 +140,7 @@ export const INSURANCE_LINES: readonly InsuranceLine[] = [
     },
     hero: {
       eyebrow: "Insurance : Medicare",
-      headline: ["Medicare Calls,", "Screened to Your Criteria"],
+      headline: ["Medicare Calls", "That Convert Like Crazy"],
       sub: "You give us your criteria. We run the ads, screen every caller, and send the ones who qualify to your licensed agents as inbound calls or live transfers. You pay per call.",
     },
     criteria:

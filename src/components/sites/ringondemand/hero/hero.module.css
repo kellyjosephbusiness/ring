@@ -99,6 +99,10 @@
   color: var(--heading);
 }
 
+.h1Accent {
+  color: var(--accent);
+}
+
 .sub {
   font-size: 18px;
   line-height: 28px;
@@ -159,24 +163,10 @@
 
 /* ---------- Proof line (the clone's rating row) ---------- */
 /* Badge set inline so a wrapped line stays one centred paragraph. */
+/* Proof lines (shared ProofList); centred with the rest of the copy below
+   1280px. */
 .proof {
-  font-size: 15px;
-  line-height: 20px;
-  color: var(--gray600);
-  text-wrap: balance;
-}
-
-.proofStrong {
-  font-weight: 600;
-  white-space: nowrap;
-  color: var(--heading);
-}
-
-.badge {
-  display: inline-block;
-  margin-right: 8px;
-  vertical-align: -4px;
-  color: var(--accent);
+  align-self: stretch;
 }
 
 /* ---------- Visual: the live-transfer illustration ---------- */
@@ -212,6 +202,7 @@
     text-wrap: balance;
   }
   .proof {
+    align-items: center;
     text-align: center;
   }
   .visual {

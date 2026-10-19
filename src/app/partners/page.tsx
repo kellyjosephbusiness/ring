@@ -1,7 +1,14 @@
 import type { Metadata } from "next";
-import { ListChecks, Radio, ShieldCheck } from "lucide-react";
+import {
+  BadgeDollarSign,
+  Banknote,
+  ListChecks,
+  Radio,
+  Rocket,
+  ShieldCheck,
+  TrendingUp,
+} from "lucide-react";
 
-import { CallSources } from "@/components/sites/ringondemand/call-sources/call-sources";
 import { FinalCta } from "@/components/sites/ringondemand/final-cta/final-cta";
 import { BOOK_CALL_URL, BOOKING_EVENTS } from "@/components/sites/ringondemand/links";
 import { Divider } from "@/components/sites/ringondemand/page-kit/divider";
@@ -12,10 +19,13 @@ import { AreaList } from "@/components/sites/ringondemand/page-kit/visuals";
 import { INSURANCE_LINES, insuranceLineHref } from "@/components/sites/ringondemand/insurance/insurance-lines";
 import { PRACTICE_AREAS, practiceAreaHref } from "@/components/sites/ringondemand/legal/practice-areas";
 import { PageShell } from "@/components/sites/ringondemand/page-shell/page-shell";
+import { PROOF } from "@/components/sites/ringondemand/shared/proof-list";
 
-const title = "Partners: Call Publishers | RingOnDemand";
+const title = "Partners: Join Our Publisher Network | RingOnDemand";
 const description =
-  "We buy legal and insurance calls from a vetted publisher network. Every call goes through the same intake script as the calls from our own ads.";
+  "Join our vetted publisher network. Strong payouts for legal and insurance calls that qualify, clear criteria for every vertical, and a simple setup.";
+
+const CTA = { label: "Book an intro call", href: BOOK_CALL_URL };
 
 export const metadata: Metadata = {
   title,
@@ -31,8 +41,37 @@ export default function PartnersPage() {
       <PageHero
         eyebrow="Partners : Call publishers"
         headline={["Join Our Vetted", "Publisher Network"]}
-        sub="We buy legal and insurance calls from a vetted publisher network. Every call you send goes through the same intake script as the calls from our own ads."
-        cta={{ label: "Talk to our team", href: BOOK_CALL_URL }}
+        sub="Send us your legal and insurance calls and get paid well for every one that qualifies. Clear criteria, steady demand, and one short call to get started."
+        cta={CTA}
+        proof={[PROOF.liveTransfers, PROOF.buyers]}
+      />
+      <Divider />
+      <FeatureColumns
+        heading={{ heading: { lead: "Why publishers", accent: "work with us" } }}
+        layout="grid"
+        items={[
+          {
+            icon: BadgeDollarSign,
+            title: "Strong payouts",
+            body: "We pay well for calls that qualify, and you know the payout for each vertical before you send a single call.",
+          },
+          {
+            icon: TrendingUp,
+            title: "Steady demand",
+            body: "We buy in nine verticals across legal and insurance, for buyers across the US, so there is room for your volume.",
+          },
+          {
+            icon: ListChecks,
+            title: "Clear criteria",
+            body: "Every vertical has one written intake script. You know what qualifies before a call goes live.",
+          },
+          {
+            icon: Rocket,
+            title: "Simple setup",
+            body: "One intro call to agree on verticals, states and payouts. Then you start sending calls.",
+          },
+        ]}
+        cta={CTA}
       />
       <Divider />
       <FeatureColumns
@@ -46,15 +85,15 @@ export default function PartnersPage() {
           {
             icon: ShieldCheck,
             title: "We vet your sources",
-            body: "Every publisher in our network is vetted before calls go live.",
+            body: "Every publisher in our network is vetted before calls go live, and you get your payouts up front.",
           },
           {
-            icon: ListChecks,
-            title: "Calls run through our intake script",
-            body: "Every caller answers the same qualifying questions as the callers from our own ads.",
+            icon: Banknote,
+            title: "Send calls, get paid",
+            body: "Every caller answers the same qualifying questions as the callers from our own ads. You get paid for every call that qualifies.",
           },
         ]}
-        cta={{ label: "Talk to our team", href: BOOK_CALL_URL }}
+        cta={CTA}
       />
       <Divider />
       <FeatureRow
@@ -67,7 +106,7 @@ export default function PartnersPage() {
             In insurance: final expense, auto, home and Medicare.
           </p>
         }
-        cta={{ label: "Talk to our team", href: BOOK_CALL_URL }}
+        cta={CTA}
         visual={
           <AreaList
             label="Verticals"
@@ -86,10 +125,9 @@ export default function PartnersPage() {
           />
         }
       />
-      <CallSources />
       <FinalCta
-        heading={{ lead: "Want to send us calls?", accent: "Tell us about your traffic" }}
-        body="Book a call with our team. Tell us the verticals, states and sources you run, and we will tell you where your calls fit."
+        heading={{ lead: "Ready to send us calls?", accent: "Book a publisher intro call" }}
+        body="Tell us the verticals, states and sources you run. We will tell you where your calls fit and what they pay."
         booking={BOOKING_EVENTS.publisher}
       />
     </PageShell>

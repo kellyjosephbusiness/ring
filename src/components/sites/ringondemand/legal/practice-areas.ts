@@ -82,7 +82,7 @@ export const PRACTICE_AREAS: readonly PracticeArea[] = [
     },
     hero: {
       eyebrow: "Legal : Motor vehicle accidents",
-      headline: ["Signed MVA Cases and Live Transfers", "for Personal Injury Firms"],
+      headline: ["MVA Cases", "That Close Like Crazy"],
       sub: "You give us your case criteria. We run the ads, screen every caller, and send you a live transfer or a signed retainer. You pay per transfer or per signed case and nothing else.",
     },
     steps: [
@@ -128,7 +128,7 @@ export const PRACTICE_AREAS: readonly PracticeArea[] = [
     },
     hero: {
       eyebrow: "Legal : Workers' compensation",
-      headline: ["Workers' Comp Cases,", "Screened to Your Criteria"],
+      headline: ["Workers' Comp Cases", "That Close Like Crazy"],
       sub: "You give us your case criteria. We run the ads, screen every injured worker who calls, and send you a live transfer or a signed retainer. You pay per transfer or per signed case.",
     },
     steps: [
@@ -163,7 +163,7 @@ export const PRACTICE_AREAS: readonly PracticeArea[] = [
     },
     hero: {
       eyebrow: "Legal : Lemon law",
-      headline: ["Lemon Law Cases,", "Screened to Your Criteria"],
+      headline: ["Lemon Law Cases", "That Close Like Crazy"],
       sub: "You give us your case criteria. We run the ads, screen every vehicle owner who calls, and send you a live transfer or a signed retainer. You pay per transfer or per signed case.",
     },
     steps: [
@@ -198,7 +198,7 @@ export const PRACTICE_AREAS: readonly PracticeArea[] = [
     },
     hero: {
       eyebrow: "Legal : Medical malpractice",
-      headline: ["Medical Malpractice Cases,", "Screened to Your Criteria"],
+      headline: ["Medical Malpractice Cases", "That Close Like Crazy"],
       sub: "You give us your case criteria. We run the ads, screen every caller, and send you a live transfer or a signed retainer. You pay per transfer or per signed case.",
     },
     steps: [
@@ -233,7 +233,7 @@ export const PRACTICE_AREAS: readonly PracticeArea[] = [
     },
     hero: {
       eyebrow: "Legal : Pre-settlement funding",
-      headline: ["Pre-Settlement Funding Calls,", "Screened to Your Criteria"],
+      headline: ["Pre-Settlement Funding Calls", "That Convert Like Crazy"],
       sub: "You give us your funding criteria. We run the ads, screen every caller, and transfer the ones who qualify to your team while they are still on the line. You pay per transfer.",
     },
     steps: [

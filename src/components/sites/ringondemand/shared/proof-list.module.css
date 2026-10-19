@@ -1,0 +1,36 @@
+/* Hero proof lines: 15px gray copy with the key figure in near-black, each
+   behind the accent-blue verified badge. */
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--site-font-body);
+  font-size: 15px;
+  line-height: 20px;
+  color: #4b5563;
+}
+
+.list[data-align="center"] {
+  align-items: center;
+  text-align: center;
+}
+
+.line {
+  text-wrap: balance;
+}
+
+.strong {
+  font-weight: 600;
+  color: #0a0d14;
+}
+
+.badge {
+  display: inline-block;
+  margin-right: 8px;
+  vertical-align: -4px;
+  color: #1c64f2;
+}

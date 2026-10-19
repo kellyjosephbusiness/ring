@@ -10,6 +10,7 @@ import { FeatureRow } from "../page-kit/feature-row";
 import { PageHero } from "../page-kit/page-hero";
 import { CriteriaCard } from "../page-kit/visuals";
 import { PageShell } from "../page-shell/page-shell";
+import { PROOF } from "../shared/proof-list";
 import { INSURANCE_CTA } from "./insurance-cta";
 import { STEP_DELIVER, STEP_SCREEN, type InsuranceLine } from "./insurance-lines";
 
@@ -22,7 +23,12 @@ const SCREENING_NOTE =
 export function InsuranceLinePage({ line }: { line: InsuranceLine }) {
   return (
     <PageShell>
-      <PageHero eyebrow={line.hero.eyebrow} headline={line.hero.headline} sub={line.hero.sub} />
+      <PageHero
+        eyebrow={line.hero.eyebrow}
+        headline={line.hero.headline}
+        sub={line.hero.sub}
+        proof={[PROOF.liveTransfers, PROOF.trustedInsurance]}
+      />
       <Divider />
       <FeatureColumns
         heading={{ heading: { lead: "How it works" } }}

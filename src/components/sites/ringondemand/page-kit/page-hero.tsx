@@ -1,4 +1,5 @@
 import { BOOK_CALL_URL } from "../links";
+import { ProofList, type ProofLine } from "../shared/proof-list";
 import { CtaLink } from "./cta-link";
 import { Eyebrow } from "./eyebrow";
 import styles from "./page-hero.module.css";
@@ -11,6 +12,8 @@ export interface PageHeroProps {
   cta?: { label: string; href: string };
   /** Small line under the button. */
   note?: string;
+  /** Proof lines with verified badges, under the button. */
+  proof?: readonly ProofLine[];
 }
 
 /** Interior page hero, after iClosed's /product/analytics hero: centred
@@ -21,6 +24,7 @@ export function PageHero({
   sub,
   cta = { label: "Book a call", href: BOOK_CALL_URL },
   note,
+  proof,
 }: PageHeroProps) {
   return (
     <section className={styles.root} data-section="page-hero">
@@ -35,6 +39,7 @@ export function PageHero({
           <CtaLink href={cta.href}>{cta.label}</CtaLink>
           {note ? <p className={styles.note}>{note}</p> : null}
         </div>
+        {proof ? <ProofList className={styles.proof} lines={proof} align="center" /> : null}
       </div>
     </section>
   );

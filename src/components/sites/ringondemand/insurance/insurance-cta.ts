@@ -9,5 +9,5 @@ export const INSURANCE_CTA = {
     accent: "we will tell you what we can deliver",
   },
   body: "Book a call with our team. We show you the ads and the intake questions, and you decide.",
-  booking: BOOKING_EVENTS.insurance,
+  booking: BOOKING_EVENTS.partner,
 };
