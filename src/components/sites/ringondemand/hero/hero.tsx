@@ -2,7 +2,7 @@ import { BOOK_CALL_TARGET, BOOK_CALL_URL } from "../links";
 import { TransferVisual } from "./transfer-visual";
 import styles from "./hero.module.css";
 
-const HEADLINE_LINE_1 = "Screened Live Transfers";
+const HEADLINE_LINE_1 = "Inbound Calls for";
 
 /** Verified badge (scalloped seal with a check), drawn at 18px beside the proof line. */
 function CheckBadge() {
@@ -24,20 +24,19 @@ export function Hero() {
       <div className={styles.inner}>
         <div className={styles.grid}>
           <div className={styles.copy}>
-            <p className={styles.eyebrow}>For law firms and insurance agencies</p>
+            <p className={styles.eyebrow}>Inbound calls and live transfers</p>
             <div className={styles.text}>
               <h1 className={styles.h1}>
                 <span>{HEADLINE_LINE_1}</span>
                 <span>
                   {" "}
                   <br className={styles.h1Break} />
-                  for Legal and Insurance
+                  8- and 9-Figure Companies
                 </span>
               </h1>
               <p className={styles.sub}>
-                You give us your criteria. We run the ads, screen every caller, and send the ones
-                who qualify to your team while they are still on the line. Law firms can also take
-                signed retainers.
+                You set the criteria. We run the ads, screen every caller, and send the ones who
+                qualify to your team as inbound calls or live transfers.
               </p>
             </div>
             <div className={styles.ctaGroup}>

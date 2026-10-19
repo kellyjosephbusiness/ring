@@ -24,9 +24,9 @@ const inter = localFont({
   ],
 });
 
-const title = "RingOnDemand | Screened Live Transfers for Legal and Insurance";
+const title = "RingOnDemand | Inbound Calls for 8- and 9-Figure Companies";
 const description =
-  "You give us your criteria. We run the ads, screen every caller, and send the ones who qualify to your team while they are still on the line. Law firms can also take signed retainers.";
+  "You set the criteria. We run the ads, screen every caller, and send the ones who qualify to your team as inbound calls or live transfers.";
 
 const siteUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
   ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`

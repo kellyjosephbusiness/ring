@@ -51,7 +51,7 @@ export function SiteFooter() {
           <div className={styles.info}>
             <div className={styles.intro}>
               <Logo variant="light" className={styles.logo} />
-              <p className={styles.blurb}>Screened live transfers for legal and insurance.</p>
+              <p className={styles.blurb}>Screened inbound calls and live transfers.</p>
             </div>
           </div>
           <nav className={styles.links} aria-label="Footer">

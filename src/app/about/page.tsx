@@ -11,7 +11,7 @@ import { PageShell } from "@/components/sites/ringondemand/page-shell/page-shell
 
 const title = "About | RingOnDemand";
 const description =
-  "RingOnDemand runs the ads, screens every caller against your criteria, and delivers live transfers to law firms and insurance agencies, and signed retainers to law firms.";
+  "RingOnDemand runs the ads, screens every caller against your criteria, and delivers inbound calls and live transfers to insurance agencies, and live transfers and signed retainers to law firms.";
 
 export const metadata: Metadata = {
   title,
@@ -27,7 +27,7 @@ export default function AboutPage() {
       <PageHero
         eyebrow="About"
         headline={["We Run the Ads and", "Screen Every Caller"]}
-        sub="RingOnDemand delivers live transfers to law firms and insurance agencies, and signed retainers to law firms. You give us your criteria. We run the ads, screen every caller, and send you only the ones who pass."
+        sub="RingOnDemand delivers inbound calls and live transfers to insurance agencies, and live transfers and signed retainers to law firms. You give us your criteria. We run the ads, screen every caller, and send you only the ones who pass."
       />
       <Divider />
       <FeatureColumns

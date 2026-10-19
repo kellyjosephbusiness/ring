@@ -2,8 +2,8 @@
  * The insurance lines, one page each under /insurance/<slug>.
  *
  * DRAFT COPY for review — see docs/research/ringondemand/pages-copy-draft.md.
- * No prices, stats, quotes or guarantees; insurance buyers get live transfers
- * only.
+ * No prices, stats, quotes or guarantees; insurance buyers get inbound calls
+ * and live transfers.
  */
 import { CarFront, HeartHandshake, HeartPulse, House, type LucideIcon } from "lucide-react";
 
@@ -38,9 +38,9 @@ export const STEP_SCREEN: Step = {
   body: "Our own ads plus a vetted publisher network. Every caller answers your qualifying questions before anything reaches you.",
 };
 
-export const STEP_TRANSFER: Step = {
-  title: "Your agents get the live transfer",
-  body: "Callers who pass your questions go to your agents' line during the hours you set.",
+export const STEP_DELIVER: Step = {
+  title: "Your agents get the call",
+  body: "Inbound calls and live transfers go to your agents' line during the hours you set.",
 };
 
 export const INSURANCE_LINES: readonly InsuranceLine[] = [
@@ -49,17 +49,17 @@ export const INSURANCE_LINES: readonly InsuranceLine[] = [
     name: "Final Expense",
     navLabel: "Final Expense",
     inSentence: "final expense",
-    summary: "Callers shopping for final expense coverage, transferred to your agents.",
+    summary: "Callers shopping for final expense coverage, sent to your agents.",
     icon: HeartHandshake,
     meta: {
-      title: "Final Expense Live Transfers | RingOnDemand",
+      title: "Final Expense Inbound Calls and Live Transfers | RingOnDemand",
       description:
-        "You give us your criteria. We run the ads, screen every caller, and transfer the ones who qualify to your licensed agents while they are still on the line.",
+        "You give us your criteria. We run the ads, screen every caller, and send the ones who qualify to your licensed agents as inbound calls or live transfers.",
     },
     hero: {
       eyebrow: "Insurance : Final expense",
       headline: ["Final Expense Calls,", "Screened to Your Criteria"],
-      sub: "You give us your criteria. We run the ads, screen every caller, and transfer the ones who qualify to your licensed agents while they are still on the line. You pay per transfer.",
+      sub: "You give us your criteria. We run the ads, screen every caller, and send the ones who qualify to your licensed agents as inbound calls or live transfers. You pay per call.",
     },
     criteria:
       "Age range, coverage amount, how the caller will pay premiums, and the states your agents are licensed in. We write your criteria into the intake script.",
@@ -79,14 +79,14 @@ export const INSURANCE_LINES: readonly InsuranceLine[] = [
     summary: "Drivers looking for a quote, screened by state, vehicle and coverage.",
     icon: CarFront,
     meta: {
-      title: "Auto Insurance Live Transfers | RingOnDemand",
+      title: "Auto Insurance Inbound Calls and Live Transfers | RingOnDemand",
       description:
-        "You give us your criteria. We run the ads, screen every driver who calls, and transfer the ones who qualify to your licensed agents while they are still on the line.",
+        "You give us your criteria. We run the ads, screen every driver who calls, and send the ones who qualify to your licensed agents as inbound calls or live transfers.",
     },
     hero: {
       eyebrow: "Insurance : Auto",
       headline: ["Auto Insurance Calls,", "Screened to Your Criteria"],
-      sub: "You give us your criteria. We run the ads, screen every driver who calls, and transfer the ones who qualify to your licensed agents while they are still on the line. You pay per transfer.",
+      sub: "You give us your criteria. We run the ads, screen every driver who calls, and send the ones who qualify to your licensed agents as inbound calls or live transfers. You pay per call.",
     },
     criteria:
       "States and ZIP codes, vehicles and drivers, current coverage, and driving history. We write your criteria into the intake script.",
@@ -107,14 +107,14 @@ export const INSURANCE_LINES: readonly InsuranceLine[] = [
     summary: "Homeowners looking for coverage, screened by property and location.",
     icon: House,
     meta: {
-      title: "Home Insurance Live Transfers | RingOnDemand",
+      title: "Home Insurance Inbound Calls and Live Transfers | RingOnDemand",
       description:
-        "You give us your criteria. We run the ads, screen every homeowner who calls, and transfer the ones who qualify to your licensed agents while they are still on the line.",
+        "You give us your criteria. We run the ads, screen every homeowner who calls, and send the ones who qualify to your licensed agents as inbound calls or live transfers.",
     },
     hero: {
       eyebrow: "Insurance : Home",
       headline: ["Home Insurance Calls,", "Screened to Your Criteria"],
-      sub: "You give us your criteria. We run the ads, screen every homeowner who calls, and transfer the ones who qualify to your licensed agents while they are still on the line. You pay per transfer.",
+      sub: "You give us your criteria. We run the ads, screen every homeowner who calls, and send the ones who qualify to your licensed agents as inbound calls or live transfers. You pay per call.",
     },
     criteria:
       "Property type, ownership, location, and when the caller needs coverage. We write your criteria into the intake script.",
@@ -134,14 +134,14 @@ export const INSURANCE_LINES: readonly InsuranceLine[] = [
     summary: "Medicare-eligible callers, screened by eligibility and location.",
     icon: HeartPulse,
     meta: {
-      title: "Medicare Live Transfers | RingOnDemand",
+      title: "Medicare Inbound Calls and Live Transfers | RingOnDemand",
       description:
-        "You give us your criteria. We run the ads, screen every caller, and transfer the ones who qualify to your licensed agents while they are still on the line.",
+        "You give us your criteria. We run the ads, screen every caller, and send the ones who qualify to your licensed agents as inbound calls or live transfers.",
     },
     hero: {
       eyebrow: "Insurance : Medicare",
       headline: ["Medicare Calls,", "Screened to Your Criteria"],
-      sub: "You give us your criteria. We run the ads, screen every caller, and transfer the ones who qualify to your licensed agents while they are still on the line. You pay per transfer.",
+      sub: "You give us your criteria. We run the ads, screen every caller, and send the ones who qualify to your licensed agents as inbound calls or live transfers. You pay per call.",
     },
     criteria:
       "Eligibility, the plans your agents offer, the counties and states you cover, and the enrollment periods you work. We write your criteria into the intake script.",

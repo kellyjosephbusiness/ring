@@ -14,7 +14,7 @@ Everything outside the copy doc is a **draft for review**:
 
 | Route | Page |
 |---|---|
-| `/` | Homepage (legal and insurance) |
+| `/` | Homepage (general: inbound calls and live transfers) |
 | `/legal` | Practice-area index |
 | `/legal/mva`, `/legal/workers-comp`, `/legal/lemon-law`, `/legal/medical-malpractice`, `/legal/pre-settlement-funding` | One page per practice area (`legal/practice-areas.ts`); MVA adds the copy doc's results, pricing and FAQ |
 | `/insurance` | Insurance index |
@@ -57,7 +57,8 @@ which every page ends with. That section holds the iClosed inline widget
 
 | Event | Pages |
 |---|---|
-| Ring On Demand - Personal Injury Discovery Call (`discovery`) | Everything except `/partners` |
+| Ring On Demand - Personal Injury Discovery Call (`discovery`) | Homepage, legal pages, Results, About |
+| Ring On Demand - Partner Discovery Call (`insurance`) | `/insurance` and the insurance line pages |
 | Publisher Intro Call (`publisher`) | `/partners` |
 
 - **Loading.** iClosed's `widget.js` loads once. It picks up new widgets after
@@ -73,9 +74,9 @@ which every page ends with. That section holds the iClosed inline widget
 
 - **Draft copy:** review [`pages-copy-draft.md`](./pages-copy-draft.md),
   especially its "Please confirm" list.
-- **Insurance booking:** the homepage and insurance pages book the
-  personal-injury discovery call until there is an insurance or general event.
-  Add it to `BOOKING_EVENTS` and pass it to `FinalCta` as `booking`.
+- **Homepage booking:** the homepage books the personal-injury discovery call.
+  If it should book a general event, add one to `BOOKING_EVENTS` and pass it to
+  `FinalCta` as `booking`.
 - **Footer pages:** Contact, Privacy Policy and Terms of Service use
   `PENDING_PAGES` placeholders (`#`).
 - **Notes in the copy doc still apply:**

@@ -19,8 +19,8 @@ const STEPS: readonly Step[] = [
   },
   {
     num: "03",
-    title: "Your team gets the live transfer",
-    body: "Callers who pass go to your line during the hours you set. Law firms can also take pre-signed cases, with the completed intake and the signed retainer.",
+    title: "Your team gets the call",
+    body: "Inbound calls and live transfers go to your line during the hours you set. Law firms can also take pre-signed cases, with the completed intake and the signed retainer.",
   },
 ];
 

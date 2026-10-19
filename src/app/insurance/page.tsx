@@ -6,8 +6,8 @@ import { FinalCta } from "@/components/sites/ringondemand/final-cta/final-cta";
 import { INSURANCE_CTA } from "@/components/sites/ringondemand/insurance/insurance-cta";
 import {
   INSURANCE_LINES,
+  STEP_DELIVER,
   STEP_SCREEN,
-  STEP_TRANSFER,
   insuranceLineHref,
 } from "@/components/sites/ringondemand/insurance/insurance-lines";
 import { BOOK_CALL_URL } from "@/components/sites/ringondemand/links";
@@ -17,9 +17,9 @@ import { LinkGrid } from "@/components/sites/ringondemand/page-kit/link-grid";
 import { PageHero } from "@/components/sites/ringondemand/page-kit/page-hero";
 import { PageShell } from "@/components/sites/ringondemand/page-shell/page-shell";
 
-const title = "Live Transfers for Insurance Agencies | RingOnDemand";
+const title = "Inbound Calls and Live Transfers for Insurance Agencies | RingOnDemand";
 const description =
-  "You give us your criteria. We run the ads, screen every caller, and transfer the ones who qualify to your licensed agents: final expense, auto, home and Medicare.";
+  "You give us your criteria. We run the ads, screen every caller, and send the ones who qualify to your licensed agents as inbound calls or live transfers: final expense, auto, home and Medicare.";
 
 export const metadata: Metadata = {
   title,
@@ -34,8 +34,8 @@ export default function InsurancePage() {
     <PageShell>
       <PageHero
         eyebrow="Insurance"
-        headline={["Live Transfers for", "Insurance Agencies"]}
-        sub="You give us your criteria. We run the ads, screen every caller, and transfer the ones who qualify to your licensed agents while they are still on the line. Pick your line to see what we check."
+        headline={["Inbound Calls and Live Transfers", "for Insurance Agencies"]}
+        sub="You give us your criteria. We run the ads, screen every caller, and send the ones who qualify to your licensed agents as inbound calls or live transfers. Pick your line to see what we check."
       />
       <Divider />
       <LinkGrid
@@ -43,7 +43,7 @@ export default function InsurancePage() {
           id: "insurance-lines-heading",
           eyebrow: "Lines of insurance",
           heading: { lead: "Pick your", accent: "line of insurance" },
-          sub: "The same process for every line: your criteria in our intake script, our ads, and a live transfer to your agents when a caller qualifies.",
+          sub: "The same process for every line: your criteria in our intake script, our ads, and an inbound call or live transfer to your agents when a caller qualifies.",
         }}
         items={[
           ...INSURANCE_LINES.map((line) => ({
@@ -72,7 +72,7 @@ export default function InsurancePage() {
             body: "The callers your agents want, by line, state and the questions you ask. We write your criteria into the intake script.",
           },
           { icon: Megaphone, ...STEP_SCREEN },
-          { icon: PhoneForwarded, ...STEP_TRANSFER },
+          { icon: PhoneForwarded, ...STEP_DELIVER },
         ]}
         cta={{ label: "Book a call", href: BOOK_CALL_URL }}
       />

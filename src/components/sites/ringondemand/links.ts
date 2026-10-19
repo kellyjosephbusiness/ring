@@ -16,10 +16,15 @@ export interface BookingEvent {
 
 /** The iClosed events the inline booking widget can show. */
 export const BOOKING_EVENTS = {
-  /** Law firms (and, until they have their own events, everyone else). */
+  /** Law firms, and the homepage and other general pages. */
   discovery: {
     url: "https://app.iclosed.io/e/ringondemand1/ring-on-demand-personal-injury-discovery-call",
     title: "Ring On Demand - Personal Injury Discovery Call",
+  },
+  /** Insurance agencies and brokers, on the insurance pages. */
+  insurance: {
+    url: "https://app.iclosed.io/e/ringondemand1/ring-on-demand-broker-partner-discovery-call",
+    title: "Ring On Demand - Partner Discovery Call",
   },
   /** Call publishers, on /partners. */
   publisher: {

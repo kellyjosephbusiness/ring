@@ -11,14 +11,14 @@ import { PageHero } from "../page-kit/page-hero";
 import { CriteriaCard } from "../page-kit/visuals";
 import { PageShell } from "../page-shell/page-shell";
 import { INSURANCE_CTA } from "./insurance-cta";
-import { STEP_SCREEN, STEP_TRANSFER, type InsuranceLine } from "./insurance-lines";
+import { STEP_DELIVER, STEP_SCREEN, type InsuranceLine } from "./insurance-lines";
 
 const SCREENING_NOTE =
-  "If a caller fails one of your questions, we do not transfer them and you do not pay for them.";
+  "If a caller fails one of your questions, we do not send them to you and you do not pay for them.";
 
 /** One insurance line, on the same page kit as the legal practice areas:
- * hero, three steps, the screening checklist, call sources, the live
- * transfer offer and the booking band. */
+ * hero, three steps, the screening checklist, call sources, the two offers
+ * (inbound calls and live transfers) and the booking band. */
 export function InsuranceLinePage({ line }: { line: InsuranceLine }) {
   return (
     <PageShell>
@@ -29,7 +29,7 @@ export function InsuranceLinePage({ line }: { line: InsuranceLine }) {
         items={[
           { icon: ClipboardList, title: "You set the criteria", body: line.criteria },
           { icon: Megaphone, ...STEP_SCREEN },
-          { icon: PhoneForwarded, ...STEP_TRANSFER },
+          { icon: PhoneForwarded, ...STEP_DELIVER },
         ]}
         cta={{ label: "Book a call", href: BOOK_CALL_URL }}
       />
@@ -45,13 +45,25 @@ export function InsuranceLinePage({ line }: { line: InsuranceLine }) {
       <CtaCards
         heading={{
           eyebrow: "Offers",
-          heading: { lead: "Live transfers", accent: "to your agents" },
+          heading: { lead: "2 ways to get", accent: "calls from us" },
           sub: `Book a call for ${line.inSentence} pricing.`,
         }}
         cards={[
           {
+            id: "inbound-calls",
+            eyebrow: "Straight to your agents",
+            title: "Inbound calls",
+            body: (
+              <p>
+                Callers who match your criteria ring straight through to your agents&apos; line,
+                from our own ads and our vetted publisher network.
+              </p>
+            ),
+            cta: { label: "Book a call", href: BOOK_CALL_URL },
+          },
+          {
             id: "live-transfers",
-            eyebrow: "For agencies with licensed agents",
+            eyebrow: "Screened by our intake team",
             title: "Live transfers",
             body: (
               <p>

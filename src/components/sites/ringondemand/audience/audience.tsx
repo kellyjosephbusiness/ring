@@ -44,7 +44,7 @@ const CARDS: readonly AudienceCard[] = [
   },
   {
     title: "Insurance agencies",
-    body: "Live transfers to your licensed agents, screened against your criteria. Final expense, auto, home and Medicare.",
+    body: "Inbound calls and live transfers to your licensed agents, screened against your criteria. Final expense, auto, home and Medicare.",
     tag: "Insurance",
     icon: (
       <Icon>
