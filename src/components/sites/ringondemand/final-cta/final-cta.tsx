@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
+import type { BookingEvent } from "../links";
 import { BookingWidget } from "./booking-widget";
 import styles from "./final-cta.module.css";
 
@@ -47,6 +48,8 @@ interface FinalCtaProps {
   /** Heading, split where the blue accent starts. */
   heading?: { lead: string; accent: string };
   body?: string;
+  /** The iClosed event to book; the discovery call by default. */
+  booking?: BookingEvent;
 }
 
 const DEFAULT_HEADING = {
@@ -59,7 +62,7 @@ const DEFAULT_BODY =
 
 /** The closing band every page ends with. It is the "Book a call" anchor
  * (#book-a-call) and holds the iClosed booking widget. */
-export function FinalCta({ heading = DEFAULT_HEADING, body = DEFAULT_BODY }: FinalCtaProps) {
+export function FinalCta({ heading = DEFAULT_HEADING, body = DEFAULT_BODY, booking }: FinalCtaProps) {
   const { ref, reveal } = useRevealOnEnter();
 
   return (
@@ -76,7 +79,7 @@ export function FinalCta({ heading = DEFAULT_HEADING, body = DEFAULT_BODY }: Fin
             {heading.lead} <span className={styles.headingAccent}>{heading.accent}</span>
           </h2>
           <p className={styles.subcopy}>{body}</p>
-          <BookingWidget />
+          <BookingWidget event={booking} />
         </div>
       </div>
     </section>

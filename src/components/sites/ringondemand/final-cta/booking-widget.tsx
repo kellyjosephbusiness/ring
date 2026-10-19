@@ -3,11 +3,12 @@
 import Script from "next/script";
 import { useEffect, useRef, useState } from "react";
 
-import { BOOKING_EVENT, ICLOSED_WIDGET_SCRIPT } from "../links";
+import { BOOKING_EVENTS, ICLOSED_WIDGET_SCRIPT, type BookingEvent } from "../links";
 import styles from "./final-cta.module.css";
 
 /**
- * iClosed's inline scheduler for the discovery call.
+ * iClosed's inline scheduler for one booking event (the discovery call by
+ * default).
  *
  * iClosed's script turns every `.iclosed-widget` box into its booking iframe
  * and keeps watching the DOM (and history changes), so a box that mounts
@@ -16,7 +17,7 @@ import styles from "./final-cta.module.css";
  * scheduler for readers who never scroll near it; a "Book a call" jump lands
  * inside that margin and mounts it straight away.
  */
-export function BookingWidget() {
+export function BookingWidget({ event = BOOKING_EVENTS.discovery }: { event?: BookingEvent }) {
   const ref = useRef<HTMLDivElement>(null);
   const [near, setNear] = useState(false);
 
@@ -42,10 +43,13 @@ export function BookingWidget() {
         <p className={styles.widgetLoading}>Loading the calendar…</p>
         {near ? (
           <>
+            {/* Keyed by event: iClosed marks a box processed, so a different
+                event needs a fresh box. */}
             <div
+              key={event.url}
               className={`iclosed-widget ${styles.widget}`}
-              data-url={BOOKING_EVENT.url}
-              title={BOOKING_EVENT.title}
+              data-url={event.url}
+              title={event.title}
             />
             <Script src={ICLOSED_WIDGET_SCRIPT} strategy="afterInteractive" />
           </>
@@ -55,7 +59,7 @@ export function BookingWidget() {
       </div>
       <p className={styles.widgetFallback}>
         Calendar not loading?{" "}
-        <a href={BOOKING_EVENT.url} target="_blank" rel="noopener noreferrer">
+        <a href={event.url} target="_blank" rel="noopener noreferrer">
           Open the booking page
         </a>
       </p>

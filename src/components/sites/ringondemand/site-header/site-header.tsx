@@ -18,7 +18,7 @@ import { usePathname } from "next/navigation";
 
 import { BOOK_CALL_TARGET, BOOK_CALL_URL } from "../links";
 import { Logo } from "../shared/logo";
-import { BOOK_CALL_LABEL, LEGAL_MENU, NAV_LINKS } from "./site-header.data";
+import { BOOK_CALL_LABEL, MENUS, NAV_LINKS, type MenuId, type NavMenu } from "./site-header.data";
 import styles from "./site-header.module.css";
 
 const PHONE_QUERY = "(max-width: 809.98px)";
@@ -152,10 +152,10 @@ function BookCallButton({ className }: { className: string }) {
   );
 }
 
-function LegalTiles({ onNavigate }: { onNavigate: () => void }) {
+function MenuTiles({ menu, onNavigate }: { menu: NavMenu; onNavigate: () => void }) {
   return (
     <ul className={styles.tiles}>
-      {LEGAL_MENU.tiles.map(({ label, href, description, icon: Icon }) => (
+      {menu.tiles.map(({ label, href, description, icon: Icon }) => (
         <li key={href} className={styles.tileItem}>
           <Link className={styles.tile} href={href} onClick={onNavigate}>
             <span className={styles.iconBox}>
@@ -171,15 +171,15 @@ function LegalTiles({ onNavigate }: { onNavigate: () => void }) {
 }
 
 interface DesktopNavProps {
-  open: boolean;
-  onOpen: () => void;
+  open: MenuId | null;
+  onOpen: (id: MenuId) => void;
   onClose: () => void;
 }
 
 function DesktopNav({ open, onOpen, onClose }: DesktopNavProps) {
-  const panelId = useId();
+  const baseId = useId();
   const navRef = useRef<HTMLElement>(null);
-  const triggerRef = useRef<HTMLButtonElement>(null);
+  const triggerRefs = useRef<Partial<Record<MenuId, HTMLButtonElement | null>>>({});
   const panelRef = useRef<HTMLDivElement>(null);
   const focusFirstLink = useRef(false);
 
@@ -190,38 +190,39 @@ function DesktopNav({ open, onOpen, onClose }: DesktopNavProps) {
     }
   }, [open]);
 
-  const openFromKeyboard = () => {
+  const openFromKeyboard = (id: MenuId) => {
     focusFirstLink.current = true;
-    onOpen();
+    onOpen(id);
   };
 
   // Pointer clicks keep the menu open (hover already opened it); keyboard
   // activation toggles it and moves focus into the panel.
-  const onTriggerClick = (event: MouseEvent<HTMLButtonElement>) => {
+  const onTriggerClick = (id: MenuId) => (event: MouseEvent<HTMLButtonElement>) => {
     if (event.detail === 0) {
-      if (open) onClose();
-      else openFromKeyboard();
+      if (open === id) onClose();
+      else openFromKeyboard(id);
       return;
     }
-    onOpen();
+    onOpen(id);
   };
 
-  const onTriggerKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
+  const onTriggerKeyDown = (id: MenuId) => (event: KeyboardEvent<HTMLButtonElement>) => {
     if (event.key === "ArrowDown") {
       event.preventDefault();
-      openFromKeyboard();
+      openFromKeyboard(id);
     }
   };
 
-  const onTriggerEnter = (event: PointerEvent<HTMLButtonElement>) => {
-    if (event.pointerType === "mouse") onOpen();
+  const onTriggerEnter = (id: MenuId) => (event: PointerEvent<HTMLButtonElement>) => {
+    if (event.pointerType === "mouse") onOpen(id);
   };
 
   const onKeyDown = (event: KeyboardEvent<HTMLElement>) => {
     if (event.key === "Escape" && open) {
       event.preventDefault();
+      const trigger = triggerRefs.current[open];
       onClose();
-      triggerRef.current?.focus();
+      trigger?.focus();
     }
   };
 
@@ -243,6 +244,8 @@ function DesktopNav({ open, onOpen, onClose }: DesktopNavProps) {
     }
   };
 
+  const activeMenu = MENUS.find((menu) => menu.id === open);
+
   return (
     <nav
       ref={navRef}
@@ -258,20 +261,25 @@ function DesktopNav({ open, onOpen, onClose }: DesktopNavProps) {
           <Wordmark />
         </div>
         <div className={styles.links}>
-          <button
-            ref={triggerRef}
-            type="button"
-            className={styles.trigger}
-            aria-expanded={open}
-            aria-controls={panelId}
-            data-open={open || undefined}
-            onPointerEnter={onTriggerEnter}
-            onClick={onTriggerClick}
-            onKeyDown={onTriggerKeyDown}
-          >
-            <span className={styles.triggerLabel}>{LEGAL_MENU.label}</span>
-            <ChevronDownIcon className={styles.triggerChevron} />
-          </button>
+          {MENUS.map((menu) => (
+            <button
+              key={menu.id}
+              ref={(node) => {
+                triggerRefs.current[menu.id] = node;
+              }}
+              type="button"
+              className={styles.trigger}
+              aria-expanded={open === menu.id}
+              aria-controls={`${baseId}-${menu.id}`}
+              data-open={open === menu.id || undefined}
+              onPointerEnter={onTriggerEnter(menu.id)}
+              onClick={onTriggerClick(menu.id)}
+              onKeyDown={onTriggerKeyDown(menu.id)}
+            >
+              <span className={styles.triggerLabel}>{menu.label}</span>
+              <ChevronDownIcon className={styles.triggerChevron} />
+            </button>
+          ))}
           {NAV_LINKS.map((link) => (
             <div key={link.href} className={styles.linkCell}>
               <Link className={styles.textLink} href={link.href} onClick={onLinkClick}>
@@ -282,9 +290,9 @@ function DesktopNav({ open, onOpen, onClose }: DesktopNavProps) {
         </div>
         <div className={styles.dropdown}>
           <div className={styles.dropdownCatcher} aria-hidden="true" />
-          {open ? (
-            <div ref={panelRef} id={panelId} className={styles.panel}>
-              <LegalTiles onNavigate={onClose} />
+          {activeMenu ? (
+            <div ref={panelRef} id={`${baseId}-${activeMenu.id}`} className={styles.panel}>
+              <MenuTiles menu={activeMenu} onNavigate={onClose} />
             </div>
           ) : null}
         </div>
@@ -366,14 +374,16 @@ function MobileNav({ open, onOpen, onClose }: { open: boolean; onOpen: () => voi
             </button>
           </div>
           <div className={styles.mLinks}>
-            <div className={styles.mGroup}>
-              <p className={styles.mGroupLabel}>{LEGAL_MENU.label}</p>
-              {LEGAL_MENU.tiles.map((tile) => (
-                <Link key={tile.href} className={styles.mSubLink} href={tile.href} onClick={onLinkClick}>
-                  {tile.label}
-                </Link>
-              ))}
-            </div>
+            {MENUS.map((menu) => (
+              <div key={menu.id} className={styles.mGroup}>
+                <p className={styles.mGroupLabel}>{menu.label}</p>
+                {menu.tiles.map((tile) => (
+                  <Link key={tile.href} className={styles.mSubLink} href={tile.href} onClick={onLinkClick}>
+                    {tile.label}
+                  </Link>
+                ))}
+              </div>
+            ))}
             {NAV_LINKS.map((link) => (
               <div key={link.href} className={styles.mLinkCell}>
                 <Link className={styles.mTextLink} href={link.href} onClick={onLinkClick}>
@@ -414,24 +424,24 @@ function MobileNav({ open, onOpen, onClose }: { open: boolean; onOpen: () => voi
 export function SiteHeader() {
   const scrollHidden = useHideOnScrollDown();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState<MenuId | null>(null);
   const pathname = usePathname();
 
   const openMobile = useCallback(() => setMobileOpen(true), []);
   const closeMobile = useCallback(() => setMobileOpen(false), []);
-  const openMenu = useCallback(() => setMenuOpen(true), []);
-  const closeMenu = useCallback(() => setMenuOpen(false), []);
+  const openMenu = useCallback((id: MenuId) => setMenuOpen(id), []);
+  const closeMenu = useCallback(() => setMenuOpen(null), []);
 
   // A route change closes whichever menu led to it.
   const [lastPath, setLastPath] = useState(pathname);
   if (pathname !== lastPath) {
     setLastPath(pathname);
     setMobileOpen(false);
-    setMenuOpen(false);
+    setMenuOpen(null);
   }
 
   useMediaQuery(PHONE_QUERY, (isPhone) => {
-    if (isPhone) setMenuOpen(false);
+    if (isPhone) setMenuOpen(null);
     else setMobileOpen(false);
   });
 

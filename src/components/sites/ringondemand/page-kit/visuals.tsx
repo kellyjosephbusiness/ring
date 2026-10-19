@@ -1,7 +1,13 @@
 import Link from "next/link";
-import { ArrowRight, Building2, ListChecks, Megaphone, PanelsTopLeft } from "lucide-react";
+import {
+  ArrowRight,
+  Building2,
+  ListChecks,
+  Megaphone,
+  PanelsTopLeft,
+  type LucideIcon,
+} from "lucide-react";
 
-import { PRACTICE_AREAS, practiceAreaHref } from "../legal/practice-areas";
 import { CheckDisc } from "../shared/check-disc";
 import styles from "./visuals.module.css";
 
@@ -69,8 +75,14 @@ export function CallAgenda() {
   );
 }
 
-/** The five practice areas as a linked list. */
-export function AreaList({ label = "Practice areas" }: { label?: string }) {
+export interface AreaListItem {
+  href: string;
+  name: string;
+  icon: LucideIcon;
+}
+
+/** Pages (practice areas, insurance lines) as a linked list. */
+export function AreaList({ label, items }: { label: string; items: readonly AreaListItem[] }) {
   return (
     <div className={styles.card}>
       <div className={styles.cardHead}>
@@ -80,11 +92,11 @@ export function AreaList({ label = "Practice areas" }: { label?: string }) {
         </span>
       </div>
       <ul className={styles.areas}>
-        {PRACTICE_AREAS.map((area) => {
+        {items.map((area) => {
           const Icon = area.icon;
           return (
-            <li key={area.slug}>
-              <Link className={styles.area} href={practiceAreaHref(area)}>
+            <li key={area.href}>
+              <Link className={styles.area} href={area.href}>
                 <span className={styles.iconBox}>
                   <Icon className={styles.iconGlyph} strokeWidth={1.75} aria-hidden="true" />
                 </span>

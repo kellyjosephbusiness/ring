@@ -24,9 +24,9 @@ const inter = localFont({
   ],
 });
 
-const title = "RingOnDemand | Signed MVA Cases for Personal Injury Firms";
+const title = "RingOnDemand | Screened Live Transfers for Legal and Insurance";
 const description =
-  "You give us your case criteria. We run the ads, screen every caller, and send you a live transfer or a signed retainer. You pay per transfer or per signed case and nothing else.";
+  "You give us your criteria. We run the ads, screen every caller, and send the ones who qualify to your team while they are still on the line. Law firms can also take signed retainers.";
 
 const siteUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
   ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`

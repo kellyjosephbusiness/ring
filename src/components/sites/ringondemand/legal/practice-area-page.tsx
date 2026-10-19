@@ -1,6 +1,7 @@
 import { ClipboardList, Megaphone, PhoneForwarded } from "lucide-react";
 
 import { CallSources } from "../call-sources/call-sources";
+import { Faq } from "../faq/faq";
 import { FinalCta } from "../final-cta/final-cta";
 import { BOOK_CALL_URL } from "../links";
 import { CtaCards, type CtaCard } from "../page-kit/cta-cards";
@@ -10,6 +11,7 @@ import { FeatureRow } from "../page-kit/feature-row";
 import { PageHero } from "../page-kit/page-hero";
 import { CriteriaCard } from "../page-kit/visuals";
 import { PageShell } from "../page-shell/page-shell";
+import { Pricing } from "../pricing/pricing";
 import { Results } from "../results/results";
 import { AttorneyCall } from "./attorney-call";
 import type { PracticeArea } from "./practice-areas";
@@ -41,9 +43,11 @@ function offerCards(area: PracticeArea): CtaCard[] {
 
 /** One legal practice area, laid out on iClosed's analytics page: hero,
  * three steps, the screening checklist, call sources, the offers, the
- * attorney call and the booking band. */
+ * attorney call and the booking band. MVA, the copy doc's page, also carries
+ * its results, pricing and FAQ. */
 export function PracticeAreaPage({ area }: { area: PracticeArea }) {
   const priced = area.offers.some((offer) => offer.price);
+  const isMva = area.slug === "mva";
 
   return (
     <PageShell>
@@ -70,7 +74,7 @@ export function PracticeAreaPage({ area }: { area: PracticeArea }) {
       <CallSources />
       <CtaCards
         heading={{
-          eyebrow: priced ? "Pricing" : "Offers",
+          eyebrow: "Offers",
           heading:
             area.offers.length > 1
               ? { lead: "2 ways to get", accent: "cases from us" }
@@ -79,8 +83,14 @@ export function PracticeAreaPage({ area }: { area: PracticeArea }) {
         }}
         cards={offerCards(area)}
       />
-      {area.slug === "mva" ? <Results /> : null}
+      {isMva ? (
+        <>
+          <Results />
+          <Pricing />
+        </>
+      ) : null}
       <AttorneyCall />
+      {isMva ? <Faq /> : null}
       <FinalCta />
     </PageShell>
   );

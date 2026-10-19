@@ -1,22 +1,29 @@
-# New pages: draft copy for review
+# Site pages: draft copy for review
 
-**Status: DRAFT.** The homepage copy comes from
-[`website-copy.md`](./website-copy.md). The pages below reuse those facts
-wherever they apply. Anything not in that doc was drafted for these pages and
-needs a yes, an edit or a cut before launch.
+**Status: DRAFT.** The legal copy doc ([`website-copy.md`](./website-copy.md))
+now lives on the MVA page (`/legal/mva`), which also carries its pricing and
+FAQ. The homepage, the insurance pages and the other pages below reuse those
+facts wherever they apply. Anything not in that doc was drafted for these pages
+and needs a yes, an edit or a cut before launch.
 
 House rules followed:
 - No new prices, stats, quotes or guarantees.
 - Only MVA shows prices ($550 / $2,500) and the MVA guarantees (guaranteed
   cost per signed case, 28-day replacement).
-- The other practice areas say "Book a call for … pricing".
+- The other practice areas and every insurance line say "Book a call for …
+  pricing".
 - No client names or testimonials.
 
 Where the copy lives in code:
 - Practice areas: `src/components/sites/ringondemand/legal/practice-areas.ts`
-- Legal index, Results, Partners and About: the route files in `src/app/`
+- Insurance lines: `src/components/sites/ringondemand/insurance/insurance-lines.ts`
+  (closing-band copy in `insurance/insurance-cta.ts`)
+- Homepage sections: `hero/`, `industries/`, `how-it-works/` and `audience/`
+  in `src/components/sites/ringondemand/`
+- Legal and insurance indexes, Results, Partners and About: the route files in
+  `src/app/`
 - Shared blocks: `src/components/sites/ringondemand/legal/attorney-call.tsx`
-  (the attorney call card) and `legal/area-grid.tsx` (the practice-area grid)
+  (the attorney call card)
 
 ## Please confirm
 
@@ -32,10 +39,9 @@ Where the copy lives in code:
    buyer can set. Edit them to match the intake scripts you actually run.
 4. **Partners page.**
    - The page claims publishers are vetted before calls go live, and that you
-     buy calls in all five practice areas.
-   - Its buttons go to the same booking widget, the *Personal Injury Discovery
-     Call*. A publisher-specific iClosed event or contact link should replace
-     it. Set it in `src/app/partners/page.tsx`.
+     buy calls in every legal and insurance vertical listed.
+   - It books the *Publisher Intro Call* (set in `links.ts`,
+     `BOOKING_EVENTS.publisher`).
 5. **About page.** It says nothing about the company beyond the copy doc (no
    founding story, team or location). Add those if you want them.
 6. **Results page.**
@@ -44,19 +50,92 @@ Where the copy lives in code:
    - Its pricing card repeats the MVA prices.
    - The copy doc's note still applies: no client quotes until one is approved
      in writing.
+7. **Insurance offers.** Every insurance line offers live transfers only,
+   sold to agencies with licensed agents, priced per transfer ("You pay per
+   transfer"). No prices are shown.
+8. **Insurance screening checks (drafted).** The final expense, auto, home and
+   Medicare checklists are typical criteria. Edit them to match the intake
+   scripts you run. **Medicare:** have the page reviewed against the CMS
+   marketing rules you work under before launch.
+9. **Booking on the homepage and insurance pages.** These still book the
+   *Personal Injury Discovery Call*, the only general event so far.
+   - Send an insurance (or general) iClosed event and it goes in
+     `BOOKING_EVENTS` in `links.ts`.
+   - Then pass it as `booking` to `FinalCta` on the homepage and the insurance
+     pages.
+10. **Homepage (general).** Check the hero, industry cards, steps and "Who this
+    is for" copy below. It keeps the copy doc's proof line, scoped as "Over
+    1,500 signed retainers delivered to personal injury firms last quarter",
+    and shows the 3 stats under "What personal injury firms see".
 
 ## Navigation
 
-- **Header:** Legal ▾ (the 5 practice areas + All practice areas) · Pricing (→
-  homepage pricing) · Results · Partners · About · **Book a call**.
-  - The copy doc's Live Transfers and Pre-Signed Cases links moved to the
-    footer.
-- **Footer:** Practice areas · Offers · Company (Results, About, Partners,
-  Contact) · Legal.
-  - "Publishers" is now "Partners" → `/partners`.
+- **Header:** Legal ▾ (the 5 practice areas + All practice areas) · Insurance ▾
+  (the 4 lines + All insurance lines) · Results · Partners · About · **Book a
+  call**.
+  - Pricing left the header: the only prices are MVA's, on `/legal/mva#pricing`.
+- **Footer:** Legal · Insurance · Company (Results, About, Partners, Contact) ·
+  Policies.
+  - The Offers column is gone (offers are on each vertical's page).
+  - The privacy and terms column is now "Policies", so it isn't confused with
+    the Legal column.
   - Contact, Privacy Policy and Terms of Service are still placeholders.
+  - Tagline: "Screened live transfers for legal and insurance."
 - **Every "Book a call"** scrolls to the closing section, which holds the
   iClosed booking widget.
+
+## / — Homepage (general)
+
+Same sections and styling as before, with general copy. The MVA-only sections
+(the screening list, pricing and FAQ) moved to `/legal/mva`.
+
+- Eyebrow: For law firms and insurance agencies
+- Headline: Screened Live Transfers / **for Legal and Insurance**
+- Sub: You give us your criteria. We run the ads, screen every caller, and send
+  the ones who qualify to your team while they are still on the line. Law
+  firms can also take signed retainers.
+- Under the button: Tell us your criteria. We tell you what we can deliver.
+- Proof line: Over 1,500 signed retainers delivered to personal injury firms
+  last quarter
+- Hero card checks:
+  - Inside the states you work in
+  - Fits your criteria
+  - Answered every qualifying question
+  - Wants to talk now
+
+  Then "Transferring to your team".
+- **Calls for legal and insurance**, two cards:
+  - **Legal**: Live transfers and signed retainers. For law firms and funding
+    companies. Every caller answers your qualifying questions before they
+    reach your intake team, or we sign them to your retainer. Chips: the 5
+    practice areas. → See legal
+  - **Insurance**: Live transfers to your licensed agents. For insurance
+    agencies. Every caller answers your qualifying questions before they are
+    transferred to your agents. Chips: the 4 lines. → See insurance
+- **How it works**
+  1. You set the criteria: The case types or lines of insurance you want, the
+     questions every caller must pass, and the states you work in. We write
+     your criteria into the intake script.
+  2. We run the ads and screen every caller: copy doc
+  3. Your team gets the live transfer: Callers who pass go to your line during
+     the hours you set. Law firms can also take pre-signed cases, with the
+     completed intake and the signed retainer.
+- Copy doc sections kept as they were:
+  - Transfers can start within 24 hours
+  - You see every transfer
+  - Where the calls come from
+- **Who this is for**
+  - Law firms (Legal): Live transfers to your intake team, or signed retainers
+    if you want us to do the whole intake. Motor vehicle accidents, workers'
+    comp, lemon law, medical malpractice and pre-settlement funding.
+  - Insurance agencies (Insurance): Live transfers to your licensed agents,
+    screened against your criteria. Final expense, auto, home and Medicare.
+  - Call publishers (Partners): Send us your calls. Every caller goes through
+    the same intake script as the callers from our own ads.
+- **What personal injury firms see**: the copy doc's 3 stats.
+- Closing section: Tell us your criteria and **we will tell you what we can
+  deliver**. Book a call with our team. We show you the ads, the intake
+  questions, and how calls reach your team, and you decide.
 
 ## /legal — Legal (index)
 
@@ -199,6 +278,109 @@ Copy doc throughout.
 - Offers: Live transfers to your team, one card (live transfers text as
   above). Under the heading: Book a call for pre-settlement funding pricing.
 
+## /insurance — Insurance (index)
+
+- Eyebrow: Insurance
+- Headline: Live Transfers for / **Insurance Agencies**
+- Sub: You give us your criteria. We run the ads, screen every caller, and
+  transfer the ones who qualify to your licensed agents while they are still on
+  the line. Pick your line to see what we check.
+- **Pick your line of insurance** (eyebrow: Lines of insurance)
+  - Intro: The same process for every line: your criteria in our intake
+    script, our ads, and a live transfer to your agents when a caller
+    qualifies.
+  - One card per line (its menu line, below).
+  - Last card: Another line of insurance? Tell us who your agents want to talk
+    to and we will tell you what we can deliver. → Book a call
+- **How it works**
+  1. You set the criteria: The callers your agents want, by line, state and the
+     questions you ask. We write your criteria into the intake script.
+  2. We run the ads and screen every caller: copy doc
+  3. Your agents get the live transfer: Callers who pass your questions go to
+     your agents' line during the hours you set.
+- Then: Where the calls come from, and the closing section: Tell us your
+  criteria and **we will tell you what we can deliver**. Book a call with our
+  team. We show you the ads and the intake questions, and you decide.
+
+## /insurance/[line] — insurance line pages
+
+Same page kit and order as the practice-area pages:
+1. Hero
+2. How it works: step 1 is the line's own criteria; steps 2 and 3 are as on
+   the index
+3. "What we check before a caller reaches you", with the checklist and the
+   line "If a caller fails one of your questions, we do not transfer them and
+   you do not pay for them."
+4. Where the calls come from
+5. **Live transfers to your agents**: "Book a call for … pricing" and one card.
+   - Eyebrow: For agencies with licensed agents
+   - Body: Our intake team screens every caller against your criteria and
+     transfers them to your agents while they are still on the line.
+6. Booking section
+
+No attorney call card.
+
+Every hero sub reads: You give us your criteria. We run the ads, screen every
+caller (auto: "every driver who calls"; home: "every homeowner who calls"), and
+transfer the ones who qualify to your licensed agents while they are still on
+the line. You pay per transfer.
+
+### Final expense (`/insurance/final-expense`)
+
+- Headline: Final Expense Calls, / **Screened to Your Criteria**
+- Menu line: Callers shopping for final expense coverage, transferred to your
+  agents.
+- Step 1: Age range, coverage amount, how the caller will pay premiums, and
+  the states your agents are licensed in.
+- Checks:
+  - The caller is inside the age range you write.
+  - The caller lives in a state your agents are licensed in.
+  - The coverage amount they want is one you offer.
+  - The caller has a way to pay premiums, such as a bank account or card.
+  - Anything else you add to the script.
+
+### Auto insurance (`/insurance/auto`)
+
+- Headline: Auto Insurance Calls, / **Screened to Your Criteria**
+- Menu line: Drivers looking for a quote, screened by state, vehicle and
+  coverage.
+- Step 1: States and ZIP codes, vehicles and drivers, current coverage, and
+  driving history.
+- Checks:
+  - The caller lives in a state or ZIP code you write.
+  - The caller has a valid driver's license.
+  - The number of vehicles and drivers is inside your limits.
+  - The caller is currently insured, or not, as you choose.
+  - The driving history fits the rules you set.
+  - Anything else you add to the script.
+
+### Home insurance (`/insurance/home`)
+
+- Headline: Home Insurance Calls, / **Screened to Your Criteria**
+- Menu line: Homeowners looking for coverage, screened by property and
+  location.
+- Step 1: Property type, ownership, location, and when the caller needs
+  coverage.
+- Checks:
+  - The caller owns the home.
+  - The property is in a state or ZIP code you write.
+  - The property type is one you cover.
+  - The caller needs coverage inside the window you pick.
+  - Anything else you add to the script.
+
+### Medicare (`/insurance/medicare`)
+
+- Headline: Medicare Calls, / **Screened to Your Criteria**
+- Menu line: Medicare-eligible callers, screened by eligibility and location.
+- Step 1: Eligibility, the plans your agents offer, the counties and states
+  you cover, and the enrollment periods you work.
+- Checks:
+  - The caller is eligible for Medicare.
+  - The caller lives in a county where your plans are offered.
+  - The caller is calling during an enrollment period you work.
+  - The caller wants to talk to a licensed agent now.
+  - Anything else you add to the script.
+
 ## /results — Results
 
 - Eyebrow: Results
@@ -222,33 +404,34 @@ Copy doc throughout.
 
 - Eyebrow: Partners : Call publishers
 - Headline: Join Our Vetted / **Publisher Network**
-- Sub: We buy legal calls from a vetted publisher network. Every call you send
-  goes through the same intake script as the calls from our own ads.
+- Sub: We buy legal and insurance calls from a vetted publisher network. Every
+  call you send goes through the same intake script as the calls from our own
+  ads.
 - Button: Talk to our team
 - **How it works for publishers**
-  - Tell us about your traffic: The practice areas, states and sources you run
-    calls from.
+  - Tell us about your traffic: The verticals, states and sources you run calls
+    from.
   - We vet your sources: Every publisher in our network is vetted before calls
     go live.
   - Calls run through our intake script: Every caller answers the same
     qualifying questions as the callers from our own ads.
-- **Calls we buy** (eyebrow: Practice areas): We take calls in every practice
-  area we run for law firms and funding companies: motor vehicle accidents,
-  workers' compensation, lemon law, medical malpractice and pre-settlement
-  funding.
+- **Calls we buy** (eyebrow: Verticals): We take calls in every vertical we
+  run. In legal: motor vehicle accidents, workers' compensation, lemon law,
+  medical malpractice and pre-settlement funding. In insurance: final expense,
+  auto, home and Medicare.
 - Where the calls come from (copy doc)
-- Closing section:
+- Closing section, booking the **Publisher Intro Call**:
   - Heading: Want to send us calls? **Tell us about your traffic**
-  - Body: Book a call with our team. Tell us the practice areas, states and
-    sources you run, and we will tell you where your calls fit.
+  - Body: Book a call with our team. Tell us the verticals, states and sources
+    you run, and we will tell you where your calls fit.
 
 ## /about — About
 
 - Eyebrow: About
-- Headline: We Run the Ads and Screen / **Every Caller for Law Firms**
-- Sub: RingOnDemand delivers live transfers and signed retainers to law firms
-  in any U.S. state. You give us your case criteria. We run the ads, screen
-  every caller, and send you only the ones who pass.
+- Headline: We Run the Ads and / **Screen Every Caller**
+- Sub: RingOnDemand delivers live transfers to law firms and insurance
+  agencies, and signed retainers to law firms. You give us your criteria. We
+  run the ads, screen every caller, and send you only the ones who pass.
 - **From the ad to your intake line** (eyebrow: What we do)
   - We run the ads: Our own ads plus a vetted publisher network. In
     California, ads run under your firm's name and you approve every creative
