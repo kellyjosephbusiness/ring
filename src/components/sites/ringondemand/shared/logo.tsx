@@ -1,7 +1,7 @@
-/** RingOnDemand logo: the gradient call bars and "Ring On Demand" wordmark,
- * traced from the brand PNG (docs/research/ringondemand/brand/). "dark" has
- * black lettering for light backgrounds; "light" has white lettering for the
- * dark footer. "On" and the bars keep their gradients in both. */
+/** RingOnDemand logo: the call bars and "Ring On Demand" wordmark, traced
+ * from the brand PNG (docs/research/ringondemand/brand/). The bars and "On"
+ * are the button blue (#0037c2). "dark" has black lettering for light
+ * backgrounds; "light" has white lettering for the dark footer. */
 
 const SRC = {
   dark: "/sites/ringondemand/brand/logo-black.svg",

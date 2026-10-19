@@ -34,14 +34,15 @@ Every destination is in `links.ts`.
 
 `public/sites/ringondemand/brand/` holds the logo as vector SVGs, traced from
 the supplied PNG (kept in [`brand/logo-original-white.png`](./brand/)). The
-call bars and "On" keep their gradients in both files.
+call bars and "On" are the site's button blue (`#0037c2`, the "Book a call"
+button) in both files, in place of the original purple/blue gradients.
 
 | File | Used for |
 |---|---|
 | `logo-black.svg` | Header. Black "Ring" and "Demand", for light backgrounds |
 | `logo-white.svg` | Footer. White lettering, as in the original, for dark backgrounds |
 
-The favicon (`meta/favicon.svg`) is the gradient call bars on their own. Both
+The favicon (`meta/favicon.svg`) is the blue call bars on their own. Both
 logos render through `shared/logo.tsx`.
 
 ## Booking
