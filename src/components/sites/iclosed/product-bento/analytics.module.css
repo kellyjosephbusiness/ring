@@ -1,0 +1,608 @@
+/* Card 4 — Analytics dashboard. Fixed 588×260 graphic; the card scales it. */
+
+.root {
+  position: relative;
+  width: 588px;
+  height: 260px;
+  overflow: hidden;
+  background: transparent;
+  font-family: var(--ic-font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  /* ic-website paints a #f8f9fa scrim over the clipped lower cards; on the
+     Figma's tinted card that has to be a mask so the tint shows through. Stops
+     are the scrim's: 236.37px and 250.96px of 260px. */
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 90.91%, rgba(0, 0, 0, 0) 96.52%);
+  mask-image: linear-gradient(180deg, #000 0%, #000 90.91%, rgba(0, 0, 0, 0) 96.52%);
+}
+
+.window {
+  position: absolute;
+  left: 24px;
+  top: 24px;
+  width: 540px;
+  height: 236px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 0 6px 20px rgba(17, 25, 40, 0.05), 0 1px 2px rgba(17, 25, 40, 0.04);
+  overflow: hidden;
+}
+
+.navbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  border-bottom: 0.48px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  gap: 7.68px;
+  padding: 4.8px 11.52px;
+}
+
+.navtitle {
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 11.52px;
+  color: #111928;
+  white-space: nowrap;
+}
+
+.card {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+}
+
+.cardFunnel { left: 7.91px; top: 28px; width: 260.55px; }
+.cardStrategy { left: 7.91px; top: 159.62px; width: 260.55px; }
+.cardSales { left: 276px; top: 28px; width: 253px; }
+.cardNosale { left: 275px; top: 160px; width: 254px; }
+
+.hd {
+  background: #f9fafb;
+  border: 0.402px solid #e5e7eb;
+  border-radius: 3.217px 3.217px 0 0;
+  padding: 3.217px 6.433px;
+  display: flex;
+  flex-direction: column;
+  gap: 3.217px;
+}
+
+.hdTight {
+  gap: 1.608px;
+}
+
+.hdRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.hdLeft {
+  display: flex;
+  align-items: center;
+  gap: 3.217px;
+}
+
+.ico {
+  display: block;
+  width: 8.042px;
+  height: 8.042px;
+  flex-shrink: 0;
+  overflow: visible;
+}
+
+.hdTitle {
+  font-size: 5.629px;
+  font-weight: 600;
+  line-height: 9.65px;
+  color: #111928;
+  white-space: nowrap;
+}
+
+.hdSub {
+  font-size: 5.629px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #374151;
+  white-space: nowrap;
+}
+
+.tog {
+  background: #f3f4f6;
+  border-radius: 1.608px;
+  padding: 0.804px;
+  display: flex;
+  width: 120.625px;
+  flex-shrink: 0;
+}
+
+.togInner {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  border-radius: 3.217px;
+}
+
+.togSeg {
+  flex: 1 0 0;
+  min-width: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.608px 6.433px;
+  font-size: 4.825px;
+  font-weight: 500;
+  line-height: 1.3;
+  color: #111928;
+  white-space: nowrap;
+}
+
+.togSegActive {
+  background: #6b7280;
+  color: #ffffff;
+  height: 9.65px;
+  border-radius: 1.608px;
+}
+
+.body {
+  background: #ffffff;
+  border-left: 0.402px solid #e5e7eb;
+  border-right: 0.402px solid #e5e7eb;
+  border-bottom: 0.402px solid #e5e7eb;
+  border-radius: 0 0 3.217px 3.217px;
+  padding: 6.433px 9.65px;
+  display: flex;
+  flex-direction: column;
+  gap: 6.433px;
+  align-items: center;
+}
+
+.fnBody {
+  background: #ffffff;
+  border-left: 0.402px solid #e5e7eb;
+  border-right: 0.402px solid #e5e7eb;
+  border-bottom: 0.402px solid #e5e7eb;
+  border-radius: 0 0 3.217px 3.217px;
+  padding: 6.433px;
+  display: flex;
+  gap: 6.433px;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.fnChart {
+  flex: 1 0 0;
+  min-width: 1px;
+  height: 84.437px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.fnCols {
+  height: 84.437px;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+}
+
+.fnDiv {
+  width: 0.402px;
+  height: 100%;
+  background: #e5e7eb;
+  flex-shrink: 0;
+}
+
+.fnCol {
+  flex: 1 0 0;
+  min-width: 1px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.fnData {
+  display: flex;
+  flex-direction: column;
+  gap: 3.217px;
+  align-items: flex-start;
+  padding: 0 4.825px;
+  width: 100%;
+}
+
+.fnLabel {
+  font-size: 5.629px;
+  font-weight: 600;
+  line-height: 9.65px;
+  color: #6b7280;
+  white-space: nowrap;
+}
+
+.fnValue {
+  font-size: 6.433px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: #111928;
+  white-space: nowrap;
+}
+
+.fnGraph {
+  width: 100%;
+  border-bottom: 0.402px solid #e5e7eb;
+  display: flex;
+  overflow: hidden;
+}
+
+.fnGraphViews { height: 55.487px; align-items: flex-start; }
+.fnGraphContacts { height: 49.456px; align-items: flex-end; }
+.fnGraphCalls { height: 30.96px; align-items: flex-end; }
+
+.fnBarViews {
+  width: 16.083px;
+  height: 55.085px;
+  flex-shrink: 0;
+  background: linear-gradient(180deg, #4f88e4 0%, #1c64f2 100%);
+}
+
+.fnBarContacts {
+  width: 16.083px;
+  height: 100%;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.fnBarContactsTop {
+  flex: 1 0 0;
+  min-height: 1px;
+  width: 100%;
+  background: #76a9fa;
+}
+
+.fnBarContactsBot {
+  flex: 1 0 0;
+  min-height: 1px;
+  width: 100%;
+  background: linear-gradient(180deg, #4f88e4 0%, #1c64f2 100%);
+}
+
+.fnBarCalls {
+  width: 16.083px;
+  height: 100%;
+  flex-shrink: 0;
+  background: linear-gradient(180deg, #4f88e4 0%, #1c64f2 100%);
+}
+
+.fnArea {
+  flex: 1 0 0;
+  min-width: 1px;
+  height: 100%;
+  display: block;
+}
+
+.fnRates {
+  width: 47px;
+  align-self: stretch;
+  background: #f9fafb;
+  display: flex;
+  flex-direction: column;
+  gap: 12.867px;
+  align-items: center;
+  justify-content: center;
+  padding: 9.65px 0;
+  text-align: center;
+}
+
+.fnRate {
+  display: flex;
+  flex-direction: column;
+  gap: 1.608px;
+  align-items: center;
+  padding: 0 4.825px;
+  width: 100%;
+}
+
+.fnRateVal {
+  font-size: 7.237px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: #111928;
+  white-space: nowrap;
+}
+
+.fnRateLbl {
+  font-size: 4.825px;
+  font-weight: 500;
+  line-height: 1.3;
+  color: #6b7280;
+}
+
+.slChart {
+  display: flex;
+  gap: 6.433px;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.yaxis {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.ylbl {
+  font-size: 4.825px;
+  font-weight: 500;
+  line-height: 8.042px;
+  color: #6b7280;
+  white-space: nowrap;
+}
+
+.slYaxis {
+  height: 53.55px;
+}
+
+.slPlot {
+  flex: 1 0 0;
+  min-width: 1px;
+  position: relative;
+  height: 53.55px;
+}
+
+.grid {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.grid > span {
+  display: block;
+  width: 100%;
+  height: 0.402px;
+  background: #e5e7eb;
+}
+
+.slSvg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+
+.slChips {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.slChip {
+  flex: 1 0 0;
+  min-width: 1px;
+  height: 22.517px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 3.217px 6.433px;
+  background: #ebf5ff;
+}
+
+.slChipRev {
+  background: #e1effe;
+}
+
+.slChipVal {
+  font-size: 5.629px;
+  font-weight: 600;
+  line-height: 9.65px;
+  color: #111928;
+  white-space: nowrap;
+}
+
+.slChipSub {
+  display: flex;
+  gap: 1.608px;
+  align-items: center;
+  font-size: 4.825px;
+  font-weight: 500;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+.slChipCount { color: #1c64f2; }
+.slChipLbl { color: #6b7280; }
+
+.miniChart {
+  display: flex;
+  gap: 6.433px;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.miniYaxis {
+  height: 81.623px;
+}
+
+.miniPlotcol {
+  flex: 1 0 0;
+  min-width: 1px;
+  display: flex;
+  flex-direction: column;
+  gap: 4.021px;
+  align-items: center;
+}
+
+.miniPlot {
+  position: relative;
+  width: 100%;
+  height: 81.623px;
+  border-left: 0.402px solid #e5e7eb;
+  border-bottom: 0.402px solid #e5e7eb;
+}
+
+.miniBars {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 77px;
+  display: flex;
+  gap: 3.217px;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0 4.021px;
+}
+
+.miniBar {
+  flex: 1 0 0;
+  min-width: 1px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  border-radius: 0.804px 0.804px 0 0;
+  overflow: hidden;
+}
+
+.miniBar > span {
+  display: block;
+  width: 100%;
+}
+
+.stBlue { background: linear-gradient(180deg, #4f88e4 0%, #1c64f2 100%); }
+.stRed { background: #f98080; }
+.stGray { background: #e5e7eb; }
+
+/* --- choreography --- */
+
+.root.isPlay .window {
+  animation: rise 450ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.root.isPlay .hd {
+  animation: fade 250ms ease-out both;
+}
+
+.root.isPlay .cardFunnel .hd { animation-delay: 400ms; }
+.root.isPlay .cardSales .hd { animation-delay: 800ms; }
+.root.isPlay .cardStrategy .hd { animation-delay: 1200ms; }
+.root.isPlay .cardNosale .hd { animation-delay: 1350ms; }
+
+.root.isPlay .fnBarViews {
+  transform-origin: top;
+  animation: grow 600ms cubic-bezier(0.22, 1, 0.36, 1) 400ms both;
+}
+
+.root.isPlay .fnBarContacts {
+  transform-origin: bottom;
+  animation: grow 600ms cubic-bezier(0.22, 1, 0.36, 1) 550ms both;
+}
+
+.root.isPlay .fnBarCalls {
+  transform-origin: bottom;
+  animation: grow 600ms cubic-bezier(0.22, 1, 0.36, 1) 700ms both;
+}
+
+.root.isPlay .fnArea {
+  animation: fade 500ms ease-out 700ms both;
+}
+
+.root.isPlay .fnRate {
+  animation: fadeRise 400ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.root.isPlay .fnRate:nth-child(1) { animation-delay: 1100ms; }
+.root.isPlay .fnRate:nth-child(2) { animation-delay: 1250ms; }
+
+.root.isPlay .slArea {
+  animation: fade 500ms ease-out 800ms both;
+}
+
+.root.isPlay .slLine {
+  stroke-dasharray: 1;
+  animation: draw 900ms ease-in-out 800ms both;
+}
+
+.root.isPlay .slDot {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pop 350ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(1000ms + var(--i) * 60ms);
+}
+
+.root.isPlay .slChip {
+  animation: chip 400ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(1400ms + var(--i) * 100ms);
+}
+
+.root.isPlay .miniBar {
+  transform-origin: bottom;
+  animation: grow 500ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.root.isPlay .cardStrategy .miniBar {
+  animation-delay: calc(1200ms + var(--i) * 70ms);
+}
+
+.root.isPlay .cardNosale .miniBar {
+  animation-delay: calc(1350ms + var(--i) * 70ms);
+}
+
+.root.isPlay .cardStrategy .grid,
+.root.isPlay .cardStrategy .yaxis {
+  animation: fade 250ms ease-out 1200ms both;
+}
+
+.root.isPlay .cardNosale .grid,
+.root.isPlay .cardNosale .yaxis {
+  animation: fade 250ms ease-out 1350ms both;
+}
+
+@keyframes rise {
+  0% { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes fadeRise {
+  0% { opacity: 0; transform: translateY(4px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes grow {
+  0% { transform: scaleY(0); }
+  100% { transform: scaleY(1); }
+}
+
+@keyframes draw {
+  0% { stroke-dashoffset: 1; }
+  100% { stroke-dashoffset: 0; }
+}
+
+@keyframes pop {
+  0% { transform: scale(0); }
+  70% { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+
+@keyframes chip {
+  0% { opacity: 0; transform: scale(0.9); }
+  70% { opacity: 1; transform: scale(1.05); }
+  100% { opacity: 1; transform: scale(1); }
+}
