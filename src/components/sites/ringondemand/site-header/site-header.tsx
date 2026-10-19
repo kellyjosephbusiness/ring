@@ -17,6 +17,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { BOOK_CALL_TARGET, BOOK_CALL_URL } from "../links";
+import { Logo } from "../shared/logo";
 import { BOOK_CALL_LABEL, LEGAL_MENU, NAV_LINKS } from "./site-header.data";
 import styles from "./site-header.module.css";
 
@@ -138,7 +139,7 @@ function ChevronDownIcon({ className }: { className: string }) {
 function Wordmark() {
   return (
     <Link className={styles.wordmark} href="/" aria-label="RingOnDemand home">
-      RingOnDemand
+      <Logo variant="dark" className={styles.logo} />
     </Link>
   );
 }

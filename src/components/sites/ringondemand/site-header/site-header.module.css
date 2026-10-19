@@ -8,7 +8,6 @@
   --nav-ease: cubic-bezier(0.6, 0, 0.05, 1);
   --link-ease: cubic-bezier(0.44, 0, 0.56, 1);
   --ink: rgb(2, 4, 24);
-  --wordmark-ink: #0a0d14;
   --hover-wash: rgb(249, 250, 251);
   position: fixed;
   top: 0;
@@ -46,16 +45,20 @@
 }
 
 .wordmark {
-  display: block;
+  display: flex;
   flex: none;
-  font-family: var(--site-font-display);
-  font-size: 22px;
-  font-weight: 600;
-  line-height: 28px;
-  letter-spacing: -0.6px;
-  white-space: nowrap;
-  color: var(--wordmark-ink);
-  text-decoration: none;
+  align-items: center;
+}
+
+.wordmark:focus-visible {
+  outline: 2px solid #1c64f2;
+  outline-offset: 4px;
+}
+
+.logo {
+  display: block;
+  width: auto;
+  height: 26px;
 }
 
 .strokeBot {
@@ -665,11 +668,17 @@
   }
 }
 
-/* Very narrow phones: shrink the wordmark so the row keeps its button. */
+/* Phones: a smaller logo leaves room for the button and the menu toggle;
+   very narrow phones shrink it again. */
+@media (max-width: 809.98px) {
+  .mRow .logo {
+    height: 22px;
+  }
+}
+
 @media (max-width: 359.98px) {
-  .mRow .wordmark {
-    font-size: 17px;
-    letter-spacing: -0.4px;
+  .mRow .logo {
+    height: 18px;
   }
 
   .bookMobile {

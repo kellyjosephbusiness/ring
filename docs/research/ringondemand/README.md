@@ -30,6 +30,20 @@ per homepage section in the copy doc's order. The other folders:
 
 Every destination is in `links.ts`.
 
+## Logo
+
+`public/sites/ringondemand/brand/` holds the logo as vector SVGs, traced from
+the supplied PNG (kept in [`brand/logo-original-white.png`](./brand/)). The
+call bars and "On" keep their gradients in both files.
+
+| File | Used for |
+|---|---|
+| `logo-black.svg` | Header. Black "Ring" and "Demand", for light backgrounds |
+| `logo-white.svg` | Footer. White lettering, as in the original, for dark backgrounds |
+
+The favicon (`meta/favicon.svg`) is the gradient call bars on their own. Both
+logos render through `shared/logo.tsx`.
+
 ## Booking
 
 Every "Book a call" button scrolls to the closing section (`#book-a-call`),
@@ -54,8 +68,6 @@ the "Ring On Demand - Personal Injury Discovery Call" event
   publisher-specific iClosed event or contact link should replace it.
 - **Footer pages:** Contact, Privacy Policy and Terms of Service use
   `PENDING_PAGES` placeholders (`#`).
-- **Logo:** the header and footer use a "RingOnDemand" text wordmark. The
-  favicon is a simple "R" monogram until brand files are supplied.
 - **Notes in the copy doc still apply:**
   - No client quotes until one is approved in writing.
   - Cut the pilot line under Pricing if the pilot isn't running.

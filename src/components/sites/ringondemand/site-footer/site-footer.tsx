@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { PRACTICE_AREAS, practiceAreaHref } from "../legal/practice-areas";
+import { Logo } from "../shared/logo";
 import { ANCHORS, PENDING_PAGES, ROUTES } from "../links";
 import styles from "./site-footer.module.css";
 
@@ -52,7 +53,7 @@ export function SiteFooter() {
         <div className={styles.bot}>
           <div className={styles.info}>
             <div className={styles.intro}>
-              <p className={styles.wordmark}>RingOnDemand</p>
+              <Logo variant="light" className={styles.logo} />
               <p className={styles.blurb}>Signed MVA cases and live transfers for personal injury firms.</p>
             </div>
           </div>
