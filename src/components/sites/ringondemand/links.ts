@@ -16,13 +16,13 @@ export interface BookingEvent {
 
 /** The iClosed events the inline booking widget can show. */
 export const BOOKING_EVENTS = {
-  /** Law firms, and the homepage and other general pages. */
+  /** Law firms, on the legal pages. */
   discovery: {
     url: "https://app.iclosed.io/e/ringondemand1/ring-on-demand-personal-injury-discovery-call",
     title: "Ring On Demand - Personal Injury Discovery Call",
   },
-  /** Insurance agencies and brokers, on the insurance pages. */
-  insurance: {
+  /** Everyone else: the homepage, Results, About and the insurance pages. */
+  partner: {
     url: "https://app.iclosed.io/e/ringondemand1/ring-on-demand-broker-partner-discovery-call",
     title: "Ring On Demand - Partner Discovery Call",
   },
@@ -44,12 +44,6 @@ export const ROUTES = {
   results: "/results",
   partners: "/partners",
   about: "/about",
-} as const;
-
-/** Section anchors on other pages. The copy doc's pricing lives on the MVA
- * page. */
-export const ANCHORS = {
-  pricing: "/legal/mva#pricing",
 } as const;
 
 /** Pages that do not exist yet; replace with real URLs when they are live. */

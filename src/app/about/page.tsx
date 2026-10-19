@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Eye, MapPin, Megaphone, PhoneCall, PhoneForwarded, Repeat, ShieldCheck } from "lucide-react";
 
 import { FinalCta } from "@/components/sites/ringondemand/final-cta/final-cta";
+import { GENERAL_CTA } from "@/components/sites/ringondemand/final-cta/general-cta";
 import { AttorneyCall } from "@/components/sites/ringondemand/legal/attorney-call";
 import { BOOK_CALL_URL } from "@/components/sites/ringondemand/links";
 import { Divider } from "@/components/sites/ringondemand/page-kit/divider";
@@ -79,7 +80,7 @@ export default function AboutPage() {
         cta={{ label: "Book a call", href: BOOK_CALL_URL }}
       />
       <AttorneyCall />
-      <FinalCta />
+      <FinalCta {...GENERAL_CTA} />
     </PageShell>
   );
 }

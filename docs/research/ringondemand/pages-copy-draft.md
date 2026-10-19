@@ -7,7 +7,8 @@ facts wherever they apply. Anything not in that doc was drafted for these pages
 and needs a yes, an edit or a cut before launch.
 
 House rules followed:
-- No new prices, stats, quotes or guarantees.
+- No new prices, quotes or guarantees, and no stats beyond the copy doc's and
+  the proof figures RingOnDemand supplied (below).
 - Only MVA shows prices ($550 / $2,500) and the MVA guarantees (guaranteed
   cost per signed case, 28-day replacement).
 - The other practice areas and every insurance line say "Book a call for …
@@ -24,6 +25,24 @@ Where the copy lives in code:
   `src/app/`
 - Shared blocks: `src/components/sites/ringondemand/legal/attorney-call.tsx`
   (the attorney call card)
+- Proof lines: `src/components/sites/ringondemand/shared/proof-list.tsx`
+  (`PROOF`); the general stats strip: `results/results.tsx` (`GENERAL_STATS`)
+- The general closing section (homepage, Results, About):
+  `final-cta/general-cta.ts`
+
+## Proof lines
+
+Supplied by RingOnDemand. Each shows behind a blue verified badge under the
+hero button.
+
+| Line | Shown on |
+|---|---|
+| Over **2,000 signed retainers** delivered | Homepage, Results, `/legal` and the practice-area pages |
+| Over **1,000 live transfers** delivered | `/legal` and the practice-area pages |
+| Over **5,000 live transfers** delivered | Homepage, Results, Partners, `/insurance` and the insurance line pages |
+| Trusted by the **largest insurance and legal organizations** in the US | Results (also the homepage stats heading) |
+| Trusted by the **largest insurance organizations** in the US | `/insurance` and the insurance line pages |
+| Your calls go to the **largest insurance and legal organizations** in the US | Partners |
 
 ## Please confirm
 
@@ -40,14 +59,16 @@ Where the copy lives in code:
 4. **Partners page.**
    - The page claims publishers are vetted before calls go live, and that you
      buy calls in every legal and insurance vertical listed.
+   - It promises strong payouts, payouts agreed per vertical before the first
+     call, and payment for every call that qualifies. It names no rates or
+     payment terms; add them if you want them on the page.
    - It books the *Publisher Intro Call* (set in `links.ts`,
      `BOOKING_EVENTS.publisher`).
 5. **About page.** It says nothing about the company beyond the copy doc (no
    founding story, team or location). Add those if you want them.
 6. **Results page.**
-   - It shows the copy doc's 3 stats.
-   - Its hero reads "What personal injury firms see when they work with us".
-   - Its pricing card repeats the MVA prices.
+   - It is now general (legal and insurance), with the supplied figures.
+   - The MVA prices are no longer on it; they stay on `/legal/mva`.
    - The copy doc's note still applies: no client quotes until one is approved
      in writing.
 7. **Insurance offers.** Every insurance line offers inbound calls and live
@@ -58,18 +79,19 @@ Where the copy lives in code:
    scripts you run. **Medicare:** have the page reviewed against the CMS
    marketing rules you work under before launch.
 9. **Booking.**
-   - The insurance pages book the *Ring On Demand - Partner Discovery Call*.
-   - The homepage, About, Results and the legal pages still book the
-     *Personal Injury Discovery Call*.
-   - If the homepage should book a general event, add it to `BOOKING_EVENTS`
-     in `links.ts`, then pass it to `FinalCta` as `booking`.
+   - The homepage, Results, About and the insurance pages book the
+     *Ring On Demand - Partner Discovery Call*.
+   - `/legal` and the practice-area pages book the *Personal Injury Discovery
+     Call*.
+   - Partners books the *Publisher Intro Call*.
 10. **Homepage (general).**
     - The headline is "Inbound Calls for Enterprise Companies"
       (`hero/hero.tsx`).
     - Check the hero, industry cards, steps and "Who this is for" copy below.
-    - It keeps the copy doc's proof line, scoped as "Over 1,500 signed
-      retainers delivered to personal injury firms last quarter".
-    - It shows the 3 stats under "What personal injury firms see".
+11. **MVA stats.** `/legal/mva` still shows the copy doc's 3 stats, including
+    "1,500+ signed retainers delivered last quarter", under a hero that says
+    "Over 2,000 signed retainers delivered". Keep both, or switch the MVA
+    page to the general figures.
 
 ## Navigation
 
@@ -97,8 +119,8 @@ Same sections and styling as before, with general copy. The MVA-only sections
 - Sub: You set the criteria. We run the ads, screen every caller, and send the
   ones who qualify to your team as inbound calls or live transfers.
 - Under the button: Tell us your criteria. We tell you what we can deliver.
-- Proof line: Over 1,500 signed retainers delivered to personal injury firms
-  last quarter
+- Proof lines: Over 2,000 signed retainers delivered · Over 5,000 live
+  transfers delivered
 - Hero card checks:
   - Inside the states you work in
   - Fits your criteria
@@ -135,10 +157,13 @@ Same sections and styling as before, with general copy. The MVA-only sections
     and Medicare.
   - Call publishers (Partners): Send us your calls. Every caller goes through
     the same intake script as the callers from our own ads.
-- **What personal injury firms see**: the copy doc's 3 stats.
-- Closing section: Tell us your criteria and **we will tell you what we can
-  deliver**. Book a call with our team. We show you the ads, the intake
-  questions, and how calls reach your team, and you decide.
+- **Trusted by the largest insurance and legal organizations in the US**:
+  2,000+ Signed retainers delivered · 5,000+ Live transfers delivered ·
+  24 hours From signed order to first transfer (copy doc).
+- Closing section, booking the **Partner Discovery Call**: Tell us your
+  criteria and **we will tell you what we can deliver**. Book a call with our
+  team. We show you the ads, the intake questions, and how calls reach your
+  team, and you decide.
 
 ## /legal — Legal (index)
 
@@ -149,6 +174,8 @@ Same sections and styling as before, with general copy. The MVA-only sections
   what we check.
 - Under the button: The call is with a licensed attorney on our team, not a
   sales rep.
+- Proof lines: Over 2,000 signed retainers delivered · Over 1,000 live
+  transfers delivered
 - **Pick your practice area** (eyebrow: Practice areas)
   - Intro: The same process in every area: your criteria in our intake script,
     our ads, and a live transfer or a signed retainer when a caller qualifies.
@@ -166,7 +193,8 @@ Same sections and styling as before, with general copy. The MVA-only sections
 
 Every practice-area page has the same sections, in this order:
 
-1. Hero
+1. Hero, with the legal proof lines (2,000 signed retainers, 1,000 live
+   transfers)
 2. How it works (3 steps)
 3. "What we check before a caller reaches you", with the screening checklist
    and the copy doc's line "If a caller fails one of your questions, we do not
@@ -187,7 +215,7 @@ Offer card labels come from the copy doc's "Who this is for":
 
 Copy doc throughout.
 - Eyebrow: Legal : Motor vehicle accidents
-- Headline: Signed MVA Cases and Live Transfers / **for Personal Injury Firms**
+- Headline: MVA Cases / **That Close Like Crazy**
 - Sub: copy doc subheadline
 - Menu line: Signed MVA cases and live transfers for personal injury firms.
 - Steps and checks: copy doc
@@ -197,7 +225,7 @@ Copy doc throughout.
 ### Workers' compensation (`/legal/workers-comp`)
 
 - Eyebrow: Legal : Workers' compensation
-- Headline: Workers' Comp Cases, / **Screened to Your Criteria**
+- Headline: Workers' Comp Cases / **That Close Like Crazy**
 - Sub: You give us your case criteria. We run the ads, screen every injured
   worker who calls, and send you a live transfer or a signed retainer. You pay
   per transfer or per signed case.
@@ -222,7 +250,7 @@ Copy doc throughout.
 ### Lemon law (`/legal/lemon-law`)
 
 - Eyebrow: Legal : Lemon law
-- Headline: Lemon Law Cases, / **Screened to Your Criteria**
+- Headline: Lemon Law Cases / **That Close Like Crazy**
 - Sub: …screen every vehicle owner who calls… (otherwise as workers' comp)
 - Menu line: Calls from vehicle owners with repeat defects, screened to your
   criteria.
@@ -240,7 +268,7 @@ Copy doc throughout.
 ### Medical malpractice (`/legal/medical-malpractice`)
 
 - Eyebrow: Legal : Medical malpractice
-- Headline: Medical Malpractice Cases, / **Screened to Your Criteria**
+- Headline: Medical Malpractice Cases / **That Close Like Crazy**
 - Sub: as the MVA sub without "and nothing else"
 - Menu line: Calls screened for the injury, the provider and the timing you
   take.
@@ -258,7 +286,7 @@ Copy doc throughout.
 ### Pre-settlement funding (`/legal/pre-settlement-funding`)
 
 - Eyebrow: Legal : Pre-settlement funding
-- Headline: Pre-Settlement Funding Calls, / **Screened to Your Criteria**
+- Headline: Pre-Settlement Funding Calls / **That Convert Like Crazy**
 - Sub: You give us your funding criteria. We run the ads, screen every caller,
   and transfer the ones who qualify to your team while they are still on the
   line. You pay per transfer.
@@ -288,6 +316,8 @@ Copy doc throughout.
 - Sub: You give us your criteria. We run the ads, screen every caller, and send
   the ones who qualify to your licensed agents as inbound calls or live
   transfers. Pick your line to see what we check.
+- Proof lines: Over 5,000 live transfers delivered · Trusted by the largest
+  insurance organizations in the US
 - **Pick your line of insurance** (eyebrow: Lines of insurance)
   - Intro: The same process for every line: your criteria in our intake
     script, our ads, and an inbound call or live transfer to your agents when
@@ -308,7 +338,8 @@ Copy doc throughout.
 ## /insurance/[line] — insurance line pages
 
 Same page kit and order as the practice-area pages:
-1. Hero
+1. Hero, with the insurance proof lines (5,000 live transfers, largest
+   insurance organizations)
 2. How it works: step 1 is the line's own criteria; steps 2 and 3 are as on
    the index
 3. "What we check before a caller reaches you", with the checklist and the
@@ -333,7 +364,7 @@ transfers. You pay per call.
 
 ### Final expense (`/insurance/final-expense`)
 
-- Headline: Final Expense Calls, / **Screened to Your Criteria**
+- Headline: Final Expense Calls / **That Convert Like Crazy**
 - Menu line: Callers shopping for final expense coverage, sent to your agents.
 - Step 1: Age range, coverage amount, how the caller will pay premiums, and
   the states your agents are licensed in.
@@ -346,7 +377,7 @@ transfers. You pay per call.
 
 ### Auto insurance (`/insurance/auto`)
 
-- Headline: Auto Insurance Calls, / **Screened to Your Criteria**
+- Headline: Auto Insurance Calls / **That Convert Like Crazy**
 - Menu line: Drivers looking for a quote, screened by state, vehicle and
   coverage.
 - Step 1: States and ZIP codes, vehicles and drivers, current coverage, and
@@ -361,7 +392,7 @@ transfers. You pay per call.
 
 ### Home insurance (`/insurance/home`)
 
-- Headline: Home Insurance Calls, / **Screened to Your Criteria**
+- Headline: Home Insurance Calls / **That Convert Like Crazy**
 - Menu line: Homeowners looking for coverage, screened by property and
   location.
 - Step 1: Property type, ownership, location, and when the caller needs
@@ -375,7 +406,7 @@ transfers. You pay per call.
 
 ### Medicare (`/insurance/medicare`)
 
-- Headline: Medicare Calls, / **Screened to Your Criteria**
+- Headline: Medicare Calls / **That Convert Like Crazy**
 - Menu line: Medicare-eligible callers, screened by eligibility and location.
 - Step 1: Eligibility, the plans your agents offer, the counties and states
   you cover, and the enrollment periods you work.
@@ -388,47 +419,63 @@ transfers. You pay per call.
 
 ## /results — Results
 
+General, across legal and insurance.
 - Eyebrow: Results
-- Headline: Signed Retainers, Sign Rates / **and Speed to First Transfer**
-- Sub: What personal injury firms see when they work with us, and how you see
-  every transfer we send.
+- Headline: Calls That Convert / **Across Legal and Insurance**
+- Sub: Signed retainers for law firms, inbound calls and live transfers for law
+  firms and insurance agencies, and a record of every call we send.
+- Proof lines: Over 2,000 signed retainers delivered · Over 5,000 live
+  transfers delivered · Trusted by the largest insurance and legal
+  organizations in the US
+- **What our buyers see**: the homepage's 3 stats (2,000+, 5,000+, 24 hours)
 - Sections from the copy doc:
-  - What firms see (3 stats)
   - You see every transfer
   - Transfers can start within 24 hours
-- Cards:
-  - Pricing — **Flat prices for MVA**: Live transfers at $550 per transfer.
-    Pre-signed cases at $2,500 per signed case. You pay per transfer or per
-    signed case and nothing else. → See pricing
-  - Book a call — **See the ads and the intake script**: On the call you will
-    see our ads, our landing pages, our intake questions, and the names of
-    firms we work with. → Book a call. Beside the button: "With a licensed
-    attorney on our team".
+- **See what we deliver in your industry** (eyebrow: Industries), two cards:
+  - Legal — **Signed retainers and live transfers**: For law firms and funding
+    companies: the 5 practice areas. → See legal
+  - Insurance — **Inbound calls and live transfers**: For insurance agencies:
+    final expense, auto, home and Medicare. → See insurance
+- Closing section: as the homepage (Partner Discovery Call)
 
 ## /partners — Partners (call publishers)
 
+Built to get a publisher to the booking form fast: every button reads "Book an
+intro call" and scrolls to it. The "Where the calls come from" section is gone
+from this page.
+
 - Eyebrow: Partners : Call publishers
 - Headline: Join Our Vetted / **Publisher Network**
-- Sub: We buy legal and insurance calls from a vetted publisher network. Every
-  call you send goes through the same intake script as the calls from our own
-  ads.
-- Button: Talk to our team
+- Sub: Send us your legal and insurance calls and get paid well for every one
+  that qualifies. Clear criteria, steady demand, and one short call to get
+  started.
+- Button: Book an intro call
+- Proof lines: Over 5,000 live transfers delivered · Your calls go to the
+  largest insurance and legal organizations in the US
+- **Why publishers work with us**
+  - Strong payouts: We pay well for calls that qualify, and you know the payout
+    for each vertical before you send a single call.
+  - Steady demand: We buy in nine verticals across legal and insurance, for
+    buyers across the US, so there is room for your volume.
+  - Clear criteria: Every vertical has one written intake script. You know
+    what qualifies before a call goes live.
+  - Simple setup: One intro call to agree on verticals, states and payouts.
+    Then you start sending calls.
 - **How it works for publishers**
   - Tell us about your traffic: The verticals, states and sources you run calls
     from.
   - We vet your sources: Every publisher in our network is vetted before calls
-    go live.
-  - Calls run through our intake script: Every caller answers the same
-    qualifying questions as the callers from our own ads.
+    go live, and you get your payouts up front.
+  - Send calls, get paid: Every caller answers the same qualifying questions as
+    the callers from our own ads. You get paid for every call that qualifies.
 - **Calls we buy** (eyebrow: Verticals): We take calls in every vertical we
   run. In legal: motor vehicle accidents, workers' compensation, lemon law,
   medical malpractice and pre-settlement funding. In insurance: final expense,
   auto, home and Medicare.
-- Where the calls come from (copy doc)
 - Closing section, booking the **Publisher Intro Call**:
-  - Heading: Want to send us calls? **Tell us about your traffic**
-  - Body: Book a call with our team. Tell us the verticals, states and sources
-    you run, and we will tell you where your calls fit.
+  - Heading: Ready to send us calls? **Book a publisher intro call**
+  - Body: Tell us the verticals, states and sources you run. We will tell you
+    where your calls fit and what they pay.
 
 ## /about — About
 
@@ -457,4 +504,5 @@ transfers. You pay per call.
     intake answers.
   - Any U.S. state: In California we advertise under your firm's name and you
     approve every creative first.
-- Then the attorney call card and the closing section.
+- Then the attorney call card and the closing section (as the homepage,
+  booking the Partner Discovery Call).

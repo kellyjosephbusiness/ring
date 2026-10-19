@@ -19,7 +19,7 @@ Everything outside the copy doc is a **draft for review**:
 | `/legal/mva`, `/legal/workers-comp`, `/legal/lemon-law`, `/legal/medical-malpractice`, `/legal/pre-settlement-funding` | One page per practice area (`legal/practice-areas.ts`); MVA adds the copy doc's results, pricing and FAQ |
 | `/insurance` | Insurance index |
 | `/insurance/final-expense`, `/insurance/auto`, `/insurance/home`, `/insurance/medicare` | One page per line (`insurance/insurance-lines.ts`) |
-| `/results` | Stats, reporting, getting started |
+| `/results` | General results: proof figures, reporting, getting started |
 | `/partners` | Call publishers |
 | `/about` | Company |
 
@@ -37,8 +37,9 @@ Every destination is in `links.ts`.
 
 `public/sites/ringondemand/brand/` holds the logo as vector SVGs, traced from
 the supplied PNG (kept in [`brand/logo-original-white.png`](./brand/)). The
-call bars and "On" are the site's button blue (`#0037c2`, the "Book a call"
-button) in both files, in place of the original purple/blue gradients.
+call bars and "On" are the site's accent blue (`#1c64f2`, the blue of the
+headline accents) in both files, in place of the original purple/blue
+gradients.
 
 | File | Used for |
 |---|---|
@@ -57,8 +58,8 @@ which every page ends with. That section holds the iClosed inline widget
 
 | Event | Pages |
 |---|---|
-| Ring On Demand - Personal Injury Discovery Call (`discovery`) | Homepage, legal pages, Results, About |
-| Ring On Demand - Partner Discovery Call (`insurance`) | `/insurance` and the insurance line pages |
+| Ring On Demand - Personal Injury Discovery Call (`discovery`) | `/legal` and the practice-area pages |
+| Ring On Demand - Partner Discovery Call (`partner`) | Homepage, Results, About, `/insurance` and the insurance line pages |
 | Publisher Intro Call (`publisher`) | `/partners` |
 
 - **Loading.** iClosed's `widget.js` loads once. It picks up new widgets after
@@ -74,9 +75,10 @@ which every page ends with. That section holds the iClosed inline widget
 
 - **Draft copy:** review [`pages-copy-draft.md`](./pages-copy-draft.md),
   especially its "Please confirm" list.
-- **Homepage booking:** the homepage books the personal-injury discovery call.
-  If it should book a general event, add one to `BOOKING_EVENTS` and pass it to
-  `FinalCta` as `booking`.
+- **Proof figures:** the 2,000 / 1,000 / 5,000 figures and the "largest
+  insurance and legal organizations" line were supplied by RingOnDemand
+  (`shared/proof-list.tsx`). `/legal/mva` still shows the copy doc's
+  "1,500+ last quarter" stat beside them.
 - **Footer pages:** Contact, Privacy Policy and Terms of Service use
   `PENDING_PAGES` placeholders (`#`).
 - **Notes in the copy doc still apply:**

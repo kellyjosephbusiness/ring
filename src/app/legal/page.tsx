@@ -11,6 +11,7 @@ import { FeatureColumns } from "@/components/sites/ringondemand/page-kit/feature
 import { LinkGrid } from "@/components/sites/ringondemand/page-kit/link-grid";
 import { PageHero } from "@/components/sites/ringondemand/page-kit/page-hero";
 import { PageShell } from "@/components/sites/ringondemand/page-shell/page-shell";
+import { PROOF } from "@/components/sites/ringondemand/shared/proof-list";
 
 const title = "Live Transfers and Signed Cases for Law Firms | RingOnDemand";
 const description =
@@ -32,6 +33,7 @@ export default function LegalPage() {
         headline={["Live Transfers and Signed Cases", "for Law Firms"]}
         sub="You give us your case criteria. We run the ads, screen every caller, and send you a live transfer or a signed retainer. Pick your practice area to see what we check."
         note="The call is with a licensed attorney on our team, not a sales rep."
+        proof={[PROOF.signedRetainers, PROOF.legalTransfers]}
       />
       <Divider />
       <LinkGrid

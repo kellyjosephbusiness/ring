@@ -11,6 +11,7 @@ import { FeatureRow } from "../page-kit/feature-row";
 import { PageHero } from "../page-kit/page-hero";
 import { CriteriaCard } from "../page-kit/visuals";
 import { PageShell } from "../page-shell/page-shell";
+import { PROOF } from "../shared/proof-list";
 import { Pricing } from "../pricing/pricing";
 import { Results } from "../results/results";
 import { AttorneyCall } from "./attorney-call";
@@ -56,6 +57,7 @@ export function PracticeAreaPage({ area }: { area: PracticeArea }) {
         headline={area.hero.headline}
         sub={area.hero.sub}
         note="The call is with a licensed attorney on our team, not a sales rep."
+        proof={[PROOF.signedRetainers, PROOF.legalTransfers]}
       />
       <Divider />
       <FeatureColumns
