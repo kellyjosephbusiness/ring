@@ -3,7 +3,8 @@
 import clsx from "clsx";
 import { useId } from "react";
 
-import { useCountUp, useSteps } from "./bento-hooks";
+import { useSteps } from "./bento-hooks";
+import { CountUp } from "./count-up";
 import { SchedulerLogo } from "./scheduler-logo";
 import styles from "./routing.module.css";
 
@@ -32,7 +33,6 @@ const CLOSERS = [
 export function RoutingGraphic({ play = false }: { play?: boolean }) {
   const uid = useId();
   const beats = useSteps(play, BEAT_TIMES);
-  const pct = useCountUp(play, 21, { delay: 2600, duration: 700, suffix: "%" });
   const gradientId = `${uid}rtConn`;
 
   return (
@@ -107,7 +107,9 @@ export function RoutingGraphic({ play = false }: { play?: boolean }) {
       <div className={styles.chip}>
         <div className={styles.chipInner}>
           <div className={styles.chipRow}>
-            <span className={styles.chipPct}>{pct}</span>
+            <span className={styles.chipPct}>
+              <CountUp play={play} to={21} delay={2600} duration={700} suffix="%" />
+            </span>
             <span className={styles.arrow} aria-hidden="true">
               <svg viewBox="0 0 22 22" fill="none">
                 <circle cx="11" cy="11" r="10.6" fill="#31c48d" />

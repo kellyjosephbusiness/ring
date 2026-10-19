@@ -82,6 +82,7 @@ export function InboxDemo() {
   const rootRef = useRef<HTMLDivElement>(null);
   const closerRef = useRef<HTMLVideoElement>(null);
   const leadRef = useRef<HTMLVideoElement>(null);
+  const dueRef = useRef<number | null>(null);
   const [step, setStep] = useState(0);
   const [started, setStarted] = useState(false);
   const [ready, setReady] = useState(false);
@@ -93,10 +94,25 @@ export function InboxDemo() {
   const playing = w.modal && w.playing && !reduced;
   const held = !started && !reduced;
 
-  // Step through the script while the window is on screen.
+  // Step through the script while the window is on screen. Frame deadlines are
+  // chained on one clock so render latency never accumulates; a pause drops the
+  // chain, and the frame on screen gets its full duration again on resume.
   useEffect(() => {
-    if (!started || !inView || reduced) return;
-    const id = window.setTimeout(() => setStep((s) => (s + 1) % FRAMES.length), FRAMES[step].d);
+    if (!started || !inView || reduced) {
+      dueRef.current = null;
+      return;
+    }
+    const now = performance.now();
+    const due = dueRef.current ?? now + FRAMES[step].d;
+    dueRef.current = due;
+    const id = window.setTimeout(
+      () => {
+        const next = (step + 1) % FRAMES.length;
+        dueRef.current = due + FRAMES[next].d;
+        setStep(next);
+      },
+      Math.max(0, due - now),
+    );
     return () => window.clearTimeout(id);
   }, [step, started, inView, reduced]);
 
@@ -162,6 +178,7 @@ export function InboxDemo() {
       aria-hidden="true"
       data-ui-window=""
       data-held={held ? "true" : "false"}
+      data-step={step}
     >
       {/* ---- Conversation list ---- */}
       <section className={styles.list}>

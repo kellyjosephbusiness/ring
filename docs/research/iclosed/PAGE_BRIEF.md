@@ -29,8 +29,8 @@ Clone route: `/` → `src/app/page.tsx`.
   hidden at ≤810px (`src/components/sites/iclosed/rails/`).
 - Header: fixed, 104px tall (40px black announcement bar + 64px nav). Visible at
   scrollY≈0; slides up (`translateY(-110px)`, opacity 0) once the page is scrolled
-  and returns only near the top. The source hero starts at y=101 (1px modal
-  anchor + 100px frame padding; 80px on tablet), reproduced by `main`'s
+  and returns only near the top. The source hero starts at y=81 (1px modal
+  anchor + 80px frame padding; 100px below 810px), reproduced by `main`'s
   padding in `src/app/page.module.css` — section components add no top offset.
 - Cookie consent (Cookiebot), analytics, Hyros and FirstPromoter scripts are
   third-party and intentionally not cloned.

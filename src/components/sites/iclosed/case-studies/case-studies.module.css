@@ -1,0 +1,495 @@
+/* Case studies — "What operators get". A centred 812 headline block over a
+   reader-driven rail of large photo cards with a glass stat panel, and a pair
+   of prev/next buttons under it. */
+
+.outer {
+  position: relative;
+  width: 100%;
+  container-type: inline-size;
+}
+
+.band {
+  --container-pad: 40px;
+  position: relative;
+  width: 100%;
+  background: #ffffff;
+  font-family: var(--ic-font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  color: #111928;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.band *,
+.band *::before,
+.band *::after {
+  box-sizing: border-box;
+}
+
+.band :focus-visible {
+  outline: 2px solid #1c64f2;
+  outline-offset: 2px;
+}
+
+/* Hairline along the section's bottom edge. */
+.band::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: #e5e7eb;
+}
+
+.inner {
+  --uc-card: 1008px;
+  position: relative;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  padding-block: 100px;
+}
+
+/* ---- Head (812 measure, centred) ---- */
+
+.head {
+  width: calc(812px + var(--container-pad) * 2);
+  max-width: 100%;
+  padding-inline: var(--container-pad);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  letter-spacing: 0.84px;
+  text-transform: uppercase;
+  color: #1c64f2;
+}
+
+/* Leads with a dot, drawn rather than typed so it keeps its size against the
+   uppercase tracking. */
+.eyebrow::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: 10px;
+  border-radius: 50%;
+  background: currentColor;
+  vertical-align: 0.15em;
+}
+
+.heading {
+  margin: 0;
+  font-family: var(--ic-font-display);
+  font-size: 40px;
+  line-height: 52px;
+  font-weight: 500;
+  letter-spacing: -0.4px;
+  color: #171717;
+}
+
+.headingAccent {
+  color: #1c64f2;
+}
+
+.subcopy {
+  margin: 0;
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 400;
+  letter-spacing: -0.04px;
+  color: #020418;
+}
+
+/* Wraps the rail and its arrows so hovering either one holds the autoplay. */
+.rail {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+}
+
+/* ---- Rail: full width, faded ends ----
+
+   Reader-driven, not a marquee. A native scroll container gets swipe and
+   trackpad flicks for free; the highlight reads the scroll position. The fade
+   is exactly the gutter width. */
+
+.ticker {
+  width: 100%;
+  display: flex;
+  gap: 24px;
+  /* Half a rail minus half a card, so the FIRST card lands dead centre with an
+     empty card-width of space to its left. Falls back to the plain gutter once
+     the rail is narrower than a card. */
+  padding-inline: max(var(--container-pad), calc((100% - var(--uc-card)) / 2));
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    #000 var(--container-pad),
+    #000 calc(100% - var(--container-pad)),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    #000 var(--container-pad),
+    #000 calc(100% - var(--container-pad)),
+    transparent 100%
+  );
+}
+
+.ticker::-webkit-scrollbar {
+  display: none;
+}
+
+/* ---- Dimming ----
+
+   Only the card nearest the rail's centre stays lit. Gated on the live flag so
+   that before the first measure the rail reads as a plain row of cards. */
+
+.ticker[data-live] .card {
+  opacity: 0.4;
+  transition: opacity 260ms ease;
+}
+
+.ticker[data-live] .card.cardActive {
+  opacity: 1;
+}
+
+/* ---- Prev / next ---- */
+
+.nav {
+  display: flex;
+  gap: 8px;
+}
+
+.navBtn {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #111928;
+  font: inherit;
+  cursor: pointer;
+  transition:
+    background 150ms ease,
+    color 150ms ease;
+}
+
+.navBtn svg {
+  display: block;
+}
+
+.navBtn:hover:not(:disabled) {
+  background: #f9fafb;
+}
+
+/* No disabled state: the rail wraps, so both arrows always do something. */
+
+/* ---- Card ---- */
+
+.card {
+  position: relative;
+  flex: none;
+  scroll-snap-align: center;
+  /* The rail owns the width. */
+  width: var(--uc-card, 1008px);
+  height: 480px;
+  border-radius: 8px;
+  overflow: hidden;
+  /* With no media the card falls back to the dark slab. */
+  background: #020418;
+  color: #fff;
+}
+
+.card:hover {
+  cursor: pointer;
+}
+
+.media {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  /* Biased above centre: the sources are head-and-shoulders. */
+  object-position: center 30%;
+}
+
+.scrim {
+  position: absolute;
+  inset: 0;
+  /* #020418 at 50% — the site's deepest navy, not a neutral black. */
+  background: rgba(2, 4, 24, 0.5);
+  pointer-events: none;
+}
+
+/* The glass panel: blur behind it, a fill lighter where the light lands, a
+   bright top hairline with a fainter rim, and an outer shadow so it sits
+   ABOVE the media. */
+.panel {
+  position: absolute;
+  left: 24px;
+  top: 24px;
+  bottom: 24px;
+  width: 254px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 8px;
+  background:
+    linear-gradient(148deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.05) 26%, rgba(255, 255, 255, 0) 58%),
+    rgba(2, 4, 24, 0.52);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.24),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.09),
+    inset 0 -1px 0 0 rgba(255, 255, 255, 0.05),
+    0 16px 40px -12px rgba(0, 0, 0, 0.45);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  backdrop-filter: blur(24px) saturate(160%);
+  white-space: nowrap;
+}
+
+.metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.metric {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.stat {
+  margin: 0;
+  font-size: 36px;
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.36px;
+}
+
+.statLabel {
+  margin: 0;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 500;
+  letter-spacing: -0.24px;
+}
+
+/* A visual affordance; the whole card is the click target (.cardLink). */
+.read {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  letter-spacing: -0.1px;
+  color: inherit;
+}
+
+.card:hover .read {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Anchored to the bottom-right, starting where the panel ends. */
+.quoteBlock {
+  position: absolute;
+  left: 302px;
+  right: 24px;
+  bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.quote {
+  margin: 0;
+  font-size: 24px;
+  line-height: 34px;
+  font-weight: 500;
+  letter-spacing: -0.36px;
+}
+
+.who {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.name {
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 500;
+  letter-spacing: -0.27px;
+}
+
+.org {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+  letter-spacing: -0.176px;
+}
+
+/* The card's LAST child, an invisible overlay, so it paints above the panel
+   and the quote and the whole card is the link. */
+.cardLink {
+  position: absolute;
+  inset: 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ---- Tablet ----
+   The card steps down in two stages, each sized to fit the narrowest rail its
+   range can produce. The quote's left offset is always panel + 48. */
+
+@container (max-width: 1279px) {
+  .inner {
+    --uc-card: 820px;
+    gap: 32px;
+    padding-block: 72px;
+  }
+
+  .heading {
+    font-size: 32px;
+    line-height: 42px;
+  }
+
+  .card {
+    height: 440px;
+  }
+
+  .panel {
+    width: 240px;
+  }
+
+  .quoteBlock {
+    left: 288px;
+  }
+
+  .quote {
+    font-size: 20px;
+    line-height: 30px;
+  }
+}
+
+@container (max-width: 1023px) {
+  .inner {
+    --uc-card: 620px;
+  }
+
+  .card {
+    height: 400px;
+  }
+
+  .panel {
+    width: 220px;
+    padding: 20px;
+  }
+
+  .quoteBlock {
+    left: 268px;
+  }
+
+  .stat {
+    font-size: 30px;
+  }
+
+  .quote {
+    font-size: 18px;
+    line-height: 26px;
+  }
+}
+
+/* ---- Phone ----
+   Stats only: the testimonial is dropped and the panel moves to the FOOT of
+   the card, leaving the photo the top two-thirds. */
+
+@container (max-width: 809px) {
+  .inner {
+    --uc-card: 300px;
+    gap: 28px;
+    padding-block: 56px;
+  }
+
+  .heading {
+    font-size: 28px;
+    line-height: 36px;
+  }
+
+  .subcopy {
+    font-size: 16px;
+    line-height: 26px;
+  }
+
+  .card {
+    height: 420px;
+  }
+
+  .panel {
+    top: auto;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    width: auto;
+    padding: 20px;
+    gap: 16px;
+  }
+
+  .metrics {
+    gap: 16px;
+  }
+
+  .stat {
+    font-size: 28px;
+  }
+
+  .quoteBlock {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .band *,
+  .band *::before,
+  .band *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  .ticker {
+    scroll-behavior: auto;
+  }
+
+  .ticker[data-live] .card {
+    transition: none;
+  }
+}

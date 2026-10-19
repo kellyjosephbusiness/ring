@@ -2,9 +2,9 @@
 
 import clsx from "clsx";
 import type { CSSProperties, ReactNode } from "react";
-import { useId } from "react";
+import { Fragment, useId } from "react";
 
-import { useCountUp } from "./bento-hooks";
+import { CountUp } from "./count-up";
 import styles from "./analytics.module.css";
 
 const PERIODS = ["Day", "Week", "Month", "Quarter", "Year"] as const;
@@ -51,6 +51,50 @@ const NOSALE_BARS = [
   [15.279, 12.465, 12.062, 20.506],
   [20.908, 11.258, 12.465, 9.248],
   [17.29, 24.125, 6.433, 9.248],
+] as const;
+
+/** Scheduling funnel columns: counter (counts up 150ms apart) + bar + falloff area. */
+const FUNNEL = [
+  {
+    label: "No. of views",
+    value: 2123,
+    delay: 500,
+    graph: "fnGraphViews",
+    bar: "fnBarViews",
+    areaViewBox: "0 0 91.3124 105.009",
+    areaPath: "M91.3124 10.901L0 0V105.009H91.3124V10.901Z",
+  },
+  {
+    label: "Contacts",
+    value: 1281,
+    delay: 650,
+    graph: "fnGraphContacts",
+    bar: "split",
+    areaViewBox: "0 0 91.3124 93.5953",
+    areaPath: "M91.3124 34.7466L0 0V93.5953H91.3124V34.7466Z",
+  },
+  {
+    label: "Calls created",
+    value: 648,
+    delay: 800,
+    graph: "fnGraphCalls",
+    bar: "fnBarCalls",
+    areaViewBox: "0 0 91.3124 58.5922",
+    areaPath: "M91.3124 0H0V58.5922H91.3124V0Z",
+  },
+] as const;
+
+const FUNNEL_RATES = [
+  { value: 60, delay: 1100, label: "Conversion to contacts" },
+  { value: 30, delay: 1250, label: "Conversion to calls created" },
+] as const;
+
+/** Sales-breakdown chips; values count up 100ms apart from 1400ms. */
+const SALES_CHIPS = [
+  { value: 25120, delay: 1400, label: "Total Revenue" },
+  { value: 21000, delay: 1500, count: "12", label: "WON" },
+  { value: 2240, delay: 1600, count: "4", label: "Deposits" },
+  { value: 1880, delay: 1700, count: "4", label: "Recurring" },
 ] as const;
 
 const indexVar = (i: number) => ({ "--i": i }) as CSSProperties;
@@ -128,23 +172,6 @@ function MiniChart({ ticks, bars }: { ticks: readonly string[]; bars: ReactNode 
  * dashboard whose panels, bars, line and counters build in over ~2.5s. */
 export function AnalyticsGraphic({ play = false }: { play?: boolean }) {
   const areaId = `${useId()}anSalesArea`;
-  const views = useCountUp(play, 2123, { delay: 500, duration: 900 });
-  const contacts = useCountUp(play, 1281, { delay: 650, duration: 900 });
-  const calls = useCountUp(play, 648, { delay: 800, duration: 900 });
-  const toContacts = useCountUp(play, 60, { delay: 1100, duration: 800, suffix: "%" });
-  const toCalls = useCountUp(play, 30, { delay: 1250, duration: 800, suffix: "%" });
-  const revenue = useCountUp(play, 25120, { delay: 1400, duration: 800, prefix: "$" });
-  const won = useCountUp(play, 21000, { delay: 1500, duration: 800, prefix: "$" });
-  const deposits = useCountUp(play, 2240, { delay: 1600, duration: 800, prefix: "$" });
-  const recurring = useCountUp(play, 1880, { delay: 1700, duration: 800, prefix: "$" });
-
-  const salesChips = [
-    { value: revenue, label: "Total Revenue" },
-    { value: won, count: "12", label: "WON" },
-    { value: deposits, count: "4", label: "Deposits" },
-    { value: recurring, count: "4", label: "Recurring" },
-  ];
-
   return (
     <div className={clsx(styles.root, play && styles.isPlay)}>
       <div className={styles.window}>
@@ -167,59 +194,50 @@ export function AnalyticsGraphic({ play = false }: { play?: boolean }) {
             <div className={styles.fnChart}>
               <div className={styles.fnCols}>
                 <div className={styles.fnDiv} />
-                <div className={styles.fnCol}>
-                  <div className={styles.fnData}>
-                    <div className={styles.fnLabel}>No. of views</div>
-                    <div className={styles.fnValue}>{views}</div>
-                  </div>
-                  <div className={clsx(styles.fnGraph, styles.fnGraphViews)}>
-                    <div className={styles.fnBarViews} />
-                    <svg className={styles.fnArea} viewBox="0 0 91.3124 105.009" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                      <path d="M91.3124 10.901L0 0V105.009H91.3124V10.901Z" fill="#EBF5FF" />
-                    </svg>
-                  </div>
-                </div>
-                <div className={styles.fnDiv} />
-                <div className={styles.fnCol}>
-                  <div className={styles.fnData}>
-                    <div className={styles.fnLabel}>Contacts</div>
-                    <div className={styles.fnValue}>{contacts}</div>
-                  </div>
-                  <div className={clsx(styles.fnGraph, styles.fnGraphContacts)}>
-                    <div className={styles.fnBarContacts}>
-                      <div className={styles.fnBarContactsTop} />
-                      <div className={styles.fnBarContactsBot} />
+                {FUNNEL.map((step) => (
+                  <Fragment key={step.label}>
+                    <div className={styles.fnCol}>
+                      <div className={styles.fnData}>
+                        <div className={styles.fnLabel}>{step.label}</div>
+                        <div className={styles.fnValue}>
+                          <CountUp play={play} to={step.value} delay={step.delay} duration={900} />
+                        </div>
+                      </div>
+                      <div className={clsx(styles.fnGraph, styles[step.graph])}>
+                        {step.bar === "split" ? (
+                          <div className={styles.fnBarContacts}>
+                            <div className={styles.fnBarContactsTop} />
+                            <div className={styles.fnBarContactsBot} />
+                          </div>
+                        ) : (
+                          <div className={styles[step.bar]} />
+                        )}
+                        <svg
+                          className={styles.fnArea}
+                          viewBox={step.areaViewBox}
+                          preserveAspectRatio="none"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                          aria-hidden="true"
+                        >
+                          <path d={step.areaPath} fill="#EBF5FF" />
+                        </svg>
+                      </div>
                     </div>
-                    <svg className={styles.fnArea} viewBox="0 0 91.3124 93.5953" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                      <path d="M91.3124 34.7466L0 0V93.5953H91.3124V34.7466Z" fill="#EBF5FF" />
-                    </svg>
-                  </div>
-                </div>
-                <div className={styles.fnDiv} />
-                <div className={styles.fnCol}>
-                  <div className={styles.fnData}>
-                    <div className={styles.fnLabel}>Calls created</div>
-                    <div className={styles.fnValue}>{calls}</div>
-                  </div>
-                  <div className={clsx(styles.fnGraph, styles.fnGraphCalls)}>
-                    <div className={styles.fnBarCalls} />
-                    <svg className={styles.fnArea} viewBox="0 0 91.3124 58.5922" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                      <path d="M91.3124 0H0V58.5922H91.3124V0Z" fill="#EBF5FF" />
-                    </svg>
-                  </div>
-                </div>
-                <div className={styles.fnDiv} />
+                    <div className={styles.fnDiv} />
+                  </Fragment>
+                ))}
               </div>
             </div>
             <div className={styles.fnRates}>
-              <div className={styles.fnRate}>
-                <div className={styles.fnRateVal}>{toContacts}</div>
-                <div className={styles.fnRateLbl}>Conversion to contacts</div>
-              </div>
-              <div className={styles.fnRate}>
-                <div className={styles.fnRateVal}>{toCalls}</div>
-                <div className={styles.fnRateLbl}>Conversion to calls created</div>
-              </div>
+              {FUNNEL_RATES.map((rate) => (
+                <div key={rate.label} className={styles.fnRate}>
+                  <div className={styles.fnRateVal}>
+                    <CountUp play={play} to={rate.value} delay={rate.delay} duration={800} suffix="%" />
+                  </div>
+                  <div className={styles.fnRateLbl}>{rate.label}</div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -274,11 +292,13 @@ export function AnalyticsGraphic({ play = false }: { play?: boolean }) {
               </div>
             </div>
             <div className={styles.slChips}>
-              {salesChips.map((chip, i) => (
+              {SALES_CHIPS.map((chip, i) => (
                 <div key={chip.label} className={clsx(styles.slChip, i === 0 && styles.slChipRev)} style={indexVar(i)}>
-                  <div className={styles.slChipVal}>{chip.value}</div>
+                  <div className={styles.slChipVal}>
+                    <CountUp play={play} to={chip.value} delay={chip.delay} duration={800} prefix="$" />
+                  </div>
                   <div className={styles.slChipSub}>
-                    {chip.count ? <span className={styles.slChipCount}>{chip.count}</span> : null}
+                    {"count" in chip ? <span className={styles.slChipCount}>{chip.count}</span> : null}
                     <span className={styles.slChipLbl}>{chip.label}</span>
                   </div>
                 </div>

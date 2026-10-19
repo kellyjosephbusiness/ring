@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 import {
   AGENT_CHATS,
@@ -296,9 +296,9 @@ function Turn({ chat, step }: { chat: AgentChat; step: number }) {
 type ToolCallProps = {
   rising: boolean;
   running: boolean;
-  logo: React.ReactNode;
+  logo: ReactNode;
   runLabel: string;
-  done: React.ReactNode;
+  done: ReactNode;
 };
 
 function ToolCall({ rising, running, logo, runLabel, done }: ToolCallProps) {
@@ -336,9 +336,7 @@ function Answer({ chat }: { chat: AgentChat }) {
           {chat.rows.map((row) => (
             <tr key={row[0]}>
               {row.map((cell, i) => (
-                <Fragment key={i}>
-                  <td>{cell}</td>
-                </Fragment>
+                <td key={i}>{cell}</td>
               ))}
             </tr>
           ))}

@@ -1,37 +1,21 @@
-/* ==== qualify ==== */
-/* Qualify & Route panel — ported 1:1 from ic-website's `QualifyPane` and its
-   share of the \3c style> block in ProductTabsV14.icptq-jsx. Every px value, easing
-   curve and sub-pixel Figma export (17.76, 32.56, 33.196 …) is verbatim.
+/* Qualify & Route panel (source prefix `icptq`). Every px value, easing curve
+   and sub-pixel export (17.76, 32.56, 33.196 …) is the source's. The card sits
+   at its natural height, centred in the shell's fixed 680px pane. */
 
-   Rule order is the source's rule order: several selectors override an earlier
-   one at equal specificity (`.icptq-qsBlurwrap` over `.icptq-blurwrap`, the second
-   `.icptq-schedPhoneinput` / `.icptq-kpicard` blocks, the V14 `.icptq-bigcard` override), so
-   moving them would change the computed style. */
-
-/* The source's DOM inherits these from `.icptq-hn-tabs-root`, which lives in the tab
-   shell rather than in the pane. Reapplied on the pane's own two roots so the
-   port is self-contained without adding a wrapper element. */
 .bigcard,
 .bigcard *,
 .bigcard *::before,
 .bigcard *::after {
   box-sizing: border-box;
 }
-.bigcard {
-  font-family: var(--ic-font-body);
-}
 .bigcard img {
   display: block;
 }
 
-/* ----- Big card (centered in the responsive content) ----- */
 .bigcard {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  top: 170px;
   width: 1144px;
-  height: 452px;
+  height: 480px;
+  margin: 0;
   background: var(--white);
   border: 1px solid var(--gray-200);
   border-radius: 4px;
@@ -40,23 +24,7 @@
   display: flex;
   align-items: flex-start;
   gap: 46.08px;
-}
-
-/* V14 override, emitted by ProductTabsV14 for version >= 7:
-   "KPI row gone. Keep the gray pane a FIXED 680px (same on every tab, height
-   never changes) and center the card — at its natural content height — in the
-   middle of it. No white space inside the card."
-   The source writes this as `.icptq-hn-tabs-content .icptq-hn-tabs-bigcard`; here it is a
-   later same-specificity rule, which computes identically. The companion
-   `.icptq-hn-tabs-content { display:flex; align-items:center; justify-content:center }`
-   half of that override belongs to the tab shell, not to this pane. */
-.bigcard {
-  position: static;
-  transform: none;
-  top: auto;
-  /* Well inside the tab shell's fixed 680px pane, which centres the card. */
-  height: 480px;
-  margin: 0;
+  font-family: var(--ic-font-body);
 }
 
 .copy {
@@ -199,9 +167,8 @@
   color: var(--gray-500);
 }
 
-/* ----- Right panels -----
-   The panel stretches to the card's height and holds the scheduler, so nothing
-   here depends on a magic offset the way the old absolute `.icptq-blurwrap` did.
+/* ----- Right panel -----
+   The panel stretches to the card's height and holds the scheduler.
    22px of blue on three sides and NONE on the right: the scheduler runs off
    that edge, and every layer runs off with it. Padding there would stack the
    glass inset on top of the blue on top of the card's own 24px and read as a
@@ -222,23 +189,16 @@
 
 /* ----- Scheduler illustration -----
 
-   This is the HERO's scheduler (src/components/home/Hero/HeroVisual.icptq-tsx), not
-   the Recover tab's older one — same glass window, same flexed columns, same
-   phone control. Its "Name *" field and Continue button give way to the two
-   qualifying questions, which is the point of this tab.
-
-   NOTE: this app's CSS pipeline strips `backdrop-filter` out of every CSS
-   Module, so the frost is set inline in the TSX. The declaration is kept here
-   for the Framer port (which injects raw CSS and is unaffected) and as the
-   record of what the surface is meant to be. */
+   The hero's scheduler — same glass window, same flexed columns, same phone
+   control — with its name field and Continue button swapped for the two
+   qualifying questions, which is the point of this tab. */
 .window {
   flex: 1 1 auto;
   min-width: 0;
   display: flex;
   flex-direction: column;
   /* The card is wider than the glass and runs off its right edge, so the glass
-     is what crops it — same as ic-website's original, where the rigid 598.92
-     card bleeds off its panel. No padding, border or radius on that edge: the
+     is what crops it: the rigid 598.92 card bleeds off its panel. No padding, border or radius on that edge: the
      glass ends where the cut is, rather than framing it. */
   overflow: hidden;
   padding: 13px 0 13px 13px;
@@ -432,7 +392,7 @@
   position: relative;
 }
 /* Month, day names and dates are out of reach until the form is filled, so they
-   carry a layer blur on top of the existing 30%. Figma's layer blur is `filter`,
+   carry a layer blur on top of the existing 30%. A layer blur is `filter`,
    not `backdrop-filter` — the latter would sample the card behind instead. It
    applies only to this inner block; the tip is a sibling and stays sharp. */
 .schedCalinner {
@@ -537,8 +497,7 @@
   width: auto;
 }
 /* Days with open slots: Gray/100 chip, numeral stays Gray/900 and goes
-   semibold. The weight is the only signal — no colour shift. (The hero's
-   treatment; the Recover tab tinted these Blue/100.) */
+   semibold. The weight is the only signal — no colour shift. */
 .schedDayAvail {
   background: var(--gray-100);
   font-weight: 600;
@@ -669,12 +628,12 @@
   flex: 0 0 auto;
 }
 
-/* Right-panel layered stage: scheduler <-> inbox */
+/* The cursor is positioned against the right-hand stage. */
 .rightstage {
   position: relative;
 }
 
-/* ===================== Qualify & Route tab ===================== */
+/* ----- Checklist outcomes, questions and cursor ----- */
 
 /* last checklist item: keep the icon top-aligned but drop the trailing line */
 .checkLinewrapLast .checkLine {
@@ -843,10 +802,10 @@
 
 @media (prefers-reduced-motion: reduce) {
   .checkAnim,
-.checkSwapDim,
-.checkSwapChk,
-.badgeReveal,
-.checkOutcomeReveal {
+  .checkSwapDim,
+  .checkSwapChk,
+  .badgeReveal,
+  .checkOutcomeReveal {
     transition: none;
   }
   .qsCursor {
@@ -895,7 +854,7 @@
   }
 }
 
-/* ============ Mobile (<810) — Figma 377:34004 ============ */
+/* ============ Mobile (<810) ============ */
 @container (max-width: 809px) {
   .bigcard {
     width: 100%;
@@ -911,7 +870,7 @@
     overflow: hidden;
   }
   .copy,
-.copytop {
+  .copytop {
     display: contents;
   }
   .copyhead {
@@ -990,7 +949,7 @@
     display: none;
   }
   .phoneInput,
-.phoneText {
+  .phoneText {
     font-size: 14px;
   }
   .phoneRow {
@@ -1041,7 +1000,7 @@
     grid-area: 1 / 1;
   }
   .checkConnector,
-.checkLinewrap {
+  .checkLinewrap {
     display: none;
   }
   .checkIconcol {
@@ -1059,11 +1018,11 @@
     max-width: 100%;
   }
   .qsOutcomeTxt,
-.qsOutcomePix {
+  .qsOutcomePix {
     white-space: normal;
   }
   .checkAnim.isDim,
-.checkAnim.isChecked {
+  .checkAnim.isChecked {
     opacity: 0;
   }
   .checkAnim.isChecked.isCurrent {
@@ -1076,7 +1035,7 @@
 
 @container (max-width: 340px) {
   .stagefit,
-.stagefit .panel {
+  .stagefit .panel {
     height: 340px;
   }
   .stagefit {
@@ -1099,7 +1058,7 @@
     line-height: 14px;
   }
   .checkTitle,
-.checkDesc {
+  .checkDesc {
     font-size: 12px;
     line-height: 16px;
   }
@@ -1113,7 +1072,7 @@
     font-size: 10px;
   }
   .qsOutcomeAv,
-.qsOutcomeIc {
+  .qsOutcomeIc {
     width: 14px;
     height: 14px;
   }
@@ -1125,7 +1084,7 @@
     padding-inline: 6px;
   }
   .phoneInput,
-.phoneText {
+  .phoneText {
     font-size: 12px;
   }
 }

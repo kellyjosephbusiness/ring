@@ -3,7 +3,8 @@
 import clsx from "clsx";
 import type { CSSProperties, ReactNode } from "react";
 
-import { useCountUp, useSteps } from "./bento-hooks";
+import { useSteps } from "./bento-hooks";
+import { CountUp } from "./count-up";
 import styles from "./tracker.module.css";
 
 /** The recovered column's counter ticks 188 → 189 when the new lead lands. */
@@ -256,9 +257,6 @@ function LeadCard({ lead, isNew, index }: { lead: Lead; isNew: boolean; index: n
  * builds in, then a freshly recovered lead drops into the first column. */
 export function TrackerGraphic({ play = false }: { play?: boolean }) {
   const landed = useSteps(play, NEW_LEAD_TIMES) > 0 || !play;
-  const recovered = useCountUp(play, 60000, { delay: 600, duration: 900, prefix: "$" });
-  const deals = useCountUp(play, 20, { delay: 800, duration: 600 });
-  const timeSaved = useCountUp(play, 10, { delay: 900, duration: 600, suffix: " hrs" });
 
   return (
     <div className={clsx(styles.root, play && styles.isPlay)}>
@@ -385,7 +383,9 @@ export function TrackerGraphic({ play = false }: { play?: boolean }) {
                 <div className={styles.statHead}>
                   <span className={styles.statLabel}>Recovered pipeline</span>
                 </div>
-                <p className={styles.statValue}>{recovered}</p>
+                <p className={styles.statValue}>
+                  <CountUp play={play} to={60000} delay={600} duration={900} prefix="$" />
+                </p>
               </div>
               <div className={styles.stat} style={indexVar("--i", 1)}>
                 <div className={clsx(styles.statHead, styles.spread)}>
@@ -404,7 +404,9 @@ export function TrackerGraphic({ play = false }: { play?: boolean }) {
                 <div className={styles.statHead}>
                   <span className={styles.statLabel}>Deals closed</span>
                 </div>
-                <p className={styles.statValue}>{deals}</p>
+                <p className={styles.statValue}>
+                  <CountUp play={play} to={20} delay={800} duration={600} />
+                </p>
               </div>
               <div className={clsx(styles.stat, styles.grow)} style={indexVar("--i", 3)}>
                 <div className={styles.statHead}>
@@ -417,7 +419,9 @@ export function TrackerGraphic({ play = false }: { play?: boolean }) {
                     </Glyph>
                   </span>
                 </div>
-                <p className={styles.statValue}>{timeSaved}</p>
+                <p className={styles.statValue}>
+                  <CountUp play={play} to={10} delay={900} duration={600} suffix=" hrs" />
+                </p>
               </div>
             </div>
 

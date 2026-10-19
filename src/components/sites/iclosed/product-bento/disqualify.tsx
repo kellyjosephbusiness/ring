@@ -94,13 +94,17 @@ function ChipRadio({ stroke }: { stroke: string }) {
   );
 }
 
+/** The email field's text; its own component so keystrokes re-render only it. */
+function TypedEmail({ play }: { play: boolean }) {
+  const typed = useSteps(play, TYPING_TIMES);
+  return <>{typed > 0 ? TYPING[typed - 1].text : play ? "" : IDLE_EMAIL}</>;
+}
+
 /** Card 1 — "Disqualify automatically": a scheduler form whose answers light
  * up Qualify / Disqualify rules one after another. */
 export function DisqualifyGraphic({ play = false }: { play?: boolean }) {
   const uid = useId();
-  const typed = useSteps(play, TYPING_TIMES);
   const beats = useSteps(play, BEAT_TIMES);
-  const email = typed > 0 ? TYPING[typed - 1].text : play ? "" : IDLE_EMAIL;
   const gradient = (n: number) => `${uid}dqC${n}`;
 
   return (
@@ -165,7 +169,7 @@ export function DisqualifyGraphic({ play = false }: { play?: boolean }) {
             <span className={styles.label}>Email</span>
             <div className={styles.input}>
               <span className={styles.inputText}>
-                {email}
+                <TypedEmail play={play} />
                 <span className={styles.caret} aria-hidden="true" />
               </span>
             </div>

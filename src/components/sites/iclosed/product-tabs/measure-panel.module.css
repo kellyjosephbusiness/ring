@@ -1,23 +1,11 @@
-/* ==== analytics ==== */
-/* Analytics panel — 1238 x 680 stage.
-
-   Ported 1:1 from ic-website's `AnalyticsPanelAnimated.icpta-jsx` (home-new). Every
-   value is a Figma export kept at its full precision (0.761, 12.175, 18.262 …)
-   rather than rounded, so the port stays traceable to the frame.
-
-   The root also folds in the wrapper ic-website rendered this panel inside —
-   `.icpta-hn-tabs-shot.icpta-hn-tabs-shot-analytics` from ProductTabsV14.icpta-jsx:
-     .icpta-hn-tabs-shot { display: flex; justify-content: center; width: 100%; height: 680px; }
-   i.icpta-e. a full-width 680px-tall box that horizontally centres the fixed 1238px
-   stage. Here the stage centres itself with `margin-inline: auto` and keeps the
-   680px height it already had, so the extra element is unnecessary. The same
-   wrapper also carried the tab's reveal animations, which are folded in at the
-   bottom of this file. */
+/* Measure panel (source prefix `icpta`): the analytics dashboard on its
+   1238 x 680 stage. Every value is the source's export at full precision
+   (0.761, 12.175, 18.262 …). The stage centres itself with `margin-inline:
+   auto`; the reveal animations are at the bottom of this file. */
 
 .panel {
   position: relative;
   width: 1238px;
-  /* from .icpta-hn-tabs-shot's flex centring */
   margin-inline: auto;
   height: 680px;
   background: var(--gray-50);
@@ -41,8 +29,8 @@
 
 /* ============ App window ============ */
 .window {
-  /* identical frame to the Unified Inbox tab's .icpta-hn-ip-app, so switching
-     tabs reads as the same app window changing content */
+  /* the same frame as the Engage tab's window, so switching tabs reads as the
+     same app changing content */
   position: absolute;
   left: 71px;
   top: 36px;
@@ -56,8 +44,7 @@
 }
 
 /* ============ Sidebar ============ */
-/* Identical to the Unified Inbox tab's .icpta-hn-ip-rail so the sidebar
-   doesn't shift when switching tabs — only the highlighted item differs. */
+/* The inbox app's rail; only the highlighted item differs. */
 .sidebar {
   position: absolute;
   left: 0;
@@ -925,10 +912,11 @@
 }
 
 /* ===================== Reveal cards + grow bars =====================
-   Folded in from ProductTabsV14's `.icpta-hn-tabs-shot-analytics …` rules, which
-   lived on the wrapper this panel was mounted in. Fill is 'backwards' (not
-   'both'): the delays need backwards-fill, but a finished forwards-fill pins
-   each element composited → soft text. */
+   Played on mount, so every visit to the tab replays them. Fill is
+   'backwards' (not 'both'): the delays need backwards-fill, but a finished
+   forwards-fill pins each element composited → soft text. Every funnel
+   column fades in at 0s (the source's nth-child stagger never matched,
+   because the dividers sit between the columns). */
 .panel .kpi,
 .panel .statCard,
 .panel .salesStat,
@@ -939,11 +927,7 @@
   animation: fadeIn 0.55s ease backwards;
 }
 
-/* The KPI row was the one group left out of the reveal, so those three read as
-   already-there while everything under them arrived. Staggered left to right
-   and ahead of the cards below, since they are the top row. Safe to count with
-   nth-child here: .icpta-kpis holds the three cards and nothing else — unlike
-   .icpta-funnelCols, whose dividers are why the delays below never match. */
+/* The KPI row staggers left to right, ahead of the cards below. */
 .panel .kpi:nth-child(2) {
   animation-delay: 0.08s;
 }
@@ -962,21 +946,6 @@
 
 .panel .callsCard {
   animation-delay: 0.4s;
-}
-
-/* Verbatim from the source. Note these three never match: inside .icpta-funnelCols the
-   columns are children 2, 4 and 6 — 1, 3 and 5 are the dividers — so every
-   .icpta-funnelCol keeps the 0s delay of the rule above. */
-.panel .funnelCol:nth-child(1) {
-  animation-delay: 0.45s;
-}
-
-.panel .funnelCol:nth-child(3) {
-  animation-delay: 0.65s;
-}
-
-.panel .funnelCol:nth-child(5) {
-  animation-delay: 0.85s;
 }
 
 .panel .funnelGraph {
@@ -1021,23 +990,19 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  /* ic-website writes this as `[class*="hn-ap-"]`; module class names are
-     hashed, so the animated classes are listed out instead — same set. */
   .panel .statCard,
-.panel .salesStat,
-.panel .funnelCol,
-.panel .callsCard,
-.panel .funnelCard,
-.panel .salesCard,
-.panel .funnelGraph,
-.panel .callsBar {
+  .panel .salesStat,
+  .panel .funnelCol,
+  .panel .callsCard,
+  .panel .funnelCard,
+  .panel .salesCard,
+  .panel .funnelGraph,
+  .panel .callsBar {
     animation: none !important;
   }
 }
 
-/* Below 1279px ic-website scales the whole 1238x680 stage down with a measured
-   JS fitter that lives in ProductTabs, not in the panel. These are the two
-   properties that rule set puts on the panel itself. */
+/* Below 1279px the shell's fitter scales the whole 1238x680 stage down. */
 @container (max-width: 1279px) {
   .panel {
     transform-origin: top center;
@@ -1083,9 +1048,9 @@
   /* Out of absolute positioning and into flow, in DOM order: topbar, KPIs,
      funnel + calls, stats + sales. */
   .topbar,
-.kpis,
-.row2,
-.row3 {
+  .kpis,
+  .row2,
+  .row3 {
     position: static;
     width: auto;
   }
@@ -1093,14 +1058,14 @@
      without it every band would shrink to fit instead of overflowing and being
      clipped. */
   .topbar,
-.kpis,
-.row2,
-.row3 {
+  .kpis,
+  .row2,
+  .row3 {
     flex: 0 0 auto;
   }
   .kpis,
-.row2,
-.row3 {
+  .row2,
+  .row3 {
     flex-direction: column;
     align-items: stretch;
     gap: 10px;
@@ -1112,13 +1077,13 @@
   /* Every card is authored at a fixed width for the 1096 window. `flex: 0 0
      auto` matters as much as the width: these rows shared their WIDTH on
      desktop, and the same `flex: 1 1 0` in a column divides the HEIGHT — which
-     crushed each KPI card to 51px, collapsed `.icpta-kpiTop` to its 1px min, and
+     crushed each KPI card to 51px, collapsed `.kpiTop` to its 1px min, and
      stacked the label, value and badge on top of each other. */
   .kpi,
-.funnelCard,
-.callsCard,
-.salesCard,
-.statCard {
+  .funnelCard,
+  .callsCard,
+  .salesCard,
+  .statCard {
     width: auto;
     flex: 0 0 auto;
   }
