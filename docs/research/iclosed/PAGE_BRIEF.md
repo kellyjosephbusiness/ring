@@ -3,6 +3,13 @@
 Source: https://www.iclosed.io/ (Framer site, inspected 2026-10-19).
 Clone route: `/` → `src/app/page.tsx`.
 
+> **Status:** the pixel-matched clone described here is preserved at commit
+> `95a0554` (paths below refer to that commit). The page was then rebranded
+> with RingOnDemand's copy — see `docs/research/ringondemand/`. The clone's
+> images and videos now live in `docs/research/iclosed/assets/` so the
+> evidence pages in `sections/` still render; they are no longer served by
+> the site.
+
 ## Route map
 
 | Source | Local | Notes |
@@ -67,7 +74,7 @@ Clone route: `/` → `src/app/page.tsx`.
 ## Evidence files
 
 - `sections/NN-slug.html` — rendered source markup (1440px) with every embedded
-  data-URI and CDN image rewritten to local `/sites/iclosed/images/<hash>.<ext>`.
+  data-URI and CDN image rewritten to local `../assets/images/<hash>.<ext>`.
 - `sections/NN-slug.css` — the section's own stylesheet as the source ships it
   (readable, commented; includes the shared `--band` token preamble).
 - `nav-computed.jsonl`, `footer-computed.jsonl` — computed geometry/type for the

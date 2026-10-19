@@ -27,11 +27,3 @@ export const PENDING_PAGES = {
   privacyPolicy: "#",
   termsOfService: "#",
 } as const;
-
-// TEMPORARY: aliases for components not yet rewritten for RingOnDemand.
-// Removed once every section uses the exports above.
-export const START_FREE_URL = BOOK_CALL_URL;
-export const LOGIN_URL = BOOK_CALL_URL;
-export function sourceUrl(path: string): string {
-  return path;
-}

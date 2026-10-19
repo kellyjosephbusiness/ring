@@ -82,32 +82,6 @@
   color: var(--gray500);
 }
 
-/* Headline line 1 at the heading's own metrics, flattened to zero height: its
-   only job is setting the eyebrow box's width. */
-.eyebrowGhost {
-  display: block;
-  height: 0;
-  overflow: hidden;
-  visibility: hidden;
-  white-space: nowrap;
-  font-family: var(--site-font-display);
-  font-size: 40px;
-  line-height: 0;
-  font-weight: 500;
-  letter-spacing: -0.4px;
-  text-transform: none;
-}
-
-/* Justified so the single line fills its span exactly. The tracking keeps
-   this short line from being carried by its word gaps alone. */
-.eyebrowText {
-  display: block;
-  width: 95%;
-  letter-spacing: 0.24em;
-  text-align: justify;
-  text-align-last: justify;
-}
-
 /* ---------- Headline + subcopy ---------- */
 .text {
   display: flex;
@@ -230,13 +204,6 @@
   .h1 {
     font-size: 36px;
   }
-  /* The ghost tracks the heading's size so the eyebrow stays width-locked. */
-  .eyebrowGhost {
-    font-size: 36px;
-  }
-  .eyebrowText {
-    width: 100%;
-  }
   .ctaGroup {
     align-items: center;
     text-align: center;
@@ -275,15 +242,8 @@
   .eyebrow {
     font-size: 12px;
   }
-  /* Looser tracking would push the phone line past the ghost and wrap it. */
-  .eyebrowText {
-    letter-spacing: 0.18em;
-  }
   .micro {
     line-height: 20px;
-  }
-  .eyebrowGhost {
-    font-size: 28px;
   }
   .cta {
     width: 100%;

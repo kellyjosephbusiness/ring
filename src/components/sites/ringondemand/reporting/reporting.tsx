@@ -1,8 +1,8 @@
 import type { CSSProperties } from "react";
 
-import panel from "../getting-started/split-panel.module.css";
-import { CheckDisc } from "../screening/check-disc";
-import { Reveal } from "../screening/reveal";
+import panel from "../shared/split-panel.module.css";
+import { CheckDisc } from "../shared/check-disc";
+import { Reveal } from "../shared/reveal";
 import styles from "./reporting.module.css";
 
 const BODY =

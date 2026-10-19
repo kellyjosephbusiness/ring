@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 
-import { Reveal } from "../screening/reveal";
+import { Reveal } from "../shared/reveal";
 import styles from "./results.module.css";
 
 const STATS = [

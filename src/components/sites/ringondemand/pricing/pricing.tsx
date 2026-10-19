@@ -1,8 +1,8 @@
 import type { CSSProperties } from "react";
 
 import { BOOK_CALL_TARGET, BOOK_CALL_URL } from "../links";
-import { CheckDisc } from "../screening/check-disc";
-import { Reveal } from "../screening/reveal";
+import { CheckDisc } from "../shared/check-disc";
+import { Reveal } from "../shared/reveal";
 import styles from "./pricing.module.css";
 
 type Plan = {

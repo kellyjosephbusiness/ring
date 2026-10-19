@@ -1,9 +1,9 @@
 import type { CSSProperties } from "react";
 
-import { CheckDisc } from "../screening/check-disc";
-import { Reveal } from "../screening/reveal";
+import { CheckDisc } from "../shared/check-disc";
+import { Reveal } from "../shared/reveal";
 import styles from "./getting-started.module.css";
-import panel from "./split-panel.module.css";
+import panel from "../shared/split-panel.module.css";
 
 const BODY =
   "To start live transfers we need 3 things from you. The phone number that receives the calls, the hours you take them, and a daily cap. There is no recurring volume commitment. You buy an order, we deliver it, and you reorder when you want more.";

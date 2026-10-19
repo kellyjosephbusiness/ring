@@ -1,7 +1,7 @@
 import type { CSSProperties, ReactNode } from "react";
 
 import { ANCHORS } from "../links";
-import { Reveal } from "../screening/reveal";
+import { Reveal } from "../shared/reveal";
 import styles from "./offers.module.css";
 
 type Offer = {

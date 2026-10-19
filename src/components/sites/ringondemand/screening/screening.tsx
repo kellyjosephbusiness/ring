@@ -1,7 +1,7 @@
 import type { CSSProperties } from "react";
 
-import { CheckDisc } from "./check-disc";
-import { Reveal } from "./reveal";
+import { CheckDisc } from "../shared/check-disc";
+import { Reveal } from "../shared/reveal";
 import styles from "./screening.module.css";
 
 const CHECKS = [

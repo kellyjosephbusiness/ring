@@ -24,12 +24,7 @@ export function Hero() {
       <div className={styles.inner}>
         <div className={styles.grid}>
           <div className={styles.copy}>
-            <p className={styles.eyebrow}>
-              <span className={styles.eyebrowGhost} aria-hidden="true">
-                {HEADLINE_LINE_1}
-              </span>
-              <span className={styles.eyebrowText}>For personal injury law firms</span>
-            </p>
+            <p className={styles.eyebrow}>For personal injury law firms</p>
             <div className={styles.text}>
               <h1 className={styles.h1}>
                 <span>{HEADLINE_LINE_1}</span>

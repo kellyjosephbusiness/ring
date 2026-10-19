@@ -24,14 +24,6 @@ const inter = localFont({
   ],
 });
 
-const interDisplay = localFont({
-  variable: "--font-inter-display",
-  display: "swap",
-  src: [
-    { path: "../../public/sites/ringondemand/fonts/inter-display-500-latin.woff2", weight: "500", style: "normal" },
-  ],
-});
-
 const title = "RingOnDemand | Signed MVA Cases for Personal Injury Firms";
 const description =
   "You give us your case criteria. We run the ads, screen every caller, and send you a live transfer or a signed retainer. You pay per transfer or per signed case and nothing else.";
@@ -67,7 +59,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${poppins.variable} ${inter.variable} ${interDisplay.variable} antialiased`}
+      className={`${poppins.variable} ${inter.variable} antialiased`}
     >
       <body>{children}</body>
     </html>
