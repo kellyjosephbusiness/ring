@@ -27,9 +27,12 @@ Clone route: `/` → `src/app/page.tsx`.
 - CTA shadow: `inset 0 1px 4px 1px rgba(255,255,255,.24), inset 0 4px 16px 1px rgba(255,255,255,.2)`.
 - Rails: fixed 1px `#e5e7eb` vertical lines at the edges of `min(1440px, 100% - 64px)`,
   hidden at ≤810px (`src/components/sites/iclosed/rails/`).
-- Header: fixed, 104px tall (40px black announcement bar + 64px nav). Visible at
-  scrollY≈0; slides up (`translateY(-110px)`, opacity 0) once the page is scrolled
-  and returns only near the top. The source hero starts at y=81 (1px modal
+- Header: fixed, 104px tall (40px black announcement bar + 64px nav). Framer's
+  scroll-direction effect: a run of scroll events moving ≥4px down from where the
+  direction last changed slides it up (`translateY(-110px)`, opacity 0, 0.4s
+  `cubic-bezier(.6,0,.05,1)`); the second scroll-up event brings it back anywhere
+  on the page. The page starts in the "down" direction, so the first downward
+  scroll already hides it. The source hero starts at y=81 (1px modal
   anchor + 80px frame padding; 100px below 810px), reproduced by `main`'s
   padding in `src/app/page.module.css` — section components add no top offset.
 - Cookie consent (Cookiebot), analytics, Hyros and FirstPromoter scripts are
@@ -37,7 +40,9 @@ Clone route: `/` → `src/app/page.tsx`.
 - A/B test: the source randomly serves a variant hero ("Triple your leads
   using", inbox visual) plus an extra "Book a 5-min demo" scheduler embed. The
   statically served control variant ("Triple your leads with", scheduler
-  visual) is the one cloned.
+  visual) is the one cloned. The variant's extra section shifts the `Main`
+  child indexes, so source comparisons must first confirm the control variant
+  loaded (no `[class*="icnhap"]` element).
 
 ## Section order (source `[data-framer-name="Main"]` children)
 
