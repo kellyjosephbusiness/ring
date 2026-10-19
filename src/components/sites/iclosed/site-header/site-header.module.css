@@ -453,6 +453,7 @@
 
 .tile {
   position: relative;
+  isolation: isolate;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
