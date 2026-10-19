@@ -1,0 +1,86 @@
+/* Customer logo wall (source prefix `iclw`). Equal cells on one row, each 56px
+   tall with 20px of breathing room, capped at the container with 20px
+   gutters rather than the standard 40. Static — no marquee. */
+
+.outer {
+  position: relative;
+  width: 100%;
+  container-type: inline-size;
+}
+
+.band {
+  position: relative;
+  width: 100%;
+  background: #ffffff;
+  font-family: var(--ic-font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  color: #111928;
+}
+
+/* Full-window hairline along the bottom edge. */
+.band::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: #e5e7eb;
+}
+
+.wrap {
+  position: relative;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-block: 16px;
+  padding-inline: 20px;
+}
+
+.cell {
+  flex: 1 0 0;
+  min-width: 0;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-inline: 20px;
+  overflow: hidden;
+}
+
+/* Each mark keeps the box the design gives it (max-width/max-height from the
+   data) — they are optically balanced rather than uniform. */
+.logo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+@container (max-width: 1279px) {
+  .row {
+    flex-wrap: wrap;
+    row-gap: 8px;
+  }
+  .cell {
+    flex: 0 0 25%;
+  }
+}
+
+@container (max-width: 809px) {
+  .row {
+    padding-inline: 12px;
+  }
+  .cell {
+    flex: 0 0 50%;
+    height: 48px;
+    padding-inline: 12px;
+  }
+}

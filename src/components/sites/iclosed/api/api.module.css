@@ -1,0 +1,219 @@
+/* "Build on iClosed" (source prefix `icapi`). A tinted panel inside the 1440
+   container: the 40px gutters stay white, so the band reads as a card on the
+   page. The section's own hairline runs the full window width underneath. */
+
+.outer {
+  position: relative;
+  width: 100%;
+  container-type: inline-size;
+}
+
+.section {
+  --blue-600: #1c64f2;
+  --nav: #020418;
+  --cta: #0236c2;
+
+  position: relative;
+  width: 100%;
+  background: #ffffff;
+  font-family: var(--ic-font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  color: #111928;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.wrap {
+  position: relative;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding-inline: 40px;
+}
+
+.panel {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  padding: 36px 48px;
+  background: #f8f9fa;
+}
+
+.text {
+  flex: 1 0 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 24px;
+  overflow: hidden;
+}
+
+.eyebrow {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  letter-spacing: 0.84px;
+  text-transform: uppercase;
+  color: var(--blue-600);
+}
+
+.heading {
+  font-family: var(--ic-font-display);
+  font-size: 40px;
+  line-height: 52px;
+  font-weight: 500;
+  letter-spacing: -0.4px;
+  color: var(--nav);
+}
+
+.body {
+  max-width: 547.346px;
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 400;
+  letter-spacing: -0.04px;
+  color: var(--nav);
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 203px;
+  height: 54px;
+  border: 1px solid var(--cta);
+  border-radius: 8px;
+  background: var(--cta);
+  box-shadow:
+    inset 0 1px 4px 1px rgba(255, 255, 255, 0.24),
+    inset 0 4px 16px 1px rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  font-family: var(--ic-font-body);
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  letter-spacing: -0.1px;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: filter 150ms ease;
+}
+
+.cta:hover {
+  filter: brightness(1.1);
+}
+
+.cta:active {
+  filter: brightness(0.96);
+}
+
+.cta:focus-visible {
+  outline: 2px solid #1c64f2;
+  outline-offset: 2px;
+}
+
+/* ---- Visual ---- */
+
+.visual {
+  position: relative;
+  flex: 1 0 0;
+  min-width: 0;
+  height: 420px;
+  overflow: hidden;
+}
+
+/* Taller than the frame and pulled up, so the gradient's bright band lands
+   behind the shot rather than at the top edge. */
+.visualBg {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: -6.11%;
+  width: 100%;
+  max-width: 100%;
+  height: 112.21%;
+  object-fit: cover;
+}
+
+.shotClip {
+  position: absolute;
+  left: 32.5px;
+  top: 32.87px;
+  width: 795.655px;
+  height: 521.741px;
+  overflow: hidden;
+}
+
+/* Wider than its own clip on purpose — the frame scales the shot up and lets
+   the clip crop it, so it opts out of the img max-width reset. */
+.shot {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0.11%;
+  width: 120.43%;
+  max-width: none;
+  height: 99.78%;
+}
+
+/* ---- Tablet: stack, and let the shot run to the panel's edge ---- */
+@container (max-width: 1279px) {
+  .panel {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 32px;
+    padding: 40px;
+  }
+  .text,
+  .visual {
+    flex: none;
+  }
+  .text {
+    align-items: center;
+    text-align: center;
+  }
+  .body {
+    max-width: 560px;
+  }
+  .heading {
+    font-size: 36px;
+    line-height: 46px;
+  }
+  .visual {
+    height: 360px;
+  }
+  .shotClip {
+    left: 24px;
+    top: 24px;
+  }
+}
+
+/* ---- Mobile ---- */
+@container (max-width: 809px) {
+  .panel {
+    gap: 28px;
+    padding: 32px 20px;
+  }
+  .heading {
+    font-size: 30px;
+    line-height: 40px;
+  }
+  .body {
+    font-size: 16px;
+    line-height: 26px;
+  }
+  .cta {
+    width: 100%;
+    max-width: 260px;
+  }
+  .visual {
+    height: 260px;
+  }
+  .shotClip {
+    left: 16px;
+    top: 16px;
+  }
+}
