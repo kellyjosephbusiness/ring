@@ -26,6 +26,8 @@ type Lead = {
   mail: string;
   session: string;
   person: string;
+  /** Index into AVATARS. */
+  av: number;
   chip: string;
   unread: boolean;
   fields: boolean;
@@ -46,8 +48,8 @@ const COLUMNS: Column[] = [
     icon: "rotate",
     count: "189",
     leads: [
-      { email: "alex.thompson@gmail.com", mail: "sarah.k@mail.com", session: "Q4 Sales Discovery [Google]", person: "Alex Thompson", chip: "New message", unread: true, fields: false },
-      { email: "priya.patel@gmail.com", mail: "marco@mail.com", session: "Product Demo [LinkedIn ADS]", person: "Priya Patel", chip: "Create chat", unread: false, fields: true },
+      { email: "alex.thompson@gmail.com", mail: "sarah.k@mail.com", session: "Q4 Sales Discovery [Google]", person: "Alex Thompson", av: 0, chip: "New message", unread: true, fields: false },
+      { email: "priya.patel@gmail.com", mail: "marco@mail.com", session: "Product Demo [LinkedIn ADS]", person: "Priya Patel", av: 1, chip: "Create chat", unread: false, fields: true },
     ],
   },
   {
@@ -56,8 +58,8 @@ const COLUMNS: Column[] = [
     icon: "lightning",
     count: "94",
     leads: [
-      { email: "james.wilson@gmail.com", mail: "nina.r@mail.com", session: "Onboarding Call [Meta ADS]", person: "James Wilson", chip: "New message", unread: true, fields: false },
-      { email: "olivia.chen@gmail.com", mail: "lucas@mail.com", session: "Strategy Session [TikTok]", person: "Olivia Chen", chip: "New message", unread: true, fields: true },
+      { email: "james.wilson@gmail.com", mail: "nina.r@mail.com", session: "Onboarding Call [Meta ADS]", person: "James Wilson", av: 2, chip: "New message", unread: true, fields: false },
+      { email: "olivia.chen@gmail.com", mail: "lucas@mail.com", session: "Strategy Session [TikTok]", person: "Olivia Chen", av: 3, chip: "New message", unread: true, fields: true },
     ],
   },
   {
@@ -66,10 +68,10 @@ const COLUMNS: Column[] = [
     icon: "rotate",
     count: "47",
     leads: [
-      { email: "ryan.murphy@gmail.com", mail: "emma.s@mail.com", session: "Follow-up Demo [FB ADS]", person: "Ryan Murphy", chip: "Create chat", unread: false, fields: false },
-      { email: "sofia.garcia@gmail.com", mail: "daniel.m@mail.com", session: "Enterprise Call [Google]", person: "Sofia Garcia", chip: "Go to chat", unread: false, fields: true },
-      { email: "noah.kim@gmail.com", mail: "ava.j@mail.com", session: "Renewal Talk [LinkedIn]", person: "Noah Kim", chip: "Go to chat", unread: false, fields: true },
-      { email: "isabella.lee@gmail.com", mail: "ethan.p@mail.com", session: "Upsell Call [Meta ADS]", person: "Isabella Lee", chip: "Go to chat", unread: false, fields: true },
+      { email: "ryan.murphy@gmail.com", mail: "emma.s@mail.com", session: "Follow-up Demo [FB ADS]", person: "Ryan Murphy", av: 4, chip: "Create chat", unread: false, fields: false },
+      { email: "sofia.garcia@gmail.com", mail: "daniel.m@mail.com", session: "Enterprise Call [Google]", person: "Sofia Garcia", av: 5, chip: "Go to chat", unread: false, fields: true },
+      { email: "noah.kim@gmail.com", mail: "ava.j@mail.com", session: "Renewal Talk [LinkedIn]", person: "Noah Kim", av: 6, chip: "Go to chat", unread: false, fields: true },
+      { email: "isabella.lee@gmail.com", mail: "ethan.p@mail.com", session: "Upsell Call [Meta ADS]", person: "Isabella Lee", av: 7, chip: "Go to chat", unread: false, fields: true },
     ],
   },
   {
@@ -78,7 +80,7 @@ const COLUMNS: Column[] = [
     icon: "rotate",
     count: "189",
     leads: [
-      { email: "liam.brooks@gmail.com", mail: "zoe.h@mail.com", session: "Intro Call [Google]", person: "Liam Brooks", chip: "New message", unread: true, fields: false },
+      { email: "liam.brooks@gmail.com", mail: "zoe.h@mail.com", session: "Intro Call [Google]", person: "Liam Brooks", av: 8, chip: "New message", unread: true, fields: false },
     ],
   },
 ];
@@ -176,22 +178,22 @@ const CHANNELS: ReactNode[] = [
   <Mark key="whatsapp">
     <circle cx="8" cy="8" r="6.3" fill="#25d366" />
     <path
-      d="M5.7 5.5c.15-.38.3-.38.48-.38h.28c.14 0 .3 0 .44.33l.48 1.08c.05.14 0 .28-.06.38l-.24.3c-.1.1-.14.24-.05.38.3.48.86 1 1.4 1.3.15.08.3.05.4-.06l.34-.4c.1-.1.24-.14.38-.08l1.02.48c.15.08.24.18.24.34 0 .5-.34.98-.78 1.12-.4.14-.86.14-2-.4-1.4-.66-2.46-2.2-2.66-3.28-.13-.68 0-1.320.2-1.86z"
+      d="M5.7 5.5c.15-.38.3-.38.48-.38h.28c.14 0 .3 0 .44.33l.48 1.08c.05.14 0 .28-.06.38l-.24.3c-.1.1-.14.24-.05.38.3.48.86 1 1.4 1.3.15.08.3.05.4-.06l.34-.4c.1-.1.24-.14.38-.08l1.02.48c.15.08.24.18.24.34 0 .5-.34.98-.78 1.12-.4.14-.86.14-2-.4-1.4-.66-2.46-2.2-2.66-3.28-.13-.68 0-1.32.2-1.86z"
       fill="#ffffff"
     />
   </Mark>,
   <Mark key="sms">
     <rect x="1.4" y="1.4" width="13.2" height="13.2" rx="3.4" fill="#3b82f6" />
-    <path d="M8 4.1c2.35 0 4.2 1.42 4.2 3.2S10.350 10.5 8 10.5c-.5 0-1-.06-1.450-.18L4.5 11.2l.52-1.42C4.28 9.24 3.8 8.35 3.8 7.3 3.8 5.5 5.65 4.1 8 4.1z" fill="#ffffff" />
+    <path d="M8 4.1c2.35 0 4.2 1.42 4.2 3.2S10.35 10.5 8 10.5c-.5 0-1-.06-1.45-.18L4.5 11.2l.52-1.42C4.28 9.24 3.8 8.35 3.8 7.3 3.8 5.5 5.65 4.1 8 4.1z" fill="#ffffff" />
   </Mark>,
   <Mark key="messenger">
     <circle cx="8" cy="8" r="6.3" fill="#0084ff" />
-    <path d="M8 3.8c-2.45 0-4.3 1.72-4.3 4.02 0 1.2.52 2.22 1.4 2.940v1.66l1.55-.86c.42.12.87.18 1.35.18 2.45 0 4.3-1.72 4.3-4.020S10.45 3.8 8 3.8z" fill="#ffffff" />
+    <path d="M8 3.8c-2.45 0-4.3 1.72-4.3 4.02 0 1.2.52 2.22 1.4 2.94v1.66l1.55-.86c.42.12.87.18 1.35.18 2.45 0 4.3-1.72 4.3-4.02S10.45 3.8 8 3.8z" fill="#ffffff" />
     <path d="M5.2 9.75 7.35 7.5l1.05 1.1 1.9-1.1-2.05 2.15-1.05-1.1z" fill="#0084ff" />
   </Mark>,
 ];
 
-function LeadCard({ lead, avatar, isNew, index }: { lead: Lead; avatar: string; isNew: boolean; index: number }) {
+function LeadCard({ lead, isNew, index }: { lead: Lead; isNew: boolean; index: number }) {
   return (
     <div className={clsx(styles.card, isNew && styles.cardNew)} style={indexVar("--i", index)}>
       <div className={styles.cardInner}>
@@ -227,7 +229,7 @@ function LeadCard({ lead, avatar, isNew, index }: { lead: Lead; avatar: string; 
                 <path d="M3.6 13c0-2.4 2-3.9 4.4-3.9s4.4 1.5 4.4 3.9" />
               </Glyph>
             </span>
-            <span className={styles.avatar} style={{ backgroundImage: avatar }} />
+            <span className={styles.avatar} style={{ backgroundImage: AVATARS[lead.av % AVATARS.length] }} />
             <span className={clsx(styles.rowText, styles.rowName)}>{lead.person}</span>
           </div>
         </div>
@@ -257,8 +259,6 @@ export function TrackerGraphic({ play = false }: { play?: boolean }) {
   const recovered = useCountUp(play, 60000, { delay: 600, duration: 900, prefix: "$" });
   const deals = useCountUp(play, 20, { delay: 800, duration: 600 });
   const timeSaved = useCountUp(play, 10, { delay: 900, duration: 600, suffix: " hrs" });
-
-  let avatarIndex = 0;
 
   return (
     <div className={clsx(styles.root, play && styles.isPlay)}>
@@ -444,7 +444,6 @@ export function TrackerGraphic({ play = false }: { play?: boolean }) {
                         <LeadCard
                           key={lead.email}
                           lead={lead}
-                          avatar={AVATARS[avatarIndex++ % AVATARS.length]}
                           isNew={isFirst && i === 0}
                           index={i}
                         />
