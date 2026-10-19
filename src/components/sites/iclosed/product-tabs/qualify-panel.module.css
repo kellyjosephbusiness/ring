@@ -1,0 +1,1132 @@
+/* ==== qualify ==== */
+/* Qualify & Route panel — ported 1:1 from ic-website's `QualifyPane` and its
+   share of the \3c style> block in ProductTabsV14.icptq-jsx. Every px value, easing
+   curve and sub-pixel Figma export (17.76, 32.56, 33.196 …) is verbatim.
+
+   Rule order is the source's rule order: several selectors override an earlier
+   one at equal specificity (`.icptq-qsBlurwrap` over `.icptq-blurwrap`, the second
+   `.icptq-schedPhoneinput` / `.icptq-kpicard` blocks, the V14 `.icptq-bigcard` override), so
+   moving them would change the computed style. */
+
+/* The source's DOM inherits these from `.icptq-hn-tabs-root`, which lives in the tab
+   shell rather than in the pane. Reapplied on the pane's own two roots so the
+   port is self-contained without adding a wrapper element. */
+.bigcard,
+.bigcard *,
+.bigcard *::before,
+.bigcard *::after {
+  box-sizing: border-box;
+}
+.bigcard {
+  font-family: var(--ic-font-body);
+}
+.bigcard img {
+  display: block;
+}
+
+/* ----- Big card (centered in the responsive content) ----- */
+.bigcard {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 170px;
+  width: 1144px;
+  height: 452px;
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: 4px;
+  padding: 16px 24px;
+  filter: drop-shadow(0px 0px 6px rgba(0, 0, 0, 0.12));
+  display: flex;
+  align-items: flex-start;
+  gap: 46.08px;
+}
+
+/* V14 override, emitted by ProductTabsV14 for version >= 7:
+   "KPI row gone. Keep the gray pane a FIXED 680px (same on every tab, height
+   never changes) and center the card — at its natural content height — in the
+   middle of it. No white space inside the card."
+   The source writes this as `.icptq-hn-tabs-content .icptq-hn-tabs-bigcard`; here it is a
+   later same-specificity rule, which computes identically. The companion
+   `.icptq-hn-tabs-content { display:flex; align-items:center; justify-content:center }`
+   half of that override belongs to the tab shell, not to this pane. */
+.bigcard {
+  position: static;
+  transform: none;
+  top: auto;
+  /* Well inside the tab shell's fixed 680px pane, which centres the card. */
+  height: 480px;
+  margin: 0;
+}
+
+.copy {
+  width: 501.12px;
+  flex: 0 0 auto;
+  align-self: stretch;
+  padding: 7.68px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.copytop {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 23.04px;
+}
+.copyhead {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 11.52px;
+}
+.title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.36px;
+  color: #171717;
+}
+.titleMobileWord {
+  display: none;
+}
+.para {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 23.04px;
+  letter-spacing: -0.24px;
+  color: #31353f;
+}
+
+/* ----- Checklist ----- */
+.checklist {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.checkItem {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+.checkIconcol {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2px;
+}
+.checkLinewrap {
+  flex: 1 1 0;
+  min-height: 1px;
+  width: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.checkLine {
+  display: block;
+  width: 1px;
+  height: 100%;
+  background: #d9d9d9;
+}
+.checkConnector {
+  width: 20px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.checkConnectorDim {
+  opacity: 0.4;
+}
+.checkTextcol {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+.checkTextcolTight {
+  gap: 2px;
+}
+.checkTitlerow {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+.checkTitle {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  color: var(--gray-900);
+  white-space: nowrap;
+}
+.checkTitleBold {
+  font-weight: 600;
+}
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 6px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
+  text-align: center;
+  white-space: nowrap;
+}
+.badgeGreen {
+  background: var(--green-100);
+  border: 1px solid var(--green-200);
+  color: var(--green-800);
+}
+.checkDesc {
+  width: 100%;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  color: var(--gray-500);
+}
+
+/* ----- Right panels -----
+   The panel stretches to the card's height and holds the scheduler, so nothing
+   here depends on a magic offset the way the old absolute `.icptq-blurwrap` did.
+   22px of blue on three sides and NONE on the right: the scheduler runs off
+   that edge, and every layer runs off with it. Padding there would stack the
+   glass inset on top of the blue on top of the card's own 24px and read as a
+   margin the composition never intended. */
+.panel {
+  flex: 1 1 0;
+  min-width: 0;
+  align-self: stretch;
+  border-radius: 4px 0 0 4px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  padding: 22px 0 22px 22px;
+}
+.panelBlue {
+  background: var(--blue-50);
+}
+
+/* ----- Scheduler illustration -----
+
+   This is the HERO's scheduler (src/components/home/Hero/HeroVisual.icptq-tsx), not
+   the Recover tab's older one — same glass window, same flexed columns, same
+   phone control. Its "Name *" field and Continue button give way to the two
+   qualifying questions, which is the point of this tab.
+
+   NOTE: this app's CSS pipeline strips `backdrop-filter` out of every CSS
+   Module, so the frost is set inline in the TSX. The declaration is kept here
+   for the Framer port (which injects raw CSS and is unaffected) and as the
+   record of what the surface is meant to be. */
+.window {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  /* The card is wider than the glass and runs off its right edge, so the glass
+     is what crops it — same as ic-website's original, where the rigid 598.92
+     card bleeds off its panel. No padding, border or radius on that edge: the
+     glass ends where the cut is, rather than framing it. */
+  overflow: hidden;
+  padding: 13px 0 13px 13px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-right: none;
+  border-radius: 8px 0 0 8px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 0 42.8px 0 rgba(43, 47, 65, 0.17), inset 0 0 0 2px rgba(255, 255, 255, 0.3);
+}
+.sched {
+  /* 598.92 is the source's authored card — wider than the glass it sits in, so
+     the calendar column is cut off at the right rather than being squeezed to
+     fit. That crop is the point: it buys the form column its full 263.44 and
+     reads as a window onto a larger screen. */
+  width: 598.92px;
+  /* Fills the glass vertically — the calendar and the form keep their own
+     heights and top-align inside it. */
+  flex: 1 1 auto;
+  min-height: 0;
+  background: var(--white);
+  /* Square on the right — that corner is cut off, not rounded. */
+  border-radius: 4px 0 0 4px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  box-shadow:
+    0px 8.33px 8.33px 0px rgba(25, 44, 128, 0.02),
+    0px 2.082px 4.165px 0px rgba(196, 196, 215, 0.17),
+    0px 1.041px 2.082px 0px rgba(196, 196, 215, 0.25),
+    0px 0px 0px 1.041px rgba(196, 196, 215, 0.25);
+}
+.schedHead {
+  width: 100%;
+  background: var(--white);
+  border-bottom: 1px solid var(--gray-200);
+  padding: 7.4px 11.84px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 11.84px;
+}
+.schedStep {
+  display: flex;
+  align-items: center;
+  gap: 5.92px;
+}
+.schedDot {
+  width: 5.92px;
+  height: 5.92px;
+  border-radius: 50%;
+  background: var(--gray-400);
+}
+.schedDotOn {
+  background: #04072a;
+}
+.schedSteplabel {
+  font-size: 10.36px;
+  font-weight: 500;
+  line-height: 14.8px;
+  color: var(--gray-400);
+  white-space: nowrap;
+}
+.schedSteplabelOn {
+  color: #04072a;
+}
+.schedBody {
+  width: 100%;
+  /* Takes the height the card has left instead of a fixed 300.88 — the two
+     columns top-align in it and the rule between them runs its full height. */
+  flex: 1 1 auto;
+  min-height: 0;
+  background: var(--white);
+  padding: 0 17.76px;
+  display: flex;
+  align-items: flex-start;
+  gap: 17.76px;
+}
+/* Both columns stand at the source's 263.44 rather than splitting what the
+   glass allows. Together they overrun it, which is what puts the cut on the
+   right — and what keeps the form wide enough to read. */
+.schedForm {
+  width: 263.44px;
+  flex: 0 0 auto;
+  padding: 17.76px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 11.84px;
+}
+.schedTitleblock {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8.88px;
+}
+.schedTitle {
+  width: 100%;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 17.76px;
+  color: var(--gray-900);
+}
+.schedSub {
+  width: 100%;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--gray-600);
+}
+.schedFields {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 11.84px;
+}
+/* The focus state colours the border of BOTH halves — the flag button and the
+   input are separate boxes sharing one outline, so the class lives on the row.
+   No outer glow: the border is the whole signal, and it turns green once the
+   number validates. */
+.phoneRow {
+  width: 100%;
+  display: flex;
+  align-items: stretch;
+}
+.phoneRowLit .flagBtn,
+.phoneRowLit .phoneInput {
+  border-color: var(--blue-400);
+}
+.phoneRowOk .flagBtn,
+.phoneRowOk .phoneInput {
+  border-color: var(--green-400);
+}
+.flagBtn {
+  background: var(--gray-100);
+  border: 0.74px solid var(--gray-200);
+  border-right: none;
+  transition: border-color 180ms ease;
+  border-radius: 5.92px 0 0 5.92px;
+  padding-left: 7.4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7.4px;
+}
+.flagBtn img:first-child {
+  width: 14.8px;
+  height: 10.36px;
+}
+.flagBtn img:nth-child(2) {
+  width: 13.32px;
+  height: 13.32px;
+  margin-left: -4.44px;
+}
+.flagDiv {
+  width: 0.74px;
+  align-self: stretch;
+  background: var(--gray-200);
+}
+.phoneInput {
+  flex: 1 1 0;
+  min-width: 0;
+  height: 32px;
+  background: var(--gray-50);
+  border: 0.74px solid var(--gray-200);
+  border-left: none;
+  border-radius: 0 5.92px 5.92px 0;
+  padding: 0 8.88px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--gray-900);
+  display: flex;
+  align-items: center;
+  transition: border-color 180ms ease;
+}
+.schedDivider {
+  width: 1px;
+  align-self: stretch;
+  background: var(--gray-200);
+  flex: 0 0 auto;
+}
+.schedCal {
+  width: 263.44px;
+  flex: 0 0 auto;
+  height: 300.88px;
+  position: relative;
+}
+/* Month, day names and dates are out of reach until the form is filled, so they
+   carry a layer blur on top of the existing 30%. Figma's layer blur is `filter`,
+   not `backdrop-filter` — the latter would sample the card behind instead. It
+   applies only to this inner block; the tip is a sibling and stays sharp. */
+.schedCalinner {
+  width: 100%;
+  opacity: 0.3;
+  filter: blur(2px);
+  padding: 17.76px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.schedCalhead {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8.88px;
+}
+.schedMonth {
+  font-size: 11.84px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--gray-900);
+  text-align: center;
+  white-space: nowrap;
+}
+.schedMonth span {
+  font-weight: 600;
+}
+.schedNavs {
+  display: flex;
+  align-items: center;
+  gap: 5.92px;
+}
+.schedNavbtn {
+  background: var(--white);
+  border: 0.74px solid var(--gray-300);
+  border-radius: 2.96px;
+  padding: 5.92px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.schedNavbtn img {
+  width: 11.84px;
+  height: 11.84px;
+}
+.schedNavbtnPrev {
+  opacity: 0.5;
+}
+.schedNavflip {
+  transform: rotate(180deg);
+}
+.schedWeeks {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5.92px;
+}
+.schedWeek {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 5.92px;
+  overflow: hidden;
+}
+.schedDayname {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 5.18px 2.96px;
+  font-size: 8.88px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--gray-900);
+  text-align: center;
+}
+.schedDay {
+  flex: 1 1 0;
+  min-width: 0;
+  height: 32.56px;
+  padding: 6.66px 1.48px;
+  border-radius: 5.92px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 11.84px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--gray-900);
+  text-align: center;
+  white-space: nowrap;
+}
+/* Weeks 1 and 5 are short rows (6 and 5 days) that must still line up with the
+   7-column grid above them, so their cells take a fixed width instead of
+   flexing. Expressed against the column rather than hardcoded at the source's
+   33.196px: that figure is one seventh of a 263.44px column, and this column
+   now flexes — left hard, the row overruns its box and the last day is clipped
+   away. */
+.schedDayFixed {
+  flex: 0 0 calc((100% - 5.92px * 6) / 7);
+  width: auto;
+}
+/* Days with open slots: Gray/100 chip, numeral stays Gray/900 and goes
+   semibold. The weight is the only signal — no colour shift. (The hero's
+   treatment; the Recover tab tinted these Blue/100.) */
+.schedDayAvail {
+  background: var(--gray-100);
+  font-weight: 600;
+}
+.schedDaySelected {
+  background: #04072a;
+  color: var(--white);
+  font-weight: 600;
+  gap: 2.96px;
+  justify-content: flex-start;
+}
+.schedDaydot {
+  width: 4.44px;
+  height: 4.44px;
+  border-radius: 50%;
+  background: var(--white);
+}
+/* The calendar column runs off the right edge, so only ~170px of it is on
+   screen. Left-anchored and sized to that strip rather than centred on the full
+   263.44 column — centred, two thirds of the tip lands past the crop and the
+   one instruction in the panel reads as broken. */
+.schedCaltip {
+  position: absolute;
+  left: 0;
+  top: 117.66px;
+  background: var(--white);
+  border: 0.74px solid var(--gray-300);
+  border-radius: 2.96px;
+  padding: 8.88px;
+  width: 160px;
+  /* 11.36, not the frame's 10.36 — it is the one legible instruction in a
+     blurred panel, so it carries the extra pixel. */
+  font-size: 11.36px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--gray-900);
+  text-align: center;
+}
+
+/* Checklist item: pending -> done -> current.
+   Only the step the sequence is ON is highlighted. A step that has already
+   fired keeps its check, badge and outcome, but recedes to 0.7 so the row it
+   hands off to is the only one at full strength — the lit rows no longer
+   accumulate until all three read as equally important. */
+.checkAnim {
+  transition: opacity 0.45s ease;
+}
+.checkAnim.isDim {
+  opacity: 0.4;
+}
+.checkAnim.isChecked {
+  opacity: 0.7;
+}
+.checkAnim.isChecked.isCurrent {
+  opacity: 1;
+}
+.checkSwap {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  flex: 0 0 auto;
+}
+.checkSwapDim,
+.checkSwapChk {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.checkSwapDim img {
+  width: 16px;
+  height: 16px;
+}
+.checkSwapChk {
+  border-radius: 27.5px;
+  background: var(--green-100);
+  opacity: 0;
+  transform: scale(0.55);
+}
+.checkSwapChk img {
+  width: 13.333px;
+  height: 13.333px;
+}
+.checkAnim.isChecked .checkSwapDim {
+  opacity: 0;
+  transform: scale(0.55);
+}
+.checkAnim.isChecked .checkSwapChk {
+  opacity: 1;
+  transform: none;
+}
+.badgeReveal {
+  opacity: 0;
+  transform: translateX(-4px) scale(0.9);
+  transition: opacity 0.35s ease 0.08s, transform 0.35s ease 0.08s;
+}
+.checkAnim.isChecked .badgeReveal {
+  opacity: 1;
+  transform: none;
+}
+
+/* Scheduler phone field */
+.phoneText {
+  white-space: nowrap;
+}
+.phoneTextIdle {
+  color: var(--gray-400);
+}
+.caret {
+  width: 1px;
+  height: 15px;
+  margin-left: 1px;
+  background: var(--gray-900);
+  animation: caretBlink 1s steps(1, end) infinite;
+  flex: 0 0 auto;
+}
+@keyframes caretBlink {
+  50% {
+    opacity: 0;
+  }
+}
+.validCheck {
+  width: 12px;
+  height: 12px;
+  margin-left: auto;
+  flex: 0 0 auto;
+}
+
+/* Right-panel layered stage: scheduler <-> inbox */
+.rightstage {
+  position: relative;
+}
+
+/* ===================== Qualify & Route tab ===================== */
+
+/* last checklist item: keep the icon top-aligned but drop the trailing line */
+.checkLinewrapLast .checkLine {
+  display: none;
+}
+
+/* red badge (disqualify) */
+.badgeRed {
+  background: #fde8e8;
+  border: 1px solid #f8b4b4;
+  color: #9b1c1c;
+}
+.checkSwap.isRed .checkSwapChk {
+  background: #fde8e8;
+}
+
+/* step outcome rows (reveal when the step checks) */
+.checkOutcome {
+  margin-top: 6px;
+}
+.checkOutcomeReveal {
+  opacity: 0;
+  transform: translateY(3px);
+  transition: opacity 0.35s ease 0.12s, transform 0.35s ease 0.12s;
+}
+.checkAnim.isChecked .checkOutcomeReveal {
+  opacity: 1;
+  transform: none;
+}
+.qsOutcome {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 9px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+}
+.qsOutcomeRoute {
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  color: var(--gray-700);
+}
+.qsOutcomeDq {
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  color: #8a4a42;
+}
+.qsOutcomeAv {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex: 0 0 auto;
+}
+.qsOutcomeIc {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+.qsOutcomeTxt {
+  white-space: nowrap;
+}
+.qsOutcomeTxt b {
+  font-weight: 600;
+}
+.qsOutcomePix {
+  margin-left: 2px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 0 2px 5px;
+  color: #057a55;
+  font-size: 10.5px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.qsOutcomePix img {
+  width: 14px;
+  height: 10px;
+  display: block;
+  flex: 0 0 auto;
+}
+
+/* scheduler questions + radio options */
+.qsFields {
+  gap: 9px !important;
+}
+.qsQuestion {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.qsQlabel {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--gray-700);
+  margin-bottom: 3px;
+}
+.qsOpt {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 2.5px 2px;
+  font-size: 12px;
+  line-height: 1.3;
+  color: var(--gray-600);
+}
+.qsOpt.isSel {
+  color: var(--gray-900);
+  font-weight: 600;
+}
+.qsRadio {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  border: 1.4px solid #cbd2dc;
+  flex: 0 0 auto;
+  position: relative;
+  transition: border-color 0.2s;
+}
+.qsOpt.isSel .qsRadio {
+  border-color: var(--blue-600);
+}
+.qsOpt.isSel .qsRadio::after {
+  content: "";
+  position: absolute;
+  inset: 2.5px;
+  border-radius: 50%;
+  background: var(--blue-600);
+}
+.qsOptlabel {
+  white-space: nowrap;
+}
+
+/* clicking cursor */
+.qsCursor {
+  position: absolute;
+  width: 19px;
+  height: 19px;
+  z-index: 30;
+  opacity: 0;
+  pointer-events: none;
+  filter: drop-shadow(0 2px 4px rgba(16, 24, 40, 0.4));
+  transition: left 0.55s cubic-bezier(0.4, 0, 0.2, 1), top 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.3s;
+}
+.qsCursor.isShow {
+  opacity: 1;
+}
+.qsCursor.isClick {
+  animation: curclick 0.4s ease;
+}
+@keyframes curclick {
+  40% {
+    transform: scale(0.78);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .checkAnim,
+.checkSwapDim,
+.checkSwapChk,
+.badgeReveal,
+.checkOutcomeReveal {
+    transition: none;
+  }
+  .qsCursor {
+    display: none;
+  }
+}
+
+/* ============ Stage fitter (inert on desktop) ============ */
+.stagefit {
+  display: contents;
+}
+
+/* ============ Tablet & below (≤1279): stacked layout ============ */
+@container (max-width: 1279px) {
+  .bigcard {
+    position: static;
+    transform: none;
+    width: 100%;
+    max-width: 680px;
+    height: auto;
+    margin: 16px auto 0;
+    flex-direction: column;
+    gap: 24px;
+    padding: 16px;
+  }
+  .copy {
+    width: 100%;
+    padding: 4px;
+    gap: 24px;
+  }
+  .stagefit {
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    width: 100%;
+  }
+  .stagefit .panel {
+    width: 547.2px;
+    flex: none;
+    /* The card stacks and goes auto-height here, so `align-self: stretch` has
+       nothing to stretch against — the panel states its own height, matching
+       the desktop card's 520 less its 16px padding. */
+    align-self: auto;
+    height: 448px;
+    transform-origin: top center;
+  }
+}
+
+/* ============ Mobile (<810) — Figma 377:34004 ============ */
+@container (max-width: 809px) {
+  .bigcard {
+    width: 100%;
+    max-width: none;
+    height: 720px;
+    margin: 0 auto;
+    padding: 24px;
+    gap: 12px;
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(16, 24, 40, 0.05), 0 1px 3px rgba(16, 24, 40, 0.04);
+    filter: none;
+    overflow: hidden;
+  }
+  .copy,
+.copytop {
+    display: contents;
+  }
+  .copyhead {
+    order: 1;
+    flex: 0 0 auto;
+    gap: 4px;
+    padding-block: 0.5px;
+  }
+  .titleDesktopWord {
+    display: none;
+  }
+  .titleMobileWord {
+    display: inline;
+  }
+  .para {
+    font-size: 14px;
+    line-height: 23px;
+  }
+
+  .stagefit {
+    order: 2;
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 372px;
+    flex: 0 0 372px;
+    overflow: hidden;
+  }
+  .stagefit .panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 372px;
+    padding: 0;
+    border-radius: 4px;
+    display: block;
+  }
+  .window {
+    position: absolute;
+    top: 23px;
+    left: 24px;
+    right: 24px;
+    width: auto;
+    height: 372px;
+    padding: 0;
+    border: 0;
+    border-radius: 8px;
+    background: var(--gray-50);
+    box-shadow: 0 2px 10px rgba(16, 24, 40, 0.06);
+    justify-content: center;
+  }
+  .sched {
+    width: 100%;
+    height: 372px;
+    flex: 0 0 372px;
+    border-radius: 4px;
+  }
+  .schedBody {
+    flex: 0 0 auto;
+    min-height: 0;
+    flex-direction: column;
+    padding: 0 17.76px;
+    gap: 17.76px;
+    overflow: visible;
+  }
+  .schedForm {
+    width: 100%;
+    padding: 17.76px 0;
+    gap: 11.84px;
+  }
+  .schedTitleblock {
+    gap: 4px;
+  }
+  .schedSub {
+    display: none;
+  }
+  .phoneInput,
+.phoneText {
+    font-size: 14px;
+  }
+  .phoneRow {
+    margin: 0;
+  }
+  .qsFields {
+    gap: 11.84px !important;
+  }
+  .qsQuestion {
+    gap: 4px;
+  }
+  .qsQlabel {
+    margin-bottom: 3px;
+    font-size: 14px;
+    line-height: 20px;
+  }
+  .qsOpt {
+    padding: 2.5px 2px;
+    font-size: 14px;
+    line-height: 15.6px;
+  }
+  .schedDivider {
+    display: block;
+    width: 1px;
+    height: 346.87px;
+    align-self: flex-start;
+    flex: 0 0 auto;
+  }
+  .schedCal {
+    display: flex;
+    width: 100%;
+    height: 300.88px;
+    min-height: 300.88px;
+    flex: 0 0 300.88px;
+    overflow: visible;
+  }
+
+  .checklist {
+    order: 3;
+    flex: 0 0 auto;
+    /* Keep every animated state in one grid cell. Transparent states still
+       reserve the tallest result's height, so the card never jumps mid-cycle. */
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    padding: 4px 5px 10px;
+  }
+  .checkItem {
+    grid-area: 1 / 1;
+  }
+  .checkConnector,
+.checkLinewrap {
+    display: none;
+  }
+  .checkIconcol {
+    align-self: flex-start;
+    justify-content: flex-start;
+  }
+  .checkTitlerow {
+    flex-wrap: wrap;
+  }
+  .checkTitle {
+    white-space: normal;
+  }
+  .qsOutcome {
+    flex-wrap: wrap;
+    max-width: 100%;
+  }
+  .qsOutcomeTxt,
+.qsOutcomePix {
+    white-space: normal;
+  }
+  .checkAnim.isDim,
+.checkAnim.isChecked {
+    opacity: 0;
+  }
+  .checkAnim.isChecked.isCurrent {
+    opacity: 1;
+  }
+  .checklist:not(:has(.isCurrent)) .checkItem:first-child {
+    opacity: 1;
+  }
+}
+
+@container (max-width: 340px) {
+  .stagefit,
+.stagefit .panel {
+    height: 340px;
+  }
+  .stagefit {
+    flex-basis: 340px;
+  }
+  .schedForm {
+    padding-block: 14px;
+    gap: 8px;
+  }
+  .qsFields {
+    gap: 8px !important;
+  }
+  .qsQlabel {
+    font-size: 12px;
+    line-height: 18px;
+  }
+  .qsOpt {
+    padding-block: 1.5px;
+    font-size: 12px;
+    line-height: 14px;
+  }
+  .checkTitle,
+.checkDesc {
+    font-size: 12px;
+    line-height: 16px;
+  }
+  .badge {
+    padding-inline: 4px;
+    font-size: 11px;
+  }
+  .qsOutcome {
+    gap: 4px;
+    padding: 4px 6px;
+    font-size: 10px;
+  }
+  .qsOutcomeAv,
+.qsOutcomeIc {
+    width: 14px;
+    height: 14px;
+  }
+  .flagBtn {
+    gap: 4px;
+    padding-left: 5px;
+  }
+  .phoneInput {
+    padding-inline: 6px;
+  }
+  .phoneInput,
+.phoneText {
+    font-size: 12px;
+  }
+}
+
