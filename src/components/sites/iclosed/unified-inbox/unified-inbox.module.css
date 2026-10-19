@@ -1,0 +1,229 @@
+/* Unified Inbox showcase.
+
+   A 1440 content wrapper 100px below the section top holds an 812px centred
+   headline block, a 40px gap, then the sky band: a photographic sky as an
+   object-cover fill, `padding: 24px 24px 0` and an 8px radius on the TOP
+   corners only. The product shot rises out of the section's bottom edge, so
+   the section has no bottom padding.
+
+   Inside the sky sits the glass frame (0.748px rgba(255,255,255,.5) border,
+   rgba(255,255,255,.2) fill, 4.486px backdrop blur, 9.719px padding) and
+   inside THAT the 1308 x 720 app window. */
+
+.outer {
+  position: relative;
+  width: 100%;
+  container-type: inline-size;
+}
+
+.band {
+  position: relative;
+  width: 100%;
+  background: #ffffff;
+  font-family: var(--ic-font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  color: #111928;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.band *,
+.band *::before,
+.band *::after {
+  box-sizing: border-box;
+}
+
+.wrap {
+  position: relative;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding-inline: 40px;
+}
+
+.root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 100px;
+}
+
+/* ---- Headline block (812px wide, centred) ---- */
+
+.head {
+  width: 100%;
+  max-width: 812px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: center;
+}
+
+.heading {
+  margin: 0;
+  font-family: var(--ic-font-display);
+  font-size: 36px;
+  line-height: 1.4;
+  font-weight: 500;
+  letter-spacing: -0.4px;
+  color: #0a0d14;
+}
+
+/* Second line carries the promise, so it takes the accent. */
+.headingAccent {
+  color: #1c64f2;
+}
+
+.subcopy {
+  margin: 0;
+  font-family: var(--ic-font-body);
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 400;
+  letter-spacing: -0.04px;
+  color: #020418;
+}
+
+/* ---- Sky band ---- */
+
+.sky {
+  position: relative;
+  width: 100%;
+  /* Caps at 1200 and centres via .root's align-items. Only binds at desktop. */
+  max-width: 1200px;
+  margin-top: 40px;
+  padding: 24px 24px 0;
+  border-radius: 8px 8px 0 0;
+  /* The stage inside is a rigid 1328.934px box scaled by the fitter. Nothing
+     may escape this box. */
+  overflow: hidden;
+}
+
+.skyImg {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  border-radius: 8px 8px 0 0;
+  pointer-events: none;
+}
+
+/* The measured box. Its clientWidth is what the fitter divides by. */
+.stageWrap {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Rigid 1328.934 x 730.467 (the 1308 x 720 window plus the glass frame's
+   9.719px padding and 0.748px border on the sides and top — no bottom ring,
+   the window attaches flush to the section's bottom edge). */
+.stage {
+  transform-origin: top left;
+  width: 1328.934px;
+  height: 730.467px;
+  flex-shrink: 0;
+}
+
+.glass {
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  border: 0.748px solid rgba(255, 255, 255, 0.5);
+  /* Square at the bottom: the frame meets the section edge clean. */
+  border-bottom: none;
+  border-radius: 8px 8px 0 0;
+  padding: 9.719px 9.719px 0;
+  -webkit-backdrop-filter: blur(4.486px);
+  backdrop-filter: blur(4.486px);
+}
+
+/* The app window; no bottom radius and no shadow. */
+.crop {
+  position: relative;
+  width: 1308px;
+  height: 720px;
+  overflow: hidden;
+  border-radius: 8px 8px 0 0;
+  background: #ffffff;
+}
+
+.offset {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+/* ============ Tablet (<=1279) ============ */
+@container (max-width: 1279px) {
+  .root {
+    padding-top: 72px;
+  }
+  .heading {
+    font-size: 30px;
+  }
+  .subcopy {
+    font-size: 17px;
+    line-height: 27px;
+  }
+  .sky {
+    margin-top: 32px;
+    padding: 16px 16px 0;
+  }
+}
+
+/* ============ Mobile (<810) ============
+   The whole window would shrink to a thumbnail, so the stage crops to the
+   chat column (x 300–976) and the fitter scales that to the band, which runs
+   out to the viewport edges — square, no side radius. */
+@container (max-width: 809px) {
+  .root {
+    padding-top: 48px;
+  }
+  .heading {
+    font-size: 24px;
+  }
+  .subcopy {
+    font-size: 16px;
+    line-height: 26px;
+  }
+  .sky {
+    /* `align-self: stretch` is load-bearing: .root centres its children, so a
+       flex item with `width: auto` would shrink-wrap instead of filling. */
+    align-self: stretch;
+    width: auto;
+    max-width: none;
+    margin-top: 24px;
+    margin-inline: -40px;
+    padding: 12px 12px 0;
+    border-radius: 0;
+  }
+  /* 676 x 720 column plus a 12px ring (it scales to about 6px on a phone). */
+  .stage {
+    width: 701.496px;
+    height: 732.748px;
+  }
+  .glass {
+    padding: 12px 12px 0;
+  }
+  .crop {
+    width: 676px;
+  }
+  .offset {
+    left: -300px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .band *,
+  .band *::before,
+  .band *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

@@ -1,0 +1,254 @@
+/* Card 3 — SMS & email workflows. Fixed 384×260 graphic; the card scales it. */
+
+.root {
+  position: relative;
+  width: 384px;
+  height: 260px;
+  font-family: var(--ic-font-body);
+  background: transparent;
+}
+
+.panel {
+  position: absolute;
+  top: 29px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 236px;
+  height: 202px;
+  background: #ebf5ff;
+  border: 0.656px solid #a4cafe;
+  border-radius: 7.872px;
+  overflow: hidden;
+}
+
+/* The source's band-wide `svg { max-width: 100% }` clamps the 347px blob to
+   the panel width (it renders contained, centred in its 203px box). */
+.blob {
+  position: absolute;
+  left: -53.82px;
+  top: 88.43px;
+  display: block;
+  max-width: 100%;
+}
+
+.header {
+  position: absolute;
+  top: 10.68px;
+  left: calc(50% - 7.02px);
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 6.56px;
+  padding: 2.624px 0;
+  white-space: nowrap;
+}
+
+.icon {
+  display: block;
+  width: 22.012px;
+  height: 21.704px;
+  flex-shrink: 0;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 14.47px;
+  line-height: 1.5;
+  color: #1e429f;
+  text-align: center;
+}
+
+.steps {
+  position: absolute;
+  top: 51.12px;
+  left: 10.03px;
+  width: 215.166px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10.496px;
+  z-index: 2;
+}
+
+.connector {
+  position: absolute;
+  top: 44.61px;
+  left: calc(50% + 0.41px);
+  transform: translateX(-50%);
+  width: 1.312px;
+  height: 127.835px;
+  background: linear-gradient(180deg, #3f83f8 0%, #144394 100%);
+  z-index: 0;
+}
+
+.card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  background: #ffffff;
+  border: 0.656px solid #d1d5db;
+  border-radius: 5.248px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.clockrow {
+  display: flex;
+  align-items: center;
+  gap: 5.248px;
+  width: 100%;
+  padding: 7.872px 10.496px;
+  background: #f9fafb;
+  border-bottom: 0.656px solid #d1d5db;
+}
+
+.actionrow {
+  display: flex;
+  align-items: center;
+  gap: 5.248px;
+  width: 100%;
+  padding: 7.872px 10.496px;
+  background: #ffffff;
+}
+
+.rowIcon {
+  display: block;
+  width: 13.12px;
+  height: 13.12px;
+  flex-shrink: 0;
+}
+
+.clocktext {
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 15.744px;
+  color: #6b7280;
+  white-space: nowrap;
+}
+
+.actiontext {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.25;
+  color: #111928;
+  white-space: nowrap;
+}
+
+/* --- choreography --- */
+
+/* 250ms — header pops in */
+.root.isPlay .icon {
+  animation: popIn 420ms cubic-bezier(0.22, 1, 0.36, 1) 250ms both;
+}
+
+.root.isPlay .title {
+  animation: fadeIn 420ms cubic-bezier(0.22, 1, 0.36, 1) 250ms both;
+}
+
+/* 500ms — step card 1 rises in */
+.root.isPlay .card1 {
+  animation: riseIn 400ms cubic-bezier(0.22, 1, 0.36, 1) 500ms both;
+}
+
+/* 1000ms — card 1 trigger fires: clock row pulses + clock ticks */
+.root.isPlay .card1 .clockrow {
+  animation: pulseGray 600ms ease-in-out 1000ms both;
+}
+
+.root.isPlay .iconClock1 {
+  animation: clockTick 600ms ease-in-out 1000ms both;
+}
+
+/* 1500ms — card 1 action row sends: pulse + mail pop/nudge */
+.root.isPlay .card1 .actionrow {
+  animation: pulseWhite 600ms ease-in-out 1500ms both;
+}
+
+.root.isPlay .iconMail {
+  animation: mailSend 500ms cubic-bezier(0.22, 1, 0.36, 1) 1500ms both;
+}
+
+/* 1700ms — connector grows top -> bottom */
+.root.isPlay .connector {
+  transform-origin: 50% 0;
+  animation: connectorGrow 500ms cubic-bezier(0.22, 1, 0.36, 1) 1700ms both;
+}
+
+/* 2200ms — step card 2 rises in */
+.root.isPlay .card2 {
+  animation: riseIn 400ms cubic-bezier(0.22, 1, 0.36, 1) 2200ms both;
+}
+
+/* 2800ms — card 2 action row sends: pulse + phone wiggle */
+.root.isPlay .card2 .actionrow {
+  animation: pulseWhite 500ms ease-in-out 2800ms both;
+}
+
+.root.isPlay .iconPhone {
+  animation: phoneWiggle 450ms ease-in-out 2800ms both;
+}
+
+/* Garnish — blobs drift slightly during play, end where they started */
+.root.isPlay .blob {
+  animation: blobDrift 3000ms ease-in-out both;
+}
+
+@keyframes popIn {
+  0% { opacity: 0; transform: scale(0.9); }
+  60% { opacity: 1; transform: scale(1.06); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes riseIn {
+  0% { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulseGray {
+  0% { background-color: #f9fafb; }
+  50% { background-color: #ebf5ff; }
+  100% { background-color: #f9fafb; }
+}
+
+@keyframes pulseWhite {
+  0% { background-color: #ffffff; }
+  50% { background-color: #ebf5ff; }
+  100% { background-color: #ffffff; }
+}
+
+@keyframes clockTick {
+  0% { transform: rotate(0deg); }
+  35% { transform: rotate(-20deg); }
+  100% { transform: rotate(0deg); }
+}
+
+@keyframes mailSend {
+  0% { transform: translateX(0) scale(1); }
+  45% { transform: translateX(2px) scale(1.25); }
+  100% { transform: translateX(0) scale(1); }
+}
+
+@keyframes connectorGrow {
+  0% { transform: translateX(-50%) scaleY(0); }
+  100% { transform: translateX(-50%) scaleY(1); }
+}
+
+@keyframes phoneWiggle {
+  0% { transform: rotate(0deg); }
+  28% { transform: rotate(-8deg); }
+  62% { transform: rotate(8deg); }
+  100% { transform: rotate(0deg); }
+}
+
+@keyframes blobDrift {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+  100% { transform: translateY(0); }
+}
