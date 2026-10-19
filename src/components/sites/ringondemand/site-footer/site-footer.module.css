@@ -61,15 +61,10 @@
   width: 100%;
 }
 
-.wordmark {
-  margin: 0;
-  font-family: var(--site-font-display);
-  font-size: 22px;
-  font-weight: 600;
-  line-height: 28px;
-  letter-spacing: -0.6px;
-  white-space: nowrap;
-  color: #fff;
+.logo {
+  display: block;
+  width: auto;
+  height: 28px;
 }
 
 .blurb {
