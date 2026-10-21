@@ -22,6 +22,8 @@ Everything outside the copy doc is a **draft for review**:
 | `/results` | General results: proof figures, reporting, getting started |
 | `/partners` | Call publishers |
 | `/about` | Company |
+| `/blog`, `/blog/<slug>` | Blog index and posts (`src/content/blog/`) |
+| `/sitemap.xml`, `/robots.txt`, `/llms.txt`, `/llms-full.txt` | Generated for search engines and AI assistants |
 
 Components live in `src/components/sites/ringondemand/`. There is one folder
 per homepage section. The other folders:
@@ -30,8 +32,69 @@ per homepage section. The other folders:
 - `legal/` — practice-area data and pages
 - `insurance/` — insurance-line data and pages
 - `shared/` — shared bits
+- `faq/faq-content.ts` — every page's FAQ copy
+- `blog/` — the blog's post page, related posts and styles
+- `seo/` — site facts, page metadata, structured data, share images, llms.txt
 
 Every destination is in `links.ts`.
+
+## SEO and AI search
+
+Everything a search engine or answer engine (Google AI Overviews, ChatGPT,
+Perplexity, Claude) reads is generated from the same data as the pages, so
+it cannot drift from what visitors see.
+
+- **Site facts:** `seo/site.ts` holds the production URL
+  (`https://www.ringondemand.com`, or `NEXT_PUBLIC_SITE_URL`), the one-line
+  company description and the topics we want to be known for. Canonical URLs,
+  the sitemap and structured data all use it.
+- **Page metadata:** every route calls `pageMetadata()` (`seo/page-metadata.ts`):
+  title, description, canonical URL, Open Graph and a large X card.
+- **Share images:** each route has an `opengraph-image.tsx` that renders its
+  own headline on the closing band's navy (`seo/og-image.tsx`). They are built
+  at build time. `seo/fonts/` holds TTF copies of Poppins and Inter because
+  the image renderer cannot read WOFF2.
+- **Structured data (JSON-LD):** Organization and WebSite on every page (root
+  layout); Service with offers (and MVA prices) on each practice-area and
+  insurance-line page; FAQPage wherever an FAQ shows; BreadcrumbList on
+  interior pages; Blog and BlogPosting on the blog.
+- **FAQs:** `faq/faq-content.ts`. The homepage, every practice area, every
+  insurance line and Partners show an FAQ, and each FAQ publishes the same
+  questions as FAQPage data. Practice-area and insurance-line checks questions
+  are built from the page's own screening checklist.
+- **Crawlers:** `app/robots.ts` allows everything and names the AI crawlers
+  (GPTBot, OAI-SearchBot, ClaudeBot, PerplexityBot, Google-Extended and
+  others). `app/sitemap.ts` lists every page and post.
+- **llms.txt:** `/llms.txt` is a short index of the site for AI assistants;
+  `/llms-full.txt` holds every page's facts, checks, offers and FAQs, and
+  every blog post in full (`seo/llms.ts`).
+
+### Adding a blog post
+
+1. Write `src/content/blog/<slug>.mdx`: no H1, open with a one-paragraph direct
+   answer to the title's question, use question-style `##` headings, and link
+   to the service pages it supports (`/legal/mva`, `/partners`, …).
+2. Add an entry to `POSTS` in `src/content/blog/posts.ts`: title,
+   description, topic (`mva`, `legal`, `insurance` or `publishers`), dates,
+   reading time, 3 to 5 key takeaways, 3 or 4 FAQ questions and the related
+   service pages.
+
+The post then appears on `/blog`, the homepage (if it is among the 3 newest),
+the related reading on its topic's pages, the sitemap, `llms.txt` and its own
+share image. Only state facts already on the site: no new prices, stats,
+guarantees or client names.
+
+### After launch
+
+- Verify the domain in **Google Search Console** and **Bing Webmaster Tools**
+  (Bing feeds ChatGPT search and Copilot) and submit `/sitemap.xml` in both.
+- Test a few pages in Google's Rich Results Test and the Schema Markup
+  Validator.
+- Add the company's LinkedIn and other official profiles to the Organization
+  data as `sameAs` (`seo/schema.ts`) once there are URLs to add.
+- Replace the placeholder Contact, Privacy Policy and Terms of Service links:
+  answer engines and Google weigh those trust pages.
+- Keep publishing: one MVA post a month keeps the topic fresh.
 
 ## Logo
 
@@ -81,6 +144,9 @@ which every page ends with. That section holds the iClosed inline widget
   "1,500+ last quarter" stat beside them.
 - **Footer pages:** Contact, Privacy Policy and Terms of Service use
   `PENDING_PAGES` placeholders (`#`).
+- **SEO and blog draft copy:** the new FAQs, meta titles and blog posts are
+  drafts for review; see "SEO, FAQs and blog" in
+  [`pages-copy-draft.md`](./pages-copy-draft.md).
 - **Notes in the copy doc still apply:**
   - No client quotes until one is approved in writing.
   - Cut the pilot line under Pricing if the pilot isn't running.

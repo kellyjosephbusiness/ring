@@ -92,6 +92,21 @@ hero button.
     "1,500+ signed retainers delivered last quarter", under a hero that says
     "Over 2,000 signed retainers delivered". Keep both, or switch the MVA
     page to the general figures.
+12. **Search titles.** The homepage's browser and search title is now "Pay-Per-Call
+    Live Transfers for Legal and Insurance | RingOnDemand". The visible
+    headline is unchanged ("Inbound Calls for Enterprise Companies"). Other
+    pages' titles and descriptions now lead with the terms buyers search for;
+    see "SEO, FAQs and blog" below.
+13. **New FAQs.** Every practice area, insurance line, the homepage and
+    Partners now have an FAQ (below). MVA keeps the copy doc's 7 questions and
+    adds 5. The homepage FAQ names no prices (only MVA shows prices).
+14. **Blog.** Seven posts restate the copy doc's facts, including the MVA
+    prices, the guarantees and the 25 to 35% sign rate. If a price or
+    guarantee changes, update the posts too (`src/content/blog/`).
+15. **Blog byline.** Posts are by "RingOnDemand". A named author with a short
+    bio (for example the licensed attorney who takes the calls) would make
+    them more credible to Google and AI answers; send a name and bio if you
+    want one.
 
 ## Navigation
 
@@ -108,6 +123,8 @@ hero button.
   - Tagline: "Screened inbound calls and live transfers."
 - **Every "Book a call"** scrolls to the closing section, which holds the
   iClosed booking widget.
+- **Blog** sits in the header after Partners and in the footer's Company
+  column.
 
 ## / — Homepage (general)
 
@@ -506,3 +523,71 @@ from this page.
     approve every creative first.
 - Then the attorney call card and the closing section (as the homepage,
   booking the Partner Discovery Call).
+
+## SEO, FAQs and blog
+
+Draft copy added for search engines and AI answers. Every FAQ is shown on
+the page and also published as FAQPage structured data. FAQ copy lives in
+`src/components/sites/ringondemand/faq/faq-content.ts` and, for each practice
+area, in `legal/practice-areas.ts` (`faq`).
+
+### Search titles and descriptions
+
+| Page | Title |
+|---|---|
+| `/` | Pay-Per-Call Live Transfers for Legal and Insurance \| RingOnDemand |
+| `/legal` | Personal Injury Live Transfers and Signed Cases \| RingOnDemand |
+| `/legal/mva` | MVA Live Transfers and Signed Car Accident Cases \| RingOnDemand |
+| `/insurance` | Insurance Live Transfers and Inbound Calls for Agencies \| RingOnDemand |
+| `/insurance/<line>` | *Line* Live Transfers and Inbound Calls \| RingOnDemand |
+| `/partners` | Pay-Per-Call Publisher Network: Sell Legal and Insurance Calls \| RingOnDemand |
+| `/results` | Results: Signed Retainers and Live Transfers Delivered \| RingOnDemand |
+| `/about` | About RingOnDemand: Pay-Per-Call for Legal and Insurance |
+| `/blog` | Blog: MVA Live Transfers, Pay-Per-Call and Selling Calls \| RingOnDemand |
+
+The MVA description: "Motor vehicle accident live transfers at $550 and
+pre-signed MVA cases at $2,500 for personal injury firms. Screened to your
+case criteria. Transfers start within 24 hours."
+
+### FAQs
+
+- **Homepage, "Questions buyers ask us" (10):** what RingOnDemand does, what a
+  live transfer is, what a pre-signed case is, the verticals, no web form
+  leads, where calls come from, how fast calls start, no volume commitment,
+  pricing ("MVA prices are on our MVA page; book a call for the rest"), and
+  whether publishers can sell us calls.
+- **MVA (12):** five new questions (what an MVA live transfer is, what we
+  check, what MVA transfers and signed cases cost, how many transfers sign,
+  live transfers or pre-signed cases), then the copy doc's 7.
+- **Other practice areas (9):** what a live transfer is in that area, what we
+  check (built from the page's checklist), "Book a call for … pricing", then
+  the copy doc's questions minus the 28-day replacement. Funding companies get
+  their own wording for "what counts as a transfer" and "which states".
+- **Insurance lines (7):** what a live transfer is, inbound call vs. live
+  transfer, what we check (from the checklist), "You pay per call. Book a call
+  for … pricing", where calls come from, no volume commitment, how fast calls
+  start.
+- **Partners, "Questions publishers ask us" (7):** which calls we buy, how to
+  become a publisher, payouts (set per vertical, known before the first call),
+  what makes a call qualify, whether we buy MVA calls, publisher vetting, and
+  who buys the calls.
+
+### Blog posts (`src/content/blog/`)
+
+All published 2026-10-21, by RingOnDemand.
+
+| Post | Topic | Books |
+|---|---|---|
+| What Is an MVA Live Transfer? A Guide for Personal Injury Firms | MVA | Personal Injury Discovery Call |
+| MVA Live Transfers vs. Pre-Signed Cases: Which Should Your Firm Buy? | MVA | Personal Injury Discovery Call |
+| How to Screen Motor Vehicle Accident Callers Before They Reach Intake | MVA | Personal Injury Discovery Call |
+| How to Start Receiving MVA Live Transfers Within 24 Hours | MVA | Personal Injury Discovery Call |
+| Pay-Per-Call vs. Web Form Leads for Personal Injury Firms | Legal | Personal Injury Discovery Call |
+| How to Sell Legal and Insurance Calls: A Guide for Pay-Per-Call Publishers | Publishers | Publisher Intro Call |
+| Inbound Calls vs. Live Transfers for Insurance Agencies | Insurance | Partner Discovery Call |
+
+Every post opens with a direct answer, then key takeaways, question-style
+sections, an FAQ, related service pages and a booking card. Beyond the copy
+doc they add only general explanation (why each MVA screening question
+matters, how to compare cost per signed case, what to bring to a publisher
+intro call), with no new numbers.

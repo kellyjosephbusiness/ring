@@ -1,0 +1,307 @@
+/* Blog post: the interior hero's centred header (eyebrow, Poppins headline,
+   grey lead) over a 720px reading column and a sticky booking card. */
+
+.article {
+  position: relative;
+  width: 100%;
+  container-type: inline-size;
+  background: #ffffff;
+  font-family: var(--site-font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ---- Header ---- */
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 128px 40px 56px;
+  text-align: center;
+}
+
+.crumbs {
+  margin-bottom: 28px;
+}
+
+.crumbList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 13px;
+  line-height: 20px;
+  color: #6b7280;
+}
+
+.crumbList li + li::before {
+  content: "/";
+  margin-right: 8px;
+  color: #d1d5db;
+}
+
+.crumbList a {
+  color: #4b5563;
+  text-decoration: none;
+}
+
+.crumbList a:hover {
+  color: rgb(2, 54, 194);
+}
+
+.crumbList a:focus-visible {
+  outline: 2px solid #1c64f2;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.h1 {
+  max-width: 920px;
+  margin: 16px 0 0;
+  font-family: var(--site-font-display);
+  font-size: 44px;
+  font-weight: 500;
+  line-height: 56px;
+  letter-spacing: -0.44px;
+  color: rgb(2, 4, 24);
+  text-wrap: balance;
+}
+
+.lead {
+  max-width: 720px;
+  margin: 20px 0 0;
+  font-size: 18px;
+  line-height: 28px;
+  letter-spacing: -0.18px;
+  color: #4b5563;
+  text-wrap: pretty;
+}
+
+.byline {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px 10px;
+  margin: 24px 0 0;
+  font-size: 14px;
+  line-height: 20px;
+  color: #6b7280;
+}
+
+/* ---- Body and aside ---- */
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 720px) 320px;
+  justify-content: center;
+  gap: 72px;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 64px 40px 96px;
+}
+
+.main {
+  min-width: 0;
+}
+
+.takeaways {
+  position: relative;
+  margin-bottom: 40px;
+  padding: 24px 28px 26px;
+  background: linear-gradient(180deg, #e6ebf6 0%, #f8f9fa 100%);
+}
+
+.takeaways::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgb(2, 54, 194);
+  pointer-events: none;
+}
+
+.takeawaysHeading {
+  margin: 0 0 16px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0.72px;
+  text-transform: uppercase;
+  color: rgb(2, 54, 194);
+}
+
+.takeawayList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.takeaway {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 16px;
+  line-height: 26px;
+  letter-spacing: -0.16px;
+  color: rgb(2, 4, 24);
+}
+
+.disc {
+  --disc: 22px;
+  margin-top: 2px;
+}
+
+.aside {
+  position: relative;
+  min-width: 0;
+}
+
+.asideInner {
+  position: sticky;
+  top: 96px;
+}
+
+.asideCard {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 28px 24px;
+  background: #f8f9fa;
+}
+
+.asideEyebrow {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 16px;
+  letter-spacing: 0.66px;
+  text-transform: uppercase;
+  color: rgb(2, 54, 194);
+}
+
+.asideTitle {
+  margin: 0;
+  font-family: var(--site-font-display);
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 30px;
+  letter-spacing: -0.22px;
+  color: rgb(2, 4, 24);
+}
+
+.asideBody {
+  margin: 0 0 8px;
+  font-size: 15px;
+  line-height: 23px;
+  letter-spacing: -0.15px;
+  color: #4b5563;
+}
+
+.related {
+  margin-top: 24px;
+  padding: 0 4px;
+}
+
+.relatedHeading {
+  margin: 0 0 10px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0.72px;
+  text-transform: uppercase;
+  color: rgb(2, 4, 24);
+}
+
+.relatedList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.relatedLink {
+  font-size: 15px;
+  line-height: 22px;
+  color: rgb(2, 54, 194);
+  text-decoration: underline;
+  text-decoration-color: rgba(2, 54, 194, 0.3);
+  text-underline-offset: 3px;
+}
+
+.relatedLink:hover {
+  text-decoration-color: currentColor;
+}
+
+.relatedLink:focus-visible {
+  outline: 2px solid #1c64f2;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* The card sits under the post once the column gets narrow; the related
+   pages then share its row. */
+@container (max-width: 1099px) {
+  .layout {
+    grid-template-columns: minmax(0, 720px);
+    gap: 48px;
+  }
+
+  .asideInner {
+    position: static;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
+    gap: 24px;
+  }
+
+  .related {
+    margin-top: 0;
+    padding-top: 28px;
+  }
+}
+
+@container (max-width: 809px) {
+  .header {
+    padding: 112px 20px 40px;
+  }
+
+  .h1 {
+    font-size: 30px;
+    line-height: 40px;
+    letter-spacing: -0.3px;
+  }
+
+  .lead {
+    font-size: 16px;
+    line-height: 26px;
+  }
+
+  .layout {
+    padding: 40px 20px 64px;
+  }
+
+  .takeaways {
+    padding: 20px 20px 22px;
+  }
+
+  .asideInner {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .related {
+    padding-top: 0;
+  }
+}

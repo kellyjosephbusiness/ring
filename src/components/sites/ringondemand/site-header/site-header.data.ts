@@ -66,6 +66,7 @@ export type MenuId = NavMenu["id"];
 export const NAV_LINKS: readonly NavLink[] = [
   { label: "Results", href: ROUTES.results },
   { label: "Partners", href: ROUTES.partners },
+  { label: "Blog", href: ROUTES.blog },
   { label: "About", href: ROUTES.about },
 ];
 

@@ -1,0 +1,166 @@
+/* Blog post body: MDX output (headings, paragraphs, lists, tables, links)
+   in the site's type scale. Poppins 500 headings as in the section headings,
+   Inter body in the page-kit greys, links and markers in the accent blue. */
+
+.prose {
+  font-family: var(--site-font-body);
+  font-size: 17px;
+  line-height: 30px;
+  letter-spacing: -0.17px;
+  color: #31353f;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.prose > :first-child {
+  margin-top: 0;
+}
+
+.prose > :last-child {
+  margin-bottom: 0;
+}
+
+.prose p {
+  margin: 0 0 20px;
+}
+
+.prose h2 {
+  margin: 48px 0 16px;
+  scroll-margin-top: 96px;
+  font-family: var(--site-font-display);
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 38px;
+  letter-spacing: -0.28px;
+  color: rgb(2, 4, 24);
+  text-wrap: balance;
+}
+
+.prose h3 {
+  margin: 32px 0 12px;
+  scroll-margin-top: 96px;
+  font-family: var(--site-font-display);
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 30px;
+  color: rgb(2, 4, 24);
+}
+
+.prose strong {
+  font-weight: 600;
+  color: rgb(2, 4, 24);
+}
+
+.prose a {
+  color: rgb(2, 54, 194);
+  text-decoration: underline;
+  text-decoration-color: rgba(2, 54, 194, 0.35);
+  text-underline-offset: 3px;
+  transition: text-decoration-color 0.2s ease;
+}
+
+.prose a:hover {
+  text-decoration-color: currentColor;
+}
+
+.prose a:focus-visible {
+  outline: 2px solid #1c64f2;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* The global reset strips list markers; posts need them back. */
+.prose ul,
+.prose ol {
+  margin: 0 0 24px;
+  padding-left: 24px;
+}
+
+.prose ul {
+  list-style: disc;
+}
+
+.prose ol {
+  list-style: decimal;
+}
+
+.prose li {
+  margin: 0 0 10px;
+  padding-left: 4px;
+}
+
+.prose li::marker {
+  color: #1c64f2;
+  font-weight: 600;
+}
+
+.prose blockquote {
+  margin: 0 0 24px;
+  padding: 4px 0 4px 20px;
+  border-left: 3px solid #1c64f2;
+  color: #31353f;
+}
+
+.prose hr {
+  margin: 40px 0;
+  border: 0;
+  border-top: 1px solid #e5e7eb;
+}
+
+/* Comparison tables: hairline grid, grey header row, first column bold. */
+.tableWrap {
+  margin: 8px 0 28px;
+  overflow-x: auto;
+  border: 1px solid #e5e7eb;
+  -webkit-overflow-scrolling: touch;
+}
+
+.prose table {
+  width: 100%;
+  min-width: 560px;
+  border-collapse: collapse;
+  font-size: 15px;
+  line-height: 22px;
+  letter-spacing: -0.15px;
+}
+
+.prose th,
+.prose td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: left;
+  vertical-align: top;
+}
+
+.prose th + th,
+.prose td + td {
+  border-left: 1px solid #e5e7eb;
+}
+
+.prose thead th {
+  background: #f9fafb;
+  font-weight: 500;
+  color: rgb(2, 4, 24);
+}
+
+.prose tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.prose tbody td:first-child {
+  font-weight: 500;
+  color: rgb(2, 4, 24);
+}
+
+@media (max-width: 809px) {
+  .prose {
+    font-size: 16px;
+    line-height: 28px;
+  }
+
+  .prose h2 {
+    margin-top: 40px;
+    font-size: 24px;
+    line-height: 32px;
+  }
+}

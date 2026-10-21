@@ -98,6 +98,22 @@
   color: #31353f;
 }
 
+.kicker {
+  margin-bottom: -6px;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 16px;
+  letter-spacing: 0.66px;
+  text-transform: uppercase;
+  color: rgb(2, 54, 194);
+}
+
+.meta {
+  font-size: 13px;
+  line-height: 20px;
+  color: #6b7280;
+}
+
 .more {
   display: inline-flex;
   align-items: center;

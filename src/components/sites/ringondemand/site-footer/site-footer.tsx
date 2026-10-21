@@ -31,6 +31,7 @@ const COLUMNS: FooterColumn[] = [
       { label: "Results", href: ROUTES.results },
       { label: "About", href: ROUTES.about },
       { label: "Partners", href: ROUTES.partners },
+      { label: "Blog", href: ROUTES.blog },
       { label: "Contact", href: PENDING_PAGES.contact },
     ],
   },

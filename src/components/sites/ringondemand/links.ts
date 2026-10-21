@@ -44,6 +44,7 @@ export const ROUTES = {
   results: "/results",
   partners: "/partners",
   about: "/about",
+  blog: "/blog",
 } as const;
 
 /** Pages that do not exist yet; replace with real URLs when they are live. */
