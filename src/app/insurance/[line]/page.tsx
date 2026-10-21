@@ -6,6 +6,7 @@ import {
   INSURANCE_LINES,
   getInsuranceLine,
 } from "@/components/sites/ringondemand/insurance/insurance-lines";
+import { pageMetadata } from "@/components/sites/ringondemand/seo/page-metadata";
 
 interface InsuranceLinePageProps {
   params: Promise<{ line: string }>;
@@ -21,13 +22,7 @@ export async function generateMetadata({ params }: InsuranceLinePageProps): Prom
   const { line: slug } = await params;
   const line = getInsuranceLine(slug);
   if (!line) return {};
-  return {
-    title: line.meta.title,
-    description: line.meta.description,
-    alternates: { canonical: `/insurance/${line.slug}` },
-    openGraph: { type: "website", title: line.meta.title, description: line.meta.description },
-    twitter: { card: "summary", title: line.meta.title, description: line.meta.description },
-  };
+  return pageMetadata({ ...line.meta, path: `/insurance/${line.slug}` });
 }
 
 export default async function InsuranceLineRoute({ params }: InsuranceLinePageProps) {

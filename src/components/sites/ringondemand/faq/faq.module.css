@@ -146,7 +146,9 @@
   transform: rotate(90deg);
 }
 
-.trigger:hover .icon {
+/* Closed items only: on an open item this out-ranked the blue fill and hid
+   the white minus. */
+.item:not(.itemOpen) .trigger:hover .icon {
   border-color: var(--gray-300);
   background: var(--gray-50);
 }

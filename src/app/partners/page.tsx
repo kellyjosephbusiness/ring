@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import {
   BadgeDollarSign,
   Banknote,
@@ -9,8 +8,12 @@ import {
   TrendingUp,
 } from "lucide-react";
 
+import { RelatedPosts } from "@/components/sites/ringondemand/blog/related-posts";
+import { Faq } from "@/components/sites/ringondemand/faq/faq";
+import { PUBLISHER_FAQ } from "@/components/sites/ringondemand/faq/faq-content";
 import { FinalCta } from "@/components/sites/ringondemand/final-cta/final-cta";
-import { BOOK_CALL_URL, BOOKING_EVENTS } from "@/components/sites/ringondemand/links";
+import { PUBLISHER_CTA } from "@/components/sites/ringondemand/final-cta/publisher-cta";
+import { BOOK_CALL_URL } from "@/components/sites/ringondemand/links";
 import { Divider } from "@/components/sites/ringondemand/page-kit/divider";
 import { FeatureColumns } from "@/components/sites/ringondemand/page-kit/feature-columns";
 import { FeatureRow } from "@/components/sites/ringondemand/page-kit/feature-row";
@@ -19,25 +22,25 @@ import { AreaList } from "@/components/sites/ringondemand/page-kit/visuals";
 import { INSURANCE_LINES, insuranceLineHref } from "@/components/sites/ringondemand/insurance/insurance-lines";
 import { PRACTICE_AREAS, practiceAreaHref } from "@/components/sites/ringondemand/legal/practice-areas";
 import { PageShell } from "@/components/sites/ringondemand/page-shell/page-shell";
+import { JsonLd } from "@/components/sites/ringondemand/seo/json-ld";
+import { pageMetadata } from "@/components/sites/ringondemand/seo/page-metadata";
+import { breadcrumbList } from "@/components/sites/ringondemand/seo/schema";
 import { PROOF } from "@/components/sites/ringondemand/shared/proof-list";
-
-const title = "Partners: Join Our Publisher Network | RingOnDemand";
-const description =
-  "Join our vetted publisher network. Strong payouts for legal and insurance calls that qualify, clear criteria for every vertical, and a simple setup.";
+import { postsOn } from "@/content/blog/posts";
 
 const CTA = { label: "Book an intro call", href: BOOK_CALL_URL };
 
-export const metadata: Metadata = {
-  title,
-  description,
-  alternates: { canonical: "/partners" },
-  openGraph: { type: "website", title, description },
-  twitter: { card: "summary", title, description },
-};
+export const metadata = pageMetadata({
+  title: "Pay-Per-Call Publisher Network: Sell Legal and Insurance Calls | RingOnDemand",
+  description:
+    "Sell your MVA, legal and insurance calls. Join our vetted pay-per-call publisher network: payouts agreed per vertical before your first call, clear criteria and a simple setup.",
+  path: "/partners",
+});
 
 export default function PartnersPage() {
   return (
     <PageShell>
+      <JsonLd data={breadcrumbList([{ name: "Partners", path: "/partners" }])} />
       <PageHero
         eyebrow="Partners : Call publishers"
         headline={["Join Our Vetted", "Publisher Network"]}
@@ -125,11 +128,9 @@ export default function PartnersPage() {
           />
         }
       />
-      <FinalCta
-        heading={{ lead: "Ready to send us calls?", accent: "Book a publisher intro call" }}
-        body="Tell us the verticals, states and sources you run. We will tell you where your calls fit and what they pay."
-        booking={BOOKING_EVENTS.publisher}
-      />
+      <Faq heading="Questions publishers ask us" items={PUBLISHER_FAQ} />
+      <RelatedPosts posts={postsOn(["publishers"])} />
+      <FinalCta {...PUBLISHER_CTA} />
     </PageShell>
   );
 }

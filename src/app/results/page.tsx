@@ -1,5 +1,3 @@
-import type { Metadata } from "next";
-
 import { FinalCta } from "@/components/sites/ringondemand/final-cta/final-cta";
 import { GENERAL_CTA } from "@/components/sites/ringondemand/final-cta/general-cta";
 import { GettingStarted } from "@/components/sites/ringondemand/getting-started/getting-started";
@@ -10,23 +8,22 @@ import { PageHero } from "@/components/sites/ringondemand/page-kit/page-hero";
 import { PageShell } from "@/components/sites/ringondemand/page-shell/page-shell";
 import { Reporting } from "@/components/sites/ringondemand/reporting/reporting";
 import { GENERAL_STATS, Results } from "@/components/sites/ringondemand/results/results";
+import { JsonLd } from "@/components/sites/ringondemand/seo/json-ld";
+import { pageMetadata } from "@/components/sites/ringondemand/seo/page-metadata";
+import { breadcrumbList } from "@/components/sites/ringondemand/seo/schema";
 import { PROOF } from "@/components/sites/ringondemand/shared/proof-list";
 
-const title = "Results | RingOnDemand";
-const description =
-  "Over 2,000 signed retainers and over 5,000 live transfers delivered. Trusted by the largest insurance and legal organizations in the US.";
-
-export const metadata: Metadata = {
-  title,
-  description,
-  alternates: { canonical: "/results" },
-  openGraph: { type: "website", title, description },
-  twitter: { card: "summary", title, description },
-};
+export const metadata = pageMetadata({
+  title: "Results: Signed Retainers and Live Transfers Delivered | RingOnDemand",
+  description:
+    "Over 2,000 signed retainers and over 5,000 live transfers delivered. Trusted by the largest insurance and legal organizations in the US.",
+  path: "/results",
+});
 
 export default function ResultsPage() {
   return (
     <PageShell>
+      <JsonLd data={breadcrumbList([{ name: "Results", path: "/results" }])} />
       <PageHero
         eyebrow="Results"
         headline={["Calls That Convert", "Across Legal and Insurance"]}

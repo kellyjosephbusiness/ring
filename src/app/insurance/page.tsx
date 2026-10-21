@@ -1,6 +1,6 @@
-import type { Metadata } from "next";
 import { ClipboardList, Megaphone, MessageSquareText, PhoneForwarded } from "lucide-react";
 
+import { RelatedPosts } from "@/components/sites/ringondemand/blog/related-posts";
 import { CallSources } from "@/components/sites/ringondemand/call-sources/call-sources";
 import { FinalCta } from "@/components/sites/ringondemand/final-cta/final-cta";
 import { INSURANCE_CTA } from "@/components/sites/ringondemand/insurance/insurance-cta";
@@ -16,23 +16,23 @@ import { FeatureColumns } from "@/components/sites/ringondemand/page-kit/feature
 import { LinkGrid } from "@/components/sites/ringondemand/page-kit/link-grid";
 import { PageHero } from "@/components/sites/ringondemand/page-kit/page-hero";
 import { PageShell } from "@/components/sites/ringondemand/page-shell/page-shell";
+import { JsonLd } from "@/components/sites/ringondemand/seo/json-ld";
+import { pageMetadata } from "@/components/sites/ringondemand/seo/page-metadata";
+import { breadcrumbList } from "@/components/sites/ringondemand/seo/schema";
 import { PROOF } from "@/components/sites/ringondemand/shared/proof-list";
+import { postsOn } from "@/content/blog/posts";
 
-const title = "Inbound Calls and Live Transfers for Insurance Agencies | RingOnDemand";
-const description =
-  "You give us your criteria. We run the ads, screen every caller, and send the ones who qualify to your licensed agents as inbound calls or live transfers: final expense, auto, home and Medicare.";
-
-export const metadata: Metadata = {
-  title,
-  description,
-  alternates: { canonical: "/insurance" },
-  openGraph: { type: "website", title, description },
-  twitter: { card: "summary", title, description },
-};
+export const metadata = pageMetadata({
+  title: "Insurance Live Transfers and Inbound Calls for Agencies | RingOnDemand",
+  description:
+    "Screened inbound calls and live transfers for insurance agencies: final expense, auto, home and Medicare. We run the ads and send qualified callers to your licensed agents.",
+  path: "/insurance",
+});
 
 export default function InsurancePage() {
   return (
     <PageShell>
+      <JsonLd data={breadcrumbList([{ name: "Insurance", path: "/insurance" }])} />
       <PageHero
         eyebrow="Insurance"
         headline={["Inbound Calls and Live Transfers", "for Insurance Agencies"]}
@@ -79,6 +79,7 @@ export default function InsurancePage() {
         cta={{ label: "Book a call", href: BOOK_CALL_URL }}
       />
       <CallSources />
+      <RelatedPosts posts={postsOn(["insurance"])} />
       <FinalCta {...INSURANCE_CTA} />
     </PageShell>
   );

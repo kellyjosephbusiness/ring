@@ -52,9 +52,9 @@ export const INSURANCE_LINES: readonly InsuranceLine[] = [
     summary: "Callers shopping for final expense coverage, sent to your agents.",
     icon: HeartHandshake,
     meta: {
-      title: "Final Expense Inbound Calls and Live Transfers | RingOnDemand",
+      title: "Final Expense Live Transfers and Inbound Calls | RingOnDemand",
       description:
-        "You give us your criteria. We run the ads, screen every caller, and send the ones who qualify to your licensed agents as inbound calls or live transfers.",
+        "Final expense live transfers and inbound calls for insurance agencies. We run the ads, screen every caller, and send the ones who qualify to your licensed agents.",
     },
     hero: {
       eyebrow: "Insurance : Final expense",
@@ -79,9 +79,9 @@ export const INSURANCE_LINES: readonly InsuranceLine[] = [
     summary: "Drivers looking for a quote, screened by state, vehicle and coverage.",
     icon: CarFront,
     meta: {
-      title: "Auto Insurance Inbound Calls and Live Transfers | RingOnDemand",
+      title: "Auto Insurance Live Transfers and Inbound Calls | RingOnDemand",
       description:
-        "You give us your criteria. We run the ads, screen every driver who calls, and send the ones who qualify to your licensed agents as inbound calls or live transfers.",
+        "Auto insurance live transfers and inbound calls for insurance agencies. We run the ads, screen every driver who calls, and send the ones who qualify to your licensed agents.",
     },
     hero: {
       eyebrow: "Insurance : Auto",
@@ -107,9 +107,9 @@ export const INSURANCE_LINES: readonly InsuranceLine[] = [
     summary: "Homeowners looking for coverage, screened by property and location.",
     icon: House,
     meta: {
-      title: "Home Insurance Inbound Calls and Live Transfers | RingOnDemand",
+      title: "Home Insurance Live Transfers and Inbound Calls | RingOnDemand",
       description:
-        "You give us your criteria. We run the ads, screen every homeowner who calls, and send the ones who qualify to your licensed agents as inbound calls or live transfers.",
+        "Home insurance live transfers and inbound calls for insurance agencies. We run the ads, screen every homeowner who calls, and send the ones who qualify to your licensed agents.",
     },
     hero: {
       eyebrow: "Insurance : Home",
@@ -134,9 +134,9 @@ export const INSURANCE_LINES: readonly InsuranceLine[] = [
     summary: "Medicare-eligible callers, screened by eligibility and location.",
     icon: HeartPulse,
     meta: {
-      title: "Medicare Inbound Calls and Live Transfers | RingOnDemand",
+      title: "Medicare Live Transfers and Inbound Calls | RingOnDemand",
       description:
-        "You give us your criteria. We run the ads, screen every caller, and send the ones who qualify to your licensed agents as inbound calls or live transfers.",
+        "Medicare live transfers and inbound calls for insurance agencies. We run the ads, screen every caller, and send the ones who qualify to your licensed agents.",
     },
     hero: {
       eyebrow: "Insurance : Medicare",

@@ -6,6 +6,7 @@ import {
   PRACTICE_AREAS,
   getPracticeArea,
 } from "@/components/sites/ringondemand/legal/practice-areas";
+import { pageMetadata } from "@/components/sites/ringondemand/seo/page-metadata";
 
 interface LegalAreaPageProps {
   params: Promise<{ area: string }>;
@@ -21,13 +22,7 @@ export async function generateMetadata({ params }: LegalAreaPageProps): Promise<
   const { area: slug } = await params;
   const area = getPracticeArea(slug);
   if (!area) return {};
-  return {
-    title: area.meta.title,
-    description: area.meta.description,
-    alternates: { canonical: `/legal/${area.slug}` },
-    openGraph: { type: "website", title: area.meta.title, description: area.meta.description },
-    twitter: { card: "summary", title: area.meta.title, description: area.meta.description },
-  };
+  return pageMetadata({ ...area.meta, path: `/legal/${area.slug}` });
 }
 
 export default async function LegalAreaPage({ params }: LegalAreaPageProps) {

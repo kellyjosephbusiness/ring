@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import { Eye, MapPin, Megaphone, PhoneCall, PhoneForwarded, Repeat, ShieldCheck } from "lucide-react";
 
 import { FinalCta } from "@/components/sites/ringondemand/final-cta/final-cta";
@@ -9,22 +8,21 @@ import { Divider } from "@/components/sites/ringondemand/page-kit/divider";
 import { FeatureColumns } from "@/components/sites/ringondemand/page-kit/feature-columns";
 import { PageHero } from "@/components/sites/ringondemand/page-kit/page-hero";
 import { PageShell } from "@/components/sites/ringondemand/page-shell/page-shell";
+import { JsonLd } from "@/components/sites/ringondemand/seo/json-ld";
+import { pageMetadata } from "@/components/sites/ringondemand/seo/page-metadata";
+import { breadcrumbList } from "@/components/sites/ringondemand/seo/schema";
 
-const title = "About | RingOnDemand";
-const description =
-  "RingOnDemand runs the ads, screens every caller against your criteria, and delivers inbound calls and live transfers to insurance agencies, and live transfers and signed retainers to law firms.";
-
-export const metadata: Metadata = {
-  title,
-  description,
-  alternates: { canonical: "/about" },
-  openGraph: { type: "website", title, description },
-  twitter: { card: "summary", title, description },
-};
+export const metadata = pageMetadata({
+  title: "About RingOnDemand: Pay-Per-Call for Legal and Insurance",
+  description:
+    "RingOnDemand runs the ads, screens every caller against your criteria, and delivers inbound calls and live transfers to insurance agencies, and live transfers and signed retainers to law firms.",
+  path: "/about",
+});
 
 export default function AboutPage() {
   return (
     <PageShell>
+      <JsonLd data={breadcrumbList([{ name: "About", path: "/about" }])} />
       <PageHero
         eyebrow="About"
         headline={["We Run the Ads and", "Screen Every Caller"]}

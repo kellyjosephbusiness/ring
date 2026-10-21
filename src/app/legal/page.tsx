@@ -1,6 +1,6 @@
-import type { Metadata } from "next";
 import { ClipboardList, Megaphone, MessageSquareText, PhoneForwarded } from "lucide-react";
 
+import { RelatedPosts } from "@/components/sites/ringondemand/blog/related-posts";
 import { CallSources } from "@/components/sites/ringondemand/call-sources/call-sources";
 import { FinalCta } from "@/components/sites/ringondemand/final-cta/final-cta";
 import { AttorneyCall } from "@/components/sites/ringondemand/legal/attorney-call";
@@ -11,23 +11,23 @@ import { FeatureColumns } from "@/components/sites/ringondemand/page-kit/feature
 import { LinkGrid } from "@/components/sites/ringondemand/page-kit/link-grid";
 import { PageHero } from "@/components/sites/ringondemand/page-kit/page-hero";
 import { PageShell } from "@/components/sites/ringondemand/page-shell/page-shell";
+import { JsonLd } from "@/components/sites/ringondemand/seo/json-ld";
+import { pageMetadata } from "@/components/sites/ringondemand/seo/page-metadata";
+import { breadcrumbList } from "@/components/sites/ringondemand/seo/schema";
 import { PROOF } from "@/components/sites/ringondemand/shared/proof-list";
+import { postsOn } from "@/content/blog/posts";
 
-const title = "Live Transfers and Signed Cases for Law Firms | RingOnDemand";
-const description =
-  "You give us your case criteria. We run the ads, screen every caller, and send you a live transfer or a signed retainer, in motor vehicle accidents, workers' comp, lemon law, medical malpractice and pre-settlement funding.";
-
-export const metadata: Metadata = {
-  title,
-  description,
-  alternates: { canonical: "/legal" },
-  openGraph: { type: "website", title, description },
-  twitter: { card: "summary", title, description },
-};
+export const metadata = pageMetadata({
+  title: "Personal Injury Live Transfers and Signed Cases | RingOnDemand",
+  description:
+    "Live transfers and pre-signed cases for law firms: motor vehicle accidents (MVA), workers' comp, lemon law and medical malpractice, plus pre-settlement funding transfers.",
+  path: "/legal",
+});
 
 export default function LegalPage() {
   return (
     <PageShell>
+      <JsonLd data={breadcrumbList([{ name: "Legal", path: "/legal" }])} />
       <PageHero
         eyebrow="Legal"
         headline={["Live Transfers and Signed Cases", "for Law Firms"]}
@@ -84,6 +84,7 @@ export default function LegalPage() {
       />
       <CallSources />
       <AttorneyCall />
+      <RelatedPosts posts={postsOn(["mva", "legal"]).slice(0, 3)} />
       <FinalCta />
     </PageShell>
   );

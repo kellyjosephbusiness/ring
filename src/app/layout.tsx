@@ -1,5 +1,11 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+
+import { JsonLd } from "@/components/sites/ringondemand/seo/json-ld";
+import { HOME_META } from "@/components/sites/ringondemand/seo/home-meta";
+import { siteGraph } from "@/components/sites/ringondemand/seo/schema";
+import { SITE } from "@/components/sites/ringondemand/seo/site";
+
 import "./globals.css";
 
 const poppins = localFont({
@@ -24,30 +30,40 @@ const inter = localFont({
   ],
 });
 
-const title = "RingOnDemand | Inbound Calls for Enterprise Companies";
-const description =
-  "You set the criteria. We run the ads, screen every caller, and send the ones who qualify to your team as inbound calls or live transfers.";
-
-const siteUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
-  ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-  : "http://localhost:3000";
-
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
-  title,
-  description,
+  metadataBase: new URL(SITE.url),
+  applicationName: SITE.name,
+  title: HOME_META.title,
+  description: HOME_META.description,
+  authors: [{ name: SITE.name, url: SITE.url }],
+  creator: SITE.name,
+  publisher: SITE.legalName,
+  category: "business",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-snippet": -1,
+      "max-image-preview": "large",
+      "max-video-preview": -1,
+    },
+  },
   icons: {
     icon: [{ url: "/sites/ringondemand/meta/favicon.svg", type: "image/svg+xml" }],
   },
   openGraph: {
     type: "website",
-    title,
-    description,
+    siteName: SITE.name,
+    locale: SITE.locale,
+    title: HOME_META.title,
+    description: HOME_META.description,
   },
   twitter: {
-    card: "summary",
-    title,
-    description,
+    card: "summary_large_image",
+    title: HOME_META.title,
+    description: HOME_META.description,
   },
 };
 
@@ -62,7 +78,10 @@ export default function RootLayout({
       className={`${poppins.variable} ${inter.variable} antialiased`}
       data-scroll-behavior="smooth"
     >
-      <body>{children}</body>
+      <body>
+        <JsonLd data={siteGraph()} />
+        {children}
+      </body>
     </html>
   );
 }
