@@ -30,6 +30,7 @@ export async function generateMetadata({ params }: BlogPostRouteProps): Promise<
       modifiedTime: post.updatedAt,
       section: BLOG_TOPICS[post.topic].label,
       tags: post.tags,
+      author: { name: post.author.name, url: post.author.linkedin },
     },
   });
 }

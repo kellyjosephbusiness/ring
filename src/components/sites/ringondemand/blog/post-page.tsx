@@ -60,7 +60,13 @@ export function PostPage({ post }: { post: BlogPost }) {
           <h1 className={styles.h1}>{post.title}</h1>
           <p className={styles.lead}>{post.description}</p>
           <p className={styles.byline}>
-            <span>By RingOnDemand</span>
+            <span>
+              By{" "}
+              <a className={styles.author} href={post.author.linkedin} target="_blank" rel="noopener noreferrer">
+                {post.author.name}
+              </a>
+              , {post.author.role}
+            </span>
             <span aria-hidden="true">·</span>
             <time dateTime={post.publishedAt}>{formatPostDate(post.publishedAt)}</time>
             {updated ? (

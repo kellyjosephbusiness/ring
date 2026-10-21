@@ -11,6 +11,7 @@ import { PageShell } from "@/components/sites/ringondemand/page-shell/page-shell
 import { JsonLd } from "@/components/sites/ringondemand/seo/json-ld";
 import { pageMetadata } from "@/components/sites/ringondemand/seo/page-metadata";
 import { breadcrumbList } from "@/components/sites/ringondemand/seo/schema";
+import { TeamGrid } from "@/components/sites/ringondemand/shared/team-grid";
 
 export const metadata = pageMetadata({
   title: "About RingOnDemand: Pay-Per-Call for Legal and Insurance",
@@ -77,6 +78,8 @@ export default function AboutPage() {
         ]}
         cta={{ label: "Book a call", href: BOOK_CALL_URL }}
       />
+      <Divider />
+      <TeamGrid id="about-team-heading" />
       <AttorneyCall />
       <FinalCta {...GENERAL_CTA} />
     </PageShell>

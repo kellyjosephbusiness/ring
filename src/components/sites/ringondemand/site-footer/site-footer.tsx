@@ -3,7 +3,8 @@ import Link from "next/link";
 import { INSURANCE_LINES, insuranceLineHref } from "../insurance/insurance-lines";
 import { PRACTICE_AREAS, practiceAreaHref } from "../legal/practice-areas";
 import { Logo } from "../shared/logo";
-import { PENDING_PAGES, ROUTES } from "../links";
+import { ROUTES } from "../links";
+import { SITE } from "../seo/site";
 import styles from "./site-footer.module.css";
 
 interface FooterLink {
@@ -32,14 +33,15 @@ const COLUMNS: FooterColumn[] = [
       { label: "About", href: ROUTES.about },
       { label: "Partners", href: ROUTES.partners },
       { label: "Blog", href: ROUTES.blog },
-      { label: "Contact", href: PENDING_PAGES.contact },
+      { label: "Contact", href: ROUTES.contact },
+      { label: "LinkedIn", href: SITE.profiles.linkedin },
     ],
   },
   {
     heading: "Policies",
     links: [
-      { label: "Privacy Policy", href: PENDING_PAGES.privacyPolicy },
-      { label: "Terms of Service", href: PENDING_PAGES.termsOfService },
+      { label: "Privacy Policy", href: ROUTES.privacy },
+      { label: "Terms of Service", href: ROUTES.terms },
     ],
   },
 ];
@@ -65,7 +67,13 @@ export function SiteFooter() {
                       {link.label}
                     </Link>
                   ) : (
-                    <a key={link.label} className={styles.link} href={link.href}>
+                    <a
+                      key={link.label}
+                      className={styles.link}
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       {link.label}
                     </a>
                   ),

@@ -21,7 +21,9 @@ Everything outside the copy doc is a **draft for review**:
 | `/insurance/final-expense`, `/insurance/auto`, `/insurance/home`, `/insurance/medicare` | One page per line (`insurance/insurance-lines.ts`) |
 | `/results` | General results: proof figures, reporting, getting started |
 | `/partners` | Call publishers |
-| `/about` | Company |
+| `/about` | Company, with the team on LinkedIn |
+| `/contact` | One booking call per audience, and the team on LinkedIn |
+| `/privacy`, `/terms` | Privacy Policy and Terms of Service (`src/content/legal/`) |
 | `/blog`, `/blog/<slug>` | Blog index and posts (`src/content/blog/`) |
 | `/sitemap.xml`, `/robots.txt`, `/llms.txt`, `/llms-full.txt` | Generated for search engines and AI assistants |
 
@@ -46,18 +48,22 @@ it cannot drift from what visitors see.
 
 - **Site facts:** `seo/site.ts` holds the production URL
   (`https://www.ringondemand.com`, or `NEXT_PUBLIC_SITE_URL`), the one-line
-  company description and the topics we want to be known for. Canonical URLs,
-  the sitemap and structured data all use it.
+  company description, the topics we want to be known for, the company's
+  LinkedIn page, and the team (`TEAM`: Kelly Joseph, Co-owner; Sam Hosey,
+  Director of Marketing). Canonical URLs, the sitemap and structured data all
+  use it.
 - **Page metadata:** every route calls `pageMetadata()` (`seo/page-metadata.ts`):
   title, description, canonical URL, Open Graph and a large X card.
 - **Share images:** each route has an `opengraph-image.tsx` that renders its
   own headline on the closing band's navy (`seo/og-image.tsx`). They are built
   at build time. `seo/fonts/` holds TTF copies of Poppins and Inter because
   the image renderer cannot read WOFF2.
-- **Structured data (JSON-LD):** Organization and WebSite on every page (root
+- **Structured data (JSON-LD):** Organization (with its LinkedIn page as
+  `sameAs`), the team as Person entries, and WebSite on every page (root
   layout); Service with offers (and MVA prices) on each practice-area and
   insurance-line page; FAQPage wherever an FAQ shows; BreadcrumbList on
-  interior pages; Blog and BlogPosting on the blog.
+  interior pages; Blog and BlogPosting on the blog, each post credited to its
+  author.
 - **FAQs:** `faq/faq-content.ts`. The homepage, every practice area, every
   insurance line and Partners show an FAQ, and each FAQ publishes the same
   questions as FAQPage data. Practice-area and insurance-line checks questions
@@ -76,8 +82,8 @@ it cannot drift from what visitors see.
    to the service pages it supports (`/legal/mva`, `/partners`, …).
 2. Add an entry to `POSTS` in `src/content/blog/posts.ts`: title,
    description, topic (`mva`, `legal`, `insurance` or `publishers`), dates,
-   reading time, 3 to 5 key takeaways, 3 or 4 FAQ questions and the related
-   service pages.
+   reading time, author (from `TEAM`; the posts so far are Sam Hosey's), 3 to
+   5 key takeaways, 3 or 4 FAQ questions and the related service pages.
 
 The post then appears on `/blog`, the homepage (if it is among the 3 newest),
 the related reading on its topic's pages, the sitemap, `llms.txt` and its own
@@ -90,10 +96,8 @@ guarantees or client names.
   (Bing feeds ChatGPT search and Copilot) and submit `/sitemap.xml` in both.
 - Test a few pages in Google's Rich Results Test and the Schema Markup
   Validator.
-- Add the company's LinkedIn and other official profiles to the Organization
-  data as `sameAs` (`seo/schema.ts`) once there are URLs to add.
-- Replace the placeholder Contact, Privacy Policy and Terms of Service links:
-  answer engines and Google weigh those trust pages.
+- Add any other official profiles to `SITE.profiles` (`seo/site.ts`); they
+  are published as the Organization's `sameAs`.
 - Keep publishing: one MVA post a month keeps the topic fresh.
 
 ## Logo
@@ -142,8 +146,17 @@ which every page ends with. That section holds the iClosed inline widget
   insurance and legal organizations" line were supplied by RingOnDemand
   (`shared/proof-list.tsx`). `/legal/mva` still shows the copy doc's
   "1,500+ last quarter" stat beside them.
-- **Footer pages:** Contact, Privacy Policy and Terms of Service use
-  `PENDING_PAGES` placeholders (`#`).
+- **Policies:** the Privacy Policy and Terms of Service
+  (`src/content/legal/`) are drafts written from what the site does: the
+  iClosed booking calendar, Vercel hosting, no analytics, and callers'
+  intake answers going to the buyer they are transferred to. Have your
+  attorney review both before relying on them. Still to add when you have
+  them:
+  - a contact email (Contact page and Privacy Policy), so privacy requests
+    have a direct channel;
+  - the state whose law governs the Terms (usually the state of
+    incorporation);
+  - a phone number or mailing address, if you want them on the Contact page.
 - **SEO and blog draft copy:** the new FAQs, meta titles and blog posts are
   drafts for review; see "SEO, FAQs and blog" in
   [`pages-copy-draft.md`](./pages-copy-draft.md).

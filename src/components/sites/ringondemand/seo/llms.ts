@@ -15,7 +15,7 @@ import { INSURANCE_LINES, STEP_DELIVER, STEP_SCREEN, insuranceLineHref } from ".
 import { PRACTICE_AREAS, practiceAreaHref } from "../legal/practice-areas";
 import { ROUTES } from "../links";
 import { GENERAL_STATS } from "../results/results";
-import { SITE, absoluteUrl } from "./site";
+import { SITE, TEAM, absoluteUrl } from "./site";
 
 const KEY_FACTS = [
   "Offers: live transfers and pre-signed cases (signed retainers) for law firms; live transfers for pre-settlement funding companies; inbound calls and live transfers for insurance agencies.",
@@ -28,6 +28,9 @@ const KEY_FACTS = [
   "No web form leads. No recurring volume commitment: buyers place an order and reorder when they want more.",
   "Coverage: any U.S. state. In California, legal ads run under the firm's name and the firm approves every creative.",
   "Call publishers can join the vetted publisher network; payouts are agreed per vertical before the first call.",
+  `Team: ${Object.values(TEAM)
+    .map((member) => `${member.name}, ${member.role} (${member.linkedin})`)
+    .join("; ")}. Company LinkedIn: ${SITE.profiles.linkedin}.`,
 ];
 
 function link(title: string, path: string, note: string): string {
@@ -67,7 +70,10 @@ export function llmsIndex(): string {
     "",
     link("Home", ROUTES.home, "What RingOnDemand does across legal and insurance."),
     link("Results", ROUTES.results, "Signed retainers and live transfers delivered."),
-    link("About", ROUTES.about, "How RingOnDemand runs the ads and screens every caller."),
+    link("About", ROUTES.about, "How RingOnDemand runs the ads and screens every caller, and the team."),
+    link("Contact", ROUTES.contact, "Book a call: law firms and funding companies, insurance agencies, or call publishers."),
+    link("Privacy Policy", ROUTES.privacy, "How RingOnDemand handles information."),
+    link("Terms of Service", ROUTES.terms, "Terms for using the site."),
     "",
     "## Blog",
     "",
@@ -152,7 +158,7 @@ export async function llmsFull(): Promise<string> {
     ...posts.flatMap(({ post, body }) => [
       `## Blog: ${post.title} (${absoluteUrl(postHref(post))})`,
       "",
-      `Topic: ${BLOG_TOPICS[post.topic].label}. Published ${post.publishedAt}. Updated ${post.updatedAt}.`,
+      `By ${post.author.name}, ${post.author.role}. Topic: ${BLOG_TOPICS[post.topic].label}. Published ${post.publishedAt}. Updated ${post.updatedAt}.`,
       "",
       "Key takeaways:",
       "",

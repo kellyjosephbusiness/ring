@@ -13,6 +13,7 @@ interface PageMetadataInput {
     modifiedTime: string;
     section: string;
     tags: readonly string[];
+    author: { name: string; url: string };
   };
 }
 
@@ -23,6 +24,7 @@ export function pageMetadata({ title, description, path, article }: PageMetadata
   return {
     title,
     description,
+    ...(article ? { authors: [article.author] } : {}),
     alternates: { canonical: path },
     openGraph: article
       ? {
@@ -32,7 +34,7 @@ export function pageMetadata({ title, description, path, article }: PageMetadata
           modifiedTime: article.modifiedTime,
           section: article.section,
           tags: [...article.tags],
-          authors: [SITE.name],
+          authors: [article.author.url],
         }
       : { ...shared, type: "website" },
     twitter: { card: "summary_large_image", title, description },

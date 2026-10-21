@@ -95,6 +95,23 @@
   color: #6b7280;
 }
 
+.author {
+  font-weight: 500;
+  color: rgb(2, 54, 194);
+  text-decoration: none;
+}
+
+.author:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.author:focus-visible {
+  outline: 2px solid #1c64f2;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
 /* ---- Body and aside ---- */
 
 .layout {
