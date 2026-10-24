@@ -229,3 +229,44 @@ export const PUBLISHER_FAQ: readonly FaqItem[] = [
       "Personal injury law firms, pre-settlement funding companies and insurance agencies across the US. Your calls go to the largest insurance and legal organizations in the US.",
   },
 ];
+
+/** The Compliance page: questions buyers' compliance and procurement teams
+ * ask. Every answer is a practice RingOnDemand confirmed. */
+export const COMPLIANCE_FAQ: readonly FaqItem[] = [
+  {
+    question: "Do callers agree to be transferred?",
+    answer: "Yes. Every caller agrees to be connected before we transfer them to your team.",
+  },
+  {
+    question: "Are calls recorded?",
+    answer: "Yes. Every intake call is recorded, and you can get the recording of any call we send you.",
+  },
+  {
+    question: "Do you capture consent certificates?",
+    answer:
+      "Yes. We capture third-party consent certificates, so there is an independent record of how and when consent was given.",
+  },
+  {
+    question: "Do you scrub against the Do Not Call Registry?",
+    answer: "Yes. Numbers are scrubbed against the National Do Not Call Registry before we call or text them.",
+  },
+  {
+    question: "How do you control publisher traffic?",
+    answer:
+      "Every publisher is vetted before calls go live, and every publisher's ads and creatives are approved before they run. Robocalls, incentivized traffic and misleading ads are not allowed. We audit sources and can remove a publisher at any time, and every caller goes through the same intake script as callers from our own ads.",
+  },
+  {
+    question: "Do Medicare calls follow CMS rules?",
+    answer:
+      "Yes. Medicare calls follow CMS rules for third-party marketing organizations, including the required disclaimer, and recordings are kept for 10 years.",
+  },
+  {
+    question: "Who approves legal ads in California?",
+    answer: "Your firm. In California, ads run under your firm's name and you approve every creative before it runs.",
+  },
+  {
+    question: "How is caller data protected?",
+    answer:
+      "Caller data is encrypted, and only staff who need it can see it. Our Privacy Policy explains what we collect and who we share it with.",
+  },
+];

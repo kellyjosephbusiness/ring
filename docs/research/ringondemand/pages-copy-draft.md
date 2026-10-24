@@ -640,3 +640,49 @@ Drafts in `src/content/legal/`, dated October 21, 2026.
   results; acceptable use; ownership of content; third-party links;
   disclaimers; a $100 liability cap; changes. No governing-law clause until
   you name the state.
+
+## Compliance (`/compliance`)
+
+Every statement comes from a practice RingOnDemand confirmed on October 24,
+2026, or from facts already on the site. The site never says calls are
+inbound only: some contacts are outbound calls or texts.
+
+Confirmed practices:
+- Some outbound calls or texts, alongside callers from ads.
+- Every intake call is recorded; buyers can get the recording of calls sent
+  to them.
+- Every caller agrees to be connected before a transfer.
+- Third-party consent certificates are captured.
+- Every publisher's ads and creatives are approved before they run.
+- No robocalls, incentivized or misleading traffic.
+- Sources are audited and a publisher can be removed at any time.
+- Numbers are scrubbed against the National Do Not Call Registry.
+- Caller data is encrypted and only staff who need it can see it.
+- Medicare calls follow CMS rules for third-party marketing organizations:
+  the required disclaimer, recordings kept 10 years.
+- Not claimed: a third-party security audit (for example SOC 2).
+
+Page:
+- Eyebrow: Compliance
+- Headline: Compliance Built Into / **Every Call**
+- Sub: Large buyers ask how every caller reached us and what they agreed to.
+  Here is how we record, screen and deliver calls, the controls on our
+  publisher network, and the rules we follow.
+- **Every call, on the record**: consent to be connected, recording available
+  on request, consent certificates, intake answers with every transfer. A
+  "Call record" card lists the four.
+- **Controls on every publisher**: vetted before calls go live (same intake
+  script), ads approved before they run, banned traffic, audits and removal.
+- **Built for regulated industries**: Do Not Call, legal advertising
+  (California under the firm's name; discovery calls with a licensed
+  attorney), Medicare (CMS), caller data.
+- **Compliance questions buyers ask** (8): transfer consent, recording,
+  consent certificates, DNC, publisher controls, CMS, California legal ads,
+  caller data.
+- Linked from the footer's Policies column.
+
+The Privacy Policy now matches: intake calls are recorded, consent
+certificates are captured, buyers can get the recording on request, outbound
+calls and texts are scrubbed against the Do Not Call Registry and can be
+stopped at any time, caller data is encrypted with limited access, and
+Medicare recordings are kept 10 years. Its date is October 24, 2026.

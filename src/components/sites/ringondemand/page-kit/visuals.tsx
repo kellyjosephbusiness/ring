@@ -14,14 +14,23 @@ import styles from "./visuals.module.css";
 /** Illustrations for the page-kit panels. Like the homepage's, they only
  * restate facts from the copy: no names, numbers or dates. */
 
-/** The intake script for one practice area: every check a caller must pass. */
-export function CriteriaCard({ label, checks }: { label: string; checks: readonly string[] }) {
+/** A checklist card: by default the intake script for one practice area,
+ * every check a caller must pass. */
+export function CriteriaCard({
+  title = "Intake script",
+  label,
+  checks,
+}: {
+  title?: string;
+  label: string;
+  checks: readonly string[];
+}) {
   return (
     <div className={styles.card}>
       <div className={styles.cardHead}>
         <span className={styles.cardTitle}>
           <span className={styles.dot} aria-hidden="true" />
-          Intake script
+          {title}
         </span>
         <span className={styles.tag}>{label}</span>
       </div>

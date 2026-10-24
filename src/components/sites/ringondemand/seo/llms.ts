@@ -9,7 +9,7 @@ import { join } from "node:path";
 
 import { BLOG_TOPICS, POSTS, postHref } from "@/content/blog/posts";
 
-import { HOME_FAQ, PUBLISHER_FAQ, insuranceLineFaq, practiceAreaFaq } from "../faq/faq-content";
+import { COMPLIANCE_FAQ, HOME_FAQ, PUBLISHER_FAQ, insuranceLineFaq, practiceAreaFaq } from "../faq/faq-content";
 import type { FaqItem } from "../faq/faq-list";
 import { INSURANCE_LINES, STEP_DELIVER, STEP_SCREEN, insuranceLineHref } from "../insurance/insurance-lines";
 import { PRACTICE_AREAS, practiceAreaHref } from "../legal/practice-areas";
@@ -27,6 +27,7 @@ const KEY_FACTS = [
   "Calls come from RingOnDemand's own ads plus a vetted publisher network; every caller goes through the same intake script built from the buyer's criteria.",
   "No web form leads. No recurring volume commitment: buyers place an order and reorder when they want more.",
   "Coverage: any U.S. state. In California, legal ads run under the firm's name and the firm approves every creative.",
+  "Compliance: every caller agrees to be connected before a transfer; every intake call is recorded and buyers can get the recording; third-party consent certificates are captured; numbers are scrubbed against the National Do Not Call Registry before calls or texts; publishers are vetted and their ads approved, with robocalls, incentivized and misleading traffic banned; Medicare calls follow CMS third-party marketing rules, with recordings kept 10 years; caller data is encrypted with access limited to staff who need it.",
   "Call publishers can join the vetted publisher network; payouts are agreed per vertical before the first call.",
   `Team: ${Object.values(TEAM)
     .map((member) => `${member.name}, ${member.role} (${member.linkedin})`)
@@ -72,6 +73,11 @@ export function llmsIndex(): string {
     link("Results", ROUTES.results, "Signed retainers and live transfers delivered."),
     link("About", ROUTES.about, "How RingOnDemand runs the ads and screens every caller, and the team."),
     link("Contact", ROUTES.contact, "Book a call: law firms and funding companies, insurance agencies, or call publishers."),
+    link(
+      "Compliance",
+      ROUTES.compliance,
+      "Consent, call recording, consent certificates, Do Not Call scrubbing, publisher controls, legal advertising and CMS rules for Medicare.",
+    ),
     link("Privacy Policy", ROUTES.privacy, "How RingOnDemand handles information."),
     link("Terms of Service", ROUTES.terms, "Terms for using the site."),
     "",
@@ -152,6 +158,9 @@ export async function llmsFull(): Promise<string> {
       "",
       ...faqSection(insuranceLineFaq(line)),
     ]),
+    `## Compliance (${absoluteUrl(ROUTES.compliance)})`,
+    "",
+    ...faqSection(COMPLIANCE_FAQ),
     `## Call publishers (${absoluteUrl(ROUTES.partners)})`,
     "",
     ...faqSection(PUBLISHER_FAQ),

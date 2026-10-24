@@ -23,6 +23,7 @@ Everything outside the copy doc is a **draft for review**:
 | `/partners` | Call publishers |
 | `/about` | Company, with the team on LinkedIn |
 | `/contact` | One booking call per audience, and the team on LinkedIn |
+| `/compliance` | Consent, call recording, publisher controls, DNC, legal advertising, Medicare (CMS), caller data |
 | `/privacy`, `/terms` | Privacy Policy and Terms of Service (`src/content/legal/`) |
 | `/blog`, `/blog/<slug>` | Blog index and posts (`src/content/blog/`) |
 | `/sitemap.xml`, `/robots.txt`, `/llms.txt`, `/llms-full.txt` | Generated for search engines and AI assistants |
@@ -146,6 +147,11 @@ which every page ends with. That section holds the iClosed inline widget
   insurance and legal organizations" line were supplied by RingOnDemand
   (`shared/proof-list.tsx`). `/legal/mva` still shows the copy doc's
   "1,500+ last quarter" stat beside them.
+- **Compliance page:** built only from practices RingOnDemand confirmed
+  (October 24, 2026); see "Compliance" in
+  [`pages-copy-draft.md`](./pages-copy-draft.md). If a practice changes, change
+  the page, its FAQ (`faq/faq-content.ts`, `COMPLIANCE_FAQ`) and the Privacy
+  Policy together. Have your attorney review it with the policies.
 - **Policies:** the Privacy Policy and Terms of Service
   (`src/content/legal/`) are drafts written from what the site does: the
   iClosed booking calendar, Vercel hosting, no analytics, and callers'

@@ -28,6 +28,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     page(ROUTES.results, 0.7),
     page(ROUTES.about, 0.6),
     page(ROUTES.contact, 0.6),
+    page(ROUTES.compliance, 0.7),
     page(ROUTES.privacy, 0.2, "yearly"),
     page(ROUTES.terms, 0.2, "yearly"),
     { ...page(ROUTES.blog, 0.7, "weekly"), ...(latestPost ? { lastModified: latestPost } : {}) },

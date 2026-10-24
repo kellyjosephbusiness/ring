@@ -40,6 +40,7 @@ const COLUMNS: FooterColumn[] = [
   {
     heading: "Policies",
     links: [
+      { label: "Compliance", href: ROUTES.compliance },
       { label: "Privacy Policy", href: ROUTES.privacy },
       { label: "Terms of Service", href: ROUTES.terms },
     ],
