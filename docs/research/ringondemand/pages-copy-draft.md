@@ -115,6 +115,9 @@ hero button.
   (the 4 lines + All insurance lines) · Results · Partners · About · **Book a
   call**.
   - Pricing left the header: the only prices are MVA's, on `/legal/mva#pricing`.
+  - On phones, Legal and Insurance are rows in the menu that fold open to show
+    their pages (one at a time); on a legal or insurance page, that section
+    starts open.
 - **Footer:** Legal · Insurance · Company (Results, About, Partners, Contact) ·
   Policies.
   - The Offers column is gone (offers are on each vertical's page).

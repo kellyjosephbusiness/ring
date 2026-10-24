@@ -306,6 +306,70 @@ function DesktopNav({ open, onOpen, onClose }: DesktopNavProps) {
   );
 }
 
+/** The section whose pages include the current path ("/legal/mva" is under
+ * Legal), so the open menu starts with it unfolded. */
+function menuForPath(pathname: string): MenuId | null {
+  const menu = MENUS.find((candidate) =>
+    candidate.tiles.some((tile) => pathname === tile.href || pathname.startsWith(`${tile.href}/`)),
+  );
+  return menu?.id ?? null;
+}
+
+interface MobileGroupProps {
+  menu: NavMenu;
+  expanded: boolean;
+  onToggle: () => void;
+  onLinkClick: (event: MouseEvent<HTMLAnchorElement>) => void;
+}
+
+/** One phone-menu section: a row like the plain links that folds its pages
+ * open beneath it. Folded, the pages are inert, so they are neither tabbable
+ * nor read out. */
+function MobileGroup({ menu, expanded, onToggle, onLinkClick }: MobileGroupProps) {
+  const panelId = useId();
+  return (
+    <div className={styles.mGroup} data-open={expanded || undefined}>
+      <button
+        type="button"
+        className={styles.mGroupTrigger}
+        aria-expanded={expanded}
+        aria-controls={panelId}
+        onClick={onToggle}
+      >
+        <span>{menu.label}</span>
+        <ChevronDownIcon className={styles.mGroupChevron} />
+      </button>
+      <div id={panelId} className={styles.mGroupPanel} inert={!expanded}>
+        <div className={styles.mGroupClip}>
+          <div className={styles.mGroupList}>
+            {menu.tiles.map((tile) => (
+              <Link key={tile.href} className={styles.mSubLink} href={tile.href} onClick={onLinkClick}>
+                {tile.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/** The phone menu's sections, one unfolded at a time. Mounted only while the
+ * menu is open, so it starts fresh each time. */
+function MobileGroups({ onLinkClick }: { onLinkClick: MobileGroupProps["onLinkClick"] }) {
+  const pathname = usePathname();
+  const [expanded, setExpanded] = useState<MenuId | null>(() => menuForPath(pathname));
+  return MENUS.map((menu) => (
+    <MobileGroup
+      key={menu.id}
+      menu={menu}
+      expanded={expanded === menu.id}
+      onToggle={() => setExpanded((current) => (current === menu.id ? null : menu.id))}
+      onLinkClick={onLinkClick}
+    />
+  ));
+}
+
 function MobileNav({ open, onOpen, onClose }: { open: boolean; onOpen: () => void; onClose: () => void }) {
   const openButton = useRef<HTMLButtonElement>(null);
   const closeButton = useRef<HTMLButtonElement>(null);
@@ -374,16 +438,7 @@ function MobileNav({ open, onOpen, onClose }: { open: boolean; onOpen: () => voi
             </button>
           </div>
           <div className={styles.mLinks}>
-            {MENUS.map((menu) => (
-              <div key={menu.id} className={styles.mGroup}>
-                <p className={styles.mGroupLabel}>{menu.label}</p>
-                {menu.tiles.map((tile) => (
-                  <Link key={tile.href} className={styles.mSubLink} href={tile.href} onClick={onLinkClick}>
-                    {tile.label}
-                  </Link>
-                ))}
-              </div>
-            ))}
+            <MobileGroups onLinkClick={onLinkClick} />
             {NAV_LINKS.map((link) => (
               <div key={link.href} className={styles.mLinkCell}>
                 <Link className={styles.mTextLink} href={link.href} onClick={onLinkClick}>

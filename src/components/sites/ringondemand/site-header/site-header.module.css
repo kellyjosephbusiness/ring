@@ -521,25 +521,79 @@
   }
 }
 
-/* The Legal group: a small label over the practice-area links. */
+/* Legal and Insurance: rows like the plain links that fold their pages open
+   beneath them (a 0fr -> 1fr grid row, as in the FAQ), on a grey panel. */
 .mGroup {
   display: flex;
   flex: none;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid rgb(229, 231, 235);
 }
 
-.mGroupLabel {
-  margin: 0 0 6px;
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 20px;
-  letter-spacing: 0.72px;
-  text-transform: uppercase;
+.mGroupTrigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 44px;
+  padding: 8px 12px 8px 16px;
+  border: 0;
+  background: #fff;
+  font-family: inherit;
+  font-size: 20px;
+  line-height: 28px;
+  letter-spacing: -0.2px;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background-color 0.4s var(--link-ease);
+}
+
+.mGroupTrigger:focus-visible {
+  outline: 2px solid #1c64f2;
+  outline-offset: -2px;
+}
+
+@media (hover: hover) {
+  .mGroupTrigger:hover {
+    background: var(--hover-wash);
+  }
+}
+
+.mGroupChevron {
+  width: 20px;
+  height: 20px;
   color: rgb(107, 114, 128);
+  transition: transform 0.32s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.mGroup[data-open] .mGroupChevron {
+  transform: rotate(180deg);
+}
+
+.mGroupPanel {
+  display: grid;
+  grid-template-rows: 0fr;
+  width: 100%;
+  transition: grid-template-rows 0.32s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.mGroup[data-open] .mGroupPanel {
+  grid-template-rows: 1fr;
+}
+
+.mGroupClip {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.mGroupList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  margin: 4px 4px 8px;
+  padding: 10px 0;
+  border-radius: 12px;
+  background: rgb(249, 250, 251);
 }
 
 .mSubLink {
@@ -554,7 +608,14 @@
 
 @media (hover: hover) {
   .mSubLink:hover {
-    background: var(--hover-wash);
+    background: rgb(243, 244, 246);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mGroupChevron,
+  .mGroupPanel {
+    transition-duration: 0.001ms;
   }
 }
 
