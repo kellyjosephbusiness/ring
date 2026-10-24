@@ -14,6 +14,8 @@ export const SITE = {
     "RingOnDemand is a pay-per-call company. We run the ads, screen every caller against your criteria, and deliver the ones who qualify as inbound calls, live transfers or signed retainers to personal injury law firms, pre-settlement funding companies and insurance agencies across the US.",
   /** Square raster mark, for the Organization logo and the touch icon. */
   logo: "/sites/ringondemand/brand/logo-mark-512.png",
+  /** The company's official profiles, published as the Organization's sameAs. */
+  profiles: { linkedin: "https://www.linkedin.com/company/117245086/" },
   knowsAbout: [
     "Pay-per-call",
     "Live transfers",
@@ -38,3 +40,28 @@ export const SITE = {
 export function absoluteUrl(path = "/"): string {
   return path === "/" ? `${SITE.url}/` : `${SITE.url}${path.startsWith("/") ? path : `/${path}`}`;
 }
+
+export interface TeamMember {
+  /** Anchor for the person's structured data (`${SITE.url}/#<id>`). */
+  id: string;
+  name: string;
+  role: string;
+  linkedin: string;
+}
+
+/** The people shown on About and Contact and in structured data. Sam writes
+ * the blog. */
+export const TEAM = {
+  kellyJoseph: {
+    id: "kelly-joseph",
+    name: "Kelly Joseph",
+    role: "Co-owner",
+    linkedin: "https://www.linkedin.com/in/kelly-joseph-paypercall/",
+  },
+  samHosey: {
+    id: "sam-hosey",
+    name: "Sam Hosey",
+    role: "Director of Marketing",
+    linkedin: "https://www.linkedin.com/in/samhosey/",
+  },
+} as const satisfies Record<string, TeamMember>;

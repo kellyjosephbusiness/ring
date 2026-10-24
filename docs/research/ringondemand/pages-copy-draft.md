@@ -103,10 +103,11 @@ hero button.
 14. **Blog.** Seven posts restate the copy doc's facts, including the MVA
     prices, the guarantees and the 25 to 35% sign rate. If a price or
     guarantee changes, update the posts too (`src/content/blog/`).
-15. **Blog byline.** Posts are by "RingOnDemand". A named author with a short
-    bio (for example the licensed attorney who takes the calls) would make
-    them more credible to Google and AI answers; send a name and bio if you
-    want one.
+15. **Blog byline.** Posts are by Sam Hosey, Director of Marketing, linked to
+    their LinkedIn profile.
+16. **Policies.** The Privacy Policy and Terms of Service are drafts; have
+    them reviewed before relying on them. See "Contact, team and policies"
+    below.
 
 ## Navigation
 
@@ -119,7 +120,9 @@ hero button.
   - The Offers column is gone (offers are on each vertical's page).
   - The privacy and terms column is now "Policies", so it isn't confused with
     the Legal column.
-  - Contact, Privacy Policy and Terms of Service are still placeholders.
+  - Contact (`/contact`), Privacy Policy (`/privacy`) and Terms of Service
+    (`/terms`) are live pages. Company also links to the company LinkedIn
+    page.
   - Tagline: "Screened inbound calls and live transfers."
 - **Every "Book a call"** scrolls to the closing section, which holds the
   iClosed booking widget.
@@ -591,3 +594,46 @@ sections, an FAQ, related service pages and a booking card. Beyond the copy
 doc they add only general explanation (why each MVA screening question
 matters, how to compare cost per signed case, what to bring to a publisher
 intro call), with no new numbers.
+
+## Contact, team and policies
+
+### /contact — Contact
+
+- Eyebrow: Contact
+- Headline: Talk to / **RingOnDemand**
+- Sub: The fastest way to reach us is a short call. Pick the call that fits you
+  and choose a time on the calendar.
+- **Pick the call that fits you** (eyebrow: Book a call), each card opening its
+  iClosed booking page:
+  - Law firms and funding companies: Talk to a licensed attorney on our team
+    about live transfers and signed cases. (Personal Injury Discovery Call)
+  - Insurance agencies and other buyers: We show you the ads and the intake
+    questions, and you decide. (Partner Discovery Call)
+  - Call publishers: Agree on verticals, states and payouts, then start sending
+    calls. (Publisher Intro Call)
+- The team block (below), then the closing section (Partner Discovery Call).
+- No email, phone or address yet: add them when you have the ones to publish.
+
+### Team (Contact and About)
+
+**The people behind RingOnDemand** (eyebrow: Team). "Find us and the team on
+LinkedIn." Three cards, each linking to LinkedIn: RingOnDemand (Our company
+page), Kelly Joseph (Co-owner), Sam Hosey (Director of Marketing).
+
+### /privacy and /terms
+
+Drafts in `src/content/legal/`, dated October 21, 2026.
+
+- **Privacy Policy** covers the site and people who call our ads: what the
+  booking calendar (iClosed) and hosting (Vercel) collect, that the site runs
+  no analytics or advertising cookies, that a qualified caller's contact
+  details and intake answers go to the buyer they are transferred to, service
+  providers, legal and business-transfer disclosures, "We do not sell
+  information about visitors to this site", rights requests through the
+  Contact page, retention, security, children and changes.
+- **Terms of Service** covers use of the site only: orders, prices, guarantees
+  and payouts are set in a separate order or agreement; content is not legal
+  advice and creates no attorney-client relationship; figures are past
+  results; acceptable use; ownership of content; third-party links;
+  disclaimers; a $100 liability cap; changes. No governing-law clause until
+  you name the state.

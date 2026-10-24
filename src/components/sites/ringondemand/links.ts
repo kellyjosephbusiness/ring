@@ -45,11 +45,7 @@ export const ROUTES = {
   partners: "/partners",
   about: "/about",
   blog: "/blog",
-} as const;
-
-/** Pages that do not exist yet; replace with real URLs when they are live. */
-export const PENDING_PAGES = {
-  contact: "#",
-  privacyPolicy: "#",
-  termsOfService: "#",
+  contact: "/contact",
+  privacy: "/privacy",
+  terms: "/terms",
 } as const;

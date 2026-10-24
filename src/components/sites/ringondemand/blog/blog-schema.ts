@@ -1,11 +1,9 @@
 import { BLOG_TOPICS, postHref, type BlogPost } from "@/content/blog/posts";
 
-import { ORGANIZATION_ID } from "../seo/schema";
+import { ORGANIZATION_ID, personId } from "../seo/schema";
 import { SITE, absoluteUrl } from "../seo/site";
 
 const BLOG_ID = `${SITE.url}/blog#blog`;
-
-const AUTHOR = { "@type": "Organization", "@id": ORGANIZATION_ID, name: SITE.name, url: absoluteUrl("/") };
 
 /** One post, as BlogPosting. */
 export function blogPosting(post: BlogPost): Record<string, unknown> {
@@ -24,7 +22,13 @@ export function blogPosting(post: BlogPost): Record<string, unknown> {
     inLanguage: "en-US",
     articleSection: BLOG_TOPICS[post.topic].label,
     keywords: post.tags.join(", "),
-    author: AUTHOR,
+    author: {
+      "@type": "Person",
+      "@id": personId(post.author),
+      name: post.author.name,
+      jobTitle: post.author.role,
+      url: post.author.linkedin,
+    },
     publisher: { "@id": ORGANIZATION_ID },
     isPartOf: { "@id": BLOG_ID },
   };

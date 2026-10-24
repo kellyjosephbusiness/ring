@@ -6,12 +6,13 @@
  *
  * To add a post: write `<slug>.mdx` in this folder (no H1, open with a
  * one-paragraph direct answer, use question-style ## headings), then add an
- * entry below. DRAFT COPY for review — see
+ * entry below. Authors come from TEAM in seo/site.ts. DRAFT COPY for review — see
  * docs/research/ringondemand/pages-copy-draft.md.
  */
 import type { MDXContent } from "mdx/types";
 
 import type { FaqItem } from "@/components/sites/ringondemand/faq/faq-list";
+import { TEAM, type TeamMember } from "@/components/sites/ringondemand/seo/site";
 
 import HowToScreenMvaCallers from "./how-to-screen-motor-vehicle-accident-callers.mdx";
 import HowToSellCalls from "./how-to-sell-legal-and-insurance-calls.mdx";
@@ -43,6 +44,8 @@ export interface BlogPost {
   publishedAt: string;
   updatedAt: string;
   readingMinutes: number;
+  /** Byline, linked to the author's LinkedIn. */
+  author: TeamMember;
   /** Answer-first summary at the top of the post. Answer engines quote
    * short, self-contained statements like these. */
   takeaways: readonly string[];
@@ -69,6 +72,7 @@ export const POSTS: readonly BlogPost[] = [
     publishedAt: "2026-10-21",
     updatedAt: "2026-10-21",
     readingMinutes: 5,
+    author: TEAM.samHosey,
     takeaways: [
       "An MVA live transfer is a motor vehicle accident caller who passed your qualifying questions and is connected to your intake line while still on the phone.",
       "Before the transfer, every caller is checked for the accident date window, fault, treatment, the at-fault driver's insurance and the statute of limitations, plus anything you add.",
@@ -109,6 +113,7 @@ export const POSTS: readonly BlogPost[] = [
     publishedAt: "2026-10-21",
     updatedAt: "2026-10-21",
     readingMinutes: 4,
+    author: TEAM.samHosey,
     takeaways: [
       "Live transfers ($550 per transfer) suit firms with their own intake team: your team takes the call and signs the case.",
       "Pre-signed cases ($2,500 per signed case) suit firms that want signed cases only: we do the full intake and sign the claimant to your retainer.",
@@ -144,6 +149,7 @@ export const POSTS: readonly BlogPost[] = [
     publishedAt: "2026-10-21",
     updatedAt: "2026-10-21",
     readingMinutes: 3,
+    author: TEAM.samHosey,
     takeaways: [
       "Screen every MVA caller before they reach your intake team, not after.",
       "The five default checks: the accident happened inside your window (30 or 90 days), the caller was not at fault, has already received treatment or seen a doctor, the at-fault driver has insurance, and the claim is inside the statute of limitations.",
@@ -178,6 +184,7 @@ export const POSTS: readonly BlogPost[] = [
     publishedAt: "2026-10-21",
     updatedAt: "2026-10-21",
     readingMinutes: 3,
+    author: TEAM.samHosey,
     takeaways: [
       "You need three things: the phone number that receives the calls, the hours you take them and a daily cap.",
       "Transfers usually start within 24 hours of the signed order.",
@@ -212,6 +219,7 @@ export const POSTS: readonly BlogPost[] = [
     publishedAt: "2026-10-21",
     updatedAt: "2026-10-21",
     readingMinutes: 3,
+    author: TEAM.samHosey,
     takeaways: [
       "Pay-per-call means a firm pays for phone calls from people who match its case criteria, not for web form leads.",
       "A live transfer connects a screened caller to your intake line while they are still on the phone; a web form lead is contact details your team has to call back.",
@@ -247,6 +255,7 @@ export const POSTS: readonly BlogPost[] = [
     publishedAt: "2026-10-21",
     updatedAt: "2026-10-21",
     readingMinutes: 3,
+    author: TEAM.samHosey,
     takeaways: [
       "RingOnDemand buys calls in nine verticals: MVA, workers' comp, lemon law, medical malpractice, pre-settlement funding, final expense, auto, home and Medicare.",
       "Payouts are set per vertical and agreed before you send a single call.",
@@ -282,6 +291,7 @@ export const POSTS: readonly BlogPost[] = [
     publishedAt: "2026-10-21",
     updatedAt: "2026-10-21",
     readingMinutes: 3,
+    author: TEAM.samHosey,
     takeaways: [
       "An inbound call rings straight through to your agents' line from ads and publisher traffic matched to your criteria.",
       "A live transfer is screened by an intake team against your criteria, then transferred while the caller is still on the line.",

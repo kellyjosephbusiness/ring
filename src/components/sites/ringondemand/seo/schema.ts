@@ -1,8 +1,9 @@
 /** schema.org builders. Every page carries the Organization and WebSite graph
  * (root layout); pages add their own Service, FAQPage, BreadcrumbList or
- * BlogPosting, pointing back at the Organization by @id. Only facts already on
- * the page go in here. */
-import { SITE, absoluteUrl } from "./site";
+ * BlogPosting, pointing back at the Organization by @id. The team's Person
+ * entries ride along with the Organization. Only facts already on the page go
+ * in here. */
+import { SITE, TEAM, absoluteUrl, type TeamMember } from "./site";
 
 type Schema = Record<string, unknown>;
 
@@ -12,6 +13,23 @@ export const ORGANIZATION_ID = `${SITE.url}/#organization`;
 export const WEBSITE_ID = `${SITE.url}/#website`;
 
 const US = { "@type": "Country", name: "United States" } as const;
+
+export function personId(member: TeamMember): string {
+  return `${SITE.url}/#${member.id}`;
+}
+
+/** A team member, tied to the company and their LinkedIn profile. */
+export function person(member: TeamMember): Schema {
+  return {
+    "@type": "Person",
+    "@id": personId(member),
+    name: member.name,
+    jobTitle: member.role,
+    url: member.linkedin,
+    sameAs: [member.linkedin],
+    worksFor: { "@id": ORGANIZATION_ID },
+  };
+}
 
 /** Who we are, on every page. */
 export function siteGraph(): Schema {
@@ -29,7 +47,10 @@ export function siteGraph(): Schema {
         description: SITE.description,
         areaServed: US,
         knowsAbout: [...SITE.knowsAbout],
+        sameAs: Object.values(SITE.profiles),
+        member: Object.values(TEAM).map((member) => ({ "@id": personId(member) })),
       },
+      ...Object.values(TEAM).map(person),
       {
         "@type": "WebSite",
         "@id": WEBSITE_ID,
