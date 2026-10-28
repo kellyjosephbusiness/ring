@@ -9,5 +9,5 @@ export const metadata = pageMetadata({
 });
 
 export default function TermsPage() {
-  return <PolicyPage title="Terms of Service" path="/terms" updatedAt="2026-10-21" Body={TermsOfService} />;
+  return <PolicyPage title="Terms of Service" path="/terms" updatedAt="2026-10-28" Body={TermsOfService} />;
 }

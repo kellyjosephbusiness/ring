@@ -31,6 +31,18 @@ export function person(member: TeamMember): Schema {
   };
 }
 
+function postalAddress(): Schema {
+  const { street, city, region, postalCode, country } = SITE.contact.address;
+  return {
+    "@type": "PostalAddress",
+    streetAddress: street,
+    addressLocality: city,
+    addressRegion: region,
+    postalCode,
+    addressCountry: country,
+  };
+}
+
 /** Who we are, on every page. */
 export function siteGraph(): Schema {
   return {
@@ -48,6 +60,17 @@ export function siteGraph(): Schema {
         areaServed: US,
         knowsAbout: [...SITE.knowsAbout],
         sameAs: Object.values(SITE.profiles),
+        email: SITE.contact.email,
+        telephone: SITE.contact.phoneE164,
+        address: postalAddress(),
+        contactPoint: {
+          "@type": "ContactPoint",
+          contactType: "sales",
+          email: SITE.contact.email,
+          telephone: SITE.contact.phoneE164,
+          areaServed: "US",
+          availableLanguage: "en",
+        },
         member: Object.values(TEAM).map((member) => ({ "@id": personId(member) })),
       },
       ...Object.values(TEAM).map(person),

@@ -10,5 +10,5 @@ export const metadata = pageMetadata({
 });
 
 export default function PrivacyPage() {
-  return <PolicyPage title="Privacy Policy" path="/privacy" updatedAt="2026-10-24" Body={PrivacyPolicy} />;
+  return <PolicyPage title="Privacy Policy" path="/privacy" updatedAt="2026-10-28" Body={PrivacyPolicy} />;
 }

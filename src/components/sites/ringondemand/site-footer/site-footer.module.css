@@ -78,6 +78,45 @@
   text-wrap: balance;
 }
 
+/* Business name, address, email and phone, in the blurb's type. */
+.contact {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 14px;
+  font-style: normal;
+  line-height: 22px;
+  letter-spacing: -0.14px;
+  color: rgb(163, 163, 163);
+}
+
+.contactName {
+  color: rgb(213, 215, 218);
+}
+
+.contactLink {
+  width: fit-content;
+  color: rgb(213, 215, 218);
+  text-decoration: none;
+  transition: color 0.4s var(--link-ease);
+}
+
+.contactLink:first-of-type {
+  margin-top: 8px;
+}
+
+@media (hover: hover) {
+  .contactLink:hover {
+    color: #fff;
+  }
+}
+
+.contactLink:focus-visible {
+  outline: 2px solid #76a9fa;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
 .links {
   display: flex;
   flex: 2 0 0px;

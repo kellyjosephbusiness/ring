@@ -101,6 +101,11 @@
   color: #31353f;
 }
 
+.prose address {
+  margin: 0 0 20px;
+  font-style: normal;
+}
+
 .prose hr {
   margin: 40px 0;
   border: 0;
