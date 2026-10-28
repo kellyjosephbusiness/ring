@@ -16,6 +16,21 @@ export const SITE = {
   logo: "/sites/ringondemand/brand/logo-mark-512.png",
   /** The company's official profiles, published as the Organization's sameAs. */
   profiles: { linkedin: "https://www.linkedin.com/company/117245086/" },
+  /** Business contact details, as entered in the company's business listings:
+   * they must match those listings word for word (name above as legalName). */
+  contact: {
+    email: "info@ringondemand.com",
+    phone: "203-455-7147",
+    /** E.164, for tel: links and structured data. */
+    phoneE164: "+12034557147",
+    address: {
+      street: "616 E Glenoaks Blvd Suite 204",
+      city: "Glendale",
+      region: "CA",
+      postalCode: "91207",
+      country: "US",
+    },
+  },
   knowsAbout: [
     "Pay-per-call",
     "Live transfers",
@@ -35,6 +50,12 @@ export const SITE = {
     "Pay-per-call publisher networks",
   ],
 } as const;
+
+/** "Glendale, CA 91207". */
+export const CITY_LINE = `${SITE.contact.address.city}, ${SITE.contact.address.region} ${SITE.contact.address.postalCode}`;
+
+/** The full address on one line. */
+export const ADDRESS_LINE = `${SITE.contact.address.street}, ${CITY_LINE}`;
 
 /** Absolute URL on the production domain for a site path. */
 export function absoluteUrl(path = "/"): string {

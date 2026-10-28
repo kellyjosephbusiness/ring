@@ -156,13 +156,15 @@ which every page ends with. That section holds the iClosed inline widget
   (`src/content/legal/`) are drafts written from what the site does: the
   iClosed booking calendar, Vercel hosting, no analytics, and callers'
   intake answers going to the buyer they are transferred to. Have your
-  attorney review both before relying on them. Still to add when you have
-  them:
-  - a contact email (Contact page and Privacy Policy), so privacy requests
-    have a direct channel;
-  - the state whose law governs the Terms (usually the state of
-    incorporation);
-  - a phone number or mailing address, if you want them on the Contact page.
+  attorney review both before relying on them. Still to add: the state whose
+  law governs the Terms (usually the state of incorporation).
+- **Business contact details** (`SITE.contact` in `seo/site.ts`): Ring On
+  Demand Inc., 616 E Glenoaks Blvd Suite 204, Glendale, CA 91207,
+  info@ringondemand.com, 203-455-7147. They match the company's business
+  listings word for word, so change them in the listings and here together.
+  They show in the footer, on Contact, in the Privacy Policy and Terms (typed
+  into the MDX, so update those too), in the Organization structured data and
+  in `llms.txt`.
 - **SEO and blog draft copy:** the new FAQs, meta titles and blog posts are
   drafts for review; see "SEO, FAQs and blog" in
   [`pages-copy-draft.md`](./pages-copy-draft.md).

@@ -15,7 +15,7 @@ import { INSURANCE_LINES, STEP_DELIVER, STEP_SCREEN, insuranceLineHref } from ".
 import { PRACTICE_AREAS, practiceAreaHref } from "../legal/practice-areas";
 import { ROUTES } from "../links";
 import { GENERAL_STATS } from "../results/results";
-import { SITE, TEAM, absoluteUrl } from "./site";
+import { ADDRESS_LINE, SITE, TEAM, absoluteUrl } from "./site";
 
 const KEY_FACTS = [
   "Offers: live transfers and pre-signed cases (signed retainers) for law firms; live transfers for pre-settlement funding companies; inbound calls and live transfers for insurance agencies.",
@@ -29,6 +29,7 @@ const KEY_FACTS = [
   "Coverage: any U.S. state. In California, legal ads run under the firm's name and the firm approves every creative.",
   "Compliance: every caller agrees to be connected before a transfer; every intake call is recorded and buyers can get the recording; third-party consent certificates are captured; numbers are scrubbed against the National Do Not Call Registry before calls or texts; publishers are vetted and their ads approved, with robocalls, incentivized and misleading traffic banned; Medicare calls follow CMS third-party marketing rules, with recordings kept 10 years; caller data is encrypted with access limited to staff who need it.",
   "Call publishers can join the vetted publisher network; payouts are agreed per vertical before the first call.",
+  `Contact: ${SITE.legalName}, ${ADDRESS_LINE}. Email ${SITE.contact.email}. Phone ${SITE.contact.phone}.`,
   `Team: ${Object.values(TEAM)
     .map((member) => `${member.name}, ${member.role} (${member.linkedin})`)
     .join("; ")}. Company LinkedIn: ${SITE.profiles.linkedin}.`,

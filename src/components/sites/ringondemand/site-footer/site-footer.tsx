@@ -4,7 +4,7 @@ import { INSURANCE_LINES, insuranceLineHref } from "../insurance/insurance-lines
 import { PRACTICE_AREAS, practiceAreaHref } from "../legal/practice-areas";
 import { Logo } from "../shared/logo";
 import { ROUTES } from "../links";
-import { SITE } from "../seo/site";
+import { CITY_LINE, SITE } from "../seo/site";
 import styles from "./site-footer.module.css";
 
 interface FooterLink {
@@ -57,6 +57,17 @@ export function SiteFooter() {
               <Logo variant="light" className={styles.logo} />
               <p className={styles.blurb}>Screened inbound calls and live transfers.</p>
             </div>
+            <address className={styles.contact}>
+              <span className={styles.contactName}>{SITE.legalName}</span>
+              <span>{SITE.contact.address.street}</span>
+              <span>{CITY_LINE}</span>
+              <a className={styles.contactLink} href={`mailto:${SITE.contact.email}`}>
+                {SITE.contact.email}
+              </a>
+              <a className={styles.contactLink} href={`tel:${SITE.contact.phoneE164}`}>
+                {SITE.contact.phone}
+              </a>
+            </address>
           </div>
           <nav className={styles.links} aria-label="Footer">
             {COLUMNS.map((column) => (

@@ -615,7 +615,10 @@ intro call), with no new numbers.
   - Call publishers: Agree on verticals, states and payouts, then start sending
     calls. (Publisher Intro Call)
 - The team block (below), then the closing section (Partner Discovery Call).
-- No email, phone or address yet: add them when you have the ones to publish.
+- **Reach us directly** (eyebrow: Ring On Demand Inc.): Email
+  (info@ringondemand.com), Phone (203-455-7147), Office (616 E Glenoaks Blvd
+  Suite 204, Glendale, CA 91207, opening Google Maps).
+- The footer shows the same name, address, email and phone on every page.
 
 ### Team (Contact and About)
 
