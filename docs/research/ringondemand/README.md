@@ -3,7 +3,14 @@
 The homepage (`/`) uses the iclosed.io clone's design (see
 `docs/research/iclosed/`) with general copy covering legal and insurance. The
 legal copy doc ([`website-copy.md`](./website-copy.md)) lives on `/legal/mva`,
-which also carries its pricing and FAQ.
+which also carries its FAQ.
+
+**No prices on the site (since November 4, 2026).** At RingOnDemand's request,
+the copy doc's $550 / $2,500 prices and the MVA Pricing section were removed.
+Every page, FAQ and post says how buyers pay (per transfer, per signed case or
+per call) and "Book a call for … pricing". The MVA guarantees (guaranteed cost
+per signed case, 28-day replacement) stay. Do not add prices back to pages,
+posts, structured data or `llms.txt` without asking.
 
 The interior pages reuse the layouts of iclosed.io's `/product/analytics` and
 `/results` pages (see `docs/research/iclosed/LAYOUTS_analytics_results.md`).
@@ -61,7 +68,7 @@ it cannot drift from what visitors see.
   the image renderer cannot read WOFF2.
 - **Structured data (JSON-LD):** Organization (with its LinkedIn page as
   `sameAs`), the team as Person entries, and WebSite on every page (root
-  layout); Service with offers (and MVA prices) on each practice-area and
+  layout); Service with offers (no prices) on each practice-area and
   insurance-line page; FAQPage wherever an FAQ shows; BreadcrumbList on
   interior pages; Blog and BlogPosting on the blog, each post credited to its
   author.
@@ -82,13 +89,14 @@ it cannot drift from what visitors see.
    answer to the title's question, use question-style `##` headings, and link
    to the service pages it supports (`/legal/mva`, `/partners`, …).
 2. Add an entry to `POSTS` in `src/content/blog/posts.ts`: title,
-   description, topic (`mva`, `legal`, `insurance` or `publishers`), dates,
+   description, topic (`mva`, `workers-comp`, `legal`, `insurance`,
+   `publishers` or `compliance`), dates,
    reading time, author (from `TEAM`; the posts so far are Sam Hosey's), 3 to
    5 key takeaways, 3 or 4 FAQ questions and the related service pages.
 
 The post then appears on `/blog`, the homepage (if it is among the 3 newest),
 the related reading on its topic's pages, the sitemap, `llms.txt` and its own
-share image. Only state facts already on the site: no new prices, stats,
+share image. Only state facts already on the site: no prices, no new stats,
 guarantees or client names.
 
 ### After launch
@@ -170,9 +178,8 @@ which every page ends with. That section holds the iClosed inline widget
   [`pages-copy-draft.md`](./pages-copy-draft.md).
 - **Notes in the copy doc still apply:**
   - No client quotes until one is approved in writing.
-  - Cut the pilot line under Pricing if the pilot isn't running.
-  - Prices stay flat ($550 / $2,500) unless volume tiers move to a pricing
-    page.
+  - The copy doc's prices and pilot line are no longer on the site (see the
+    note at the top).
 
 Illustrations (hero transfer card, setup card, transfer record, call-source
 diagram, intake-script card, call agenda) restate facts from the copy only: no

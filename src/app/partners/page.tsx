@@ -129,7 +129,7 @@ export default function PartnersPage() {
         }
       />
       <Faq heading="Questions publishers ask us" items={PUBLISHER_FAQ} />
-      <RelatedPosts posts={postsOn(["publishers"])} />
+      <RelatedPosts posts={postsOn(["publishers"]).slice(0, 3)} />
       <FinalCta {...PUBLISHER_CTA} />
     </PageShell>
   );

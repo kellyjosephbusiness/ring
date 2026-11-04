@@ -84,7 +84,7 @@ export default function LegalPage() {
       />
       <CallSources />
       <AttorneyCall />
-      <RelatedPosts posts={postsOn(["mva", "legal"]).slice(0, 3)} />
+      <RelatedPosts posts={postsOn(["legal", "mva", "workers-comp"]).slice(0, 3)} />
       <FinalCta />
     </PageShell>
   );

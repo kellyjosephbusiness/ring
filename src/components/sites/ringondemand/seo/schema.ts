@@ -128,8 +128,6 @@ export function faqPage(items: readonly QuestionAnswer[]): Schema {
 export interface ServiceOffer {
   name: string;
   description: string;
-  /** Only where the page shows a price (MVA). */
-  price?: { amount: string; unit: string };
 }
 
 interface ServiceInput {
@@ -162,16 +160,6 @@ export function service({ path, name, serviceType, description, audience, offers
         "@type": "Offer",
         name: offer.name,
         description: offer.description,
-        ...(offer.price
-          ? {
-              priceSpecification: {
-                "@type": "UnitPriceSpecification",
-                price: Number(offer.price.amount.replace(/[^0-9.]/g, "")),
-                priceCurrency: "USD",
-                unitText: offer.price.unit,
-              },
-            }
-          : {}),
       })),
     },
   };

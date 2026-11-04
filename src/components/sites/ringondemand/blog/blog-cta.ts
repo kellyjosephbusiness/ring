@@ -1,8 +1,9 @@
+import { GENERAL_CTA } from "../final-cta/general-cta";
 import { PUBLISHER_CTA } from "../final-cta/publisher-cta";
 import { INSURANCE_CTA } from "../insurance/insurance-cta";
 import { BOOKING_EVENTS, type BookingEvent } from "../links";
 
-export type BlogAudience = "firms" | "agencies" | "publishers";
+export type BlogAudience = "firms" | "agencies" | "publishers" | "buyers";
 
 interface BlogCta {
   /** The card beside the post. */
@@ -12,7 +13,8 @@ interface BlogCta {
 }
 
 /** Who a post's readers talk to: law firms book the attorney discovery call,
- * agencies the partner call, publishers the publisher intro call. */
+ * agencies and buyers in general the partner call, publishers the publisher
+ * intro call. */
 export const BLOG_CTA: Record<BlogAudience, BlogCta> = {
   firms: {
     aside: {
@@ -38,6 +40,15 @@ export const BLOG_CTA: Record<BlogAudience, BlogCta> = {
       label: "Book a call",
     },
     final: INSURANCE_CTA,
+  },
+  buyers: {
+    aside: {
+      eyebrow: "Book a call",
+      title: "Calls that hold up to compliance review",
+      body: "We show you the ads, the intake questions and how consent is captured, and you decide.",
+      label: "Book a call",
+    },
+    final: GENERAL_CTA,
   },
   publishers: {
     aside: {

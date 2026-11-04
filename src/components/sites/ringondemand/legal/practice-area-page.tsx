@@ -18,7 +18,6 @@ import { PageShell } from "../page-shell/page-shell";
 import { JsonLd } from "../seo/json-ld";
 import { breadcrumbList, service } from "../seo/schema";
 import { PROOF } from "../shared/proof-list";
-import { Pricing } from "../pricing/pricing";
 import { Results } from "../results/results";
 import { AttorneyCall } from "./attorney-call";
 import { practiceAreaHref, type PracticeArea } from "./practice-areas";
@@ -41,7 +40,6 @@ function offerCards(area: PracticeArea): CtaCard[] {
     id: offer.id,
     eyebrow: offerAudience(area, offer),
     title: offer.title,
-    price: offer.price,
     body: <p>{offer.body}</p>,
     cta: { label: "Book a call", href: BOOK_CALL_URL },
     tone: index === area.offers.length - 1 ? "blue" : "plain",
@@ -54,17 +52,18 @@ function audience(area: PracticeArea): string {
   return area.slug === "mva" ? "Personal injury law firms" : `Law firms that take ${area.shortName} cases`;
 }
 
-/** The blog posts for this area: MVA's own, or the legal posts first. */
+/** The blog posts for this area: its own topic first (MVA, workers' comp),
+ * then the general legal posts. */
 function areaPosts(area: PracticeArea) {
-  return (area.slug === "mva" ? postsOn(["mva"]) : [...postsOn(["legal"]), ...postsOn(["mva"])]).slice(0, 3);
+  const own = area.slug === "mva" ? postsOn(["mva"]) : area.slug === "workers-comp" ? postsOn(["workers-comp"]) : [];
+  return [...own, ...postsOn(["legal"])].slice(0, 3);
 }
 
 /** One legal practice area, laid out on iClosed's analytics page: hero,
  * three steps, the screening checklist, call sources, the offers, the
  * attorney call, the FAQ, related posts and the booking band. MVA, the copy
- * doc's page, also carries its results and pricing. */
+ * doc's page, also carries its results. */
 export function PracticeAreaPage({ area }: { area: PracticeArea }) {
-  const priced = area.offers.some((offer) => offer.price);
   const isMva = area.slug === "mva";
   const path = practiceAreaHref(area);
 
@@ -77,7 +76,7 @@ export function PracticeAreaPage({ area }: { area: PracticeArea }) {
           serviceType: "Pay-per-call live transfers",
           description: area.hero.sub,
           audience: audience(area),
-          offers: area.offers.map((offer) => ({ name: offer.title, description: offer.body, price: offer.price })),
+          offers: area.offers.map((offer) => ({ name: offer.title, description: offer.body })),
         })}
       />
       <JsonLd
@@ -115,16 +114,11 @@ export function PracticeAreaPage({ area }: { area: PracticeArea }) {
             area.offers.length > 1
               ? { lead: "2 ways to get", accent: "cases from us" }
               : { lead: "Live transfers", accent: "to your team" },
-          sub: priced ? undefined : `Book a call for ${area.name.toLowerCase()} pricing.`,
+          sub: `Book a call for ${area.name.toLowerCase()} pricing.`,
         }}
         cards={offerCards(area)}
       />
-      {isMva ? (
-        <>
-          <Results />
-          <Pricing />
-        </>
-      ) : null}
+      {isMva ? <Results /> : null}
       <AttorneyCall />
       <Faq
         heading={area.buyer === "funders" ? "Questions funding companies ask us" : "Questions firms ask us"}

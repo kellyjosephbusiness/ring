@@ -1,4 +1,4 @@
-import { Car, Radio, Scale, ShieldCheck, type LucideIcon } from "lucide-react";
+import { Car, FileCheck2, HardHat, Radio, Scale, ShieldCheck, type LucideIcon } from "lucide-react";
 
 import { BLOG_TOPICS, formatPostDate, postHref, type BlogPost, type BlogTopic } from "@/content/blog/posts";
 
@@ -6,9 +6,11 @@ import type { LinkGridItem } from "../page-kit/link-grid";
 
 const TOPIC_ICONS: Record<BlogTopic, LucideIcon> = {
   mva: Car,
+  "workers-comp": HardHat,
   legal: Scale,
   insurance: ShieldCheck,
   publishers: Radio,
+  compliance: FileCheck2,
 };
 
 /** "Oct 21, 2026 · 5 min read". */

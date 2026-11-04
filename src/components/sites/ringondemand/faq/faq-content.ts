@@ -6,8 +6,8 @@
  * The firm questions are the legal copy doc's
  * (docs/research/ringondemand/website-copy.md). Everything else restates
  * facts already on the site and is DRAFT COPY for review — see
- * docs/research/ringondemand/pages-copy-draft.md. No new prices, stats or
- * guarantees: only MVA states prices.
+ * docs/research/ringondemand/pages-copy-draft.md. No prices, and no new stats
+ * or guarantees.
  */
 import type { InsuranceLine } from "../insurance/insurance-lines";
 import type { PracticeArea } from "../legal/practice-areas";
@@ -183,7 +183,7 @@ export const HOME_FAQ: readonly FaqItem[] = [
   {
     question: "How much do calls cost?",
     answer:
-      "It depends on the vertical and the offer. Motor vehicle accident prices are on our MVA page. For every other practice area and line of insurance, book a call for pricing.",
+      "It depends on the vertical and the offer: law firms pay per transfer or per signed case, funding companies per transfer, and insurance agencies per call. Book a call for pricing in your practice area or line of insurance.",
   },
   {
     question: "Can I sell my calls to RingOnDemand?",

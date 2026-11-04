@@ -24,7 +24,7 @@ import styles from "./page.module.css";
 export const metadata = pageMetadata({ ...HOME_META, path: "/" });
 
 /** Homepage: what RingOnDemand does across legal and insurance, the buyer
- * FAQ and the latest posts. The legal copy doc's MVA page, pricing and FAQ
+ * FAQ and the latest posts. The legal copy doc's MVA page and FAQ
  * live on /legal/mva. */
 export default function Home() {
   return (

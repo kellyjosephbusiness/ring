@@ -30,6 +30,14 @@ const INBOUND_CALLS =
 const LIVE_TRANSFERS =
   "Our intake team screens every caller against your criteria and transfers them to your agents while they are still on the line.";
 
+/** Insurance posts, this line's own first ("final-expense-…" on Final
+ * Expense). */
+function linePosts(line: InsuranceLine) {
+  const posts = postsOn(["insurance"]);
+  const own = posts.filter((post) => post.slug.includes(line.slug));
+  return [...own, ...posts.filter((post) => !own.includes(post))].slice(0, 3);
+}
+
 /** One insurance line, on the same page kit as the legal practice areas:
  * hero, three steps, the screening checklist, call sources, the two offers
  * (inbound calls and live transfers), the FAQ, related posts and the booking
@@ -107,7 +115,7 @@ export function InsuranceLinePage({ line }: { line: InsuranceLine }) {
         ]}
       />
       <Faq heading="Questions agencies ask us" items={insuranceLineFaq(line)} />
-      <RelatedPosts posts={postsOn(["insurance"])} />
+      <RelatedPosts posts={linePosts(line)} />
       <FinalCta {...INSURANCE_CTA} />
     </PageShell>
   );
