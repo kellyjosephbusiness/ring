@@ -12,7 +12,7 @@ import { PageShell } from "@/components/sites/ringondemand/page-shell/page-shell
 import { JsonLd } from "@/components/sites/ringondemand/seo/json-ld";
 import { pageMetadata } from "@/components/sites/ringondemand/seo/page-metadata";
 import { breadcrumbList } from "@/components/sites/ringondemand/seo/schema";
-import { POSTS, postHref } from "@/content/blog/posts";
+import { FEATURED_SLUG, POSTS, getPost, postHref } from "@/content/blog/posts";
 
 import styles from "./page.module.css";
 
@@ -23,10 +23,11 @@ export const metadata = pageMetadata({
   path: "/blog",
 });
 
-/** The blog index: the lead MVA guide, then every other post. */
+/** The blog index: the featured MVA guide, then every other post, newest
+ * first. */
 export default function BlogPage() {
   const mva = getPracticeArea("mva");
-  const featured = POSTS.find((post) => post.topic === "mva") ?? POSTS[0];
+  const featured = getPost(FEATURED_SLUG) ?? POSTS[0];
   const rest = POSTS.filter((post) => post !== featured);
 
   return (

@@ -79,7 +79,7 @@ export default function InsurancePage() {
         cta={{ label: "Book a call", href: BOOK_CALL_URL }}
       />
       <CallSources />
-      <RelatedPosts posts={postsOn(["insurance"])} />
+      <RelatedPosts posts={postsOn(["insurance"]).slice(0, 3)} />
       <FinalCta {...INSURANCE_CTA} />
     </PageShell>
   );

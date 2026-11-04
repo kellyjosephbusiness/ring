@@ -3,7 +3,8 @@
  *
  * DRAFT COPY: everything here except the MVA facts (which come from
  * docs/research/ringondemand/website-copy.md) was drafted for review — see
- * docs/research/ringondemand/pages-copy-draft.md. Only MVA shows prices.
+ * docs/research/ringondemand/pages-copy-draft.md. The site shows no prices:
+ * every area says "Book a call for … pricing".
  */
 import { Car, HandCoins, HardHat, Stethoscope, Wrench, type LucideIcon } from "lucide-react";
 
@@ -18,8 +19,6 @@ export interface Offer {
   /** Anchor id on the page (lets the homepage-style links land on a card). */
   id: string;
   title: string;
-  /** Shown only where the copy doc sets a price (MVA). */
-  price?: { amount: string; unit: string };
   body: string;
 }
 
@@ -87,7 +86,7 @@ export const PRACTICE_AREAS: readonly PracticeArea[] = [
     meta: {
       title: "MVA Live Transfers and Signed Car Accident Cases | RingOnDemand",
       description:
-        "Motor vehicle accident live transfers at $550 and pre-signed MVA cases at $2,500 for personal injury firms. Screened to your case criteria. Transfers start within 24 hours.",
+        "Motor vehicle accident live transfers and pre-signed MVA cases for personal injury firms, screened to your case criteria. Guaranteed cost per signed case. Transfers start within 24 hours.",
     },
     hero: {
       eyebrow: "Legal : Motor vehicle accidents",
@@ -113,12 +112,10 @@ export const PRACTICE_AREAS: readonly PracticeArea[] = [
     offers: [
       {
         ...LIVE_TRANSFERS,
-        price: { amount: "$550", unit: "per transfer" },
         body: "Our intake team screens every caller against your criteria and transfers them to your phone while they are still on the line. You get a guaranteed cost per signed case. If you do not hit it, we keep sending transfers free until you do.",
       },
       {
         ...PRE_SIGNED,
-        price: { amount: "$2,500", unit: "per signed case" },
         body: "We run the ads, do the full intake, and sign the claimant to your retainer. You pay for signed retainers only. If a case falls out inside 28 days, we replace it.",
       },
     ],
@@ -131,7 +128,7 @@ export const PRACTICE_AREAS: readonly PracticeArea[] = [
       {
         question: "How much do MVA live transfers and signed MVA cases cost?",
         answer:
-          "Live transfers are $550 per transfer, with a guaranteed cost per signed case: if you do not hit it, we keep sending transfers free until you do. Pre-signed cases are $2,500 per signed case, and if a case falls out inside 28 days, we replace it.",
+          "You pay per transfer or per signed case. Live transfers come with a guaranteed cost per signed case: if you do not hit it, we keep sending transfers free until you do. Pre-signed cases come with a 28-day replacement on any case that falls out. Book a call for MVA pricing.",
       },
       {
         question: "How many MVA live transfers sign?",

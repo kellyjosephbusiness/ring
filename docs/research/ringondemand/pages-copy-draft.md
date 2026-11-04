@@ -1,5 +1,11 @@
 # Site pages: draft copy for review
 
+> **Prices removed, November 4, 2026.** RingOnDemand asked for every price to
+> come off the site. The $550 / $2,500 figures below describe the copy as it
+> was; today every page, FAQ and post says how buyers pay and "Book a call for
+> … pricing", and the MVA guarantees stay. See "Prices removed and new posts"
+> at the end.
+
 **Status: DRAFT.** The legal copy doc ([`website-copy.md`](./website-copy.md))
 now lives on the MVA page (`/legal/mva`), which also carries its pricing and
 FAQ. The homepage, the insurance pages and the other pages below reuse those
@@ -9,7 +15,7 @@ and needs a yes, an edit or a cut before launch.
 House rules followed:
 - No new prices, quotes or guarantees, and no stats beyond the copy doc's and
   the proof figures RingOnDemand supplied (below).
-- Only MVA shows prices ($550 / $2,500) and the MVA guarantees (guaranteed
+- (Until November 4, 2026) only MVA showed prices ($550 / $2,500); the MVA guarantees (guaranteed
   cost per signed case, 28-day replacement).
 - The other practice areas and every insurance line say "Book a call for …
   pricing".
@@ -114,7 +120,8 @@ hero button.
 - **Header:** Legal ▾ (the 5 practice areas + All practice areas) · Insurance ▾
   (the 4 lines + All insurance lines) · Results · Partners · About · **Book a
   call**.
-  - Pricing left the header: the only prices are MVA's, on `/legal/mva#pricing`.
+  - Pricing left the header, and since November 4, 2026 the site shows no
+    prices at all.
   - On phones, Legal and Insurance are rows in the menu that fold open to show
     their pages (one at a time); on a legal or insurance page, that section
     starts open.
@@ -689,3 +696,58 @@ certificates are captured, buyers can get the recording on request, outbound
 calls and texts are scrubbed against the Do Not Call Registry and can be
 stopped at any time, caller data is encrypted with limited access, and
 Medicare recordings are kept 10 years. Its date is October 24, 2026.
+
+## Prices removed and new posts (November 4, 2026)
+
+### Prices removed
+
+- `/legal/mva`: the offer cards lose $550 / $2,500, the Pricing section is
+  gone, the offers heading says "Book a call for motor vehicle accidents
+  pricing", and the search description reads "Motor vehicle accident live
+  transfers and pre-signed MVA cases for personal injury firms, screened to
+  your case criteria. Guaranteed cost per signed case. Transfers start within
+  24 hours."
+- MVA FAQ, "How much do MVA live transfers and signed MVA cases cost?": "You
+  pay per transfer or per signed case. Live transfers come with a guaranteed
+  cost per signed case: if you do not hit it, we keep sending transfers free
+  until you do. Pre-signed cases come with a 28-day replacement on any case
+  that falls out. Book a call for MVA pricing."
+- Homepage FAQ, "How much do calls cost?": "It depends on the vertical and the
+  offer: law firms pay per transfer or per signed case, funding companies per
+  transfer, and insurance agencies per call. Book a call for pricing in your
+  practice area or line of insurance."
+- Four posts (what an MVA live transfer is; live transfers vs. pre-signed
+  cases; starting in 24 hours; pay-per-call vs. web form leads) say "priced
+  per transfer" / "priced per signed case" instead, updated November 4.
+- No prices in the Service structured data or `llms.txt`.
+- Privacy Policy: "Recordings of Medicare calls are kept for 10 years" (it no
+  longer adds "as CMS rules require": CMS has been reported to cut the
+  required retention, so the policy states RingOnDemand's practice only).
+
+### New posts
+
+Thirteen posts by Sam Hosey, each aimed at a search people type or ask AI
+tools. All restate facts already on the site; none states a price.
+
+| Post | Topic | Aimed at |
+|---|---|---|
+| MVA Leads: What They Are and How Law Firms Buy Them | MVA | "MVA leads", "car accident leads" |
+| How to Get More Car Accident Cases: 7 Channels for PI Firms | MVA | "how to get more car accident cases" |
+| Workers' Comp Leads for Attorneys: Live Transfers and Signed Cases | Workers' Comp | "workers comp leads for attorneys" |
+| Workers' Comp Intake Questions: How to Screen Injured Workers | Workers' Comp | "workers comp intake questions" |
+| Legal Lead Generation: How Law Firms Buy Cases, Calls and Leads | Legal | "legal lead generation" |
+| How to Choose a Personal Injury Lead Generation Company: 12 Questions | Legal | "personal injury lead generation company" |
+| Pre-Settlement Funding Leads: How Funding Companies Buy Live Transfers | Legal | "pre-settlement funding leads" |
+| Insurance Lead Generation: Leads, Inbound Calls or Live Transfers? | Insurance | "insurance lead generation" |
+| Final Expense Live Transfers: How They Work and What to Ask | Insurance | "final expense live transfers" |
+| Medicare Live Transfers: How They Work Under CMS Rules | Insurance | "Medicare live transfers", "TPMO" |
+| How to Sell MVA Calls: A Guide for Pay-Per-Call Publishers | Publishers | "sell MVA calls" |
+| Legal and Insurance Pay-Per-Call Offers: How Publishers Pick a Buyer | Publishers | "pay-per-call offers" |
+| TCPA-Compliant Live Transfers: What Buyers Should Ask Their Vendor | Compliance | "TCPA compliant live transfers" |
+
+Beyond the site's facts they add only general explanation: what each product
+is, why each screening question matters, the TCPA in one paragraph (with a
+"not legal advice" note), the TPMO disclaimer, and the Medicare Annual
+Enrollment Period (October 15 to December 7). Two new blog topics: Workers'
+Comp and Compliance. The blog index still leads with "What Is an MVA Live
+Transfer?"; service pages show their own topic's posts first.

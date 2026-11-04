@@ -21,7 +21,7 @@ const KEY_FACTS = [
   "Offers: live transfers and pre-signed cases (signed retainers) for law firms; live transfers for pre-settlement funding companies; inbound calls and live transfers for insurance agencies.",
   "Legal verticals: motor vehicle accidents (MVA), workers' compensation, lemon law, medical malpractice, pre-settlement funding.",
   "Insurance verticals: final expense, auto, home, Medicare.",
-  "MVA pricing: $550 per live transfer with a guaranteed cost per signed case; $2,500 per pre-signed case with a 28-day replacement on any case that falls out. Other verticals: book a call for pricing.",
+  "Pricing: law firms pay per transfer or per signed case, funding companies per transfer, insurance agencies per call; pricing is given on a call. MVA live transfers carry a guaranteed cost per signed case; pre-signed MVA cases carry a 28-day replacement on any case that falls out.",
   "Firms sign 25 to 35% of MVA live transfers, higher in California.",
   ...GENERAL_STATS.map((stat) => `${stat.figure} ${stat.label.toLowerCase()}.`),
   "Calls come from RingOnDemand's own ads plus a vetted publisher network; every caller goes through the same intake script built from the buyer's criteria.",
@@ -137,7 +137,7 @@ export async function llmsFull(): Promise<string> {
       "Offers:",
       "",
       ...area.offers.map(
-        (offer) => `- ${offer.title}${offer.price ? ` (${offer.price.amount} ${offer.price.unit})` : ""}: ${offer.body}`,
+        (offer) => `- ${offer.title}: ${offer.body}`,
       ),
       "",
       ...faqSection(practiceAreaFaq(area)),

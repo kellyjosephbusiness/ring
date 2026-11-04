@@ -1,5 +1,6 @@
 import { Ban, BadgeCheck, HeartPulse, Lock, Megaphone, PhoneOff, Scale, ShieldCheck } from "lucide-react";
 
+import { RelatedPosts } from "@/components/sites/ringondemand/blog/related-posts";
 import { Faq } from "@/components/sites/ringondemand/faq/faq";
 import { COMPLIANCE_FAQ } from "@/components/sites/ringondemand/faq/faq-content";
 import { FinalCta } from "@/components/sites/ringondemand/final-cta/final-cta";
@@ -14,6 +15,7 @@ import { PageShell } from "@/components/sites/ringondemand/page-shell/page-shell
 import { JsonLd } from "@/components/sites/ringondemand/seo/json-ld";
 import { pageMetadata } from "@/components/sites/ringondemand/seo/page-metadata";
 import { breadcrumbList } from "@/components/sites/ringondemand/seo/schema";
+import { postsOn } from "@/content/blog/posts";
 
 export const metadata = pageMetadata({
   title: "Compliance: Consent, Call Recording and Publisher Controls | RingOnDemand",
@@ -125,6 +127,7 @@ export default function CompliancePage() {
         cta={{ label: "Book a call", href: BOOK_CALL_URL }}
       />
       <Faq heading="Compliance questions buyers ask" items={COMPLIANCE_FAQ} />
+      <RelatedPosts posts={postsOn(["compliance", "publishers"]).slice(0, 3)} />
       <FinalCta {...GENERAL_CTA} />
     </PageShell>
   );
