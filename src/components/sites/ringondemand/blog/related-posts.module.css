@@ -62,6 +62,16 @@
   outline-offset: -2px;
 }
 
+.link .thumb {
+  flex: none;
+  width: 200px;
+  border-radius: 8px;
+}
+
+.link .thumb svg {
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
 .text {
   display: flex;
   flex: 1 1 auto;
@@ -151,6 +161,10 @@
     background: #f9fafb;
   }
 
+  .link:hover .thumb svg {
+    transform: scale(1.03);
+  }
+
   .link:hover .arrow {
     border-color: rgb(2, 54, 194);
     background: rgb(2, 54, 194);
@@ -171,6 +185,25 @@
     margin-top: 36px;
   }
 
+  .link {
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .link .thumb {
+    width: 112px;
+    border-radius: 6px;
+  }
+
+  .title {
+    font-size: 17px;
+    line-height: 25px;
+  }
+
+  .body {
+    display: none;
+  }
+
   .arrow {
     display: none;
   }
@@ -178,6 +211,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .link,
+  .link .thumb svg,
   .arrow,
   .allIcon {
     transition-duration: 0.001ms !important;

@@ -91,16 +91,17 @@ hero button.
      Call*.
    - Partners books the *Publisher Intro Call*.
 10. **Homepage (general).**
-    - The headline is "Inbound Calls for Enterprise Companies"
-      (`hero/hero.tsx`).
+    - The headline is now "Live Transfers for Legal and Insurance"
+      (`hero/hero.tsx`; it was "Inbound Calls for Enterprise Companies").
+      Revert it there if you prefer the old one.
     - Check the hero, industry cards, steps and "Who this is for" copy below.
 11. **MVA stats.** `/legal/mva` still shows the copy doc's 3 stats, including
     "1,500+ signed retainers delivered last quarter", under a hero that says
     "Over 2,000 signed retainers delivered". Keep both, or switch the MVA
     page to the general figures.
 12. **Search titles.** The homepage's browser and search title is now "Pay-Per-Call
-    Live Transfers for Legal and Insurance | RingOnDemand". The visible
-    headline is unchanged ("Inbound Calls for Enterprise Companies"). Other
+    Live Transfers for Legal and Insurance | RingOnDemand", and the visible
+    headline now matches it ("Live Transfers for Legal and Insurance"). Other
     pages' titles and descriptions now lead with the terms buyers search for;
     see "SEO, FAQs and blog" below.
 13. **New FAQs.** Every practice area, insurance line, the homepage and
@@ -144,10 +145,11 @@ hero button.
 Same sections and styling as before, with general copy. The MVA-only sections
 (the screening list, pricing and FAQ) moved to `/legal/mva`.
 
-- Eyebrow: Inbound calls and live transfers
-- Headline: Inbound Calls for / **Enterprise Companies**
+- Eyebrow: Pay-per-call for law firms and insurance agencies
+- Headline: Live Transfers for / **Legal and Insurance**
 - Sub: You set the criteria. We run the ads, screen every caller, and send the
-  ones who qualify to your team as inbound calls or live transfers.
+  ones who qualify to your team live, or sign them to your firm's retainer.
+  Calls usually start within 24 hours of a signed order.
 - Under the button: Tell us your criteria. We tell you what we can deliver.
 - Proof lines: Over 2,000 signed retainers delivered · Over 5,000 live
   transfers delivered
@@ -168,16 +170,21 @@ Same sections and styling as before, with general copy. The MVA-only sections
     licensed agents. Chips: the 4 lines. → See insurance
 - **How it works**
   1. You set the criteria: The case types or lines of insurance you want, the
-     questions every caller must pass, and the states you work in. We write
-     your criteria into the intake script.
-  2. We run the ads and screen every caller: copy doc
-  3. Your team gets the call: Inbound calls and live transfers go to your line
-     during the hours you set. Law firms can also take pre-signed cases, with
-     the completed intake and the signed retainer.
+     questions every caller must pass, the states you work in and your daily
+     cap. We write it all into the intake script.
+  2. We run the ads and screen every caller: Callers come from our own ads
+     and a vetted publisher network. Every one answers your qualifying
+     questions, and every intake call is recorded, before anything reaches
+     you.
+  3. Your team gets the call: Qualified callers reach your line live, only
+     during the hours you set, and a caller who fails a question is never
+     sent or billed. Law firms can also take pre-signed cases, with the
+     signed retainer.
 - Copy doc sections kept as they were:
   - Transfers can start within 24 hours
   - You see every transfer
-  - Where the calls come from
+  - Where the calls come from, whose body now adds that publisher ads are
+    approved before they run
 - **Who this is for**
   - Law firms (Legal): Live transfers to your intake team, or signed retainers
     if you want us to do the whole intake. Motor vehicle accidents, workers'
@@ -185,8 +192,9 @@ Same sections and styling as before, with general copy. The MVA-only sections
   - Insurance agencies (Insurance): Inbound calls and live transfers to your
     licensed agents, screened against your criteria. Final expense, auto, home
     and Medicare.
-  - Call publishers (Partners): Send us your calls. Every caller goes through
-    the same intake script as the callers from our own ads.
+  - Call publishers (Partners): Sell your legal and insurance calls in nine
+    verticals. Payouts are agreed before your first call, and you get paid for
+    every call that qualifies.
 - **Trusted by the largest insurance and legal organizations in the US**:
   2,000+ Signed retainers delivered · 5,000+ Live transfers delivered ·
   24 hours From signed order to first transfer (copy doc).
@@ -200,8 +208,8 @@ Same sections and styling as before, with general copy. The MVA-only sections
 - Eyebrow: Legal
 - Headline: Live Transfers and Signed Cases / **for Law Firms**
 - Sub: You give us your case criteria. We run the ads, screen every caller, and
-  send you a live transfer or a signed retainer. Pick your practice area to see
-  what we check.
+  send you a live transfer or a signed retainer, usually starting within 24
+  hours of a signed order. Pick your practice area to see what we check.
 - Under the button: The call is with a licensed attorney on our team, not a
   sales rep.
 - Proof lines: Over 2,000 signed retainers delivered · Over 1,000 live
@@ -345,7 +353,8 @@ Copy doc throughout.
 - Headline: Inbound Calls and Live Transfers / **for Insurance Agencies**
 - Sub: You give us your criteria. We run the ads, screen every caller, and send
   the ones who qualify to your licensed agents as inbound calls or live
-  transfers. Pick your line to see what we check.
+  transfers, usually starting within 24 hours of a signed order. Pick your
+  line to see what we check.
 - Proof lines: Over 5,000 live transfers delivered · Trusted by the largest
   insurance organizations in the US
 - **Pick your line of insurance** (eyebrow: Lines of insurance)
@@ -474,11 +483,11 @@ Built to get a publisher to the booking form fast: every button reads "Book an
 intro call" and scrolls to it. The "Where the calls come from" section is gone
 from this page.
 
-- Eyebrow: Partners : Call publishers
+- Eyebrow: Partners: call publishers
 - Headline: Join Our Vetted / **Publisher Network**
-- Sub: Send us your legal and insurance calls and get paid well for every one
-  that qualifies. Clear criteria, steady demand, and one short call to get
-  started.
+- Sub: Sell your legal and insurance calls in nine verticals. Payouts are
+  agreed per vertical before your first call, and you get paid for every call
+  that qualifies. One short call to get started.
 - Button: Book an intro call
 - Proof lines: Over 5,000 live transfers delivered · Your calls go to the
   largest insurance and legal organizations in the US
@@ -751,3 +760,60 @@ is, why each screening question matters, the TCPA in one paragraph (with a
 Enrollment Period (October 15 to December 7). Two new blog topics: Workers'
 Comp and Compliance. The blog index still leads with "What Is an MVA Live
 Transfer?"; service pages show their own topic's posts first.
+
+## Blog covers and copy pass (November 7, 2026)
+
+### Blog covers
+
+Every post now has a cover illustration, drawn in the site's own style (white
+cards on a pale panel, green ticks, the brand blue), so a reader sees what a
+post explains before clicking. Covers show on the blog index cards, the
+featured post, the homepage's blog section, related reading on every page,
+and under each post's byline. Each topic has its own panel colour: blue for
+MVA, indigo for legal, amber for workers' comp, teal for insurance, green for
+compliance and navy for publishers.
+
+The labels on the covers repeat facts already in the posts (the screening
+checks, what each product is, the publisher steps, the compliance controls);
+none adds a number, price or claim.
+
+| Post | Cover |
+|---|---|
+| What Is an MVA Live Transfer? | Accident caller → 5 screening checks → your intake line |
+| MVA Live Transfers vs. Pre-Signed Cases | The two offers side by side: how you pay, who signs, the guarantee |
+| How to Screen Motor Vehicle Accident Callers | A funnel of the 5 checks; callers who fail are not billed |
+| How to Start Receiving MVA Live Transfers Within 24 Hours | Intro call → signed order → first transfer, "usually within 24 hours" |
+| MVA Leads | Web form lead, live transfer and pre-signed case compared |
+| How to Get More Car Accident Cases | The 7 channels, live transfers highlighted |
+| Pay-Per-Call vs. Web Form Leads | Web form lead vs. pay-per-call |
+| Workers' Comp Leads for Attorneys | Injured worker → 4 checks → your intake line |
+| Workers' Comp Intake Questions | The 5 intake questions |
+| Legal Lead Generation | Web lead → inbound call → live transfer → signed case: less work for your intake team |
+| How to Choose a PI Lead Generation Company | The first 4 of the 12 questions |
+| Pre-Settlement Funding Leads | Plaintiff → 4 funding checks → your funding team |
+| Insurance Lead Generation | Internet lead → inbound call → live transfer: less time chasing |
+| Inbound Calls vs. Live Transfers for Insurance | The two side by side |
+| Final Expense Live Transfers | Policy shopper → 4 checks → licensed agent |
+| Medicare Live Transfers | A Medicare call record: TPMO disclaimer, eligibility, recording, kept 10 years |
+| TCPA-Compliant Live Transfers | A call record: consent to transfer, consent certificate, recording, DNC scrub |
+| How to Sell MVA Calls | The 5 publisher steps, paid for every call that qualifies |
+| How to Sell Legal and Insurance Calls | The nine verticals around your calls |
+| Legal and Insurance Pay-Per-Call Offers | The 6-point buyer checklist |
+
+### Copy changes
+
+- Homepage hero: eyebrow "Pay-per-call for law firms and insurance
+  agencies", headline "Live Transfers for **Legal and Insurance**" (was
+  "Inbound Calls for **Enterprise Companies**"), and the sub now mentions
+  signed retainers and the usual 24-hour start.
+- Homepage "How it works": each step now carries one more confirmed fact
+  (the daily cap; every intake call recorded; a caller who fails a question
+  is never sent or billed).
+- Homepage "Who this is for", call publishers: the nine verticals, payouts
+  agreed up front, paid for every call that qualifies.
+- Homepage "Where the calls come from": publisher ads approved before they
+  run.
+- `/legal` and `/insurance` subs: the usual 24-hour start.
+- `/partners`: eyebrow "Partners: call publishers" (was "Partners : Call
+  publishers"); the sub replaces "get paid well" with the nine verticals and
+  payouts agreed per vertical before the first call.

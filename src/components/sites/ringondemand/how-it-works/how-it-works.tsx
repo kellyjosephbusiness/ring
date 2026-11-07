@@ -10,17 +10,17 @@ const STEPS: readonly Step[] = [
   {
     num: "01",
     title: "You set the criteria",
-    body: "The case types or lines of insurance you want, the questions every caller must pass, and the states you work in. We write your criteria into the intake script.",
+    body: "The case types or lines of insurance you want, the questions every caller must pass, the states you work in and your daily cap. We write it all into the intake script.",
   },
   {
     num: "02",
     title: "We run the ads and screen every caller",
-    body: "Our own ads plus a vetted publisher network. Every caller answers your qualifying questions before anything reaches you.",
+    body: "Callers come from our own ads and a vetted publisher network. Every one answers your qualifying questions, and every intake call is recorded, before anything reaches you.",
   },
   {
     num: "03",
     title: "Your team gets the call",
-    body: "Inbound calls and live transfers go to your line during the hours you set. Law firms can also take pre-signed cases, with the completed intake and the signed retainer.",
+    body: "Qualified callers reach your line live, only during the hours you set, and a caller who fails a question is never sent or billed. Law firms can also take pre-signed cases, with the signed retainer.",
   },
 ];
 

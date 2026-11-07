@@ -12,6 +12,7 @@
 import type { MDXContent } from "mdx/types";
 
 import type { BlogAudience } from "@/components/sites/ringondemand/blog/blog-cta";
+import type { PostCoverSpec } from "@/components/sites/ringondemand/blog/cover/cover-spec";
 import type { FaqItem } from "@/components/sites/ringondemand/faq/faq-list";
 import { TEAM, type TeamMember } from "@/components/sites/ringondemand/seo/site";
 
@@ -71,6 +72,8 @@ export interface BlogPost {
   faq: readonly FaqItem[];
   /** Service pages the post supports, shown beside it. */
   related: readonly { label: string; href: string }[];
+  /** The illustration on the post's card and at the top of the post. */
+  cover: PostCoverSpec;
   Body: MDXContent;
 }
 
@@ -122,6 +125,17 @@ export const POSTS: readonly BlogPost[] = [
       },
     ],
     related: [MVA_PAGE, RESULTS_PAGE],
+    cover: {
+      label: "MVA leads",
+      scene: {
+        kind: "compare",
+        columns: [
+          { title: "Web form lead", icon: "form", lines: ["Contact details", "You call back"] },
+          { title: "Live transfer", icon: "phoneCall", lines: ["Screened caller", "On your line now"], highlight: true },
+          { title: "Pre-signed case", icon: "signature", lines: ["Retainer signed", "Intake done"] },
+        ],
+      },
+    },
     Body: MvaLeads,
   },
   {
@@ -159,6 +173,22 @@ export const POSTS: readonly BlogPost[] = [
       },
     ],
     related: [MVA_PAGE, LEGAL_PAGE],
+    cover: {
+      label: "More car accident cases",
+      scene: {
+        kind: "channels",
+        items: [
+          { label: "Referrals", icon: "users" },
+          { label: "SEO", icon: "search" },
+          { label: "Paid search", icon: "click" },
+          { label: "TV and radio", icon: "tv" },
+          { label: "Reviews", icon: "star" },
+          { label: "Lead vendors", icon: "building" },
+          { label: "Live transfers", icon: "phoneCall", highlight: true },
+        ],
+        caption: "Judge every channel on cost per signed case",
+      },
+    },
     Body: HowToGetCarAccidentCases,
   },
   {
@@ -195,6 +225,16 @@ export const POSTS: readonly BlogPost[] = [
       },
     ],
     related: [WORKERS_COMP_PAGE, LEGAL_PAGE],
+    cover: {
+      label: "Workers' comp live transfer",
+      scene: {
+        kind: "transfer",
+        caller: "Injured worker",
+        callerIcon: "hardHat",
+        checks: ["Hurt on the job", "An employee", "Injury reported", "Already treated"],
+        to: "Your intake line",
+      },
+    },
     Body: WorkersCompLeads,
   },
   {
@@ -230,6 +270,22 @@ export const POSTS: readonly BlogPost[] = [
       },
     ],
     related: [WORKERS_COMP_PAGE, LEGAL_PAGE],
+    cover: {
+      label: "Workers' comp intake",
+      scene: {
+        kind: "checklist",
+        title: "Intake questions",
+        badge: "5 checks",
+        numbered: true,
+        items: [
+          "Hurt on the job?",
+          "An employee, not a contractor?",
+          "Injury reported in your window?",
+          "Already treated?",
+          "Inside the filing deadline?",
+        ],
+      },
+    },
     Body: WorkersCompIntake,
   },
   {
@@ -266,6 +322,19 @@ export const POSTS: readonly BlogPost[] = [
       },
     ],
     related: [LEGAL_PAGE, MVA_PAGE],
+    cover: {
+      label: "Legal lead generation",
+      scene: {
+        kind: "ladder",
+        steps: [
+          { label: "Web lead", sub: "You screen", icon: "form" },
+          { label: "Inbound call", sub: "Ad targeting", icon: "phoneIncoming" },
+          { label: "Live transfer", sub: "We screen", icon: "phoneForwarded" },
+          { label: "Signed case", sub: "We sign", icon: "signature" },
+        ],
+        axis: "Less work for your intake team",
+      },
+    },
     Body: LegalLeadGeneration,
   },
   {
@@ -302,6 +371,22 @@ export const POSTS: readonly BlogPost[] = [
       },
     ],
     related: [LEGAL_PAGE, COMPLIANCE_PAGE],
+    cover: {
+      label: "Vet a PI lead vendor",
+      scene: {
+        kind: "checklist",
+        title: "Questions to ask",
+        badge: "12 questions",
+        numbered: true,
+        items: [
+          "What am I billed for?",
+          "Where do the leads come from?",
+          "Who writes the screening questions?",
+          "Can I hear the call recording?",
+        ],
+        more: "+ 8 more questions",
+      },
+    },
     Body: HowToChoosePiVendor,
   },
   {
@@ -338,6 +423,16 @@ export const POSTS: readonly BlogPost[] = [
       },
     ],
     related: [FUNDING_PAGE, LEGAL_PAGE],
+    cover: {
+      label: "Pre-settlement funding",
+      scene: {
+        kind: "transfer",
+        caller: "Plaintiff",
+        callerIcon: "user",
+        checks: ["Pending case", "Has an attorney", "Case type you fund", "State you fund"],
+        to: "Your funding team",
+      },
+    },
     Body: PreSettlementFundingLeads,
   },
   {
@@ -373,6 +468,18 @@ export const POSTS: readonly BlogPost[] = [
       },
     ],
     related: [INSURANCE_PAGE, COMPLIANCE_PAGE],
+    cover: {
+      label: "Insurance lead generation",
+      scene: {
+        kind: "ladder",
+        steps: [
+          { label: "Internet lead", sub: "Agent calls back", icon: "form" },
+          { label: "Inbound call", sub: "Rings your line", icon: "phoneIncoming" },
+          { label: "Live transfer", sub: "Screened first", icon: "phoneForwarded" },
+        ],
+        axis: "Less time chasing prospects",
+      },
+    },
     Body: InsuranceLeadGeneration,
   },
   {
@@ -408,6 +515,16 @@ export const POSTS: readonly BlogPost[] = [
       },
     ],
     related: [FINAL_EXPENSE_PAGE, INSURANCE_PAGE],
+    cover: {
+      label: "Final expense live transfer",
+      scene: {
+        kind: "transfer",
+        caller: "Policy shopper",
+        callerIcon: "heart",
+        checks: ["Age range", "Licensed state", "Coverage amount", "Pays premiums"],
+        to: "Licensed agent",
+      },
+    },
     Body: FinalExpenseTransfers,
   },
   {
@@ -444,6 +561,20 @@ export const POSTS: readonly BlogPost[] = [
       },
     ],
     related: [MEDICARE_PAGE, COMPLIANCE_PAGE],
+    cover: {
+      label: "Medicare live transfer",
+      scene: {
+        kind: "record",
+        title: "Medicare call",
+        badge: "CMS rules",
+        rows: [
+          { label: "TPMO disclaimer given", icon: "scroll", status: "check" },
+          { label: "Eligibility checked", icon: "userCheck", status: "check" },
+          { label: "Call recorded", icon: "mic", status: "wave" },
+          { label: "Kept for 10 years", icon: "archive", status: "check" },
+        ],
+      },
+    },
     Body: MedicareTransfers,
   },
   {
@@ -479,6 +610,20 @@ export const POSTS: readonly BlogPost[] = [
       },
     ],
     related: [PARTNERS_PAGE, MVA_PAGE],
+    cover: {
+      label: "Sell MVA calls",
+      scene: {
+        kind: "steps",
+        steps: [
+          { label: "Intro call", icon: "phone" },
+          { label: "Your traffic", icon: "radio" },
+          { label: "Agree payouts", icon: "dollar" },
+          { label: "Get vetted", icon: "badgeCheck" },
+          { label: "Send calls", icon: "phoneForwarded" },
+        ],
+        badge: { label: "Paid for every call that qualifies", icon: "banknote" },
+      },
+    },
     Body: HowToSellMvaCalls,
   },
   {
@@ -515,6 +660,22 @@ export const POSTS: readonly BlogPost[] = [
       },
     ],
     related: [PARTNERS_PAGE, COMPLIANCE_PAGE],
+    cover: {
+      label: "Pick a pay-per-call buyer",
+      scene: {
+        kind: "checklist",
+        title: "Buyer checklist",
+        badge: "6 checks",
+        items: [
+          "Verticals you can fill",
+          "Written qualification script",
+          "Payout agreed up front",
+          "Clear traffic rules",
+          "Consent, recording, DNC",
+          "Steady buyer demand",
+        ],
+      },
+    },
     Body: PayPerCallOffers,
   },
   {
@@ -551,6 +712,20 @@ export const POSTS: readonly BlogPost[] = [
       },
     ],
     related: [COMPLIANCE_PAGE, INSURANCE_PAGE, LEGAL_PAGE],
+    cover: {
+      label: "TCPA-compliant transfer",
+      scene: {
+        kind: "record",
+        title: "Call record",
+        badge: "TCPA",
+        rows: [
+          { label: "Consent to transfer", icon: "userCheck", status: "check" },
+          { label: "Consent certificate", icon: "badgeCheck", status: "check" },
+          { label: "Call recorded", icon: "mic", status: "wave" },
+          { label: "DNC scrubbed", icon: "listChecks", status: "check" },
+        ],
+      },
+    },
     Body: TcpaCompliantTransfers,
   },
   {
@@ -592,6 +767,16 @@ export const POSTS: readonly BlogPost[] = [
       },
     ],
     related: [MVA_PAGE, RESULTS_PAGE],
+    cover: {
+      label: "MVA live transfer",
+      scene: {
+        kind: "transfer",
+        caller: "Accident caller",
+        callerIcon: "car",
+        checks: ["Inside your window", "Not at fault", "Already treated", "Other driver insured", "Inside the SOL"],
+        to: "Your intake line",
+      },
+    },
     Body: WhatIsMvaTransfer,
   },
   {
@@ -628,6 +813,24 @@ export const POSTS: readonly BlogPost[] = [
       },
     ],
     related: [MVA_PAGE, LEGAL_PAGE],
+    cover: {
+      label: "Transfers vs. signed cases",
+      scene: {
+        kind: "compare",
+        columns: [
+          {
+            title: "Live transfer",
+            icon: "phoneForwarded",
+            lines: ["Paid per transfer", "Your team signs", "Guaranteed cost per case"],
+          },
+          {
+            title: "Pre-signed case",
+            icon: "signature",
+            lines: ["Paid per signed case", "We sign the retainer", "28-day replacement"],
+          },
+        ],
+      },
+    },
     Body: MvaTransfersVsPreSigned,
   },
   {
@@ -663,6 +866,15 @@ export const POSTS: readonly BlogPost[] = [
       },
     ],
     related: [MVA_PAGE, LEGAL_PAGE],
+    cover: {
+      label: "Screen MVA callers",
+      scene: {
+        kind: "funnel",
+        checks: ["Inside your window", "Not at fault", "Already treated", "Other driver insured", "Inside the SOL"],
+        result: "Transferred to your line",
+        rejected: "Not billed",
+      },
+    },
     Body: HowToScreenMvaCallers,
   },
   {
@@ -698,6 +910,18 @@ export const POSTS: readonly BlogPost[] = [
       },
     ],
     related: [MVA_PAGE, RESULTS_PAGE],
+    cover: {
+      label: "Start in 24 hours",
+      scene: {
+        kind: "steps",
+        steps: [
+          { label: "Intro call", icon: "phone", sub: "With a licensed attorney" },
+          { label: "Signed order", icon: "penLine", sub: "Number, hours, daily cap" },
+          { label: "First transfer", icon: "phoneForwarded", sub: "Posted with intake answers" },
+        ],
+        badge: { label: "Usually within 24 hours", icon: "clock" },
+      },
+    },
     Body: HowToStartMva,
   },
   {
@@ -734,6 +958,25 @@ export const POSTS: readonly BlogPost[] = [
       },
     ],
     related: [LEGAL_PAGE, MVA_PAGE],
+    cover: {
+      label: "Pay-per-call vs. web forms",
+      scene: {
+        kind: "compare",
+        columns: [
+          {
+            title: "Web form lead",
+            icon: "form",
+            lines: ["Contact details only", "Your team calls back", "Qualify from scratch"],
+          },
+          {
+            title: "Pay-per-call",
+            icon: "phoneCall",
+            lines: ["Caller on the phone", "Screened first", "Live to your intake"],
+            highlight: true,
+          },
+        ],
+      },
+    },
     Body: PayPerCallVsForms,
   },
   {
@@ -770,6 +1013,26 @@ export const POSTS: readonly BlogPost[] = [
       },
     ],
     related: [PARTNERS_PAGE, MVA_PAGE, INSURANCE_PAGE],
+    cover: {
+      label: "Nine verticals we buy",
+      scene: {
+        kind: "network",
+        center: "Your calls",
+        centerIcon: "phoneIncoming",
+        nodes: [
+          "MVA",
+          "Workers' comp",
+          "Lemon law",
+          "Malpractice",
+          "Pre-settlement",
+          "Final expense",
+          "Auto",
+          "Home",
+          "Medicare",
+        ],
+        split: 5,
+      },
+    },
     Body: HowToSellCalls,
   },
   {
@@ -804,6 +1067,24 @@ export const POSTS: readonly BlogPost[] = [
       },
     ],
     related: [INSURANCE_PAGE, { label: "Final expense calls", href: "/insurance/final-expense" }],
+    cover: {
+      label: "Inbound vs. live transfer",
+      scene: {
+        kind: "compare",
+        columns: [
+          {
+            title: "Inbound call",
+            icon: "phoneIncoming",
+            lines: ["Rings your agents", "Matched by targeting", "Paid per call"],
+          },
+          {
+            title: "Live transfer",
+            icon: "phoneForwarded",
+            lines: ["Screened by intake", "Then connected live", "Paid per call"],
+          },
+        ],
+      },
+    },
     Body: InsuranceInboundVsTransfers,
   },
 ];

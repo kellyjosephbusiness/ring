@@ -13,6 +13,7 @@ import { JsonLd } from "../seo/json-ld";
 import { breadcrumbList } from "../seo/schema";
 import { CheckDisc } from "../shared/check-disc";
 import { BLOG_CTA } from "./blog-cta";
+import { PostCover } from "./cover/post-cover";
 import { blogPosting } from "./blog-schema";
 import { RelatedPosts } from "./related-posts";
 import prose from "./prose.module.css";
@@ -25,9 +26,9 @@ function morePosts(post: BlogPost): BlogPost[] {
   return [...sameTopic, ...others].slice(0, 3);
 }
 
-/** One blog post: breadcrumbs, title and byline, the key takeaways, the MDX
- * body beside a booking card, then the post's FAQ, more posts and the booking
- * band for the post's audience. */
+/** One blog post: breadcrumbs, title, byline and cover, the key takeaways,
+ * the MDX body beside a booking card, then the post's FAQ, more posts and the
+ * booking band for the post's audience. */
 export function PostPage({ post }: { post: BlogPost }) {
   const { Body } = post;
   const topic = BLOG_TOPICS[post.topic];
@@ -80,6 +81,7 @@ export function PostPage({ post }: { post: BlogPost }) {
             <span aria-hidden="true">·</span>
             <span>{post.readingMinutes} min read</span>
           </p>
+          <PostCover post={post} className={styles.cover} />
         </header>
         <Divider />
         <div className={styles.layout}>

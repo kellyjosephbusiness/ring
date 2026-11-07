@@ -1,13 +1,12 @@
 import { blogListing } from "@/components/sites/ringondemand/blog/blog-schema";
-import { postGridItem, postMeta } from "@/components/sites/ringondemand/blog/post-grid";
+import { PostCover } from "@/components/sites/ringondemand/blog/cover/post-cover";
+import { PostCards } from "@/components/sites/ringondemand/blog/post-cards";
+import { postMeta } from "@/components/sites/ringondemand/blog/post-grid";
 import { FinalCta } from "@/components/sites/ringondemand/final-cta/final-cta";
 import { GENERAL_CTA } from "@/components/sites/ringondemand/final-cta/general-cta";
-import { getPracticeArea } from "@/components/sites/ringondemand/legal/practice-areas";
 import { Divider } from "@/components/sites/ringondemand/page-kit/divider";
 import { FeatureRow } from "@/components/sites/ringondemand/page-kit/feature-row";
-import { LinkGrid } from "@/components/sites/ringondemand/page-kit/link-grid";
 import { PageHero } from "@/components/sites/ringondemand/page-kit/page-hero";
-import { CriteriaCard } from "@/components/sites/ringondemand/page-kit/visuals";
 import { PageShell } from "@/components/sites/ringondemand/page-shell/page-shell";
 import { JsonLd } from "@/components/sites/ringondemand/seo/json-ld";
 import { pageMetadata } from "@/components/sites/ringondemand/seo/page-metadata";
@@ -26,7 +25,6 @@ export const metadata = pageMetadata({
 /** The blog index: the featured MVA guide, then every other post, newest
  * first. */
 export default function BlogPage() {
-  const mva = getPracticeArea("mva");
   const featured = getPost(FEATURED_SLUG) ?? POSTS[0];
   const rest = POSTS.filter((post) => post !== featured);
 
@@ -50,17 +48,17 @@ export default function BlogPage() {
           </>
         }
         cta={{ label: "Read the guide", href: postHref(featured) }}
-        visual={mva ? <CriteriaCard label={mva.navLabel} checks={mva.checks} /> : null}
+        visual={<PostCover post={featured} />}
       />
       <Divider />
-      <LinkGrid
+      <PostCards
         heading={{
           id: "all-posts-heading",
           eyebrow: "All posts",
           heading: { lead: "More", accent: "guides" },
           sub: "For personal injury firms, insurance agencies and call publishers.",
         }}
-        items={rest.map(postGridItem)}
+        posts={rest}
       />
       <FinalCta {...GENERAL_CTA} />
     </PageShell>

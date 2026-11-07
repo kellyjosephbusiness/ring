@@ -92,7 +92,11 @@ it cannot drift from what visitors see.
    description, topic (`mva`, `workers-comp`, `legal`, `insurance`,
    `publishers` or `compliance`), dates,
    reading time, author (from `TEAM`; the posts so far are Sam Hosey's), 3 to
-   5 key takeaways, 3 or 4 FAQ questions and the related service pages.
+   5 key takeaways, 3 or 4 FAQ questions, the related service pages and a
+   `cover`: a short label and one of the scenes in
+   `src/components/sites/ringondemand/blog/cover/cover-spec.ts` (transfer,
+   compare, ladder, checklist, channels, record, steps, network or funnel).
+   Each field there notes how long its text can be.
 
 The post then appears on `/blog`, the homepage (if it is among the 3 newest),
 the related reading on its topic's pages, the sitemap, `llms.txt` and its own

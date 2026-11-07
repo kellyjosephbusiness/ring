@@ -1,10 +1,9 @@
 import { Car, FileCheck2, HardHat, Radio, Scale, ShieldCheck, type LucideIcon } from "lucide-react";
 
-import { BLOG_TOPICS, formatPostDate, postHref, type BlogPost, type BlogTopic } from "@/content/blog/posts";
+import { formatPostDate, type BlogPost, type BlogTopic } from "@/content/blog/posts";
 
-import type { LinkGridItem } from "../page-kit/link-grid";
-
-const TOPIC_ICONS: Record<BlogTopic, LucideIcon> = {
+/** One icon per blog topic: the cover label and the cards' topic. */
+export const TOPIC_ICONS: Record<BlogTopic, LucideIcon> = {
   mva: Car,
   "workers-comp": HardHat,
   legal: Scale,
@@ -16,17 +15,4 @@ const TOPIC_ICONS: Record<BlogTopic, LucideIcon> = {
 /** "Oct 21, 2026 · 5 min read". */
 export function postMeta(post: BlogPost): string {
   return `${formatPostDate(post.publishedAt)} · ${post.readingMinutes} min read`;
-}
-
-/** A post as a cell in the page kit's link grid. */
-export function postGridItem(post: BlogPost): LinkGridItem {
-  return {
-    href: postHref(post),
-    icon: TOPIC_ICONS[post.topic],
-    kicker: BLOG_TOPICS[post.topic].label,
-    title: post.title,
-    body: post.description,
-    meta: postMeta(post),
-    more: "Read the post",
-  };
 }
