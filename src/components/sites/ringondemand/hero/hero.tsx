@@ -3,7 +3,7 @@ import { PROOF, ProofList } from "../shared/proof-list";
 import { TransferVisual } from "./transfer-visual";
 import styles from "./hero.module.css";
 
-const HEADLINE_LINE_1 = "Live Transfers for";
+const HEADLINE_LINE_1 = "Inbound Calls for";
 
 export function Hero() {
   return (
@@ -11,14 +11,13 @@ export function Hero() {
       <div className={styles.inner}>
         <div className={styles.grid}>
           <div className={styles.copy}>
-            <p className={styles.eyebrow}>Pay-per-call for law firms and insurance agencies</p>
             <div className={styles.text}>
               <h1 className={styles.h1}>
                 <span>{HEADLINE_LINE_1}</span>
                 <span className={styles.h1Accent}>
                   {" "}
                   <br className={styles.h1Break} />
-                  Legal and Insurance
+                  Enterprise Companies
                 </span>
               </h1>
               <p className={styles.sub}>
