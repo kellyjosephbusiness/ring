@@ -1,5 +1,5 @@
 import { Audience } from "@/components/sites/ringondemand/audience/audience";
-import { postGridItem } from "@/components/sites/ringondemand/blog/post-grid";
+import { PostCards } from "@/components/sites/ringondemand/blog/post-cards";
 import { CallSources } from "@/components/sites/ringondemand/call-sources/call-sources";
 import { Faq } from "@/components/sites/ringondemand/faq/faq";
 import { HOME_FAQ } from "@/components/sites/ringondemand/faq/faq-content";
@@ -9,7 +9,6 @@ import { GettingStarted } from "@/components/sites/ringondemand/getting-started/
 import { Hero } from "@/components/sites/ringondemand/hero/hero";
 import { HowItWorks } from "@/components/sites/ringondemand/how-it-works/how-it-works";
 import { Industries } from "@/components/sites/ringondemand/industries/industries";
-import { LinkGrid } from "@/components/sites/ringondemand/page-kit/link-grid";
 import { Rails } from "@/components/sites/ringondemand/rails/rails";
 import { Reporting } from "@/components/sites/ringondemand/reporting/reporting";
 import { GENERAL_STATS, Results } from "@/components/sites/ringondemand/results/results";
@@ -43,14 +42,15 @@ export default function Home() {
           stats={GENERAL_STATS}
         />
         <Faq heading="Questions buyers ask us" items={HOME_FAQ} />
-        <LinkGrid
+        <PostCards
           heading={{
             id: "blog-heading",
             eyebrow: "Blog",
             heading: { lead: "Guides from", accent: "the blog" },
             sub: "How MVA live transfers, signed cases and insurance calls work, and how to sell your calls.",
           }}
-          items={POSTS.slice(0, 3).map(postGridItem)}
+          posts={POSTS.slice(0, 3)}
+          more={{ label: "All posts", href: "/blog" }}
         />
         <FinalCta {...GENERAL_CTA} />
         <Rails />

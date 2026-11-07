@@ -36,7 +36,7 @@ export default function InsurancePage() {
       <PageHero
         eyebrow="Insurance"
         headline={["Inbound Calls and Live Transfers", "for Insurance Agencies"]}
-        sub="You give us your criteria. We run the ads, screen every caller, and send the ones who qualify to your licensed agents as inbound calls or live transfers. Pick your line to see what we check."
+        sub="You give us your criteria. We run the ads, screen every caller, and send the ones who qualify to your licensed agents as inbound calls or live transfers, usually starting within 24 hours of a signed order. Pick your line to see what we check."
         proof={[PROOF.liveTransfers, PROOF.trustedInsurance]}
       />
       <Divider />

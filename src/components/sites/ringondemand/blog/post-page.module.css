@@ -112,6 +112,12 @@
   border-radius: 2px;
 }
 
+.header .cover {
+  max-width: 960px;
+  margin-top: 40px;
+  border-radius: 14px;
+}
+
 /* ---- Body and aside ---- */
 
 .layout {
@@ -304,6 +310,11 @@
   .lead {
     font-size: 16px;
     line-height: 26px;
+  }
+
+  .header .cover {
+    margin-top: 28px;
+    border-radius: 10px;
   }
 
   .layout {

@@ -31,7 +31,7 @@ export default function LegalPage() {
       <PageHero
         eyebrow="Legal"
         headline={["Live Transfers and Signed Cases", "for Law Firms"]}
-        sub="You give us your case criteria. We run the ads, screen every caller, and send you a live transfer or a signed retainer. Pick your practice area to see what we check."
+        sub="You give us your case criteria. We run the ads, screen every caller, and send you a live transfer or a signed retainer, usually starting within 24 hours of a signed order. Pick your practice area to see what we check."
         note="The call is with a licensed attorney on our team, not a sales rep."
         proof={[PROOF.signedRetainers, PROOF.legalTransfers]}
       />

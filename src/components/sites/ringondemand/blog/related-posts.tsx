@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react";
 import { BLOG_TOPICS, postHref, type BlogPost } from "@/content/blog/posts";
 
 import { SectionHeading } from "../page-kit/section-heading";
+import { PostCover } from "./cover/post-cover";
 import { postMeta } from "./post-grid";
 import styles from "./related-posts.module.css";
 
@@ -13,7 +14,8 @@ interface RelatedPostsProps {
 }
 
 /** Blog posts linked from a service page or another post: hairline rows in
- * the FAQ's centred column, so one post reads as well as three. */
+ * the FAQ's centred column, each led by the post's cover, so one post reads
+ * as well as three. */
 export function RelatedPosts({ posts, heading = { lead: "Related", accent: "reading" } }: RelatedPostsProps) {
   if (!posts.length) return null;
   return (
@@ -24,6 +26,7 @@ export function RelatedPosts({ posts, heading = { lead: "Related", accent: "read
           {posts.map((post) => (
             <li key={post.slug} className={styles.item}>
               <Link className={styles.link} href={postHref(post)}>
+                <PostCover post={post} className={styles.thumb} />
                 <span className={styles.text}>
                   <span className={styles.kicker}>{BLOG_TOPICS[post.topic].label}</span>
                   <span className={styles.title}>{post.title}</span>

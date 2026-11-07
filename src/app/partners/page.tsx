@@ -42,9 +42,9 @@ export default function PartnersPage() {
     <PageShell>
       <JsonLd data={breadcrumbList([{ name: "Partners", path: "/partners" }])} />
       <PageHero
-        eyebrow="Partners : Call publishers"
+        eyebrow="Partners: call publishers"
         headline={["Join Our Vetted", "Publisher Network"]}
-        sub="Send us your legal and insurance calls and get paid well for every one that qualifies. Clear criteria, steady demand, and one short call to get started."
+        sub="Sell your legal and insurance calls in nine verticals. Payouts are agreed per vertical before your first call, and you get paid for every call that qualifies. One short call to get started."
         cta={CTA}
         proof={[PROOF.liveTransfers, PROOF.buyers]}
       />

@@ -10,8 +10,9 @@ export function CallSources() {
             Where the calls come from
           </h2>
           <p className={styles.body}>
-            We run our own ads and we buy from a vetted publisher network. Every caller, from either
-            source, goes through the same intake script before they reach you.
+            We run our own ads and we buy from a vetted publisher network whose ads we approve before
+            they run. Every caller, from either source, goes through the same intake script before
+            they reach you.
           </p>
         </div>
         <div className={styles.panel}>

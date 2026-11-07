@@ -55,7 +55,7 @@ const CARDS: readonly AudienceCard[] = [
   },
   {
     title: "Call publishers",
-    body: "Send us your calls. Every caller goes through the same intake script as the callers from our own ads.",
+    body: "Sell your legal and insurance calls in nine verticals. Payouts are agreed before your first call, and you get paid for every call that qualifies.",
     tag: "Partners",
     icon: (
       <Icon>
