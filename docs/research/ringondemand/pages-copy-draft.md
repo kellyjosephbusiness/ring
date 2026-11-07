@@ -91,17 +91,17 @@ hero button.
      Call*.
    - Partners books the *Publisher Intro Call*.
 10. **Homepage (general).**
-    - The headline is now "Live Transfers for Legal and Insurance"
-      (`hero/hero.tsx`; it was "Inbound Calls for Enterprise Companies").
-      Revert it there if you prefer the old one.
+    - The headline is "Inbound Calls for Enterprise Companies"
+      (`hero/hero.tsx`), kept by RingOnDemand's choice, with no eyebrow
+      above it.
     - Check the hero, industry cards, steps and "Who this is for" copy below.
 11. **MVA stats.** `/legal/mva` still shows the copy doc's 3 stats, including
     "1,500+ signed retainers delivered last quarter", under a hero that says
     "Over 2,000 signed retainers delivered". Keep both, or switch the MVA
     page to the general figures.
 12. **Search titles.** The homepage's browser and search title is now "Pay-Per-Call
-    Live Transfers for Legal and Insurance | RingOnDemand", and the visible
-    headline now matches it ("Live Transfers for Legal and Insurance"). Other
+    Live Transfers for Legal and Insurance | RingOnDemand". The visible
+    headline stays "Inbound Calls for Enterprise Companies". Other
     pages' titles and descriptions now lead with the terms buyers search for;
     see "SEO, FAQs and blog" below.
 13. **New FAQs.** Every practice area, insurance line, the homepage and
@@ -145,8 +145,8 @@ hero button.
 Same sections and styling as before, with general copy. The MVA-only sections
 (the screening list, pricing and FAQ) moved to `/legal/mva`.
 
-- Eyebrow: Pay-per-call for law firms and insurance agencies
-- Headline: Live Transfers for / **Legal and Insurance**
+- Eyebrow: none (removed at RingOnDemand's request)
+- Headline: Inbound Calls for / **Enterprise Companies**
 - Sub: You set the criteria. We run the ads, screen every caller, and send the
   ones who qualify to your team live, or sign them to your firm's retainer.
   Calls usually start within 24 hours of a signed order.
@@ -802,10 +802,12 @@ none adds a number, price or claim.
 
 ### Copy changes
 
-- Homepage hero: eyebrow "Pay-per-call for law firms and insurance
-  agencies", headline "Live Transfers for **Legal and Insurance**" (was
-  "Inbound Calls for **Enterprise Companies**"), and the sub now mentions
-  signed retainers and the usual 24-hour start.
+- Homepage hero: the sub now mentions signed retainers and the usual
+  24-hour start. The headline stays "Inbound Calls for **Enterprise
+  Companies**": it was briefly changed to "Live Transfers for **Legal and
+  Insurance**" and restored at RingOnDemand's request. The eyebrow above it
+  ("Inbound calls and live transfers", briefly "Pay-per-call for law firms
+  and insurance agencies") is removed at RingOnDemand's request.
 - Homepage "How it works": each step now carries one more confirmed fact
   (the daily cap; every intake call recorded; a caller who fails a question
   is never sent or billed).
