@@ -21,9 +21,8 @@ export function Hero() {
                 </span>
               </h1>
               <p className={styles.sub}>
-                You set the criteria. We run the ads, screen every caller, and send the ones who
-                qualify to your team live, or sign them to your firm&apos;s retainer. Calls usually
-                start within 24 hours of a signed order.
+                We run the ads, screen every caller, and send only qualified legal and insurance
+                calls to your team.
               </p>
             </div>
             <div className={styles.ctaGroup}>
