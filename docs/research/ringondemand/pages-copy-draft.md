@@ -147,9 +147,8 @@ Same sections and styling as before, with general copy. The MVA-only sections
 
 - Eyebrow: none (removed at RingOnDemand's request)
 - Headline: Inbound Calls for / **Enterprise Companies**
-- Sub: You set the criteria. We run the ads, screen every caller, and send the
-  ones who qualify to your team live, or sign them to your firm's retainer.
-  Calls usually start within 24 hours of a signed order.
+- Sub: We generate calls for large organizations that need volume, compliance
+  and strong economics.
 - Under the button: Tell us your criteria. We tell you what we can deliver.
 - Proof lines: Over 2,000 signed retainers delivered · Over 5,000 live
   transfers delivered
@@ -802,8 +801,10 @@ none adds a number, price or claim.
 
 ### Copy changes
 
-- Homepage hero: the sub now mentions signed retainers and the usual
-  24-hour start. The headline stays "Inbound Calls for **Enterprise
+- Homepage hero: the sub is now one short line, in RingOnDemand's words,
+  that follows the headline: "We generate calls for large organizations that
+  need volume, compliance and strong economics." (November 9; it replaces a
+  longer line about signed retainers and the 24-hour start.) The headline stays "Inbound Calls for **Enterprise
   Companies**": it was briefly changed to "Live Transfers for **Legal and
   Insurance**" and restored at RingOnDemand's request. The eyebrow above it
   ("Inbound calls and live transfers", briefly "Pay-per-call for law firms
