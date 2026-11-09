@@ -21,8 +21,8 @@ export function Hero() {
                 </span>
               </h1>
               <p className={styles.sub}>
-                We run the ads, screen every caller, and send only qualified legal and insurance
-                calls to your team.
+                We generate calls for large organizations that need volume, compliance and strong
+                economics.
               </p>
             </div>
             <div className={styles.ctaGroup}>
